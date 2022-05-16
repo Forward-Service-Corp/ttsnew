@@ -10,7 +10,7 @@ export default function Home({user, dreams}) {
     ]
     return (
         <Layout title={"Dashboard"} session={user}>
-            <div className={"text-center w-full"}><Image className={"rounded-full"} src={user.image} width={100}
+            <div className={"text-center w-full"}><Image alt={"user avatar"} className={"rounded-full"} src={user.image} width={100}
                                                          height={100}/>
                 <div>{user.name}</div>
                 <div>{user.email}</div>
@@ -40,7 +40,7 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // set up variables
-    const url =  baseUrl + "/api/get-user?email=" + "uxmccauley@gmail.com"
+    const url =  baseUrl + "/api/get-user?email=" + session.user.email
 
     // fetch data
     const getUser = await fetch(url)
