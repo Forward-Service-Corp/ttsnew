@@ -3,16 +3,24 @@ import {getSession} from "next-auth/react";
 
 import LifeAreaSurveyForm from "../components/lifeAreaSurveyForm";
 import Link from "next/link";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function LifeAreaSurveys({user, dreams, incomingDream}) {
     const [currentDream, setCurrentDream] = useState("")
 
+    useEffect(() => {
+        if(incomingDream.hasDream){
+            setCurrentDream(incomingDream.dream)
+        }
+    },[])
+
+
+
     const hasCurrentDreamJSX = () => {
         return (
             <div>
-            <h2>    {incomingDream.dream}</h2>
-                <LifeAreaSurveyForm/>
+            <h2>{currentDream}</h2>
+                <LifeAreaSurveyForm user={user} currentDream={currentDream}/>
             </div>
         )
     }
@@ -21,13 +29,15 @@ export default function LifeAreaSurveys({user, dreams, incomingDream}) {
         return (
             dreams.length > 0 ?
                 <>
-                    <select>
+                    <select onChange={(e) => {
+                        setCurrentDream(e.target.value)
+                    }}>
                         <option>Select a dream...</option>
                         {dreams.map((dream, i) => (
-                            <option key={i}>{dream.dream}</option>
+                            <option key={i} value={dream.dream}>{dream.dream}</option>
                         ))}
                     </select>
-                    <LifeAreaSurveyForm/>
+                    <LifeAreaSurveyForm user={user} currentDream={currentDream}/>
                 </>
                 :
                 <p>You need to enter at least 1 dream to proceed <Link href={"/dreams"} passhref>

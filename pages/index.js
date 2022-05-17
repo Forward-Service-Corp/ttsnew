@@ -3,10 +3,10 @@ import {getSession} from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link"
 
-export default function Home({user, dreams}) {
+export default function Home({user, dreams, surveys}) {
     const stats = [
         { name: 'Dreams', stat: dreams.length, link: "/dreams", label: "Add a dream" },
-        { name: 'Life Area Surveys', stat: '5', link: "/life-area-surveys", label: "Complete a survey" },
+        { name: 'Life Area Surveys', stat: surveys.length, link: "/life-area-surveys", label: "Complete a survey" },
         { name: 'To-do Completion', stat: '24.57%', link: "/", label: "See all to-dos" },
     ]
     return (
@@ -50,17 +50,21 @@ export async function getServerSideProps(context) {
     // cast data to json
     const userJson = await getUser.json()
 
-
-
     //dreams url
     const getUserDreamsUrl = baseUrl + "/api/get-user-dreams?userId=" + userJson._id
     const getDreams = await fetch(getUserDreamsUrl)
     const dreamsJson = await getDreams.json()
 
+    //surveys url
+    const getUserSurveysUrl = baseUrl + "/api/get-user-surveys?userId=" + userJson._id
+    const getSurveys = await fetch(getUserSurveysUrl)
+    const surveysJson = await getSurveys.json()
+
     return {
         props: {
             user: userJson,
-            dreams: dreamsJson
+            dreams: dreamsJson,
+            surveys: surveysJson
         }
     }
 

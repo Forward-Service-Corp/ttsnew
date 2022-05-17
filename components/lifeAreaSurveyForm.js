@@ -2,20 +2,40 @@ import {useState} from "react";
 import { lasList } from "../lib/lasList"
 import Link from "next/link";
 
-export default function LifeAreaSurveyForm() {
+export default function LifeAreaSurveyForm({user, currentDream}) {
 
-    const createLASRecord = async () => {
-        const record = await fetch("/api/create-las-record", {
-            method: 'POST',
+    async function saveSurvey() {
+        await fetch("/api/post-life-area-survey", {
+            method: "POST",
             headers: {
-                "Content-Type": 'application/json'
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                user: localStorage.getItem("userId"),
-
+                dream: currentDream,
+                food: food,
+                money: money,
+                substances: substances,
+                mentalHealth: mentalHealth,
+                safety: safety,
+                healthInsurance: healthInsurance,
+                transportation: transportation,
+                disabilities: disabilities,
+                lifeSkills: lifeSkills,
+                work: work,
+                legal: legal,
+                childcare: childcare,
+                adultEducation: adultEducation,
+                parentingSkills: parentingSkills,
+                childrensEducation: childrensEducation,
+                communityInvolvement: communityInvolvement,
+                familyFriendsSupport: familyFriendsSupport,
+                budgeting: budgeting,
+                racismBigotry: racismBigotry,
+                internetAccess: internetAccess,
+                housing: housing,
+                userId: user._id
             })
         })
-        const sentRecord = record.json()
     }
 
     const [data, setData] = useState(lasList)
@@ -176,13 +196,19 @@ export default function LifeAreaSurveyForm() {
 
             <div className={"mt-20 flex justify-between"}>
                 <div className={""}>
-                    <Link href={"/workbook/life-area-survey-2"}>
-                        <a className={"px-8 py-3 rounded border border-orange-600"}>Back</a>
-                    </Link>
-                </div>
-                <div className={""}>
-                    <a href={"/workbook/life-area-survey-4"}
-                       className={"px-8 py-3 rounded border bg-orange-600 text-white"}>Next</a>
+                    <button onClick={() => {
+                        if(food[1] && money[1] && substances[1] && mentalHealth[1] && safety[1] && healthInsurance[1] && transportation[1] && disabilities[1] &&
+                            lifeSkills[1] && work[1] && legal[1] && childcare[1] && adultEducation[1] && parentingSkills[1] && childrensEducation[1] && communityInvolvement[1] &&
+                            budgeting[1] && familyFriendsSupport[1] && racismBigotry[1] && internetAccess[1] && housing[1]){
+                            saveSurvey()
+                                .then(res => console.log(res))
+                                .catch(err => console.warn(err))
+                        }else{
+                            alert("missing some data")
+                        }
+                    }}
+                       className={"px-8 py-3 rounded border bg-indigo-600 text-white"}>Submit
+                    </button>
 
                 </div>
             </div>
