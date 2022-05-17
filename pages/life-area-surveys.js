@@ -1,53 +1,87 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
-import { lasList } from "../lib/lasList"
 
-export default function Dreams({user, dreams}) {
-    const domainKeys = Object.keys(lasList)
+import LifeAreaSurveyForm from "../components/lifeAreaSurveyForm";
+import Link from "next/link";
+import {useState} from "react";
+
+export default function LifeAreaSurveys({user, dreams, incomingDream}) {
+    const [currentDream, setCurrentDream] = useState("")
+
+    const hasCurrentDreamJSX = () => {
+        return (
+            <div>
+            <h2>    {incomingDream.dream}</h2>
+                <LifeAreaSurveyForm/>
+            </div>
+        )
+    }
+
+    const dreamOptionsJSX = () => {
+        return (
+            dreams.length > 0 ?
+                <>
+                    <select>
+                        <option>Select a dream...</option>
+                        {dreams.map((dream, i) => (
+                            <option key={i}>{dream.dream}</option>
+                        ))}
+                    </select>
+                    <LifeAreaSurveyForm/>
+                </>
+                :
+                <p>You need to enter at least 1 dream to proceed <Link href={"/dreams"} passhref>
+                    <a className={"text-indigo-600 underline"}>
+                        Click here to enter a dream.
+                    </a>
+                </Link>
+                </p>
+
+        )
+    }
+
+
     return (
         <Layout title={"Life Area Surveys"} session={user}>
-            <select>
-                <option>Select a dream...</option>
-                {dreams.map((dream, i) => (
-                    <option key={i}>{dream.dream}</option>
-                ))}
-            </select>
-            {domainKeys.map(key =>
-                (
-                    <div key={key}>
-                        <p>{lasList[key].label}</p>
-                        <select className={"overflow-hidden max-w-[300px]"}>
-                            <option className={"whitespace-pre-wrap"}>{lasList[key].statements[0]}</option>
-                            <option className={"whitespace-pre-wrap"}>{lasList[key].statements[1]}</option>
-                            <option className={"whitespace-pre-wrap"}>{lasList[key].statements[2]}</option>
-                            <option className={"whitespace-pre-wrap"}>{lasList[key].statements[3]}</option>
-                            <option className={"whitespace-pre-wrap"}>{lasList[key].statements[4]}</option>
-                            <option className={"whitespace-pre-wrap"}>{lasList[key].statements[5]}</option>
-                        </select>
-                    </div>
-                ))}
+
+            {incomingDream.hasDream ?
+
+                hasCurrentDreamJSX()
+
+                :
+
+                dreamOptionsJSX()
+            }
+
+
         </Layout>
     )
 }
 
 export async function getServerSideProps(context) {
+    console.log(context.query.dream === undefined)
+    let dream
+    if (context.query.dream !== undefined) {
+        dream = context.query.dream
+    } else {
+        dream = ""
+    }
+
+    // session check and possible redirect
     const session = await getSession(context)
     if (!session) return {redirect: {destination: "/login", permanent: false}}
-    const {req} = context;
 
+    // dynamic url setup
+    const {req} = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http'
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
-    // set up variables
-    const url =  baseUrl + "/api/get-user?email=" + session.user.email
-
-    // fetch user data
+    // user data
+    const url = baseUrl + "/api/get-user?email=" + session.user.email
     const getUser = await fetch(url)
-
-    // cast user data to json
     const userJson = await getUser.json()
 
-    //dreams url
+    // dreams data
     const getUserDreamsUrl = baseUrl + "/api/get-user-dreams?userId=" + userJson._id
     const getDreams = await fetch(getUserDreamsUrl)
     const dreamsJson = await getDreams.json()
@@ -55,7 +89,11 @@ export async function getServerSideProps(context) {
     return {
         props: {
             user: userJson,
-            dreams: dreamsJson
+            dreams: dreamsJson,
+            incomingDream: {
+                hasDream: context.query.dream !== undefined,
+                dream: dream
+            }
         }
     }
 

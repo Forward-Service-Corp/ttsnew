@@ -1,8 +1,10 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
 import {useEffect, useState} from "react";
+import {useRouter} from "next/router";
 
 export default function Dreams({user, dreams}) {
+    const router = useRouter()
     const [savedDreams, setSavedDreams] = useState([])
     const [dream, setDream] = useState("")
     const [dreamNeed, setDreamNeed] = useState("")
@@ -10,9 +12,9 @@ export default function Dreams({user, dreams}) {
 
     useEffect(() => {
         setSavedDreams(dreams)
-    },[])
+    }, [])
 
-    async function saveDream () {
+    async function saveDream() {
         await fetch("/api/post-dream", {
             method: "POST",
             headers: {
@@ -27,7 +29,7 @@ export default function Dreams({user, dreams}) {
         })
     }
 
-    async function  deleteDream (id) {
+    async function deleteDream(id) {
         await fetch("/api/delete-dream", {
             method: "POST",
             headers: {
@@ -68,20 +70,34 @@ export default function Dreams({user, dreams}) {
                 setDream("")
                 setDreamNeed("")
                 setDreamHelp("")
-            }}>Save dream</button>
+            }}>Save dream
+            </button>
 
-            <h2 className={"text-xl mt-6 mb-5 uppercase"}>My Dreams</h2>
+            {savedDreams.length ? <h2 className={"text-xl mt-6 mb-5 uppercase"}>My Dreams</h2> : null}
             {savedDreams.map((dream, i) => (
-                <div key={i} className={"mb-4"}>
-                    <p><strong>Dream {i+1}:</strong> {dream.dream}</p>
-                    <p><strong>What I need to {dream.dream.toLowerCase()}: </strong> {dream.dreamNeed}</p>
-                    <p><strong>Who I need to help me is: </strong>{dream.dreamHelp}</p>
-                    <div className={"text-red-700 text-sm cursor-pointer max-w-[150px]"} onClick={() => {
-                        if(confirm("Are you sure you want to delete this dream?")){
-                            deleteDream(dream._id)
-                        }
+                <div key={i} className={"mb-4 flex border-b-2"}>
+                    <div className={" p-2 flex-2"}>
+                        <p><strong>Dream {i + 1}:</strong> {dream.dream}</p>
+                        <p><strong>What I need to {dream.dream.toLowerCase()}: </strong> {dream.dreamNeed}</p>
+                        <p><strong>Who I need to help me is: </strong>{dream.dreamHelp}</p>
+                        <div className={"text-red-700 text-sm cursor-pointer max-w-[150px]"} onClick={() => {
+                            if (confirm("Are you sure you want to delete this dream?")) {
+                                deleteDream(dream._id)
+                            }
 
-                    }}>Delete this dream</div>
+                        }}>
+                            Delete this dream
+                        </div>
+                    </div>
+                    <div className={"text-right flex-1 p-2 align-middle justify-center flex"}>
+                        <div className={"self-center"}>
+                            <button className={"w-auto block p-2 bg-indigo-700 rounded text-white"}
+                            onClick={() => {
+                                router.push("/life-area-surveys?dream=" + dream.dream)
+                            }}
+                            >Complete survey for this dream</button>
+                        </div>
+                    </div>
                 </div>))}
         </Layout>
     )
@@ -96,7 +112,7 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // set up variables
-    const url =  baseUrl + "/api/get-user?email=" + session.user.email
+    const url = baseUrl + "/api/get-user?email=" + session.user.email
 
     // fetch user data
     const getUser = await fetch(url)

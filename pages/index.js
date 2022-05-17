@@ -1,12 +1,13 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link"
 
 export default function Home({user, dreams}) {
     const stats = [
-        { name: 'Dreams', stat: dreams.length },
-        { name: 'Life Area Surveys', stat: '5' },
-        { name: 'To-do Completion', stat: '24.57%' },
+        { name: 'Dreams', stat: dreams.length, link: "/dreams", label: "Add a dream" },
+        { name: 'Life Area Surveys', stat: '5', link: "/life-area-surveys", label: "Complete a survey" },
+        { name: 'To-do Completion', stat: '24.57%', link: "/", label: "See all to-dos" },
     ]
     return (
         <Layout title={"Dashboard"} session={user}>
@@ -20,9 +21,10 @@ export default function Home({user, dreams}) {
                 {/*<h3 className="text-lg leading-6 font-medium text-gray-900">Last 30 days</h3>*/}
                 <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
                     {stats.map((item) => (
-                        <div key={item.name} className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+                        <div key={item.name} className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6 text-center">
                             <dt className="text-sm font-medium text-gray-500 truncate">{item.name}</dt>
                             <dd className="mt-1 text-3xl font-semibold text-gray-900">{item.stat}</dd>
+                            <Link href={item.link}><a className={"text-indigo-600 underline text-xs"}>{item.label}</a></Link>
                         </div>
                     ))}
                 </dl>
