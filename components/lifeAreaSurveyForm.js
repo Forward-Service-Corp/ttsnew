@@ -1,6 +1,5 @@
 import {useState} from "react";
-import { lasList } from "../lib/lasList"
-import Link from "next/link";
+import {lasList} from "../lib/lasList"
 
 export default function LifeAreaSurveyForm({user, currentDream}) {
 
@@ -12,6 +11,12 @@ export default function LifeAreaSurveyForm({user, currentDream}) {
             },
             body: JSON.stringify({
                 dream: currentDream,
+                totalScore: food[0] + money[0] + substances[0] + mentalHealth[0] + safety[0] +
+                    healthInsurance[0] + transportation[0] + disabilities[0] + lifeSkills[0] + work[0] + legal[0] +
+                    childcare[0] + adultEducation[0] + parentingSkills[0] + childrensEducation[0] +
+                    communityInvolvement[0] + budgeting[0] + familyFriendsSupport[0] + racismBigotry[0] +
+                    internetAccess[0] + housing[0],
+                priority: priority,
                 food: food,
                 money: money,
                 substances: substances,
@@ -63,7 +68,6 @@ export default function LifeAreaSurveyForm({user, currentDream}) {
     const [housing, setHousing] = useState([0, ""])
 
 
-
     const checkPriority = (value) => {
         if (priority.indexOf(value) === -1) {
             setPriority(prevState => [...prevState, value])
@@ -89,6 +93,12 @@ export default function LifeAreaSurveyForm({user, currentDream}) {
                         </div>
                     })}
                 </div>
+                <div
+                    className={"mt-5"}>Score: {food[0] + money[0] + substances[0] + mentalHealth[0] + safety[0] +
+                    healthInsurance[0] + transportation[0] + disabilities[0] + lifeSkills[0] + work[0] + legal[0] +
+                    childcare[0] + adultEducation[0] + parentingSkills[0] + childrensEducation[0] +
+                    communityInvolvement[0] + budgeting[0] + familyFriendsSupport[0] + racismBigotry[0] +
+                    internetAccess[0] + housing[0]}</div>
             </div>
             {keys.map((key) => {
                 return (
@@ -109,70 +119,75 @@ export default function LifeAreaSurveyForm({user, currentDream}) {
                             </div>
                         </div>
                         <form onChange={(event) => {
-                            console.log(event.target.dataset.statement)
+
                             switch (key) {
                                 case "food":
-                                    setFood([event.target.value, event.target.dataset.statement])
+                                    setFood([parseInt(event.target.value), event.target.dataset.statement])
+
                                     break;
                                 case "money":
-                                    setMoney([event.target.value, event.target.dataset.statement])
+                                    setMoney([parseInt(event.target.value), event.target.dataset.statement])
+
                                     break;
                                 case "substances":
-                                    setSubstances([event.target.value, event.target.dataset.statement])
+                                    setSubstances([parseInt(event.target.value), event.target.dataset.statement])
+
                                     break;
                                 case "mentalHealth":
-                                    setMentalHealth([event.target.value, event.target.dataset.statement])
+                                    setMentalHealth([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "safety":
-                                    setSafety([event.target.value, event.target.dataset.statement])
+                                    setSafety([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "healthInsurance":
-                                    setHealthInsurance([event.target.value, event.target.dataset.statement])
+                                    setHealthInsurance([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "transportation":
-                                    setTransportation([event.target.value, event.target.dataset.statement])
+                                    setTransportation([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "disabilities":
-                                    setDisabilities([event.target.value, event.target.dataset.statement])
+                                    setDisabilities([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "lifeSkills":
-                                    setLifSkills([event.target.value, event.target.dataset.statement])
+                                    setLifSkills([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "work":
-                                    setWork([event.target.value, event.target.dataset.statement])
+                                    setWork([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "legal":
-                                    setLegal([event.target.value, event.target.dataset.statement])
+                                    setLegal([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "childcare":
-                                    setChildcare([event.target.value, event.target.dataset.statement])
+                                    setChildcare([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "adultEducation":
-                                    setAdultEducation([event.target.value, event.target.dataset.statement])
+                                    setAdultEducation([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "parentingSkills":
-                                    setParentingSkills([event.target.value, event.target.dataset.statement])
+                                    setParentingSkills([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "childrensEducation":
-                                    setChildrensEducation([event.target.value, event.target.dataset.statement])
+                                    setChildrensEducation([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "communityInvolvement":
-                                    setCommunityInvolvement([event.target.value, event.target.dataset.statement])
+                                    setCommunityInvolvement([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "budgeting":
-                                    setBudgeting([event.target.value, event.target.dataset.statement])
+                                    setBudgeting([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "familyFriendsSupport":
-                                    setFamilyFriendsSupport([event.target.value, event.target.dataset.statement])
+                                    setFamilyFriendsSupport([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "racismBigotry":
-                                    setRacismBigotry([event.target.value, event.target.dataset.statement])
+                                    setRacismBigotry([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "internetAccess":
-                                    setInternetAccess([event.target.value, event.target.dataset.statement])
+                                    setInternetAccess([parseInt(event.target.value), event.target.dataset.statement])
                                     break;
                                 case "housing":
-                                    setHousing([event.target.value, event.target.dataset.statement])
+                                    setHousing([parseInt(event.target.value), event.target.dataset.statement])
+                                    break;
+                                default:
                                     break;
                             }
                         }}>
@@ -197,17 +212,24 @@ export default function LifeAreaSurveyForm({user, currentDream}) {
             <div className={"mt-20 flex justify-between"}>
                 <div className={""}>
                     <button onClick={() => {
-                        if(food[1] && money[1] && substances[1] && mentalHealth[1] && safety[1] && healthInsurance[1] && transportation[1] && disabilities[1] &&
+                        if (food[1] && money[1] && substances[1] && mentalHealth[1] && safety[1] && healthInsurance[1] && transportation[1] && disabilities[1] &&
                             lifeSkills[1] && work[1] && legal[1] && childcare[1] && adultEducation[1] && parentingSkills[1] && childrensEducation[1] && communityInvolvement[1] &&
-                            budgeting[1] && familyFriendsSupport[1] && racismBigotry[1] && internetAccess[1] && housing[1]){
-                            saveSurvey()
-                                .then(res => console.log(res))
-                                .catch(err => console.warn(err))
-                        }else{
+                            budgeting[1] && familyFriendsSupport[1] && racismBigotry[1] && internetAccess[1] && housing[1]) {
+
+                            if (priority.length > 0) {
+                                saveSurvey()
+                                    .then(res => console.log(res))
+                                    .catch(err => console.warn(err))
+
+                            } else {
+                                alert("Please choose at least 1 priority area.")
+                            }
+
+                        } else {
                             alert("missing some data")
                         }
                     }}
-                       className={"px-8 py-3 rounded border bg-indigo-600 text-white"}>Submit
+                            className={"px-8 py-3 rounded border bg-indigo-600 text-white"}>Submit
                     </button>
 
                 </div>

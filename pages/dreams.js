@@ -78,7 +78,7 @@ export default function Dreams({user, dreams}) {
                 <div key={i} className={"mb-4 flex border-b-2"}>
                     <div className={" p-2 flex-2"}>
                         <p><strong>Dream {i + 1}:</strong> {dream.dream}</p>
-                        <p><strong>What I need to {dream.dream.toLowerCase()}: </strong> {dream.dreamNeed}</p>
+                        <p><strong>What I need: </strong> {dream.dreamNeed}</p>
                         <p><strong>Who I need to help me is: </strong>{dream.dreamHelp}</p>
                         <div className={"text-red-700 text-sm cursor-pointer max-w-[150px]"} onClick={() => {
                             if (confirm("Are you sure you want to delete this dream?")) {
@@ -89,8 +89,8 @@ export default function Dreams({user, dreams}) {
                             Delete this dream
                         </div>
                     </div>
-                    <div className={"text-right flex-1 p-2 align-middle justify-center flex"}>
-                        <div className={"self-center"}>
+                    <div className={"align-middle flex-1 p-2 justify-end flex "}>
+                        <div className={"self-center text-right "}>
                             <button className={"w-auto block p-2 bg-indigo-700 rounded text-white"}
                             onClick={() => {
                                 router.push("/life-area-surveys?dream=" + dream.dream)

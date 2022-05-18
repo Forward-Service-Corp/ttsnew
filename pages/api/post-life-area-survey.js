@@ -5,6 +5,8 @@ import {ObjectId} from "mongodb";
 export default async(req, res) => {
     const record = {
         dream: req.body.dream,
+        totalScore: req.body.totalScore,
+        priority: req.body.priority,
         food: req.body.food,
         money: req.body.money,
         substances: req.body.substances,
