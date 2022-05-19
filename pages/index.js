@@ -11,11 +11,11 @@ export default function Home({user, dreams, surveys}) {
     ]
     return (
         <Layout title={"Dashboard"} session={user}>
-            <div className={"text-center w-full"}><Image alt={"user avatar"} className={"rounded-full"} src={user.image} width={100}
-                                                         height={100}/>
-                <div>{user.name}</div>
-                <div>{user.email}</div>
-            </div>
+            {/*<div className={"text-center w-full"}><Image alt={"user avatar"} className={"rounded-full"} src={user.image} width={100}*/}
+            {/*                                             height={100}/>*/}
+            {/*    <div>{user.name}</div>*/}
+            {/*    <div>{user.email}</div>*/}
+            {/*</div>*/}
 
             <div>
                 {/*<h3 className="text-lg leading-6 font-medium text-gray-900">Last 30 days</h3>*/}

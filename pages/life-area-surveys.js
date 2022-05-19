@@ -53,17 +53,11 @@ export default function LifeAreaSurveys({user, dreams, incomingDream}) {
 
     return (
         <Layout title={"Life Area Surveys"} session={user}>
-
             {incomingDream.hasDream ?
-
                 hasCurrentDreamJSX()
-
                 :
-
                 dreamOptionsJSX()
             }
-
-
         </Layout>
     )
 }
