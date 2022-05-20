@@ -1,10 +1,9 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
 import {useState} from "react";
-import {prefixes} from "next/dist/build/output/log";
+import ProfilePrograms from "../components/profilePrograms";
 
 export default function Profile({user, dreams, surveys}) {
-    const [programs, setPrograms] = useState([])
 
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
@@ -18,74 +17,47 @@ export default function Profile({user, dreams, surveys}) {
     const [contactName, setContactName] = useState("")
     const [contactNumber, setContactNumber] = useState("")
 
-    const [password, setPassword] = useState("")
-    const [passwordConfirm, setPasswordConfirm] = useState("")
+    // const [password, setPassword] = useState("")
+    // const [passwordConfirm, setPasswordConfirm] = useState("")
 
     const [currentTab, setCurrentTab] = useState("tab1")
 
     return (
         <Layout title={"Profile"} session={user}>
-            <div className={"mb-5"}>
-                <div className={"cursor-pointer inline-block pr-6"} data-tabId={"tab1"} onClick={() => {
+            <div className={"mb-5 border-b-2 border-b-gray-500-300"}>
+                <div className={`cursor-pointer inline-block px-6 py-2 ${currentTab === "tab1" ? "border-b-2 border-b-orange-500" : ""}`} onClick={() => {
                     setCurrentTab("tab1")
                 }}>Programs
                 </div>
-                <div className={"cursor-pointer inline-block pr-6"} data-tabId={"tab2"} onClick={() => {
+                <div className={`cursor-pointer inline-block px-6 py-2 ${currentTab === "tab2" ? "border-b-2 border-b-orange-500" : ""}`} onClick={() => {
                     setCurrentTab("tab2")
                 }}>Personal Details
                 </div>
+                <div className={`cursor-pointer inline-block px-6 py-2 ${currentTab === "tab3" ? "border-b-2 border-b-orange-500" : ""}`} onClick={() => {
+                    setCurrentTab("tab3")
+                }}>Organization Information
+                </div>
+                {/*<div className={`cursor-pointer inline-block px-6 py-2 ${currentTab === "tab4" ? "border-b-2 border-b-orange-500" : ""}`} onClick={() => {*/}
+                {/*    setCurrentTab("tab4")*/}
+                {/*}}>Password*/}
+                {/*</div>*/}
             </div>
 
             <div className={`${currentTab === "tab1" ? "visible" : "hidden"}`}>
-                <div className={"flex"}>
-                    <div className={"w-1/2 inline-block"}>
-                        <h2 className={"uppercase text-gray-600 font-light mb-3"}>Available Programs</h2>
-                        <select className={"h-[240px]"} multiple onChange={(e) => {
-                            setPrograms(prevState => {
-                                if (programs.indexOf(e.target.value) === -1) {
-                                    return [...prevState, e.target.value]
-                                } else {
-                                    return prevState
-                                }
-                            })
-                        }}>
-                            <option>FoodShare, Employment, and Training (FSET)</option>
-                            <option>Jobs for America&apos;s Graduates (JAG)</option>
-                            <option>Transportation Alliance for New Solutions (TrANS)</option>
-                            <option>Road to Livelihood</option>
-                            <option>Upward Bound Math Science (UBMS)</option>
-                            <option>Upward Bound (UB)</option>
-                            <option>Wheels to Work</option>
-                            <option>WIOA Adult and Dislocated Worker</option>
-                            <option>WIOA Youth</option>
-                            <option>Wisconsin Employment Transportation Assistance Program (WETAP)</option>
-                            <option>Wisconsin Works (W-2)</option>
-                        </select>
-                    </div>
-                    <div className={" w-1/2 inline-block"}>
-                        <h2 className={"uppercase text-gray-600 font-light mb-3"}>Your Selected Programs</h2>
-                        <div>
-                            {programs.map(program => (
-                                <div className={"cursor-pointer"} key={program}
-                                     onClick={() => {
-                                         setPrograms(prevState => prevState.filter(item => item !== program))
-                                     }}>
-                                    {program}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                </div>
-                <div className={"w-full"}>
-                    <button className={"p-2 bg-indigo-600 text-white rounded mt-4"}>Update programs</button>
-                </div>
+                <ProfilePrograms user={user}/>
             </div>
 
             <div className={`${currentTab === "tab2" ? "visible" : "hidden"}`}>
                 <h2 className={"uppercase text-gray-600 font-light mb-3"}>Personal Details</h2>
             </div>
 
+            <div className={`${currentTab === "tab3" ? "visible" : "hidden"}`}>
+                <h2 className={"uppercase text-gray-600 font-light mb-3"}>Organization Information</h2>
+            </div>
+
+            {/*<div className={`${currentTab === "tab4" ? "visible" : "hidden"}`}>*/}
+            {/*    <h2 className={"uppercase text-gray-600 font-light mb-3"}>Password</h2>*/}
+            {/*</div>*/}
         </Layout>
     )
 }
