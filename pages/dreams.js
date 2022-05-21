@@ -39,7 +39,7 @@ export default function Dreams({user, dreams}) {
                 id: id
             })
         })
-        window.location.reload()
+        router.reload()
     }
 
     return (

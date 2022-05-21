@@ -55,6 +55,7 @@ function ProfilePrograms({user}) {
                             <div className={"cursor-pointer"} key={program}
                                  onClick={() => {
                                      setPrograms(prevState => prevState.filter(item => item !== program))
+                                     setProgramsUpdated(true)
                                  }}>
                                 {program}
                             </div>

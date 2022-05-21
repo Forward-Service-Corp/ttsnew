@@ -28,7 +28,8 @@ export default async(req, res) => {
         racismBigotry: req.body.racismBigotry,
         internetAccess: req.body.internetAccess,
         housing: req.body.housing,
-        userId: ObjectId(req.body.userId)
+        userId: ObjectId(req.body.userId),
+        datestamp: new Date()
     }
 
     const {db} = await connectToDatabase()

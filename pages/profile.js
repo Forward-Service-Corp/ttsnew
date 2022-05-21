@@ -2,23 +2,13 @@ import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
 import {useState} from "react";
 import ProfilePrograms from "../components/profilePrograms";
+import ProfilePersonalDetails from "../components/profilePersonalDetails";
 
 export default function Profile({user, dreams, surveys}) {
-
-    const [firstName, setFirstName] = useState("")
-    const [lastName, setLastName] = useState("")
-    const [street, setStreet] = useState("")
-    const [city, setCity] = useState("")
-    const [state, setState] = useState("")
-    const [zip, setZip] = useState("")
-    const [county, setCounty] = useState([])
 
     const [coach, setCoach] = useState("")
     const [contactName, setContactName] = useState("")
     const [contactNumber, setContactNumber] = useState("")
-
-    // const [password, setPassword] = useState("")
-    // const [passwordConfirm, setPasswordConfirm] = useState("")
 
     const [currentTab, setCurrentTab] = useState("tab1")
 
@@ -37,10 +27,6 @@ export default function Profile({user, dreams, surveys}) {
                     setCurrentTab("tab3")
                 }}>Organization Information
                 </div>
-                {/*<div className={`cursor-pointer inline-block px-6 py-2 ${currentTab === "tab4" ? "border-b-2 border-b-orange-500" : ""}`} onClick={() => {*/}
-                {/*    setCurrentTab("tab4")*/}
-                {/*}}>Password*/}
-                {/*</div>*/}
             </div>
 
             <div className={`${currentTab === "tab1" ? "visible" : "hidden"}`}>
@@ -49,15 +35,12 @@ export default function Profile({user, dreams, surveys}) {
 
             <div className={`${currentTab === "tab2" ? "visible" : "hidden"}`}>
                 <h2 className={"uppercase text-gray-600 font-light mb-3"}>Personal Details</h2>
+                <ProfilePersonalDetails user={user}/>
             </div>
 
             <div className={`${currentTab === "tab3" ? "visible" : "hidden"}`}>
                 <h2 className={"uppercase text-gray-600 font-light mb-3"}>Organization Information</h2>
             </div>
-
-            {/*<div className={`${currentTab === "tab4" ? "visible" : "hidden"}`}>*/}
-            {/*    <h2 className={"uppercase text-gray-600 font-light mb-3"}>Password</h2>*/}
-            {/*</div>*/}
         </Layout>
     )
 }

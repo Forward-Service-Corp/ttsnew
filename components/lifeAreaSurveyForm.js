@@ -1,8 +1,9 @@
 import {useState} from "react";
 import {lasList} from "../lib/lasList"
+import {useRouter} from "next/router";
 
 export default function LifeAreaSurveyForm({user, currentDream}) {
-
+    const router = useRouter()
     async function saveSurvey() {
         await fetch("/api/post-life-area-survey", {
             method: "POST",
@@ -220,6 +221,7 @@ export default function LifeAreaSurveyForm({user, currentDream}) {
                                 saveSurvey()
                                     .then(res => console.log(res))
                                     .catch(err => console.warn(err))
+                                router.reload()
 
                             } else {
                                 alert("Please choose at least 1 priority area.")

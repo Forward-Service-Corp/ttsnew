@@ -1,9 +1,9 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
 
-export default function Dreams({user, dreams, surveys}) {
+export default function MapOfMyDreams({user, dreams, surveys}) {
     return (
-        <Layout title={"Care Plans"} session={user}>
+        <Layout title={"Map of My Dreams"} session={user}>
             Content
         </Layout>
     )
@@ -17,13 +17,11 @@ export async function getServerSideProps(context) {
     const protocol = req.headers['x-forwarded-proto'] || 'http'
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
-    // set up variables
+    console.log(context.resolvedUrl)
+
+    // user data
     const url =  baseUrl + "/api/get-user?email=" + session.user.email
-
-    // fetch data
     const getUser = await fetch(url)
-
-    // cast data to json
     const userJson = await getUser.json()
 
     //dreams url
