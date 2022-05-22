@@ -110,11 +110,11 @@ export default function LifeAreaSurveys({user, dreams, incomingDream, lifeAreaSu
                             <div>
                                 <div className={"underline text-sm text-indigo-600 cursor-pointer"} onClick={() => {
                                     router.push({
-                                        pathname: "/api/get-referral",
+                                        pathname: "/map-of-my-dreams",
                                         query: {
                                             surveyId: survey._id,
                                             county: user.county,
-                                            domain: "Food"
+                                            domain: survey.priority
                                         }
                                     })
                                 }}>Map this Dream</div>
