@@ -37,6 +37,14 @@ export default function MapOfMyDreams({user, query, surveys}) {
             .catch(err => console.warn(err))
     }, [])
 
+    if(currentSurvey.length === 0){
+        return (
+            <Layout title={"Map of My Dreams"} session={user}>
+                Please go to your completed Life Area Surveys page and select a dream to map.
+            </Layout>
+        )
+    }
+
     return (
         <Layout title={"Map of My Dreams"} session={user}>
             <div className={"p-3 border rounded mt-5"}>

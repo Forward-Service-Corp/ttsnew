@@ -68,27 +68,28 @@ export default function LifeAreaSurveys({user, dreams, incomingDream, lifeAreaSu
     return (
         <Layout title={"Life Area Surveys"} session={user}>
             <div className={"mb-5 border-b-2 border-b-gray-500-300"}>
+
                 <div
                     className={`cursor-pointer inline-block px-6 py-2 ${currentTab === "tab1" ? "border-b-2 border-b-orange-500" : ""}`}
                     onClick={() => {
                         setCurrentTab("tab1")
-                    }}>New Life Area Survey
+                    }}>Completed Life Area Surveys
                 </div>
                 <div
                     className={`cursor-pointer inline-block px-6 py-2 ${currentTab === "tab2" ? "border-b-2 border-b-orange-500" : ""}`}
                     onClick={() => {
                         setCurrentTab("tab2")
-                    }}>Completed Life Area Surveys
+                    }}>New Life Area Survey
                 </div>
             </div>
-            <div className={`${currentTab === "tab1" ? "visible" : "hidden"}`}>
+            <div className={`${currentTab === "tab2" ? "visible" : "hidden"}`}>
                 {incomingDream.hasDream ?
                     hasCurrentDreamJSX()
                     :
                     dreamOptionsJSX()
                 }
             </div>
-            <div className={`${currentTab === "tab2" ? "visible" : "hidden"}`}>
+            <div className={`${currentTab === "tab1" ? "visible" : "hidden"}`}>
                 <h2 className={"uppercase text-gray-500"}>Completed Life Area Surveys</h2>
                 {lifeAreaSurveys.map((survey, i) => {
                     return (
