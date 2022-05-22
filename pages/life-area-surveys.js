@@ -8,12 +8,14 @@ import {useRouter} from "next/router";
 
 export default function LifeAreaSurveys({user, dreams, incomingDream, lifeAreaSurveys}) {
     const [currentDream, setCurrentDream] = useState("")
+    const [currentDreamId, setCurrentDreamId] = useState("")
     const [currentTab, setCurrentTab] = useState("tab1")
     const router = useRouter()
 
     useEffect(() => {
         if (incomingDream.hasDream) {
             setCurrentDream(incomingDream.dream)
+            setCurrentDreamId(incomingDream.dreamId)
         }
     }, [])
 
@@ -22,7 +24,7 @@ export default function LifeAreaSurveys({user, dreams, incomingDream, lifeAreaSu
         return (
             <div>
                 <h2>{currentDream}</h2>
-                <LifeAreaSurveyForm user={user} currentDream={currentDream}/>
+                <LifeAreaSurveyForm user={user} currentDream={currentDream} currentDreamId={currentDreamId}/>
             </div>
         )
     }
@@ -33,10 +35,11 @@ export default function LifeAreaSurveys({user, dreams, incomingDream, lifeAreaSu
                 <>
                     <select onChange={(e) => {
                         setCurrentDream(e.target.value)
+                        setCurrentDreamId(e.target[e.target.selectedIndex].dataset.id)
                     }}>
                         <option>Select a dream...</option>
                         {dreams.map((dream, i) => (
-                            <option key={i} value={dream.dream}>{dream.dream}</option>
+                            <option key={i} value={dream.dream} data-id={dream._id}>{dream.dream}</option>
                         ))}
                     </select>
                     <LifeAreaSurveyForm user={user} currentDream={currentDream}/>
@@ -52,7 +55,7 @@ export default function LifeAreaSurveys({user, dreams, incomingDream, lifeAreaSu
         )
     }
 
-    async function deleteSurvey (id) {
+    async function deleteSurvey(id) {
         await fetch("/api/delete-survey", {
             method: "POST",
             headers: {
@@ -118,14 +121,16 @@ export default function LifeAreaSurveys({user, dreams, incomingDream, lifeAreaSu
                                             domain: survey.priority
                                         }
                                     })
-                                }}>Map this Dream</div>
+                                }}>Map this Dream
+                                </div>
                                 <div className={"underline text-sm text-red-600 cursor-pointer"} onClick={() => {
-                                    if(confirm("Are you sure you want to delete this survey? This action is permanent.")){
+                                    if (confirm("Are you sure you want to delete this survey? This action is permanent.")) {
                                         deleteSurvey(survey._id)
                                             .then(res => console.log(res))
                                             .catch(err => console.warn(err))
                                     }
-                                }}>Delete this survey</div>
+                                }}>Delete this survey
+                                </div>
                             </div>
                         </div>
                     )
@@ -136,12 +141,14 @@ export default function LifeAreaSurveys({user, dreams, incomingDream, lifeAreaSu
 }
 
 export async function getServerSideProps(context) {
-    console.log(context.query.dream === undefined)
-    let dream
+
+    let dream, dreamId
     if (context.query.dream !== undefined) {
         dream = context.query.dream
+        dreamId = context.query.dreamId
     } else {
         dream = ""
+        dreamId = ""
     }
 
     // session check and possible redirect
@@ -174,7 +181,8 @@ export async function getServerSideProps(context) {
             dreams: dreamsJson,
             incomingDream: {
                 hasDream: context.query.dream !== undefined,
-                dream: dream
+                dream: dream,
+                dreamId: dreamId
             },
             lifeAreaSurveys: surveysJson
         }

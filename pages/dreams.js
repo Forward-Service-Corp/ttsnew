@@ -27,6 +27,7 @@ export default function Dreams({user, dreams}) {
                 userId: user._id
             })
         })
+        router.reload()
     }
 
     async function deleteDream(id) {
@@ -91,11 +92,13 @@ export default function Dreams({user, dreams}) {
                     </div>
                     <div className={"align-middle flex-1 p-2 justify-end flex "}>
                         <div className={"self-center text-right "}>
-                            <button className={"w-auto block p-2 bg-indigo-700 rounded text-white"}
-                            onClick={() => {
-                                router.push("/life-area-surveys?dream=" + dream.dream)
-                            }}
-                            >Complete survey for this dream</button>
+                            {dream.surveyComplete ? "Survey completed" :
+                                <button className={"w-auto block p-2 bg-indigo-700 rounded text-white"}
+                                                                                            onClick={() => {
+                                                                                                router.push("/life-area-surveys?dream=" + dream.dream + "&dreamId=" + dream._id)
+                                                                                            }}
+                            >Complete survey for this dream</button>}
+
                         </div>
                     </div>
                 </div>))}

@@ -2,8 +2,24 @@ import {useState} from "react";
 import {lasList} from "../lib/lasList"
 import {useRouter} from "next/router";
 
-export default function LifeAreaSurveyForm({user, currentDream}) {
+export default function LifeAreaSurveyForm({user, currentDream, currentDreamId}) {
+
     const router = useRouter()
+
+    async function updateDreamStatus () {
+        alert(currentDreamId)
+        await fetch("/api/update-dream-status", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: currentDreamId,
+                surveyComplete: true
+            })
+        })
+    }
+
     async function saveSurvey() {
         await fetch("/api/post-life-area-survey", {
             method: "POST",
@@ -219,6 +235,9 @@ export default function LifeAreaSurveyForm({user, currentDream}) {
 
                             if (priority.length > 0) {
                                 saveSurvey()
+                                    .then(res => console.log(res))
+                                    .catch(err => console.warn(err))
+                                updateDreamStatus()
                                     .then(res => console.log(res))
                                     .catch(err => console.warn(err))
                                 router.reload()
