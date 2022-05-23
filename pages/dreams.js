@@ -77,27 +77,28 @@ export default function Dreams({user, dreams}) {
             {savedDreams.length ? <h2 className={"text-xl mt-6 mb-5 uppercase"}>My Dreams</h2> : null}
             {savedDreams.map((dream, i) => (
                 <div key={i} className={"mb-4 flex border-b-2"}>
-                    <div className={" p-2 flex-2"}>
+                    <div className={" flex-2"}>
                         <p><strong>Dream {i + 1}:</strong> {dream.dream}</p>
                         <p><strong>What I need: </strong> {dream.dreamNeed}</p>
                         <p><strong>Who I need to help me is: </strong>{dream.dreamHelp}</p>
-                        <div className={"text-red-700 text-sm cursor-pointer max-w-[150px]"} onClick={() => {
-                            if (confirm("Are you sure you want to delete this dream?")) {
-                                deleteDream(dream._id)
-                            }
+                        <button className={"text-sm text-white bg-red-600 rounded px-4 py-2 cursor-pointer my-3"}
+                                onClick={() => {
+                                    if (confirm("Are you sure you want to delete this dream?")) {
+                                        deleteDream(dream._id)
+                                    }
 
-                        }}>
+                                }}>
                             Delete this dream
-                        </div>
+                        </button>
                     </div>
                     <div className={"align-middle flex-1 p-2 justify-end flex "}>
                         <div className={"self-center text-right "}>
                             {dream.surveyComplete ? "Survey completed" :
                                 <button className={"w-auto block p-2 bg-indigo-700 rounded text-white"}
-                                                                                            onClick={() => {
-                                                                                                router.push("/life-area-surveys?dream=" + dream.dream + "&dreamId=" + dream._id)
-                                                                                            }}
-                            >Complete survey for this dream</button>}
+                                        onClick={() => {
+                                            router.push("/life-area-surveys?dream=" + dream.dream + "&dreamId=" + dream._id)
+                                        }}
+                                >Complete survey for this dream</button>}
 
                         </div>
                     </div>

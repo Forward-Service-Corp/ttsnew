@@ -5,11 +5,12 @@ import LifeAreaSurveyForm from "../components/lifeAreaSurveyForm";
 import Link from "next/link";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
+import CompletedLifeAreaSurveys from "../components/completedLifeAreaSurveys";
 
 export default function LifeAreaSurveys({user, dreams, incomingDream, lifeAreaSurveys}) {
     const [currentDream, setCurrentDream] = useState("")
     const [currentDreamId, setCurrentDreamId] = useState("")
-    const [currentTab, setCurrentTab] = useState("tab1")
+    const [currentTab, setCurrentTab] = useState(incomingDream.hasDream ? "tab2" : "tab1")
     const router = useRouter()
 
     useEffect(() => {
@@ -71,7 +72,6 @@ export default function LifeAreaSurveys({user, dreams, incomingDream, lifeAreaSu
     return (
         <Layout title={"Life Area Surveys"} session={user}>
             <div className={"mb-5 border-b-2 border-b-gray-500-300"}>
-
                 <div
                     className={`cursor-pointer inline-block px-6 py-2 ${currentTab === "tab1" ? "border-b-2 border-b-orange-500" : ""}`}
                     onClick={() => {
@@ -85,6 +85,12 @@ export default function LifeAreaSurveys({user, dreams, incomingDream, lifeAreaSu
                     }}>New Life Area Survey
                 </div>
             </div>
+
+            <div className={`${currentTab === "tab1" ? "visible" : "hidden"}`}>
+                <h2 className={"uppercase text-gray-500 mb-5"}>Completed Life Area Surveys</h2>
+                <CompletedLifeAreaSurveys user={user} dreams={dreams}/>
+            </div>
+
             <div className={`${currentTab === "tab2" ? "visible" : "hidden"}`}>
                 {incomingDream.hasDream ?
                     hasCurrentDreamJSX()
@@ -92,50 +98,7 @@ export default function LifeAreaSurveys({user, dreams, incomingDream, lifeAreaSu
                     dreamOptionsJSX()
                 }
             </div>
-            <div className={`${currentTab === "tab1" ? "visible" : "hidden"}`}>
-                <h2 className={"uppercase text-gray-500"}>Completed Life Area Surveys</h2>
-                {lifeAreaSurveys.map((survey, i) => {
-                    return (
-                        <div key={i} className={"flex justify-between p-3 rounded border my-3"}>
-                            <div className={"text-sm"}>
-                                <div className={"uppercase text-lg text-indigo-600"}>{survey.dream}</div>
-                                <div className={"my-2"}>
-                                    Priority Domains
-                                    <ul className={"list-disc pl-5"}>
-                                        {survey.priority.map((item, i) => {
-                                            return <li key={i}>{item}</li>
-                                        })}
-                                    </ul>
-                                </div>
-                                <div><span className={"text-gray-500"}>Total Score:</span> {survey.totalScore}</div>
-                                <div>Completed on: {survey.datestamp}</div>
-                            </div>
 
-                            <div>
-                                <div className={"underline text-sm text-indigo-600 cursor-pointer"} onClick={() => {
-                                    router.push({
-                                        pathname: "/map-of-my-dreams",
-                                        query: {
-                                            surveyId: survey._id,
-                                            county: user.county,
-                                            domain: survey.priority
-                                        }
-                                    })
-                                }}>Map this Dream
-                                </div>
-                                <div className={"underline text-sm text-red-600 cursor-pointer"} onClick={() => {
-                                    if (confirm("Are you sure you want to delete this survey? This action is permanent.")) {
-                                        deleteSurvey(survey._id)
-                                            .then(res => console.log(res))
-                                            .catch(err => console.warn(err))
-                                    }
-                                }}>Delete this survey
-                                </div>
-                            </div>
-                        </div>
-                    )
-                })}
-            </div>
         </Layout>
     )
 }

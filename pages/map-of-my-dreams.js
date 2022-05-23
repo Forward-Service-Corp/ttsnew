@@ -47,7 +47,7 @@ export default function MapOfMyDreams({user, query, surveys}) {
 
     return (
         <Layout title={"Map of My Dreams"} session={user}>
-            <div className={"p-3 border rounded mt-5"}>
+            <div className={"p-3"}>
                 <div className={"flex p-3"}>
                     <div className={"flex-1"}>
                         <p className={"text-sm text-gray-600"}>Dream:</p>

@@ -2,8 +2,8 @@ import {connectToDatabase} from "../../lib/dbConnect";
 import {ObjectId} from "mongodb";
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async(req, res) => {
-    const record = {
+export default async (req, res) => {
+    const survey = {
         dream: req.body.dream,
         totalScore: req.body.totalScore,
         priority: req.body.priority,
@@ -33,10 +33,19 @@ export default async(req, res) => {
     }
 
     const {db} = await connectToDatabase()
-    const user = await db
+    const LAS = await db
         .collection("lifeAreaSurveys")
-        .insertOne(record)
+        .insertOne(survey)
 
-    res.json(user)
+    const dreamUpdate = await db
+        .collection("dreams")
+        .updateOne(
+            {_id: ObjectId(req.body.id)},
+            {
+                $set: {survey}
+            }
+        )
+
+    res.json(LAS, dreamUpdate)
 
 }
