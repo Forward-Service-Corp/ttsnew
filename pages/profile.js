@@ -34,7 +34,6 @@ export default function Profile({user, dreams, surveys}) {
             </div>
 
             <div className={`${currentTab === "tab2" ? "visible" : "hidden"}`}>
-                <h2 className={"uppercase text-gray-600 font-light mb-3"}>Personal Details</h2>
                 <ProfilePersonalDetails user={user}/>
             </div>
 

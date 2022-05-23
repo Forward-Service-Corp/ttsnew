@@ -1,4 +1,5 @@
 import {Fragment} from 'react'
+import {signOut} from "next-auth/react"
 import {Disclosure, Menu, Transition} from '@headlessui/react'
 import {BellIcon, MenuIcon, XIcon} from '@heroicons/react/outline'
 import {useRouter} from "next/router";
@@ -13,7 +14,6 @@ const navigation = [
 const userNavigation = [
     {name: 'Your Profile', href: '/profile'},
     {name: 'Settings', href: '/settings'},
-    {name: 'Sign out', href: '#'},
 ]
 
 function classNames(...classes) {
@@ -105,6 +105,24 @@ export default function Layout({children, title, session}) {
                                                                         )}
                                                                     </Menu.Item>
                                                                 ))}
+                                                                <Menu.Item>
+                                                                    {({active}) => (
+                                                                        <a
+                                                                            onClick={() => {
+                                                                                signOut()
+                                                                                    .then(() => {
+                                                                                        router.reload()
+                                                                                    })
+                                                                            }}
+                                                                            className={classNames(
+                                                                                active ? 'bg-gray-100' : '',
+                                                                                'block px-4 py-2 text-sm text-gray-700'
+                                                                            )}
+                                                                        >
+                                                                            Sign Out
+                                                                        </a>
+                                                                    )}
+                                                                </Menu.Item>
                                                             </Menu.Items>
                                                         </Transition>
                                                     </Menu>
@@ -173,6 +191,17 @@ export default function Layout({children, title, session}) {
                                                     {item.name}
                                                 </Disclosure.Button>
                                             ))}
+                                            <Disclosure.Button
+                                                className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+                                                onClick={() => {
+                                                    signOut()
+                                                        .then(() => {
+                                                            router.reload()
+                                                        })
+                                                }}
+                                            >
+                                                Sign Out
+                                            </Disclosure.Button>
                                         </div>
                                     </div>
                                 </Disclosure.Panel>
@@ -188,11 +217,11 @@ export default function Layout({children, title, session}) {
 
                 <main className="-mt-32">
                     <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
-                        {/* Replace with your content */}
+
                         <div className="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
                             {children}
                         </div>
-                        {/* /End replace */}
+
                     </div>
                 </main>
             </div>

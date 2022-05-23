@@ -1,11 +1,14 @@
 import {signIn, signOut, useSession} from "next-auth/react";
+import {useRouter} from "next/router";
 
 export default function Login() {
     const { data: session } = useSession()
+    const router = useRouter()
 
     if (session) {
+        router.push("/")
         return (
-            <div className={"border h-screen w-screen bg-green-100 flex align-middle justify-center"}>
+            <div className={"h-screen w-screen bg-gray-700 flex align-middle justify-center"}>
                 <div className={"bg-white max-h-[300px] self-center p-4 text-center rounded shadow"}>
                     <div className={"self-center"}>
                         <div className={""}>Signed in as {session.user.email}</div>
@@ -16,11 +19,11 @@ export default function Login() {
         )
     }
     return (
-        <div className={"border h-screen w-screen bg-green-100 flex align-middle justify-center"}>
+        <div className={"h-screen w-screen bg-gray-700 flex align-middle justify-center"}>
             <div className={"bg-white max-h-[300px] self-center p-4 text-center rounded shadow"}>
                 <div className={"self-center"}>
                     <div className={""}>Not signed in</div>
-                    <button className={"rounded bg-gray-700 text-white p-3 mt-3"} onClick={() => signIn("google")}>Sign in with Google</button>
+                    <button className={"rounded bg-green-700 text-white p-3 mt-3"} onClick={() => signIn("google")}>Sign in with Google</button>
                 </div>
             </div>
         </div>
