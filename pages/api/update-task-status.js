@@ -5,12 +5,12 @@ import {ObjectId} from "mongodb";
 export default async(req, res) => {
     const {db} = await connectToDatabase()
     const dream = await db
-        .collection("dreams")
+        .collection("todos")
         .updateOne(
-            { _id: ObjectId(req.body.id) },
+            { _id: ObjectId(req.query.taskId) },
             {
                 $set: {
-                    surveyComplete: req.body.surveyComplete
+                    completed: req.query.setTo
                 }
             }
         )

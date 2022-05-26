@@ -23,7 +23,7 @@ export default function MapOfMyDreams({user, query, surveys, referrals}) {
     }
 
     async function getUserReferrals() {
-        const userReferrals = await fetch("/api/get-referrals?userId=" + user._id)
+        const userReferrals = await fetch("/api/get-referrals?userId=" + user._id + "&surveyId=" + query.surveyId)
             .then(res => res.json())
         await setUserReferrals(userReferrals)
     }
@@ -211,11 +211,11 @@ export async function getServerSideProps(context) {
     const surveysJson = await getSurveys.json()
 
     // referral data
-    const getUserReferralsUrl = baseUrl + "/api/get-referrals?userId=" + userJson._id
+    const getUserReferralsUrl = baseUrl + "/api/get-referrals?userId=" + userJson._id + "&surveyId=" + context.query.surveyId
     const getReferrals = await fetch(getUserReferralsUrl)
     const referralsJson = await getReferrals.json()
 
-    console.log(surveysJson)
+    console.log(context.query.surveyId)
 
     return {
         props: {

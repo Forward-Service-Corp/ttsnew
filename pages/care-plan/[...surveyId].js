@@ -1,24 +1,22 @@
-import Layout from "../components/layout";
+import Layout from "../../components/layout";
 import {getSession} from "next-auth/react";
-import {useState} from "react";
-import Link from "next/link";
+import {useRouter} from "next/router";
+import ReferralContainer from "../../components/referralContainer";
 
-export default function CarePlans({user, referrals, query, surveys}) {
-
+export default function CarePlan({user, referrals, query, surveys}) {
+    const router = useRouter()
+    const {surveyId} = router.query
     return (
-        <Layout title={"Care Plans"} session={user}>
-            <h2 className={"uppercase text-gray-500 mb-4"}>Manage Care Plans</h2>
-            {surveys.map(survey => {
+        <Layout title={"Survey id: " + surveyId} session={user}>
+            {referrals.filter(referral => referral.surveyId === surveyId.toString()).map(item => {
                 return (
-                    <div className={"p-3 rounded border mb-3 shadow"} key={survey._id}>
-                        <p>{survey.dream}</p>
-                        <Link passhref href={"/care-plan/" + survey._id}><a className={"text-indigo-600 underline text-xs"}>Manage this care plan</a></Link>
-                    </div>
+                    <ReferralContainer key={item._id} item={item} user={user}/>
                 )
             })}
         </Layout>
     )
 }
+
 
 export async function getServerSideProps(context) {
     const session = await getSession(context)
@@ -53,4 +51,3 @@ export async function getServerSideProps(context) {
     }
 
 }
-

@@ -2,21 +2,14 @@ import {connectToDatabase} from "../../lib/dbConnect";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async(req, res) => {
-    let q
-    if(req.query.surveyId === undefined){
-        q = {
+    let q = {
             userId: req.query.userId,
+            referralId: req.query.referralId
         }
-    }else{
-        q = {
-            userId: req.query.userId,
-            surveyId: req.query.surveyId
-        }
-    }
 
     const {db} = await connectToDatabase()
     const dreams = await db
-        .collection("referrals")
+        .collection("todos")
         .find(q)
         .toArray()
 
