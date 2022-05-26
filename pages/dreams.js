@@ -2,17 +2,16 @@ import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
+import SavedDreams from "../components/savedDreams";
 
 export default function Dreams({user, dreams}) {
+
     const router = useRouter()
-    const [savedDreams, setSavedDreams] = useState([])
+    const [savedDreams, setSavedDreams] = useState(dreams)
     const [dream, setDream] = useState("")
     const [dreamNeed, setDreamNeed] = useState("")
     const [dreamHelp, setDreamHelp] = useState("")
-
-    useEffect(() => {
-        setSavedDreams(dreams)
-    }, [])
+    const [isLoading, setIsLoading] = useState(false)
 
     async function saveDream() {
         await fetch("/api/post-dream", {
@@ -27,82 +26,59 @@ export default function Dreams({user, dreams}) {
                 userId: user._id
             })
         })
-        router.reload()
     }
 
-    async function deleteDream(id) {
-        await fetch("/api/delete-dream", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                id: id
-            })
-        })
-        router.reload()
+    async function getDreams() {
+        setIsLoading(true)
+        const newDreams = await fetch("/api/get-dreams?userId=" + user._id)
+            .then(res => res.json())
+        setSavedDreams(newDreams)
     }
+
+    useEffect(() => {
+
+        getDreams()
+            .then(() => {
+                setIsLoading(false)
+            })
+    }, [])
 
     return (
-        <Layout title={"Dreams"} session={user}>
-            <h2 className={"text-xl uppercase mb-5"}>Define dream</h2>
+        <Layout title={"Dreams"} session={user} loadingState={isLoading}>
 
-            <p className={"uppercase mb-2"}>Your dream</p>
+            <h2 className={"text-xl uppercase mb-5"}>Define a new dream</h2>
+
+            <p className={"uppercase mb-2 text-sm text-gray-500"}>Your dream</p>
             <input className={"w-full rounded"} type={"text"} onChange={(e) => {
                 setDream(e.target.value)
             }} value={dream}/>
 
-            <p className={"uppercase mb-2 mt-5"}>What do you need to do to achieve this dream?</p>
+            <p className={"uppercase mb-2 mt-5 text-sm text-gray-500"}>What do you need to do to achieve this dream?</p>
             <input className={"w-full rounded"} type={"text"} onChange={(e) => {
                 setDreamNeed(e.target.value)
             }} value={dreamNeed}/>
 
-            <p className={"uppercase mb-2 mt-5"}>Whose help do you need to achieve this dream?</p>
+            <p className={"uppercase mb-2 mt-5 text-sm text-gray-500"}>Whose help do you need to achieve this dream?</p>
             <input className={"w-full rounded"} type={"text"} onChange={(e) => {
                 setDreamHelp(e.target.value)
             }} value={dreamHelp}/>
 
-            <button className={"p-2 mt-4 bg-indigo-600 text-white rounded"} onClick={() => {
+            <button className={"p-2 mt-4 bg-indigo-700 text-white rounded text-xs"} onClick={() => {
+                setIsLoading(true)
                 saveDream()
-                    .then(res => console.log(res))
+                    .then(() => {
+                        getDreams().then(res => console.log(res)).catch(err => console.warn(err))
+                    })
+                    .then(() => {
+                        setIsLoading(false)
+                    })
                     .catch(err => console.warn(err))
-
-                setSavedDreams(prevState => [...prevState, {dream, dreamNeed, dreamHelp}])
                 setDream("")
                 setDreamNeed("")
                 setDreamHelp("")
             }}>Save dream
             </button>
-
-            {savedDreams.length ? <h2 className={"text-xl mt-6 mb-5 uppercase"}>My Dreams</h2> : null}
-            {savedDreams.map((dream, i) => (
-                <div key={i} className={"mb-4 flex border-b-2"}>
-                    <div className={" flex-2"}>
-                        <p><strong>Dream {i + 1}:</strong> {dream.dream}</p>
-                        <p><strong>What I need: </strong> {dream.dreamNeed}</p>
-                        <p><strong>Who I need to help me is: </strong>{dream.dreamHelp}</p>
-                        <button className={"text-sm text-white bg-red-600 rounded px-4 py-2 cursor-pointer my-3"}
-                                onClick={() => {
-                                    if (confirm("Are you sure you want to delete this dream?")) {
-                                        deleteDream(dream._id)
-                                    }
-
-                                }}>
-                            Delete this dream
-                        </button>
-                    </div>
-                    <div className={"align-middle flex-1 p-2 justify-end flex "}>
-                        <div className={"self-center text-right "}>
-                            {dream.surveyComplete ? "Survey completed" :
-                                <button className={"w-auto block p-2 bg-indigo-700 rounded text-white"}
-                                        onClick={() => {
-                                            router.push("/life-area-surveys?dream=" + dream.dream + "&dreamId=" + dream._id)
-                                        }}
-                                >Complete survey for this dream</button>}
-
-                        </div>
-                    </div>
-                </div>))}
+            <SavedDreams savedDreams={savedDreams} setLoadingState={setIsLoading} saveDreams={setSavedDreams} user={user}/>
         </Layout>
     )
 }
@@ -115,24 +91,14 @@ export async function getServerSideProps(context) {
     const protocol = req.headers['x-forwarded-proto'] || 'http'
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
-    // set up variables
+    // user data
     const url = baseUrl + "/api/get-user?email=" + session.user.email
-
-    // fetch user data
     const getUser = await fetch(url)
-
-    // cast user data to json
     const userJson = await getUser.json()
-
-    //dreams url
-    const getUserDreamsUrl = baseUrl + "/api/get-user-dreams?userId=" + userJson._id
-    const getDreams = await fetch(getUserDreamsUrl)
-    const dreamsJson = await getDreams.json()
 
     return {
         props: {
             user: userJson,
-            dreams: dreamsJson
         }
     }
 }

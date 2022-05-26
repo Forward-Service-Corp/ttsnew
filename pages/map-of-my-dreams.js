@@ -2,13 +2,59 @@ import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
 import {useEffect, useState} from "react";
 import {labelMap} from "../lib/serviceLabelsMap";
+import {useRouter} from "next/router";
+import CurrentReferral from "../components/currentReferral";
 
-export default function MapOfMyDreams({user, query, surveys}) {
-
+export default function MapOfMyDreams({user, query, surveys, referrals}) {
+    const router = useRouter()
     const [data, setData] = useState({})
     const [domains, setDomains] = useState([])
     const [currentSurvey, setCurrentSurvey] = useState(surveys.filter(survey => survey._id === query.surveyId))
     const [selectedReferrals, setSelectedReferrals] = useState([])
+    const [storedReferrals, setStoredReferrals] = useState({})
+    const [currentReferral, setCurrentReferral] = useState({})
+    const [userReferrals, setUserReferrals] = useState(referrals)
+
+    function removeReferral(domain, name) {
+        setStoredReferrals(prevState => ({
+            ...prevState,
+            [domain]: prevState[domain].filter(item => item.name !== name)
+        }))
+    }
+
+    async function getUserReferrals() {
+        const userReferrals = await fetch("/api/get-referrals?userId=" + user._id)
+            .then(res => res.json())
+        await setUserReferrals(userReferrals)
+    }
+
+    async function deleteReferral(id) {
+        await fetch("/api/delete-referral?referralId=" + id)
+    }
+
+    async function saveReferral() {
+        const data = await fetch("/api/save-referral", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                dreamId: query.dreamId,
+                surveyId: query.surveyId,
+                userId: user._id,
+                dream: query.dream,
+                domain: currentReferral.domain,
+                name: currentReferral.name,
+                email: currentReferral.email,
+                phone: currentReferral.phone,
+                hours: currentReferral.hours,
+                requirements: currentReferral.requirements,
+                url: currentReferral.url,
+                contact: currentReferral.contact,
+                needs: currentReferral.needs
+            })
+        }).then(res => res.json())
+    }
 
     async function getReferrals() {
         const data = await fetch("/api/get-referral-alt", {
@@ -37,7 +83,7 @@ export default function MapOfMyDreams({user, query, surveys}) {
             .catch(err => console.warn(err))
     }, [])
 
-    if(currentSurvey.length === 0){
+    if (currentSurvey.length === 0) {
         return (
             <Layout title={"Map of My Dreams"} session={user}>
                 Please go to your completed Life Area Surveys page and select a dream to map.
@@ -48,7 +94,7 @@ export default function MapOfMyDreams({user, query, surveys}) {
     return (
         <Layout title={"Map of My Dreams"} session={user}>
             <div className={"p-3"}>
-                <div className={"flex p-3"}>
+                <div className={"flex p-3 w-full"}>
                     <div className={"flex-1"}>
                         <p className={"text-sm text-gray-600"}>Dream:</p>
                         <p className={"uppercase"}>{currentSurvey[0].dream}</p>
@@ -63,60 +109,79 @@ export default function MapOfMyDreams({user, query, surveys}) {
 
                 <div className={"p-3 text-sm text-indigo-600"}>Please select a referral for each priority area.</div>
 
-                <div>
-                    {domains.map((domain, i) => {
-                        return (
-                            <div key={i} className={"mx-1 my-4 border rounded p-3"}>
-                                <div className={"text-sm mb-2"}><span
-                                    className={"text-gray-500"}>Priority area:</span> {labelMap[domain]}</div>
+                <div className={"flex"}>
+                    <div className={"flex-1"}>
+                        {domains.map((domain, i) => {
+                            return (
+                                <div key={i} className={"mx-1 my-4 border rounded p-3"}>
+                                    <div className={"text-sm mb-2"}><span
+                                        className={"text-gray-500"}>Priority area:</span> {labelMap[domain]}</div>
 
-                                <div className={"flex"}>
-
-                                    <div className={"w-1/2"}>
-                                        <select className={"w-full"} onChange={(e) => {
-                                            setSelectedReferrals(prevState => prevState.filter(item => item.domain !== domain))
-
-                                            setSelectedReferrals(prevState => [...prevState, {
-                                                domain: domain,
-                                                referralId: e.target.value,
-                                                name: e.target[e.target.selectedIndex].dataset.name,
-                                                email: e.target[e.target.selectedIndex].dataset.email,
-                                                phone: e.target[e.target.selectedIndex].dataset.phone,
-                                                hours: e.target[e.target.selectedIndex].dataset.hours
-                                            }])
-                                        }}>
-                                            <option value={""}></option>
-                                            {data.referrals && data.referrals.filter(item => item.service === domain).map((referral, i) => {
-                                                return (
-                                                    <option key={i} value={referral._id}
-                                                            data-name={referral.name}
-                                                            data-hours={referral.hours}
-                                                            data-phone={referral.contactPhone}
-                                                            data-email={referral.contactEmail}>
-                                                        {referral.name}
-                                                    </option>
-                                                )
-                                            })}
-                                        </select>
-                                    </div>
-
-                                    <div
-                                        className={"w-1/2 ml-10"}>{selectedReferrals && selectedReferrals.filter(item => item.domain === domain).map((referral, i) => {
-                                        return (
-                                            <div key={i}>
-                                                {referral.phone !== undefined ? <div className={"text-xs"}><p className={"font-bold"}>Phone:</p><p>{referral.phone}</p></div> : null}
-                                                {referral.email !== undefined ? <div className={"text-xs mt-3"}><p className={"font-bold"}>Email:</p><p>{referral.email}</p></div> : null}
-                                                {referral.hours !== undefined ? <div className={"text-xs mt-3"}><p className={"font-bold"}>Hours:</p><p>{referral.hours}</p></div> : null}
+                                    <div className={"flex"}>
+                                        <div className={"w-full"}>
+                                            <select className={"w-full"} onChange={(e) => {
+                                                setCurrentReferral({
+                                                    domain: domain,
+                                                    name: e.target[e.target.selectedIndex].dataset.name,
+                                                    email: e.target[e.target.selectedIndex].dataset.email,
+                                                    phone: e.target[e.target.selectedIndex].dataset.phone,
+                                                    hours: e.target[e.target.selectedIndex].dataset.hours,
+                                                    requirements: e.target[e.target.selectedIndex].dataset.requirements,
+                                                    url: e.target[e.target.selectedIndex].dataset.url,
+                                                    contact: e.target[e.target.selectedIndex].dataset.contact,
+                                                    needs: e.target[e.target.selectedIndex].dataset.needs
+                                                })
+                                            }}>
+                                                <option value={""}></option>
+                                                {data.referrals && data.referrals.filter(item => item.service === domain).map((referral, i) => {
+                                                    return (
+                                                        <option key={i} value={referral._id}
+                                                                data-name={referral.name}
+                                                                data-hours={referral.hours}
+                                                                data-phone={referral.contactPhone}
+                                                                data-email={referral.contactEmail}
+                                                                data-requirements={referral.requirements}
+                                                                data-url={referral.url}
+                                                                data-contact={referral.contactName}
+                                                                data-needs={referral.needs}
+                                                        >
+                                                            {referral.name}
+                                                        </option>
+                                                    )
+                                                })}
+                                            </select>
+                                            <button
+                                                className={"bg-indigo-600 text-white px-4 py-2 text-xs rounded mt-3 mb-4"}
+                                                onClick={() => {
+                                                    saveReferral(domain)
+                                                        .then(() => {
+                                                            getUserReferrals()
+                                                            setCurrentReferral({})
+                                                        })
+                                                }}>+ Save this referral
+                                            </button>
+                                            <div>
+                                                {userReferrals && userReferrals.filter(item => item.domain === domain).map((referral, i) => {
+                                                    return (
+                                                        <div key={i}><span className={"text-sm"}>{referral.name}</span> - <span
+                                                            className={"text-xs underline text-red-600"}
+                                                            onClick={() => {
+                                                                deleteReferral(referral._id)
+                                                                    .then(() => getUserReferrals())
+                                                            }}>delete</span>
+                                                        </div>
+                                                    )
+                                                })}
                                             </div>
-                                        )
-                                    })}
+                                        </div>
                                     </div>
-
                                 </div>
-                            </div>
-                        )
-                    })}
+                            )
+                        })}
+                    </div>
+                    <CurrentReferral currentReferral={currentReferral}/>
                 </div>
+
             </div>
         </Layout>
     )
@@ -130,28 +195,34 @@ export async function getServerSideProps(context) {
     const protocol = req.headers['x-forwarded-proto'] || 'http'
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
-    console.log(context)
-
     // user data
     const url = baseUrl + "/api/get-user?email=" + session.user.email
     const getUser = await fetch(url)
     const userJson = await getUser.json()
 
     //dreams url
-    const getUserDreamsUrl = baseUrl + "/api/get-user-dreams?userId=" + userJson._id
+    const getUserDreamsUrl = baseUrl + "/api/get-dreams?userId=" + userJson._id
     const getDreams = await fetch(getUserDreamsUrl)
     const dreamsJson = await getDreams.json()
 
-    //surveys url
-    const getUserSurveysUrl = baseUrl + "/api/get-user-surveys?userId=" + userJson._id
+    // survey data
+    const getUserSurveysUrl = baseUrl + "/api/get-surveys?userId=" + userJson._id
     const getSurveys = await fetch(getUserSurveysUrl)
     const surveysJson = await getSurveys.json()
+
+    // referral data
+    const getUserReferralsUrl = baseUrl + "/api/get-referrals?userId=" + userJson._id
+    const getReferrals = await fetch(getUserReferralsUrl)
+    const referralsJson = await getReferrals.json()
+
+    console.log(surveysJson)
 
     return {
         props: {
             user: userJson,
             dreams: dreamsJson,
             surveys: surveysJson,
+            referrals: referralsJson,
             query: context.query
         }
     }

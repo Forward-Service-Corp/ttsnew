@@ -7,7 +7,6 @@ export default function LifeAreaSurveyForm({user, currentDream, currentDreamId})
     const router = useRouter()
 
     async function updateDreamStatus () {
-        alert(currentDreamId)
         await fetch("/api/update-dream-status", {
             method: "POST",
             headers: {
@@ -98,7 +97,7 @@ export default function LifeAreaSurveyForm({user, currentDream, currentDreamId})
     return (
         <div className={""}>
             <div>
-                <div className={"uppercase text-gray-500 mb-4"}>Priority Areas</div>
+                <div className={"uppercase text-gray-500 mb-4 mt-6"}>Priority Areas</div>
                 <div>
                     {priority.map((priority, i) => {
                         return <div
@@ -241,7 +240,7 @@ export default function LifeAreaSurveyForm({user, currentDream, currentDreamId})
                                 updateDreamStatus()
                                     .then(res => console.log(res))
                                     .catch(err => console.warn(err))
-                                router.reload()
+                                router.push("/life-area-surveys")
 
                             } else {
                                 alert("Please choose at least 1 priority area.")
@@ -251,7 +250,7 @@ export default function LifeAreaSurveyForm({user, currentDream, currentDreamId})
                             alert("missing some data")
                         }
                     }}
-                            className={"px-8 py-3 rounded border bg-indigo-600 text-white"}>Submit
+                            className={"px-6 py-2 text-xs rounded border bg-indigo-600 text-white"}>Submit
                     </button>
 
                 </div>

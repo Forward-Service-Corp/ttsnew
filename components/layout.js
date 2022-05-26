@@ -1,4 +1,4 @@
-import {Fragment} from 'react'
+import {Fragment, useState} from 'react'
 import {signOut} from "next-auth/react"
 import {Disclosure, Menu, Transition} from '@headlessui/react'
 import {BellIcon, MenuIcon, XIcon} from '@heroicons/react/outline'
@@ -20,10 +20,12 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Layout({children, title, session}) {
+export default function Layout({children, title, session, loadingState}) {
     const router = useRouter()
     return (
         <>
+            <div className={`fixed w-full h-full bg-gray-600 bg-opacity-50 flex align-middle justify-center ${loadingState ? "visible" : "hidden"}`}>
+                <div className={"uppercase text-white self-center rounded-full p-5 bg-orange-600 shadow"}>loading...</div></div>
             <div className="min-h-full">
                 <div className="bg-gray-800 pb-32">
                     <Disclosure as="nav" className="bg-gray-800">

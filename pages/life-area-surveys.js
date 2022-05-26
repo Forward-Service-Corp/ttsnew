@@ -7,11 +7,20 @@ import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import CompletedLifeAreaSurveys from "../components/completedLifeAreaSurveys";
 
-export default function LifeAreaSurveys({user, dreams, incomingDream, lifeAreaSurveys}) {
+export default function LifeAreaSurveys({user, dreams, incomingDream, surveys}) {
     const [currentDream, setCurrentDream] = useState("")
     const [currentDreamId, setCurrentDreamId] = useState("")
     const [currentTab, setCurrentTab] = useState(incomingDream.hasDream ? "tab2" : "tab1")
+    const [surveysList, setSurveysList] = useState(surveys)
     const router = useRouter()
+
+    async function getSurveys () {
+        const fetchedSurveys = await fetch("/api/get-surveys?userId=" + user._id)
+            .then(res => res.json())
+            .catch(err => console.warn(fetchedSurveys))
+        console.log(fetchedSurveys)
+        setSurveysList(fetchedSurveys)
+    }
 
     useEffect(() => {
         if (incomingDream.hasDream) {
@@ -23,8 +32,10 @@ export default function LifeAreaSurveys({user, dreams, incomingDream, lifeAreaSu
 
     const hasCurrentDreamJSX = () => {
         return (
-            <div>
-                <h2>{currentDream}</h2>
+            <div className={""}>
+                <div className={"bg-gray-600 p-4 uppercase text-white rounded shadow font-light text-2xl text-center mb-7"}>
+                    {currentDream}
+                </div>
                 <LifeAreaSurveyForm user={user} currentDream={currentDream} currentDreamId={currentDreamId}/>
             </div>
         )
@@ -88,7 +99,7 @@ export default function LifeAreaSurveys({user, dreams, incomingDream, lifeAreaSu
 
             <div className={`${currentTab === "tab1" ? "visible" : "hidden"}`}>
                 <h2 className={"uppercase text-gray-500 mb-5"}>Completed Life Area Surveys</h2>
-                <CompletedLifeAreaSurveys user={user} dreams={dreams}/>
+                <CompletedLifeAreaSurveys user={user} surveys={surveysList} setSurveys={setSurveysList} dreamId={currentDreamId} dream={currentDream}/>
             </div>
 
             <div className={`${currentTab === "tab2" ? "visible" : "hidden"}`}>
@@ -129,12 +140,12 @@ export async function getServerSideProps(context) {
     const userJson = await getUser.json()
 
     // dreams data
-    const getUserDreamsUrl = baseUrl + "/api/get-user-dreams?userId=" + userJson._id
+    const getUserDreamsUrl = baseUrl + "/api/get-dreams?userId=" + userJson._id
     const getDreams = await fetch(getUserDreamsUrl)
     const dreamsJson = await getDreams.json()
 
     // survey data
-    const getUserSurveysUrl = baseUrl + "/api/get-user-surveys?userId=" + userJson._id
+    const getUserSurveysUrl = baseUrl + "/api/get-surveys?userId=" + userJson._id
     const getSurveys = await fetch(getUserSurveysUrl)
     const surveysJson = await getSurveys.json()
 
@@ -147,7 +158,7 @@ export async function getServerSideProps(context) {
                 dream: dream,
                 dreamId: dreamId
             },
-            lifeAreaSurveys: surveysJson
+            surveys: surveysJson
         }
     }
 

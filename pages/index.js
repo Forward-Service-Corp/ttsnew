@@ -1,19 +1,31 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link"
+import {useEffect, useState} from "react";
 
 export default function Home({user, dreams, surveys}) {
+    const [completedSurveys, setCompletedSurveys] = useState(0)
     const stats = [
         { name: 'Dreams', stat: dreams.length, link: "/dreams", label: "Add a dream" },
-        { name: 'Life Area Surveys', stat: surveys.length, link: "/life-area-surveys", label: "Complete a survey" },
-        { name: 'To-do Completion', stat: '24.57%', link: "/", label: "See all to-dos" },
+        { name: 'Life Area Surveys', stat: completedSurveys, link: "/life-area-surveys", label: "Complete a survey" },
+        { name: 'Dream Maps', stat: '1', link: "/", label: "View all" },
+        { name: 'Care Plans', stat: '0', link: "/", label: "View all" },
     ]
+
+    useEffect(() => {
+        dreams.map(dream => {
+            console.log(dream.dream, dream.surveyComplete)
+            if (dream.surveyComplete === true) {
+                setCompletedSurveys(prevState => prevState + 1)
+            }
+        })
+    },[])
+
     return (
         <Layout title={"Dashboard"} session={user}>
             <div>
                 {/*<h3 className="text-lg leading-6 font-medium text-gray-900">Last 30 days</h3>*/}
-                <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+                <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
                     {stats.map((item) => (
                         <div key={item.name} className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6 text-center">
                             <dt className="text-sm font-medium text-gray-500 truncate">{item.name}</dt>
@@ -95,20 +107,14 @@ export async function getServerSideProps(context) {
     const userJson = await getUser.json()
 
     //dreams url
-    const getUserDreamsUrl = baseUrl + "/api/get-user-dreams?userId=" + userJson._id
+    const getUserDreamsUrl = baseUrl + "/api/get-dreams?userId=" + userJson._id
     const getDreams = await fetch(getUserDreamsUrl)
     const dreamsJson = await getDreams.json()
-
-    //surveys url
-    const getUserSurveysUrl = baseUrl + "/api/get-user-surveys?userId=" + userJson._id
-    const getSurveys = await fetch(getUserSurveysUrl)
-    const surveysJson = await getSurveys.json()
 
     return {
         props: {
             user: userJson,
             dreams: dreamsJson,
-            surveys: surveysJson
         }
     }
 

@@ -3,14 +3,14 @@ import {ObjectId} from "mongodb"
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async(req, res) => {
-    const record = {
-       _id: ObjectId(req.body.id)
+    const q = {
+       _id: ObjectId(req.query.dreamId)
     }
 
     const {db} = await connectToDatabase()
     const user = await db
         .collection("dreams")
-        .remove(record)
+        .remove(q)
 
     res.json(user)
 
