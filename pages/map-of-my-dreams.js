@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {labelMap} from "../lib/serviceLabelsMap";
 import {useRouter} from "next/router";
 import CurrentReferral from "../components/currentReferral";
+import Link from "next/link";
 
 export default function MapOfMyDreams({user, query, surveys, referrals}) {
     const router = useRouter()
@@ -181,7 +182,9 @@ export default function MapOfMyDreams({user, query, surveys, referrals}) {
                     </div>
                     <CurrentReferral currentReferral={currentReferral}/>
                 </div>
-
+            <Link href={"/care-plans"} passhref>
+                <a className={"px-6 py-2 bg-indigo-600 text-xs rounded text-white"}>Go to Care Plans</a>
+            </Link>
             </div>
         </Layout>
     )

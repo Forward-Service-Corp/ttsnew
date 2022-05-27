@@ -15,6 +15,7 @@ function ReferralContainer({item, user}) {
                 referralId: item._id,
                 userId: user._id,
                 task: task,
+                surveyId: item.surveyId,
                 timestamp: new Date()
             })
         })
@@ -22,6 +23,10 @@ function ReferralContainer({item, user}) {
 
     async function setTaskStatus (taskId, setTo) {
         await fetch("/api/update-task-status?taskId=" + taskId + "&setTo=" + setTo)
+    }
+
+    async function deleteTask (taskId, setTo) {
+        await fetch("/api/delete-task?taskId=" + taskId)
     }
 
     async function getTasks () {
@@ -39,7 +44,7 @@ function ReferralContainer({item, user}) {
 
     return (
         <div className={"my-3"} key={item._id}>
-            <div className={"flex justify-between bg-gray-200 rounded"}>
+            <div className={"flex justify-between bg-gray-200 rounded shadow"}>
                 <div className={"p-3"}>
                     <h2>{item.name}</h2>
                 </div>
@@ -50,12 +55,13 @@ function ReferralContainer({item, user}) {
             <div className={`flex ${open ? "visible" : "hidden"}`}>
                 <div className={"w-1/2 p-5 inline"}>
                     <h2 className={"uppercase text-gray-500"}>Add a new task</h2>
-                    <input type={"text"} className={"w-full rounded mt-2"} onChange={(e) => {
+                    <input type={"text"} className={"w-full rounded mt-2"} value={task} onChange={(e) => {
                         setTask(e.target.value)
                     }}/>
-                    <button className={"mt-2 mb-4 text-indigo-600 underline text-sm"} onClick={() => {
+                    <button className={"mt-2 mb-4 bg-indigo-600 text-white px-6 py-2 rounded text-xs disabled:bg-gray-400"} onClick={() => {
                         saveTask().then(() => {getTasks().then()})
-                    }}>Save task</button>
+                        setTask("")
+                    }} disabled={task === ""}>Save task</button>
 
                     <div className={"uppercase text-gray-500 text-sm"}>Todos</div>
                     {allTasks && allTasks.filter(item => eval(item.completed) === false).map((task, i) => {
@@ -64,7 +70,13 @@ function ReferralContainer({item, user}) {
                                 <input type={"checkbox"} className={"mr-2 rounded"} onChange={() => {
                                     setTaskStatus(task._id, true).then(() => {getTasks().then()})
                                 }}/>
-                                <span className={"text-xs"}>{task.task}</span>
+                                <span className={"text-xs"}>{task.task} - </span> <span className={"bg-red-600 py-0.5 px-1.5 rounded-full text-white text-xs cursor-pointer"}
+                            onClick={() => {
+                                if(confirm("Do you want to delete this task? This action is permanent.")){
+                                    deleteTask(task._id)
+                                        .then(() => {getTasks().then()})
+                                }
+                            }}>X</span>
                             </div>
                         )
                     })}
@@ -81,7 +93,7 @@ function ReferralContainer({item, user}) {
                         )
                     })}
                 </div>
-                <div className={"w-1/2 text-sm p-5 inline"}>
+                <div className={"w-1/2 text-sm p-5 inline bg-gray-100 bg-opacity-50 m-3 rounded"}>
                     {item.domain !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Domain: </p>
                         <p>{item.domain}</p></div>) : null}
 

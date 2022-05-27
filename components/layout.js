@@ -8,7 +8,7 @@ const navigation = [
     {name: 'Dashboard', href: '/', current: true},
     {name: 'Dreams', href: '/dreams', current: false},
     {name: 'Life Area Surveys', href: '/life-area-surveys', current: false},
-    {name: 'Map of My Dreams', href: '/map-of-my-dreams', current: false},
+    // {name: 'Map of My Dreams', href: '/map-of-my-dreams', current: false},
     {name: 'Care Plans', href: '/care-plans', current: false},
 ]
 const userNavigation = [

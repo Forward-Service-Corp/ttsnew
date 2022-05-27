@@ -7,6 +7,7 @@ export default async (req, res) => {
         userId: req.body.userId,
         task: req.body.task,
         timestamp: req.body.timestamp,
+        surveyId: req.body.surveyId,
         completed: false
     }
 

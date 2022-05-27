@@ -3,16 +3,28 @@ import {getSession} from "next-auth/react";
 import {useState} from "react";
 import Link from "next/link";
 
-export default function CarePlans({user, referrals, query, surveys}) {
+export default function CarePlans({user, referrals, tasks, surveys}) {
 
     return (
         <Layout title={"Care Plans"} session={user}>
             <h2 className={"uppercase text-gray-500 mb-4"}>Manage Care Plans</h2>
             {surveys.map(survey => {
                 return (
-                    <div className={"p-3 rounded border mb-3 shadow"} key={survey._id}>
-                        <p>{survey.dream}</p>
-                        <Link passhref href={"/care-plan/" + survey._id}><a className={"text-indigo-600 underline text-xs"}>Manage this care plan</a></Link>
+                    <div className={"rounded border mb-3 shadow flex overflow-hidden"} key={survey._id}>
+                        <div className={"flex-1 p-3 "}>
+                            <p>{survey.dream}</p>
+                            <Link passhref href={"/care-plan/" + survey._id}>
+                                <a className={"text-indigo-600 underline text-xs"}>Manage this care plan</a>
+                            </Link>
+                        </div>
+                        <div className={"bg-indigo-500 text-white py-3 px-6 text-center text-xs"}>
+                            <p>To-do items:</p>
+                            <p className={"text-xl"}>{tasks.filter(task => task.surveyId === survey._id).length}</p>
+                        </div>
+                        <div className={"bg-indigo-600 text-white py-3 px-6 text-center text-xs"}>
+                            <p>Total referrals:</p>
+                            <p className={"text-xl"}>{referrals.filter(referral => referral.surveyId === survey._id).length}</p>
+                        </div>
                     </div>
                 )
             })}
@@ -43,11 +55,17 @@ export async function getServerSideProps(context) {
     const getReferrals = await fetch(getUserReferralsUrl)
     const referralsJson = await getReferrals.json()
 
+    // tasks data
+    const getTasksUrl = baseUrl + "/api/get-all-tasks?userId=" + userJson._id
+    const getTasks = await fetch(getTasksUrl)
+    const tasksJson = await getTasks.json()
+
     return {
         props: {
             user: userJson,
             referrals: referralsJson,
             surveys: surveysJson,
+            tasks: tasksJson,
             query: context.query
         }
     }
