@@ -12,6 +12,7 @@ function ProfilePersonalDetails({user}) {
     const [county, setCounty] = useState(user.county ? user.county : [])
 
     const [email, setEmail] = useState(user.email)
+    const [phone, setPhone] = useState(user.phone)
 
     const [dataChanged, setDataChanged] = useState(false)
 
@@ -22,7 +23,7 @@ function ProfilePersonalDetails({user}) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                street, city, state, zip, county,
+                street, city, state, zip, county, phone,
                 userId: user._id
             })
         })
@@ -58,6 +59,7 @@ function ProfilePersonalDetails({user}) {
                     {inputJSX("State", state, setState)}
                     {inputJSX("Zip", zip, setZip)}
                     {inputJSX("Email", email, setEmail, true)}
+                    {inputJSX("Phone", phone, setPhone)}
                 </div>
 
                 <div className={"w-1/3 px-5"}>

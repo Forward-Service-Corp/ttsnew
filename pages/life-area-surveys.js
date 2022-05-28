@@ -6,6 +6,7 @@ import Link from "next/link";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import CompletedLifeAreaSurveys from "../components/completedLifeAreaSurveys";
+import Head from "next/head";
 
 export default function LifeAreaSurveys({user, dreams, incomingDream, surveys}) {
     const [currentDream, setCurrentDream] = useState("")
@@ -81,6 +82,9 @@ export default function LifeAreaSurveys({user, dreams, incomingDream, surveys}) 
 
     return (
         <Layout title={"Life Area Surveys"} session={user}>
+            <Head>
+                <title>TTS / Life Area Surveys</title>
+            </Head>
             <div className={"mb-5 border-b-2 border-b-gray-500-300"}>
                 <div
                     className={`cursor-pointer inline-block px-6 py-2 ${currentTab === "tab1" ? "border-b-2 border-b-orange-500" : ""}`}

@@ -2,11 +2,15 @@ import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
 import {useState} from "react";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function CarePlans({user, referrals, tasks, surveys}) {
 
     return (
         <Layout title={"Care Plans"} session={user}>
+            <Head>
+                <title>TTS / Care Plans</title>
+            </Head>
             <h2 className={"uppercase text-gray-500 mb-4"}>Manage Care Plans</h2>
             {surveys.map(survey => {
                 return (

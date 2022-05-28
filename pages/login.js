@@ -1,5 +1,6 @@
 import {signIn, signOut, useSession} from "next-auth/react";
 import {useRouter} from "next/router";
+import Head from "next/head";
 
 export default function Login() {
     const { data: session } = useSession()
@@ -20,6 +21,9 @@ export default function Login() {
     }
     return (
         <div className={"h-screen w-screen bg-gray-700 flex align-middle justify-center"}>
+            <Head>
+                <title>TTS / Login</title>
+            </Head>
             <div className={"bg-white max-h-[300px] self-center p-4 text-center rounded shadow"}>
                 <div className={"self-center"}>
                     <div className={""}>Not signed in</div>

@@ -62,12 +62,12 @@ export async function getServerSideProps(context) {
     const userJson = await getUser.json()
 
     //dreams url
-    const getUserDreamsUrl = baseUrl + "/api/get-user-dreams?userId=" + userJson._id
+    const getUserDreamsUrl = baseUrl + "/api/get-dreams?userId=" + userJson._id
     const getDreams = await fetch(getUserDreamsUrl)
     const dreamsJson = await getDreams.json()
 
     //surveys url
-    const getUserSurveysUrl = baseUrl + "/api/get-user-surveys?userId=" + userJson._id
+    const getUserSurveysUrl = baseUrl + "/api/get-surveys?userId=" + userJson._id
     const getSurveys = await fetch(getUserSurveysUrl)
     const surveysJson = await getSurveys.json()
 

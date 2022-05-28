@@ -5,6 +5,7 @@ import {labelMap} from "../lib/serviceLabelsMap";
 import {useRouter} from "next/router";
 import CurrentReferral from "../components/currentReferral";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function MapOfMyDreams({user, query, surveys, referrals}) {
     const router = useRouter()
@@ -78,6 +79,9 @@ export default function MapOfMyDreams({user, query, surveys, referrals}) {
     if (currentSurvey.length === 0) {
         return (
             <Layout title={"Map of My Dreams"} session={user}>
+                <Head>
+                    <title>TTS / Map of My Dreams</title>
+                </Head>
                 Please go to your completed Life Area Surveys page and select a dream to map.
             </Layout>
         )
@@ -85,6 +89,9 @@ export default function MapOfMyDreams({user, query, surveys, referrals}) {
 
     return (
         <Layout title={"Map of My Dreams"} session={user}>
+            <Head>
+                <title>TTS / Map of My Dreams</title>
+            </Head>
             <div className={"p-3"}>
                 <div className={"flex p-3 w-full"}>
                     <div className={"flex-1"}>

@@ -1,10 +1,13 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
+import Head from "next/head";
 
 export default function Dreams({custom}) {
     return (
         <Layout title={"Settings"} session={custom}>
-            Content
+            <Head>
+                <title>TTS / Settings</title>
+            </Head>
         </Layout>
     )
 }

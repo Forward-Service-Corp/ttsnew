@@ -3,6 +3,7 @@ import {getSession} from "next-auth/react";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import SavedDreams from "../components/savedDreams";
+import Head from "next/head";
 
 export default function Dreams({user, dreams}) {
 
@@ -36,7 +37,6 @@ export default function Dreams({user, dreams}) {
     }
 
     useEffect(() => {
-
         getDreams()
             .then(() => {
                 setIsLoading(false)
@@ -45,7 +45,9 @@ export default function Dreams({user, dreams}) {
 
     return (
         <Layout title={"Dreams"} session={user} loadingState={isLoading}>
-
+            <Head>
+                <title>TTS / Dreams</title>
+            </Head>
             <h2 className={"text-xl uppercase mb-5"}>Define a new dream</h2>
 
             <p className={"uppercase mb-2 text-sm text-gray-500"}>Your dream</p>
