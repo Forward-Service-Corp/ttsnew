@@ -61,8 +61,8 @@ function CompletedLifeAreaSurveys({surveys, setSurveys, user, dream, dreamId}) {
                                                 router.push({
                                                     pathname: "/map-of-my-dreams",
                                                     query: {
-                                                        dreamId: dreamId,
-                                                        dream: dream,
+                                                        dreamId: survey.dreamId,
+                                                        dream: survey.dream,
                                                         surveyId: survey._id,
                                                         county: user.county,
                                                         domain: survey.priority

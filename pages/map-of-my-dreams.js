@@ -11,17 +11,8 @@ export default function MapOfMyDreams({user, query, surveys, referrals}) {
     const [data, setData] = useState({})
     const [domains, setDomains] = useState([])
     const [currentSurvey, setCurrentSurvey] = useState(surveys.filter(survey => survey._id === query.surveyId))
-    const [selectedReferrals, setSelectedReferrals] = useState([])
-    const [storedReferrals, setStoredReferrals] = useState({})
     const [currentReferral, setCurrentReferral] = useState({})
     const [userReferrals, setUserReferrals] = useState(referrals)
-
-    function removeReferral(domain, name) {
-        setStoredReferrals(prevState => ({
-            ...prevState,
-            [domain]: prevState[domain].filter(item => item.name !== name)
-        }))
-    }
 
     async function getUserReferrals() {
         const userReferrals = await fetch("/api/get-referrals?userId=" + user._id + "&surveyId=" + query.surveyId)
@@ -151,13 +142,14 @@ export default function MapOfMyDreams({user, query, surveys, referrals}) {
                                                     )
                                                 })}
                                             </select>
-                                            <button
-                                                className={"bg-indigo-600 text-white px-4 py-2 text-xs rounded mt-3 mb-4"}
+                                            <button disabled={Object.keys(currentReferral).length === 0}
+                                                className={"bg-indigo-600 text-white px-4 py-2 text-xs rounded mt-3 mb-4 disabled:bg-gray-500"}
                                                 onClick={() => {
                                                     saveReferral(domain)
                                                         .then(() => {
-                                                            getUserReferrals()
-                                                            setCurrentReferral({})
+                                                            getUserReferrals().then(() => {
+                                                                setCurrentReferral({})
+                                                            })
                                                         })
                                                 }}>+ Save this referral
                                             </button>
@@ -165,7 +157,7 @@ export default function MapOfMyDreams({user, query, surveys, referrals}) {
                                                 {userReferrals && userReferrals.filter(item => item.domain === domain).map((referral, i) => {
                                                     return (
                                                         <div key={i}><span className={"text-sm"}>{referral.name}</span> - <span
-                                                            className={"text-xs underline text-red-600"}
+                                                            className={"text-xs underline text-red-600 cursor-pointer"}
                                                             onClick={() => {
                                                                 deleteReferral(referral._id)
                                                                     .then(() => getUserReferrals())

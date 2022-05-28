@@ -26,7 +26,7 @@ export default function LifeAreaSurveyForm({user, currentDream, currentDreamId})
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                id: currentDreamId,
+                dreamId: currentDreamId,
                 dream: currentDream,
                 totalScore: food[0] + money[0] + substances[0] + mentalHealth[0] + safety[0] +
                     healthInsurance[0] + transportation[0] + disabilities[0] + lifeSkills[0] + work[0] + legal[0] +

@@ -18,7 +18,6 @@ export default function LifeAreaSurveys({user, dreams, incomingDream, surveys}) 
         const fetchedSurveys = await fetch("/api/get-surveys?userId=" + user._id)
             .then(res => res.json())
             .catch(err => console.warn(fetchedSurveys))
-        console.log(fetchedSurveys)
         setSurveysList(fetchedSurveys)
     }
 
