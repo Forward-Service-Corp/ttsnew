@@ -1,11 +1,10 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
-import {useState} from "react";
 import Link from "next/link";
 import Head from "next/head";
 
-export default function CarePlans({user, referrals, tasks, surveys}) {
-
+export default function CarePlans({pageDataJson}) {
+    const {user, referrals, tasks, surveys} = pageDataJson
     return (
         <Layout title={"Care Plans"} session={user}>
             <Head>
@@ -44,34 +43,13 @@ export async function getServerSideProps(context) {
     const protocol = req.headers['x-forwarded-proto'] || 'http'
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
-    // user data
-    const url = baseUrl + "/api/get-user?email=" + session.user.email
-    const getUser = await fetch(url)
-    const userJson = await getUser.json()
-
-    // survey data
-    const getUserSurveysUrl = baseUrl + "/api/get-surveys?userId=" + userJson._id
-    const getSurveys = await fetch(getUserSurveysUrl)
-    const surveysJson = await getSurveys.json()
-
-    // referral data
-    const getUserReferralsUrl = baseUrl + "/api/get-referrals?userId=" + userJson._id
-    const getReferrals = await fetch(getUserReferralsUrl)
-    const referralsJson = await getReferrals.json()
-
-    // tasks data
-    const getTasksUrl = baseUrl + "/api/get-all-tasks?userId=" + userJson._id
-    const getTasks = await fetch(getTasksUrl)
-    const tasksJson = await getTasks.json()
+    // page data
+    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    const getPageData = await fetch(pageDataUrl)
+    const pageDataJson = await getPageData.json()
 
     return {
-        props: {
-            user: userJson,
-            referrals: referralsJson,
-            surveys: surveysJson,
-            tasks: tasksJson,
-            query: context.query
-        }
+        props: {pageDataJson}
     }
 
 }

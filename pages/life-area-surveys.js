@@ -8,19 +8,13 @@ import {useRouter} from "next/router";
 import CompletedLifeAreaSurveys from "../components/completedLifeAreaSurveys";
 import Head from "next/head";
 
-export default function LifeAreaSurveys({user, dreams, incomingDream, surveys}) {
+export default function LifeAreaSurveys({pageDataJson, incomingDream}) {
+
+    const {user, dreams, surveys} = pageDataJson
     const [currentDream, setCurrentDream] = useState("")
     const [currentDreamId, setCurrentDreamId] = useState("")
     const [currentTab, setCurrentTab] = useState(incomingDream.hasDream ? "tab2" : "tab1")
     const [surveysList, setSurveysList] = useState(surveys)
-    const router = useRouter()
-
-    async function getSurveys () {
-        const fetchedSurveys = await fetch("/api/get-surveys?userId=" + user._id)
-            .then(res => res.json())
-            .catch(err => console.warn(fetchedSurveys))
-        setSurveysList(fetchedSurveys)
-    }
 
     useEffect(() => {
         if (incomingDream.hasDream) {
@@ -65,19 +59,6 @@ export default function LifeAreaSurveys({user, dreams, incomingDream, surveys}) 
                 </p>
 
         )
-    }
-
-    async function deleteSurvey(id) {
-        await fetch("/api/delete-survey", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                id: id
-            })
-        })
-        router.reload()
     }
 
     return (
@@ -137,31 +118,19 @@ export async function getServerSideProps(context) {
     const protocol = req.headers['x-forwarded-proto'] || 'http'
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
-    // user data
-    const url = baseUrl + "/api/get-user?email=" + session.user.email
-    const getUser = await fetch(url)
-    const userJson = await getUser.json()
-
-    // dreams data
-    const getUserDreamsUrl = baseUrl + "/api/get-dreams?userId=" + userJson._id
-    const getDreams = await fetch(getUserDreamsUrl)
-    const dreamsJson = await getDreams.json()
-
-    // survey data
-    const getUserSurveysUrl = baseUrl + "/api/get-surveys?userId=" + userJson._id
-    const getSurveys = await fetch(getUserSurveysUrl)
-    const surveysJson = await getSurveys.json()
+    // page data
+    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    const getPageData = await fetch(pageDataUrl)
+    const pageDataJson = await getPageData.json()
 
     return {
         props: {
-            user: userJson,
-            dreams: dreamsJson,
+            pageDataJson,
             incomingDream: {
                 hasDream: context.query.dream !== undefined,
                 dream: dream,
                 dreamId: dreamId
-            },
-            surveys: surveysJson
+            }
         }
     }
 

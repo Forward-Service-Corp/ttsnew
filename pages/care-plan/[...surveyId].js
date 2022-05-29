@@ -3,11 +3,14 @@ import {getSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import ReferralContainer from "../../components/referralContainer";
 
-export default function CarePlan({user, referrals, query, surveys}) {
+export default function CarePlan({pageDataJson}) {
+
     const router = useRouter()
+    const {user, referrals} = pageDataJson
     const {surveyId} = router.query
+
     return (
-        <Layout title={"Survey id: " + surveyId} session={user}>
+        <Layout title={"Create Care Plan"} session={user}>
             {referrals.filter(referral => referral.surveyId === surveyId.toString()).map(item => {
                 return (
                     <ReferralContainer key={item._id} item={item} user={user}/>
@@ -17,7 +20,6 @@ export default function CarePlan({user, referrals, query, surveys}) {
     )
 }
 
-
 export async function getServerSideProps(context) {
     const session = await getSession(context)
     if (!session) return {redirect: {destination: "/login", permanent: false}}
@@ -26,28 +28,13 @@ export async function getServerSideProps(context) {
     const protocol = req.headers['x-forwarded-proto'] || 'http'
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
-    // user data
-    const url = baseUrl + "/api/get-user?email=" + session.user.email
-    const getUser = await fetch(url)
-    const userJson = await getUser.json()
-
-    // survey data
-    const getUserSurveysUrl = baseUrl + "/api/get-surveys?userId=" + userJson._id
-    const getSurveys = await fetch(getUserSurveysUrl)
-    const surveysJson = await getSurveys.json()
-
-    // referral data
-    const getUserReferralsUrl = baseUrl + "/api/get-referrals?userId=" + userJson._id
-    const getReferrals = await fetch(getUserReferralsUrl)
-    const referralsJson = await getReferrals.json()
+    // page data
+    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    const getPageData = await fetch(pageDataUrl)
+    const pageDataJson = await getPageData.json()
 
     return {
-        props: {
-            user: userJson,
-            referrals: referralsJson,
-            surveys: surveysJson,
-            query: context.query
-        }
+        props: {pageDataJson}
     }
 
 }

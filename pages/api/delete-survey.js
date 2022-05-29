@@ -7,11 +7,20 @@ export default async(req, res) => {
        _id: ObjectId(req.query.surveyId)
     }
 
-    const {db} = await connectToDatabase()
-    const user = await db
-        .collection("lifeAreaSurveys")
-        .remove(record)
+    const referralsToDelete = {
+        surveyId: req.query.surveyId
+    }
 
-    res.json(user)
+    const tasksToDelete = {
+        surveyId: req.query.surveyId
+    }
+
+    const {db} = await connectToDatabase()
+
+    const survey = await db.collection("lifeAreaSurveys").remove(record)
+    const referrals = await db.collection("referrals").remove(referralsToDelete)
+    const tasks = await db.collection("todos").remove(tasksToDelete)
+
+    res.json({survey, referrals, tasks})
 
 }

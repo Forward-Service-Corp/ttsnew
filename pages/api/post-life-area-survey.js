@@ -29,7 +29,7 @@ export default async (req, res) => {
         racismBigotry: req.body.racismBigotry,
         internetAccess: req.body.internetAccess,
         housing: req.body.housing,
-        userId: ObjectId(req.body.userId),
+        userId: req.body.userId,
         datestamp: new Date()
     }
 

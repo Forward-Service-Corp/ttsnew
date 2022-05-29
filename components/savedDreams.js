@@ -4,7 +4,7 @@ function SavedDreams({savedDreams, setLoadingState, saveDreams, user}) {
     const router = useRouter()
 
     async function getDreams() {
-        const newDreams = await fetch("/api/get-dreams?userId=" + user._id)
+        const newDreams = await fetch("/api/get-dreams?userId=" + user.email)
             .then(res => res.json())
         saveDreams(newDreams)
     }

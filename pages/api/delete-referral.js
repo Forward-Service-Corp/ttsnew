@@ -12,13 +12,9 @@ export default async(req, res) => {
     }
 
     const {db} = await connectToDatabase()
-    const referral = await db
-        .collection("referrals")
-        .remove(referralToDelete)
 
-    const tasks = await db
-        .collection("todos")
-        .remove(tasksToDelete)
+    const referral = await db.collection("referrals").remove(referralToDelete)
+    const tasks = await db.collection("todos").remove(tasksToDelete)
 
     res.json(referral, tasks)
 

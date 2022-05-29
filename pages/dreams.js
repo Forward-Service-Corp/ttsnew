@@ -1,13 +1,12 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
-import {useEffect, useState} from "react";
-import {useRouter} from "next/router";
+import {useState} from "react";
 import SavedDreams from "../components/savedDreams";
 import Head from "next/head";
 
-export default function Dreams({user, dreams}) {
+export default function Dreams({pageDataJson}) {
 
-    const router = useRouter()
+    const {user, dreams} = pageDataJson
     const [savedDreams, setSavedDreams] = useState(dreams)
     const [dream, setDream] = useState("")
     const [dreamNeed, setDreamNeed] = useState("")
@@ -24,24 +23,16 @@ export default function Dreams({user, dreams}) {
                 dream,
                 dreamNeed,
                 dreamHelp,
-                userId: user._id
+                userId: user.email
             })
         })
     }
 
     async function getDreams() {
-        setIsLoading(true)
-        const newDreams = await fetch("/api/get-dreams?userId=" + user._id)
+        const newDreams = await fetch("/api/get-dreams?userId=" + user.email)
             .then(res => res.json())
-        setSavedDreams(newDreams)
+        await setSavedDreams(newDreams)
     }
-
-    useEffect(() => {
-        getDreams()
-            .then(() => {
-                setIsLoading(false)
-            })
-    }, [])
 
     return (
         <Layout title={"Dreams"} session={user} loadingState={isLoading}>
@@ -80,7 +71,8 @@ export default function Dreams({user, dreams}) {
                 setDreamHelp("")
             }}>Save dream
             </button>
-            <SavedDreams savedDreams={savedDreams} setLoadingState={setIsLoading} saveDreams={setSavedDreams} user={user}/>
+            <SavedDreams savedDreams={savedDreams} setLoadingState={setIsLoading} saveDreams={setSavedDreams}
+                         user={user}/>
         </Layout>
     )
 }
@@ -90,18 +82,18 @@ export async function getServerSideProps(context) {
     if (!session) return {redirect: {destination: "/login", permanent: false}}
     const {req} = context;
 
+    // set up dynamic url
     const protocol = req.headers['x-forwarded-proto'] || 'http'
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
-    // user data
-    const url = baseUrl + "/api/get-user?email=" + session.user.email
-    const getUser = await fetch(url)
-    const userJson = await getUser.json()
+    // page data
+    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    const getPageData = await fetch(pageDataUrl)
+    const pageDataJson = await getPageData.json()
 
     return {
-        props: {
-            user: userJson,
-        }
+        props: {pageDataJson}
     }
+
 }
 

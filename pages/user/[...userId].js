@@ -3,9 +3,10 @@ import {getSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import Head from "next/head";
 
-export default function User({user, viewingUser, dreams, referrals, query, surveys}) {
-    const router = useRouter()
-    const {userId} = router.query
+export default function User({viewingUser, pageDataJson}) {
+
+    const {user, dreams} = pageDataJson
+
     return (
         <Layout title={viewingUser.name} session={user}>
             <Head>
@@ -55,55 +56,32 @@ export default function User({user, viewingUser, dreams, referrals, query, surve
             <div>
                 <h2 className={"uppercase text-gray-500"}>Surveys</h2>
             </div>
-
         </Layout>
     )
 }
-
 
 export async function getServerSideProps(context) {
     const session = await getSession(context)
     if (!session) return {redirect: {destination: "/login", permanent: false}}
     const {req} = context;
 
-    console.log(context.query)
-
     const protocol = req.headers['x-forwarded-proto'] || 'http'
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
-    // user data
-    const url = baseUrl + "/api/get-user?email=" + session.user.email
-    const getUser = await fetch(url)
-    const userJson = await getUser.json()
+    // page data
+    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    const getPageData = await fetch(pageDataUrl)
+    const pageDataJson = await getPageData.json()
 
     // viewing user data
     const userUrl = baseUrl + "/api/get-user?userId=" + context.query.userId
     const getViewingUser = await fetch(userUrl)
     const viewingUserJson = await getViewingUser.json()
 
-    // dreams data
-    const getUserDreamsUrl = baseUrl + "/api/get-dreams?userId=" + context.query.userId
-    const getDreams = await fetch(getUserDreamsUrl)
-    const dreamsJson = await getDreams.json()
-
-    // survey data
-    const getUserSurveysUrl = baseUrl + "/api/get-surveys?userId=" + context.query.userId
-    const getSurveys = await fetch(getUserSurveysUrl)
-    const surveysJson = await getSurveys.json()
-
-    // referral data
-    const getUserReferralsUrl = baseUrl + "/api/get-referrals?userId=" + context.query.userId
-    const getReferrals = await fetch(getUserReferralsUrl)
-    const referralsJson = await getReferrals.json()
-
     return {
         props: {
-            user: userJson,
+            pageDataJson,
             viewingUser: viewingUserJson,
-            dreams: dreamsJson,
-            referrals: referralsJson,
-            surveys: surveysJson,
-            query: context.query
         }
     }
 

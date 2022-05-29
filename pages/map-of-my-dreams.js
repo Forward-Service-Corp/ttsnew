@@ -7,16 +7,17 @@ import CurrentReferral from "../components/currentReferral";
 import Link from "next/link";
 import Head from "next/head";
 
-export default function MapOfMyDreams({user, query, surveys, referrals}) {
+export default function MapOfMyDreams({pageDataJson}) {
+    const {user, surveys, referrals} = pageDataJson
     const router = useRouter()
     const [data, setData] = useState({})
     const [domains, setDomains] = useState([])
-    const [currentSurvey, setCurrentSurvey] = useState(surveys.filter(survey => survey._id === query.surveyId))
+    const [currentSurvey, setCurrentSurvey] = useState(surveys.filter(survey => survey._id === router.query.surveyId))
     const [currentReferral, setCurrentReferral] = useState({})
     const [userReferrals, setUserReferrals] = useState(referrals)
 
     async function getUserReferrals() {
-        const userReferrals = await fetch("/api/get-referrals?userId=" + user._id + "&surveyId=" + query.surveyId)
+        const userReferrals = await fetch("/api/get-referrals?userId=" + user.email + "&surveyId=" + router.query.surveyId)
             .then(res => res.json())
         await setUserReferrals(userReferrals)
     }
@@ -26,16 +27,16 @@ export default function MapOfMyDreams({user, query, surveys, referrals}) {
     }
 
     async function saveReferral() {
-        const data = await fetch("/api/save-referral", {
+        await fetch("/api/save-referral", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                dreamId: query.dreamId,
-                surveyId: query.surveyId,
-                userId: user._id,
-                dream: query.dream,
+                dreamId: router.query.dreamId,
+                surveyId: router.query.surveyId,
+                userId: user.email,
+                dream: router.query.dream,
                 domain: currentReferral.domain,
                 name: currentReferral.name,
                 email: currentReferral.email,
@@ -46,7 +47,7 @@ export default function MapOfMyDreams({user, query, surveys, referrals}) {
                 contact: currentReferral.contact,
                 needs: currentReferral.needs
             })
-        }).then(res => res.json())
+        })
     }
 
     async function getReferrals() {
@@ -56,8 +57,8 @@ export default function MapOfMyDreams({user, query, surveys, referrals}) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                county: query.county,
-                domain: query.domain
+                county: router.query.county,
+                domain: router.query.domain
             })
         }).then(res => res.json())
 
@@ -197,35 +198,14 @@ export async function getServerSideProps(context) {
     const protocol = req.headers['x-forwarded-proto'] || 'http'
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
-    // user data
-    const url = baseUrl + "/api/get-user?email=" + session.user.email
-    const getUser = await fetch(url)
-    const userJson = await getUser.json()
-
-    //dreams url
-    const getUserDreamsUrl = baseUrl + "/api/get-dreams?userId=" + userJson._id
-    const getDreams = await fetch(getUserDreamsUrl)
-    const dreamsJson = await getDreams.json()
-
-    // survey data
-    const getUserSurveysUrl = baseUrl + "/api/get-surveys?userId=" + userJson._id
-    const getSurveys = await fetch(getUserSurveysUrl)
-    const surveysJson = await getSurveys.json()
-
-    // referral data
-    const getUserReferralsUrl = baseUrl + "/api/get-referrals?userId=" + userJson._id + "&surveyId=" + context.query.surveyId
-    const getReferrals = await fetch(getUserReferralsUrl)
-    const referralsJson = await getReferrals.json()
-
-    console.log(context.query.surveyId)
+    // page data
+    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    const getPageData = await fetch(pageDataUrl)
+    const pageDataJson = await getPageData.json()
 
     return {
         props: {
-            user: userJson,
-            dreams: dreamsJson,
-            surveys: surveysJson,
-            referrals: referralsJson,
-            query: context.query
+            pageDataJson,
         }
     }
 

@@ -55,7 +55,7 @@ export default function LifeAreaSurveyForm({user, currentDream, currentDreamId})
                 racismBigotry: racismBigotry,
                 internetAccess: internetAccess,
                 housing: housing,
-                userId: user._id
+                userId: user.email
             })
         })
     }
