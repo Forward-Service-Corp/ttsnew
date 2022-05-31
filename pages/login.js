@@ -27,7 +27,12 @@ export default function Login() {
             <div className={"bg-white max-h-[300px] self-center p-4 text-center rounded shadow"}>
                 <div className={"self-center"}>
                     <div className={""}>Not signed in</div>
-                    <button className={"rounded bg-green-700 text-white p-3 mt-3"} onClick={() => signIn("google")}>Sign in with Google</button>
+                    <p>
+                        <button className={"rounded bg-green-700 text-white p-3 mt-3"}
+                                onClick={() => signIn("google")}>Sign in with Google
+                        </button>
+                    </p>
+                    <button className={"rounded bg-gray-700 text-white p-3 mt-3"} onClick={() => signIn("email")}>Sign in with Email</button>
                 </div>
             </div>
         </div>
