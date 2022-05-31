@@ -1,4 +1,4 @@
-import {Fragment, useState} from 'react'
+import {Fragment} from 'react'
 import {signOut} from "next-auth/react"
 import {Disclosure, Menu, Transition} from '@headlessui/react'
 import {BellIcon, MenuIcon, XIcon} from '@heroicons/react/outline'
@@ -69,7 +69,7 @@ export default function Layout({children, title, session, loadingState}) {
                                                             )}
                                                             aria-current={router.pathname === "/users" ? 'page' : undefined}
                                                         >
-                                                            Users
+                                                            My Clients
                                                         </a>
                                                         <a
                                                             href={"/directory"}
