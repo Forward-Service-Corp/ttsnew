@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {labelMap} from "../lib/serviceLabelsMap";
 
 function ReferralContainer({item, user}) {
     const [open, setOpen] = useState(false)
@@ -13,7 +14,7 @@ function ReferralContainer({item, user}) {
             },
             body: JSON.stringify({
                 referralId: item._id,
-                userId: user._id,
+                userId: user.email,
                 task: task,
                 surveyId: item.surveyId,
                 timestamp: new Date()
@@ -30,7 +31,7 @@ function ReferralContainer({item, user}) {
     }
 
     async function getTasks () {
-        const fetchedTasks = await fetch("/api/get-tasks?userId=" + user._id + "&referralId=" + item._id)
+        const fetchedTasks = await fetch("/api/get-tasks?userId=" + user.email + "&referralId=" + item._id)
             .then(res=> res.json())
         await setAllTasks(fetchedTasks)
     }
@@ -38,7 +39,6 @@ function ReferralContainer({item, user}) {
     useEffect(() => {
         getTasks()
             .then((res) => {
-                console.log(res)
             })
     }, [])
 
@@ -95,7 +95,7 @@ function ReferralContainer({item, user}) {
                 </div>
                 <div className={"w-1/2 text-sm p-5 inline bg-gray-100 bg-opacity-50 m-3 rounded"}>
                     {item.domain !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Domain: </p>
-                        <p>{item.domain}</p></div>) : null}
+                        <p>{labelMap[item.domain]}</p></div>) : null}
 
                     {item.phone !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Phone: </p>
                         <p>{item.phone}</p></div>) : null}
