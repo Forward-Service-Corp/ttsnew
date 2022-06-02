@@ -1,0 +1,31 @@
+@media only screen and (max-width: 600px) {
+  .surveyDomainList {
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    left: -257px;
+    z-index: 99;
+    overflow: visible;
+    transition: 0.2s;
+  }
+  .surveyDomainList .listInner {
+    overflow: scroll;
+    height: 100%;
+  }
+  .surveyDomainList .openButton {
+    position: absolute;
+    top: 40px;
+    right: -50px;
+    width: 50px;
+    height: 50px;
+    background: #0070f3;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 10px 0 0 8px;
+  }
+  .surveyDomainList.open {
+    left: 0;
+  }
+}
+
+/*# sourceMappingURL=SurveyDomainList.module.css.map */
