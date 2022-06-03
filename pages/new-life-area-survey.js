@@ -9,18 +9,32 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
     const {user} = pageDataJson
     const [activeDomain, setActiveDomain] = useState("food")
     const [answered, setAnswered] = useState({})
+    const [domains, setDomains] = useState([])
 
     return (
         <Layout title={"Life Area Survey"} session={user}>
+            <div className={`bg-indigo-600 p-2 rounded text-center text-white text-xs mb-6 ${Object.keys(answered).length === 21 ? "hidden" : null}`}>
+                You&apos;ve completed {Object.keys(answered).length} of 21 life areas. Keep going!
+            </div>
+            <div className={`bg-indigo-600 p-2 rounded text-center text-white text-xs mb-6 ${domains.length > 0 ? "hidden" : null}`}>
+                Please select at least one life area as a priority by using the toggle.
+            </div>
             <div className={"flex"}>
                 <div className={"flex-3"}>
-                    <SurveyDomainList setActiveDomain={setActiveDomain} activeDomain={activeDomain} answered={answered}/>
+                    <SurveyDomainList setActiveDomain={setActiveDomain} activeDomain={activeDomain}
+                                      answered={answered} domains={domains}/>
                 </div>
                 <div className={"flex-1"}>
-                    <NewLifeAreaSurveyForm activeDomain={activeDomain} setAnswered={setAnswered} answered={answered}/>
+                    <NewLifeAreaSurveyForm activeDomain={activeDomain} setAnswered={setAnswered} answered={answered}
+                                           domains={domains} setDomains={setDomains}/>
                 </div>
             </div>
-
+            <div className={"flex justify-end"}>
+                <button disabled={domains.length === 0 || Object.keys(answered).length !== 21}
+                        className={"bg-indigo-600 text-white text-sm rounded py-2 px-4 disabled:bg-gray-400"}>Save this
+                    survey
+                </button>
+            </div>
         </Layout>
     )
 }

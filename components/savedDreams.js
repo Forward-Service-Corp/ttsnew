@@ -20,7 +20,7 @@ function SavedDreams({savedDreams, setLoadingState, saveDreams, user}) {
             <div>{savedDreams && savedDreams.length ?
                 <h2 className={"text-xl mt-14 mb-5 uppercase"}>My Dreams</h2> : null}</div>
 
-            <div className={"grid grid-cols-2 gap-4"}>
+            <div className={"grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"}>
                 {savedDreams && savedDreams.map((dream, i) => (
                 <div key={i} className={"mb-4 flex p-3 shadow rounded"}>
                     <div className={" flex-2"}>

@@ -1,4 +1,8 @@
-@media only screen and (max-width: 600px) {
+.openButton {
+  display: none;
+}
+
+@media only screen and (max-width: 640px) {
   .surveyDomainList {
     position: fixed;
     height: 100vh;
@@ -7,15 +11,18 @@
     z-index: 99;
     overflow: visible;
     transition: 0.2s;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 
     .listInner {
       overflow: scroll;
       height: 100%;
+      padding-bottom: 80px;
     }
 
     .openButton {
+      display: block;
       position: absolute;
-      top: 40px;
+      top: 140px;
       right: -50px;
       width: 50px;
       height: 50px;
