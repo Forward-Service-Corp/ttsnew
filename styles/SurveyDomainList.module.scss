@@ -7,11 +7,12 @@
     position: fixed;
     height: 100vh;
     top: 0;
-    left: -233px;
+    left: -300px;
     z-index: 99;
     overflow: visible;
     transition: 0.2s;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    width: 300px;
 
     .listInner {
       overflow: scroll;

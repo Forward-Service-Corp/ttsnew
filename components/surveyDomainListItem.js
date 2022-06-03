@@ -11,7 +11,7 @@ export default function SurveyDomainListItem({item, setActiveDomain, activeDomai
             setActiveDomain(item)
             setOpen(false)
         }}>
-            <div className={"self-center text-xs mr-3"}>{labelMap[item]}</div>
+            <div className={"self-center text-sm mr-3"}>{labelMap[item]}</div>
             <div className={"flex justify-end"}>
                 <div>
                     {domains.indexOf(item) > -1 ? <Flag size={20} color={"red"}/> : null}
