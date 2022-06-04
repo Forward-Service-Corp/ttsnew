@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {useRouter} from "next/router";
 import {WICountiesList} from "../lib/WI_Counties";
+import {XCircle} from "phosphor-react";
 
 function ProfilePersonalDetails({user}) {
     const router = useRouter()
@@ -9,7 +10,7 @@ function ProfilePersonalDetails({user}) {
     const [city, setCity] = useState(user.city ? user.city : "")
     const [state, setState] = useState(user.state ? user.state : "")
     const [zip, setZip] = useState(user.zip ? user.zip : "")
-    const [county, setCounty] = useState(user.county ? user.county : [])
+    const [counties, setCounties] = useState(user.county ? user.county : [])
 
     const [email, setEmail] = useState(user.email)
     const [phone, setPhone] = useState(user.phone)
@@ -23,7 +24,7 @@ function ProfilePersonalDetails({user}) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                street, city, state, zip, county, phone,
+                street, city, state, zip, counties, phone,
                 userId: user._id
             })
         })
@@ -50,9 +51,8 @@ function ProfilePersonalDetails({user}) {
     return (
         <div>
             <h2 className={"uppercase text-gray-500 font-light mb-3"}>Personal Details</h2>
-            <div className={"flex"}>
-
-                <div className={"w-1/3"}>
+            <div className={"flex flex-col lg:flex-row"}>
+                <div className={"lg:flex-1 lg:mr-10"}>
                     {inputJSX("Name", name, setName, true)}
                     {inputJSX("Street", street, setStreet)}
                     {inputJSX("City", city, setCity)}
@@ -62,12 +62,28 @@ function ProfilePersonalDetails({user}) {
                     {inputJSX("Phone", phone, setPhone)}
                 </div>
 
-                <div className={"w-1/3 px-5"}>
-                    <p className={"text-gray-500"}>Available counties</p>
+                <div className={"lg:flex-1"}>
+                    <p className={"text-gray-500 mb-1"}>Counties</p>
+                    <div className={"lg:flex-1 flex flex-wrap"}>
+                        {counties.map((currentCounty) => {
+                            return (
+                                <div key={currentCounty}
+                                     className={"cursor-pointer rounded border py-1 px-2 h-8 mr-2 mb-2 flex justify-between align-middle text-sm"}
+                                     onClick={() => {
+                                         setCounties(prevState => prevState.filter(item => item !== currentCounty))
+                                         setDataChanged(true)
+                                     }}>
+                                    <div className={"inline-block mr-1"}>{currentCounty}</div>
+                                    <div className={"inline-block"}><XCircle size={20} weight="thin" color={"red"}/></div>
+                                </div>
+                            )
+                        })}
+
+                    </div>
                     <p className={"text-indigo-600 text-sm mb-5"}>Click below to add a county</p>
-                    <select className={"w-1/2 min-h-[400px]"} multiple={true} onChange={(e) => {
-                        setCounty(prevState => {
-                            if (county.indexOf(e.target.value) === -1) {
+                    <select className={"w-full lg:min-h-[400px]"} multiple={true} onChange={(e) => {
+                        setCounties(prevState => {
+                            if (counties.indexOf(e.target.value) === -1) {
                                 return [...prevState, e.target.value]
                             } else {
                                 return prevState
@@ -77,24 +93,10 @@ function ProfilePersonalDetails({user}) {
                     }}>
                         {WICountiesList.map((county) => {
                             return (
-                                <option key={county}>{county}</option>
+                                <option key={county} value={county}>{county}</option>
                             )
                         })}
                     </select>
-                </div>
-
-                <div className={"w-1/3"}>
-                    <p className={"text-gray-600"}>Your selected counties</p>
-                    <p className={"text-red-600 text-sm mb-5"}>Click below to remove a county</p>
-                    {county.map((c) => {
-                        return (
-                            <div key={c} className={"cursor-pointer"} onClick={() => {
-                                setCounty(prevState => prevState.filter(item => item !== c))
-                                setDataChanged(true)
-                            }}>{c}</div>
-                        )
-                    })}
-
                 </div>
             </div>
             <button className={"rounded bg-indigo-600 text-white p-2 mt-4 disabled:bg-gray-600"} onClick={() => {

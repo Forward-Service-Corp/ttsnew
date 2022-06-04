@@ -27,8 +27,8 @@ export default function Layout({children, title, session, loadingState}) {
             <div className={`fixed w-full h-full bg-gray-600 bg-opacity-50 flex align-middle justify-center ${loadingState ? "visible" : "hidden"}`}>
                 <div className={"uppercase text-white self-center rounded-full p-5 bg-orange-600 shadow"}>loading...</div></div>
             <div className="min-h-full">
-                <div className="bg-gray-800 pb-32">
-                    <Disclosure as="nav" className="bg-gray-800">
+                <div className="bg-gradient-to-r from-gray-900 to-gray-800 pb-32">
+                    <Disclosure as="nav" className="bg-gradient-to-r from-gray-900 to-gray-800">
                         {({open}) => (
                             <>
                                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

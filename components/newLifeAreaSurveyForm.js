@@ -1,12 +1,16 @@
 import {lasList} from "../lib/lasList";
 import {labelMap} from "../lib/serviceLabelsMap";
-import {useState} from "react";
 import Toggle from "./toggle";
 
-function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, setDomains}) {
+function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, setDomains, setScore}) {
 
-    const [selectedValue, setSelectedValue] = useState("")
-
+    function getScore() {
+        let score = 0
+        for (const key in answered) {
+            score += answered[key].selection
+        }
+        return score
+    }
 
     return (
         <div className={"p-4"}>
@@ -20,20 +24,21 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
                 </div>
             </div>
 
-            <p className={"text-sm mt-7"}>Select the option that best describes your condition in each of the life areas. You
-                must select an answer
-                for each life area. If one does not apply to you, then select &quot;This does not apply to me.&quot;</p>
+            <p className={"text-sm mt-7"}>Select the option that best describes your condition in each of the life
+                areas. You must select an answer for each life area. If one does not apply to you, then
+                select &quot;This does not apply to me.&quot;</p>
             <div className={"mt-8"}>
 
-                <form onChange={(event) => {
-                    // setSelectedValue(event.target.value)
-                    setAnswered(prevState => ({
+                <form onChange={async (event) => {
+                    await setAnswered(prevState => ({
                         ...prevState,
                         [activeDomain]: {
                             ...prevState[activeDomain],
-                            selection: eval(event.target.value)
+                            selection: eval(event.target.value),
+                            statement: event.target.dataset.statement
                         }
                     }))
+                    await setScore(getScore)
                 }}>
                     <div>
                         <input checked={answered[activeDomain] && answered[activeDomain].selection === 0}

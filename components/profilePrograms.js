@@ -1,5 +1,6 @@
 import {useRouter} from "next/router";
 import {useState} from "react";
+import {XCircle} from "phosphor-react";
 
 function ProfilePrograms({user}) {
     const router = useRouter()
@@ -22,10 +23,10 @@ function ProfilePrograms({user}) {
     }
     return (
         <>
-            <div className={"flex"}>
-                <div className={"w-1/2 inline-block"}>
+            <div className={"flex flex-col"}>
+                <div className={""}>
                     <h2 className={"uppercase text-gray-600 font-light mb-3"}>Available Programs</h2>
-                    <select className={"h-[240px]"} multiple onChange={(e) => {
+                    <select className={"h-[240px] w-full"} multiple onChange={(e) => {
                         setPrograms(prevState => {
                             if (programs.indexOf(e.target.value) === -1) {
                                 return [...prevState, e.target.value]
@@ -48,16 +49,17 @@ function ProfilePrograms({user}) {
                         <option>Wisconsin Works (W-2)</option>
                     </select>
                 </div>
-                <div className={" w-1/2 inline-block"}>
+                <div className={""}>
                     <h2 className={"uppercase text-gray-600 font-light mb-3"}>Your Selected Programs</h2>
                     <div>
                         {programs.map(program => (
-                            <div className={"cursor-pointer"} key={program}
+                            <div className={"cursor-pointer rounded border py-1 px-2 min-h-8 mr-2 mb-2 flex justify-between align-middle text-sm"} key={program}
                                  onClick={() => {
                                      setPrograms(prevState => prevState.filter(item => item !== program))
                                      setProgramsUpdated(true)
                                  }}>
-                                {program}
+                                <div className={"inline-block"}>{program}</div>
+                                <div className={"inline-block"}><XCircle size={20} weight="thin" color={"red"}/></div>
                             </div>
                         ))}
                     </div>
@@ -65,7 +67,7 @@ function ProfilePrograms({user}) {
 
             </div>
             <div className={"w-full"}>
-                <button className={"p-2 bg-indigo-600 text-white rounded mt-4 disabled:bg-gray-500 cursor-pointer"} onClick={() => {
+                <button className={"p-2 bg-indigo-600 text-white rounded mt-4 disabled:bg-gray-500 cursor-pointer text-sm"} onClick={() => {
                     if(programsUpdated){
                         savePrograms()
                             .then(res => console.log(res))

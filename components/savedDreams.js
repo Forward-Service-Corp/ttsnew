@@ -37,7 +37,7 @@ function SavedDreams({savedDreams, setLoadingState, saveDreams, user}) {
                         <div className={"self-center text-right "}>
                             <button className={"w-auto block px-4 py-2 bg-indigo-500 shadow-lg shadow-indigo-500/50 rounded text-white text-xs hover:shadow-indigo-500/10"}
                                     onClick={() => {
-                                        router.push("/life-area-surveys?dream=" + dream.dream + "&dreamId=" + dream._id)
+                                        router.push("/new-life-area-survey?dreamName=" + dream.dream + "&dreamId=" + dream._id)
                                     }}
                             >Survey dream
                             </button>

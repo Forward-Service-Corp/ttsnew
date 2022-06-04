@@ -93,7 +93,8 @@ export default function MapOfMyDreams({pageDataJson}) {
             <Head>
                 <title>TTS / Map of My Dreams</title>
             </Head>
-            <div className={"p-3"}>
+            <div className={"p-3 text-sm text-white bg-indigo-600 rounded shadow"}>Please select a referral for each priority area.</div>
+            <div className={""}>
                 <div className={"flex p-3 w-full"}>
                     <div className={"flex-1"}>
                         <p className={"text-sm text-gray-600"}>Dream:</p>
@@ -107,7 +108,7 @@ export default function MapOfMyDreams({pageDataJson}) {
                     </div>
                 </div>
 
-                <div className={"p-3 text-sm text-indigo-600"}>Please select a referral for each priority area.</div>
+
 
                 <div className={"flex"}>
                     <div className={"flex-1"}>
@@ -151,20 +152,21 @@ export default function MapOfMyDreams({pageDataJson}) {
                                                 })}
                                             </select>
                                             <button disabled={Object.keys(currentReferral).length === 0}
-                                                className={"bg-indigo-600 text-white px-4 py-2 text-xs rounded mt-3 mb-4 disabled:bg-gray-500"}
-                                                onClick={() => {
-                                                    saveReferral(domain)
-                                                        .then(() => {
-                                                            getUserReferrals().then(() => {
-                                                                setCurrentReferral({})
+                                                    className={"bg-indigo-600 text-white px-4 py-2 text-xs rounded mt-3 mb-4 disabled:bg-gray-400"}
+                                                    onClick={() => {
+                                                        saveReferral(domain)
+                                                            .then(() => {
+                                                                getUserReferrals().then(() => {
+                                                                    setCurrentReferral({})
+                                                                })
                                                             })
-                                                        })
-                                                }}>+ Save this referral
+                                                    }}>+ Save this referral
                                             </button>
                                             <div>
                                                 {userReferrals && userReferrals.filter(item => item.domain === domain).map((referral, i) => {
                                                     return (
-                                                        <div key={i}><span className={"text-sm"}>{referral.name}</span> - <span
+                                                        <div key={i}><span
+                                                            className={"text-sm"}>{referral.name}</span> - <span
                                                             className={"text-xs underline text-red-600 cursor-pointer"}
                                                             onClick={() => {
                                                                 deleteReferral(referral._id)
@@ -182,9 +184,11 @@ export default function MapOfMyDreams({pageDataJson}) {
                     </div>
                     <CurrentReferral currentReferral={currentReferral}/>
                 </div>
-            <Link href={"/care-plans"} passhref>
-                <a className={"px-6 py-2 bg-indigo-600 text-xs rounded text-white"}>Go to Care Plans</a>
-            </Link>
+                <div className={"flex justify-end"}>
+                    <Link href={"/care-plans"} passhref>
+                        <a className={"px-6 py-2 bg-indigo-600 text-xs rounded text-white"}>Go to Care Plans</a>
+                    </Link>
+                </div>
             </div>
         </Layout>
     )

@@ -1,10 +1,10 @@
-function Welcome1(props) {
+function Welcome1() {
     return (
         <div className={"font-light"}>
-            <h1 className={"text-2xl text-cyan-600"}>Vision Without Backbone Is Merely Hallucination</h1>
-            <p>Wishes don&apos;t make your dreams come true. Dreams come true because we work at them. We don&apos;t
+            <h1 className={"text-2xl text-indigo-600"}>Vision Without Backbone Is Merely Hallucination</h1>
+            <p className={"font-bold"}>Wishes don&apos;t make your dreams come true. Dreams come true because we work at them. We don&apos;t
                 give up.</p>
-            <h2 className={"my-5 font-bold text-cyan-600"}>The Power of &quot;We&quot;</h2>
+            <h2 className={"my-5 font-bold text-indigo-600"}>The Power of &quot;We&quot;</h2>
             <p className={"text-sm"}>
                 Very little in life is accomplished alone. Friends, family, teachers, and now your TTS Coach all play a
                 part in your success. Your TTS Coach is trained to help you with your MAP and to support you as YOU
@@ -24,9 +24,9 @@ function Welcome1(props) {
                 going, you know what you need, you get the help you need, and help others on their journey.
             </p>
 
-            <div className={"p-5 bg-cyan-100 my-5 rounded border border-cyan-400 shadow-xl"}>
-                <p className={"font-bold"}>You lead your life</p>
-                <p className={"font-bold text-cyan-600 my-3"}>That&apos;s how dreams come true. Welcome To Transition To
+            <div className={"p-5 bg-gradient-to-r from-indigo-800 to-indigo-500 my-5 rounded flex flex-wrap justify-between align-middle  text-white"}>
+                <p className={"font-bold text-3xl "}>You lead your life</p>
+                <p className={"font-bold my-3"}>That&apos;s how dreams come true. Welcome To Transition To
                     Success&reg;. Let&apos;s make your dreams come true.</p>
                 <p className={"text-sm"}>Marcella Wilson PhD</p>
                 <p className={"text-sm"}>Founder, Transition To Success</p>

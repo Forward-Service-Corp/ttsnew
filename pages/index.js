@@ -31,7 +31,6 @@ export default function Home({pageDataJson}) {
             router.push("/dreams")
         }else{
             setCurrentTab(prevState => prevState + 1)
-
         }
     }
 
@@ -44,11 +43,11 @@ export default function Home({pageDataJson}) {
                 <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
                     {stats.map((item) => (
                         <div key={item.name}
-                             className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6 text-center">
-                            <dt className="text-sm font-medium text-gray-500 truncate">{item.name}</dt>
-                            <dd className="mt-1 text-3xl font-semibold text-gray-900">{item.stat}</dd>
+                             className="px-4 py-5 bg-gradient-to-t from-indigo-800 to-indigo-500 shadow rounded-lg overflow-hidden sm:p-6 text-center text-white shadow-lg shadow-indigo-500/50">
+                            <dt className="text-xl font-light uppercase">{item.name}</dt>
+                            <dd className="mt-1 text-3xl font-semibold ">{item.stat}</dd>
                             <Link href={item.link}><a
-                                className={"text-indigo-600 underline text-xs"}>{item.label}</a></Link>
+                                className={"text-white underline text-xs"}>{item.label}</a></Link>
                         </div>
                     ))}
                 </dl>

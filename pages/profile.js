@@ -4,7 +4,7 @@ import {useState} from "react";
 import ProfilePrograms from "../components/profilePrograms";
 import ProfilePersonalDetails from "../components/profilePersonalDetails";
 
-export default function Profile({user, dreams, surveys}) {
+export default function Profile({user}) {
 
     const [coach, setCoach] = useState("")
     const [contactName, setContactName] = useState("")
@@ -14,16 +14,16 @@ export default function Profile({user, dreams, surveys}) {
 
     return (
         <Layout title={"Profile"} session={user}>
-            <div className={"mb-5 border-b-2 border-b-gray-500-300"}>
-                <div className={`cursor-pointer inline-block px-6 py-2 ${currentTab === "tab1" ? "border-b-2 border-b-orange-500" : ""}`} onClick={() => {
+            <div className={"mb-5 border-b-2 border-b-gray-300 flex flex-col md:flex-row lg:flex-row "}>
+                <div className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab1" ? "border-b-2 border-b-orange-500" : ""}`} onClick={() => {
                     setCurrentTab("tab1")
                 }}>Programs
                 </div>
-                <div className={`cursor-pointer inline-block px-6 py-2 ${currentTab === "tab2" ? "border-b-2 border-b-orange-500" : ""}`} onClick={() => {
+                <div className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab2" ? "border-b-2 border-b-orange-500" : ""}`} onClick={() => {
                     setCurrentTab("tab2")
                 }}>Personal Details
                 </div>
-                <div className={`cursor-pointer inline-block px-6 py-2 ${currentTab === "tab3" ? "border-b-2 border-b-orange-500" : ""}`} onClick={() => {
+                <div className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab3" ? "border-b-2 border-b-orange-500" : ""}`} onClick={() => {
                     setCurrentTab("tab3")
                 }}>Organization Information
                 </div>
