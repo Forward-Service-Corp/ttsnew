@@ -52,7 +52,9 @@ function CompletedLifeAreaSurveys({surveys, setSurveys, user}) {
                                     }
                                 })
                             }}>Map this survey</div>
-                            <div className={"bg-gray-600 p-3 flex-1 cursor-pointer hover:bg-gray-500"}>Review</div>
+                            <div className={"bg-gray-600 p-3 flex-1 cursor-pointer hover:bg-gray-500"} onClick={() => {
+                                router.push("/surveys/" + survey._id)
+                            }}>Review</div>
                             <div className={"bg-red-600 p-3 flex-1 cursor-pointer hover:bg-red-500"} onClick={() => {
                                 if (confirm("Are you sure you want to delete this survey? This action is permanent.")) {
                                     deleteSurvey(survey._id)
