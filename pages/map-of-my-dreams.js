@@ -6,6 +6,7 @@ import {useRouter} from "next/router";
 import CurrentReferral from "../components/currentReferral";
 import Link from "next/link";
 import Head from "next/head";
+import moment from "moment";
 
 export default function MapOfMyDreams({pageDataJson}) {
     const {user, surveys, referrals} = pageDataJson
@@ -93,9 +94,11 @@ export default function MapOfMyDreams({pageDataJson}) {
             <Head>
                 <title>TTS / Map of My Dreams</title>
             </Head>
-            <div className={"p-3 text-sm text-white bg-indigo-600 rounded shadow"}>Please select a referral for each priority area.</div>
+            <div className={"p-3 text-sm text-white bg-indigo-600 rounded shadow"}>Please select a referral for each
+                priority area.
+            </div>
             <div className={""}>
-                <div className={"flex p-3 w-full"}>
+                <div className={"flex py-4 w-full"}>
                     <div className={"flex-1"}>
                         <p className={"text-sm text-gray-600"}>Dream:</p>
                         <p className={"uppercase"}>{currentSurvey[0].dream}</p>
@@ -104,19 +107,20 @@ export default function MapOfMyDreams({pageDataJson}) {
                     </div>
                     <div className={"flex-1"}>
                         <p className={"text-sm text-gray-600"}>Survey Completed:</p>
-                        <p className={"uppercase"}>{currentSurvey[0].datestamp}</p>
+                        <p className={"uppercase"}>{moment(currentSurvey[0].datestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}</p>
                     </div>
                 </div>
 
-
-
-                <div className={"flex"}>
-                    <div className={"flex-1"}>
+                <div className={"flex flex-col md:flex-row"}>
+                    <CurrentReferral currentReferral={currentReferral}/>
+                    <div className={"flex-grow"}>
                         {domains.map((domain, i) => {
                             return (
-                                <div key={i} className={"mx-1 my-4 border rounded p-3"}>
+                                <div key={i} className={" my-4 border-b-2 pb-4"}>
                                     <div className={"text-sm mb-2"}><span
-                                        className={"text-gray-500"}>Priority area:</span> {labelMap[domain]}</div>
+                                        className={"text-gray-500"}>Life Area:</span> <p
+                                        className={"text-indigo-600 text-lg"}>{labelMap[domain]}</p>
+                                    </div>
 
                                     <div className={"flex"}>
                                         <div className={"w-full"}>
@@ -151,16 +155,17 @@ export default function MapOfMyDreams({pageDataJson}) {
                                                     )
                                                 })}
                                             </select>
-                                            <button disabled={Object.keys(currentReferral).length === 0}
-                                                    className={"bg-indigo-600 text-white px-4 py-2 text-xs rounded mt-3 mb-4 disabled:bg-gray-400"}
-                                                    onClick={() => {
-                                                        saveReferral(domain)
-                                                            .then(() => {
-                                                                getUserReferrals().then(() => {
-                                                                    setCurrentReferral({})
-                                                                })
+                                            <button
+                                                disabled={Object.keys(currentReferral).length === 0 || currentReferral.domain !== domain}
+                                                className={"bg-indigo-600 text-white px-4 py-2 text-xs rounded mt-3 mb-4 disabled:bg-gray-400"}
+                                                onClick={() => {
+                                                    saveReferral(domain)
+                                                        .then(() => {
+                                                            getUserReferrals().then(() => {
+                                                                setCurrentReferral({})
                                                             })
-                                                    }}>+ Save this referral
+                                                        })
+                                                }}>+ Save
                                             </button>
                                             <div>
                                                 {userReferrals && userReferrals.filter(item => item.domain === domain).map((referral, i) => {
@@ -182,7 +187,7 @@ export default function MapOfMyDreams({pageDataJson}) {
                             )
                         })}
                     </div>
-                    <CurrentReferral currentReferral={currentReferral}/>
+
                 </div>
                 <div className={"flex justify-end"}>
                     <Link href={"/care-plans"} passhref>

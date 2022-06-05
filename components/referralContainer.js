@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {labelMap} from "../lib/serviceLabelsMap";
+import CarePlanDomain from "./carePlanDomain";
+import {Trash} from "phosphor-react";
 
 function ReferralContainer({item, user}) {
     const [open, setOpen] = useState(false)
     const [task, setTask] = useState("")
     const [allTasks, setAllTasks] = useState([])
 
-    async function saveTask () {
+    async function saveTask() {
         await fetch("/api/save-task", {
             method: "POST",
             headers: {
@@ -22,24 +23,22 @@ function ReferralContainer({item, user}) {
         })
     }
 
-    async function setTaskStatus (taskId, setTo) {
+    async function setTaskStatus(taskId, setTo) {
         await fetch("/api/update-task-status?taskId=" + taskId + "&setTo=" + setTo)
     }
 
-    async function deleteTask (taskId, setTo) {
+    async function deleteTask(taskId) {
         await fetch("/api/delete-task?taskId=" + taskId)
     }
 
-    async function getTasks () {
+    async function getTasks() {
         const fetchedTasks = await fetch("/api/get-tasks?userId=" + user.email + "&referralId=" + item._id)
-            .then(res=> res.json())
+            .then(res => res.json())
         await setAllTasks(fetchedTasks)
     }
 
     useEffect(() => {
-        getTasks()
-            .then((res) => {
-            })
+        getTasks().then()
     }, [])
 
     return (
@@ -52,69 +51,62 @@ function ReferralContainer({item, user}) {
                     setOpen(!open)
                 }}>{open ? "Collapse" : "Expand"}</div>
             </div>
-            <div className={`flex ${open ? "visible" : "hidden"}`}>
-                <div className={"w-1/2 p-5 inline"}>
+
+            <div className={`flex ${open ? "visible" : "hidden"} flex-col md:flex-row`}>
+                <CarePlanDomain item={item}/>
+                <div className={"w-full p-5 inline"}>
                     <h2 className={"uppercase text-gray-500"}>Add a new task</h2>
                     <input type={"text"} className={"w-full rounded mt-2"} value={task} onChange={(e) => {
                         setTask(e.target.value)
                     }}/>
-                    <button className={"mt-2 mb-4 bg-indigo-600 text-white px-6 py-2 rounded text-xs disabled:bg-gray-400"} onClick={() => {
-                        saveTask().then(() => {getTasks().then()})
-                        setTask("")
-                    }} disabled={task === ""}>Save task</button>
+                    <button
+                        className={"mt-2 mb-4 bg-indigo-600 text-white px-6 py-2 rounded text-xs disabled:bg-gray-400"}
+                        onClick={() => {
+                            saveTask().then(() => {
+                                getTasks().then()
+                            })
+                            setTask("")
+                        }} disabled={task === ""}>Save task
+                    </button>
 
-                    <div className={"uppercase text-gray-500 text-sm"}>Todos</div>
-                    {allTasks && allTasks.filter(item => eval(item.completed) === false).map((task, i) => {
+                    <div className={"uppercase text-gray-500 text-sm mb-1"}>Todos</div>
+                    {allTasks && allTasks.filter(item => eval(item.completed) === false).map((task) => {
                         return (
-                            <div key={task._id}>
+                            <div className={"flex justify-start align-middle mb-1"} key={task._id}>
                                 <input type={"checkbox"} className={"mr-2 rounded"} onChange={() => {
-                                    setTaskStatus(task._id, true).then(() => {getTasks().then()})
+                                    setTaskStatus(task._id, true).then(() => {
+                                        getTasks().then()
+                                    })
                                 }}/>
-                                <span className={"text-xs"}>{task.task} - </span> <span className={"bg-red-600 py-0.5 px-1.5 rounded-full text-white text-xs cursor-pointer"}
-                            onClick={() => {
-                                if(confirm("Do you want to delete this task? This action is permanent.")){
-                                    deleteTask(task._id)
-                                        .then(() => {getTasks().then()})
-                                }
-                            }}>X</span>
+                                <div className={"text-xs "}>{task.task} -</div>
+                                <div className={"cursor-pointer"}
+                                     onClick={() => {
+                                         if (confirm("Do you want to delete this task? This action is permanent.")) {
+                                             deleteTask(task._id)
+                                                 .then(() => {
+                                                     getTasks().then()
+                                                 })
+                                         }
+                                     }}><Trash size={16} weight="thin"/></div>
                             </div>
                         )
                     })}
 
                     <div className={"uppercase text-gray-500 text-sm mt-4"}>Completed</div>
-                    {allTasks && allTasks.filter(item => eval(item.completed) === true).map((task, i) => {
+                    {allTasks && allTasks.filter(item => eval(item.completed) === true).map((task) => {
                         return (
                             <div key={task._id}>
                                 <input type={"checkbox"} className={"mr-2 rounded"} checked={true} onChange={() => {
-                                    setTaskStatus(task._id, false).then(() => {getTasks().then()})
+                                    setTaskStatus(task._id, false).then(() => {
+                                        getTasks().then()
+                                    })
                                 }}/>
                                 <span className={"text-xs line-through"}>{task.task}</span>
                             </div>
                         )
                     })}
                 </div>
-                <div className={"w-1/2 text-sm p-5 inline bg-gray-100 bg-opacity-50 m-3 rounded"}>
-                    {item.domain !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Domain: </p>
-                        <p>{labelMap[item.domain]}</p></div>) : null}
 
-                    {item.phone !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Phone: </p>
-                        <p>{item.phone}</p></div>) : null}
-
-                    {item.email !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Email: </p>
-                        <p>{item.email}</p></div>) : null}
-
-                    {item.contact !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Contact person: </p>
-                        <p>{item.contact}</p></div>) : null}
-
-                    {item.url !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Website: </p>
-                        <p>{item.url}</p></div>) : null}
-
-                    {item.requirements !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Requirements: </p>
-                        <p>{item.requirements}</p></div>) : null}
-
-                    {item.needs !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Need to bring: </p>
-                        <p>{item.needs}</p></div>) : null}
-                </div>
 
             </div>
 

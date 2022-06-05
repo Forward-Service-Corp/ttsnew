@@ -1,9 +1,16 @@
 import React from 'react';
 
 function CurrentReferral({currentReferral}) {
+    if(Object.keys(currentReferral).length === 0){
+        return (
+            <div className={"mr-10 flex-initial"}>
+                <p>Please make a selection from one of the drop down menus to see details. </p>
+            </div>
+        )
+    }
     return (
-        <div className={"flex-1 p-6"}>
-            <p className={"uppercase text-gray-500"}>Selected referral details:</p>
+        <div className={"flex-1"}>
+            <p className={"text-indigo-600"}>Selected referral details:</p>
 
             {currentReferral.name !== undefined ? (
                 <div>
@@ -36,7 +43,7 @@ function CurrentReferral({currentReferral}) {
             {currentReferral.url !== undefined ? (
                 <div>
                     <p className={"text-xs text-gray-500 mt-3"}>Website</p>
-                <p className={"text-sm"}>{currentReferral.url}</p>
+                <p className={"text-sm truncate"}>{currentReferral.url}</p>
                 </div>
             ) : null}
 
