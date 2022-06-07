@@ -27,10 +27,14 @@ export default function LifeAreaSurveys({pageDataJson, incomingDream}) {
             <Head>
                 <title>TTS / Life Area Surveys</title>
             </Head>
-            <h2 className={"uppercase text-gray-500 mb-5"}>Active Life Area Survey</h2>
+            <div className={"w-full border-b-[1px] pb-2 mb-5"}>
+                <h2 className={"uppercase text-gray-500 "}>Active Life Area Survey</h2>
+            </div>
             <LasCurrent user={user} surveys={surveysList} setSurveys={setSurveysList}
                         dreamId={currentDreamId} dream={currentDream}/>
-            <h2 className={"uppercase text-gray-500 mb-5"}>Life Area Survey History</h2>
+            <div className={"w-full border-b-[1px] pb-2 mb-5"}>
+                <h2 className={"uppercase text-gray-500 mb-5"}>Life Area Survey History</h2>
+            </div>
             <LasHistory user={user} surveys={surveysList} setSurveys={setSurveysList}
                         dreamId={currentDreamId} dream={currentDream}/>
         </Layout>
