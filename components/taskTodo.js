@@ -46,7 +46,7 @@ function TaskTodo({task, setAllTasks, user, item, setAllNotes}) {
 
     return (
         <div className={"mt-3"}>
-            <div className={"flex justify-between align-middle mb-1 p-2 bg-gray-200"} key={task._id}>
+            <div className={"flex justify-between align-middle p-2 bg-gray-200"} key={task._id}>
                 <div className={"flex"}>
                     <input type={"checkbox"} className={"mr-2 rounded"} onChange={() => {
                         setTaskStatus(task._id, true)
@@ -75,9 +75,11 @@ function TaskTodo({task, setAllTasks, user, item, setAllNotes}) {
                 </div>
             </div>
             <div className={`mb-3 ${noteOpen ? "visible" : "hidden"}`}>
-                <input type={"text"} value={note} placeholder={"Enter  note here..."} className={"p-1 text-sm border-0 border-b-[1px] border-indigo-500 text-sm font-light w-full"} onChange={(e) => {
-                    setNote(e.target.value)
-                }}/>
+                <input type={"text"} value={note} placeholder={"Enter  note here..."}
+                       className={"p-1 text-sm border-0 border-b-[1px] border-indigo-500 text-sm font-light w-full"}
+                       onChange={(e) => {
+                           setNote(e.target.value)
+                       }}/>
                 <div className={"flex justify-end"}>
                     <button disabled={note === ""}
                             className={"bg-indigo-600 text-white px-4 py-1 text-xs rounded mt-2 disabled:bg-gray-400"}

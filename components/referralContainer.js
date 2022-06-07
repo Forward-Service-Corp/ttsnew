@@ -64,7 +64,7 @@ function ReferralContainer({item, user, notes}) {
             <div className={`flex ${open ? "visible" : "hidden"} flex-col md:flex-row`}>
                 <CarePlanDomain item={item}/>
                 <div className={"w-full p-5 inline"}>
-                    <h2 className={"uppercase text-gray-500 mb-2"}>Add a new task</h2>
+                    <h2 className={"uppercase text-indigo-600 mb-2"}>Add a new task</h2>
                     <input type={"text"} className={"w-full border-0 border-b-[1px] p-0 text-sm font-light"} value={task} placeholder={"Enter new todo item..."} onChange={(e) => {
                         setTask(e.target.value)
                     }}/>
@@ -80,10 +80,10 @@ function ReferralContainer({item, user, notes}) {
                         </button>
                     </div>
 
-                    <div className={"uppercase text-gray-500 text-sm mb-1"}>Todos</div>
+                    <div className={"uppercase text-indigo-600 text-sm mb-1"}>Tasks</div>
                     {allTasks && allTasks.filter(item => eval(item.completed) === false).map((task, i) => {
                         return (
-                            <div key={i}>
+                            <div className={"border-l-[1px]"} key={i}>
                                 <TaskTodo item={item} task={task} user={user} setAllTasks={setAllTasks} setAllNotes={setAllNotes}/>
                                 {allNotes && allNotes.filter(note => note.taskId === task._id.toString()).map(noteItem => {
                                     return (
@@ -94,7 +94,8 @@ function ReferralContainer({item, user, notes}) {
                         )
                     })}
 
-                    <div className={"uppercase text-gray-500 text-sm mt-4"}>Completed</div>
+                    {allTasks && allTasks.filter(item => eval(item.completed) === true).length > 0 ? <div className={"uppercase text-indigo-600 text-sm mt-4"}>Completed</div> : null}
+
                     {allTasks && allTasks.filter(item => eval(item.completed) === true).map((task) => {
                         return (
                             <div key={task._id}>
