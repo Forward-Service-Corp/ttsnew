@@ -4,8 +4,9 @@ import {getSession} from "next-auth/react";
 import LifeAreaSurveyForm from "../components/lifeAreaSurveyForm";
 import Link from "next/link";
 import {useEffect, useState} from "react";
-import CompletedLifeAreaSurveys from "../components/completedLifeAreaSurveys";
+import LasHistory from "../components/lasHistory";
 import Head from "next/head";
+import LasCurrent from "../components/lasCurrent";
 
 export default function LifeAreaSurveys({pageDataJson, incomingDream}) {
 
@@ -26,8 +27,12 @@ export default function LifeAreaSurveys({pageDataJson, incomingDream}) {
             <Head>
                 <title>TTS / Life Area Surveys</title>
             </Head>
-            <CompletedLifeAreaSurveys user={user} surveys={surveysList} setSurveys={setSurveysList}
-                                      dreamId={currentDreamId} dream={currentDream}/>
+            <h2 className={"uppercase text-gray-500 mb-5"}>Active Life Area Survey</h2>
+            <LasCurrent user={user} surveys={surveysList} setSurveys={setSurveysList}
+                        dreamId={currentDreamId} dream={currentDream}/>
+            <h2 className={"uppercase text-gray-500 mb-5"}>Life Area Survey History</h2>
+            <LasHistory user={user} surveys={surveysList} setSurveys={setSurveysList}
+                        dreamId={currentDreamId} dream={currentDream}/>
         </Layout>
     )
 }

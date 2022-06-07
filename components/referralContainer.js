@@ -1,11 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import CarePlanDomain from "./carePlanDomain";
-import {Trash} from "phosphor-react";
+import {Trash, FilePlus, CaretDoubleDown, CaretDoubleUp} from "phosphor-react";
+import TaskTodo from "./taskTodo";
+import moment from "moment";
+import NoteItem from "./noteItem";
+import {labelMap} from "../lib/serviceLabelsMap";
 
-function ReferralContainer({item, user}) {
+function ReferralContainer({item, user, notes}) {
     const [open, setOpen] = useState(false)
     const [task, setTask] = useState("")
     const [allTasks, setAllTasks] = useState([])
+    const [allNotes, setAllNotes] = useState(notes)
 
     async function saveTask() {
         await fetch("/api/save-task", {
@@ -37,57 +42,54 @@ function ReferralContainer({item, user}) {
         await setAllTasks(fetchedTasks)
     }
 
+
     useEffect(() => {
         getTasks().then()
     }, [])
 
     return (
         <div className={"my-3"} key={item._id}>
-            <div className={"flex justify-between bg-gray-200 rounded shadow"}>
-                <div className={"p-3"}>
-                    <h2>{item.name}</h2>
+            <div className={"flex justify-start items-center text-sm bg-indigo-600 font-light text-white relative p-3"}>
+                <div className={"w-[160px] ml-4 whitespace-nowrap mr-3 truncate"}>{labelMap[item.domain]}</div>
+                <div className={"truncate max-w-[200px]"}>{item.name}</div>
+                <div className={"absolute right-0 min-w-[100px] flex items-center justify-between h-full pl-3  bg-indigo-600"}>
+                    <div>Todos: {allTasks.filter(task => task.referralId === item._id && task.completed === "false").length}</div>
+                    <div className={"p-3 cursor-pointer text-xs"} onClick={() => {
+                        setOpen(!open)
+                    }}>{open ? <CaretDoubleUp size={20} weight="thin"/> :
+                        <CaretDoubleDown size={20} weight="thin"/>}</div>
                 </div>
-                <div className={"p-4 text-indigo-600 cursor-pointer text-xs"} onClick={() => {
-                    setOpen(!open)
-                }}>{open ? "Collapse" : "Expand"}</div>
             </div>
 
             <div className={`flex ${open ? "visible" : "hidden"} flex-col md:flex-row`}>
                 <CarePlanDomain item={item}/>
                 <div className={"w-full p-5 inline"}>
-                    <h2 className={"uppercase text-gray-500"}>Add a new task</h2>
-                    <input type={"text"} className={"w-full rounded mt-2"} value={task} onChange={(e) => {
+                    <h2 className={"uppercase text-gray-500 mb-2"}>Add a new task</h2>
+                    <input type={"text"} className={"w-full border-0 border-b-[1px] p-0 text-sm font-light"} value={task} placeholder={"Enter new todo item..."} onChange={(e) => {
                         setTask(e.target.value)
                     }}/>
-                    <button
-                        className={"mt-2 mb-4 bg-indigo-600 text-white px-6 py-2 rounded text-xs disabled:bg-gray-400"}
-                        onClick={() => {
-                            saveTask().then(() => {
-                                getTasks().then()
-                            })
-                            setTask("")
-                        }} disabled={task === ""}>Save task
-                    </button>
+                    <div className={"flex justify-end"}>
+                        <button
+                            className={"mt-2 mb-4 bg-indigo-600 text-white px-4 py-1 rounded text-xs disabled:bg-gray-400"}
+                            onClick={() => {
+                                saveTask().then(() => {
+                                    getTasks().then()
+                                })
+                                setTask("")
+                            }} disabled={task === ""}>Save task
+                        </button>
+                    </div>
 
                     <div className={"uppercase text-gray-500 text-sm mb-1"}>Todos</div>
-                    {allTasks && allTasks.filter(item => eval(item.completed) === false).map((task) => {
+                    {allTasks && allTasks.filter(item => eval(item.completed) === false).map((task, i) => {
                         return (
-                            <div className={"flex justify-start align-middle mb-1"} key={task._id}>
-                                <input type={"checkbox"} className={"mr-2 rounded"} onChange={() => {
-                                    setTaskStatus(task._id, true).then(() => {
-                                        getTasks().then()
-                                    })
-                                }}/>
-                                <div className={"text-xs "}>{task.task} -</div>
-                                <div className={"cursor-pointer"}
-                                     onClick={() => {
-                                         if (confirm("Do you want to delete this task? This action is permanent.")) {
-                                             deleteTask(task._id)
-                                                 .then(() => {
-                                                     getTasks().then()
-                                                 })
-                                         }
-                                     }}><Trash size={16} weight="thin"/></div>
+                            <div key={i}>
+                                <TaskTodo item={item} task={task} user={user} setAllTasks={setAllTasks} setAllNotes={setAllNotes}/>
+                                {allNotes && allNotes.filter(note => note.taskId === task._id.toString()).map(noteItem => {
+                                    return (
+                                        <NoteItem key={noteItem._id} noteItem={noteItem}/>
+                                    )
+                                })}
                             </div>
                         )
                     })}

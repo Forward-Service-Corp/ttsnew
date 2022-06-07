@@ -8,10 +8,12 @@ export default async(req, res) => {
     }
 
     const {db} = await connectToDatabase()
-    const user = await db
+    const todos = await db
         .collection("todos")
         .remove(q)
 
-    res.json(user)
+    const notes = await db.collection("notes").remove({"taskId" : req.query.taskId})
+
+    res.json(todos, notes)
 
 }

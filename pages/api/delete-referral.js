@@ -15,7 +15,8 @@ export default async(req, res) => {
 
     const referral = await db.collection("referrals").remove(referralToDelete)
     const tasks = await db.collection("todos").remove(tasksToDelete)
+    const notes = await db.collection("notes").remove({"referralId" : req.query.referralId})
 
-    res.json(referral, tasks)
+    res.json(referral, tasks, notes)
 
 }

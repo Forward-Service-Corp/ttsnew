@@ -11,11 +11,16 @@ export default function CarePlan({pageDataJson}) {
 
     return (
         <Layout title={"Create Care Plan"} session={user}>
-            {referrals.filter(referral => referral.surveyId === surveyId.toString()).map(item => {
+            {referrals.map(item => {
                 return (
                     <ReferralContainer key={item._id} item={item} user={user}/>
                 )
             })}
+            {/*{referrals.filter(referral => referral.surveyId === surveyId.toString()).map(item => {*/}
+            {/*    return (*/}
+            {/*        <ReferralContainer key={item._id} item={item} user={user}/>*/}
+            {/*    )*/}
+            {/*})}*/}
         </Layout>
     )
 }

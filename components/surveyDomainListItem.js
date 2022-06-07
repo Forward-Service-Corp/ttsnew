@@ -1,10 +1,11 @@
 import {labelMap} from "../lib/serviceLabelsMap";
 import {CheckCircle, Circle, Flag} from "phosphor-react";
 
-export default function SurveyDomainListItem({item, setActiveDomain, answered, domains, setOpen}) {
+export default function SurveyDomainListItem({item, activeDomain, setActiveDomain, answered, domains, setOpen}) {
+    console.log(item)
     return (
         <div
-            className={`py-2 px-4  flex justify-between cursor-pointer w-full hover:bg-gray-600 hover:text-white bg-gradient-to-r from-gray-300 to-gray-100`}
+            className={`${activeDomain === item ? "border-l-6" : ""} py-2 px-4 flex justify-between cursor-pointer w-full hover:border-l-4 hover:border-indigo-500`}
             key={item} onClick={() => {
             setActiveDomain(item)
             setOpen(false)

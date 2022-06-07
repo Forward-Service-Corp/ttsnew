@@ -3,7 +3,10 @@ import {labelMap} from "../lib/serviceLabelsMap";
 
 function CarePlanDomain({item}) {
     return (
-        <div className={"w-full md:w-1/2 text-sm p-5 inline bg-gray-100 bg-opacity-50  rounded"}>
+        <div className={"w-full md:w-1/2 text-sm p-5 inline bg-gray-100 bg-opacity-50 "}>
+            {item.name !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Name: </p>
+                <p>{item.name}</p></div>) : null}
+
             {item.domain !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Domain: </p>
                 <p>{labelMap[item.domain]}</p></div>) : null}
 

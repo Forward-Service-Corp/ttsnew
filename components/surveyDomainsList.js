@@ -12,7 +12,7 @@ export default function SurveyDomainList({setActiveDomain, activeDomain, answere
 
     return (
         <div
-            className={`${styles.surveyDomainList} ${open ? styles.open : null}  bg-gradient-to-r from-gray-300 to-gray-100 rounded relative`}>
+            className={`${styles.surveyDomainList} ${open ? styles.open : null}  rounded relative bg-gray-200`}>
 
             <div className={`${styles.openButton} bg-gradient-to-r from-indigo-700 to-indigo-500`} onClick={() => {
                 setOpen(!open)

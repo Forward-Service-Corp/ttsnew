@@ -102,12 +102,10 @@ export default function MapOfMyDreams({pageDataJson}) {
                     <div className={"flex-1"}>
                         <p className={"text-sm text-gray-600"}>Dream:</p>
                         <p className={"uppercase"}>{currentSurvey[0].dream}</p>
-                        <p className={"text-sm text-gray-600 mt-5"}>Score:</p>
-                        <p className={"uppercase"}>{currentSurvey[0].totalScore}</p>
                     </div>
                     <div className={"flex-1"}>
                         <p className={"text-sm text-gray-600"}>Survey Completed:</p>
-                        <p className={"uppercase"}>{moment(currentSurvey[0].datestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}</p>
+                        <p className={"uppercase"}>{moment(currentSurvey[0].datestamp).format("MMMM Do YYYY, h:mm:ss a")}</p>
                     </div>
                 </div>
 

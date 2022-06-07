@@ -1,6 +1,7 @@
 import Layout from "../../components/layout";
 import {getSession} from "next-auth/react";
 import {useRouter} from "next/router";
+import {labelMap} from "../../lib/serviceLabelsMap";
 
 export default function CarePlan({pageDataJson}) {
 
@@ -29,128 +30,128 @@ export default function CarePlan({pageDataJson}) {
                         </div>
 
                         <div className={"grid grid-cols-1 md:grid-cols-3 print:grid-cols-3"}>
-                            <div className={"p-2"}>
-                                <p><strong>Adult Education</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("adultEducation") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["adultEducation"]} </strong></p>
                                 <p>Score: {survey.adultEducation[0]}</p>
                                 <p>{survey.adultEducation[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Budgeting</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("budgeting") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["budgeting"]}</strong></p>
                                 <p>Score: {survey.budgeting[0]}</p>
                                 <p>{survey.budgeting[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Child Care</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("childcare") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["childcare"]}</strong></p>
                                 <p>Score: {survey.childcare[0]}</p>
                                 <p>{survey.childcare[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Children&apos;s Education</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("childrensEducation") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["childrensEducation"]}</strong></p>
                                 <p>Score: {survey.childrensEducation[0]}</p>
                                 <p>{survey.childrensEducation[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Community Involvement</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("communityInvolvement") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["communityInvolvement"]}</strong></p>
                                 <p>Score: {survey.communityInvolvement[0]}</p>
                                 <p>{survey.communityInvolvement[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Disabilities</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("disabilities") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["disabilities"]}</strong></p>
                                 <p>Score: {survey.disabilities[0]}</p>
                                 <p>{survey.disabilities[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Family and Friends Support</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("familyFriendsSupport") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["familyFriendsSupport"]}</strong></p>
                                 <p>Score: {survey.familyFriendsSupport[0]}</p>
                                 <p>{survey.familyFriendsSupport[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Food</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("food") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["food"]}</strong></p>
                                 <p>Score: {survey.food[0]}</p>
                                 <p>{survey.food[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Health Insurance</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("healthInsurance") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["healthInsurance"]}</strong></p>
                                 <p>Score: {survey.healthInsurance[0]}</p>
                                 <p>{survey.healthInsurance[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Housing</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("housing") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["housing"]}</strong></p>
                                 <p>Score: {survey.housing[0]}</p>
                                 <p>{survey.housing[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Internet Access</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("internetAccess") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["internetAccess"]}</strong></p>
                                 <p>Score: {survey.internetAccess[0]}</p>
                                 <p>{survey.internetAccess[1]}</p>
                             </div>
 
-                            <div className={"p-2 print:mb-40"}>
-                                <p><strong>Legal</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("legal") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["legal"]}</strong></p>
                                 <p>Score: {survey.legal[0]}</p>
                                 <p>{survey.legal[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Life Skills</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("lifeSkills") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["lifeSkills"]}</strong></p>
                                 <p>Score: {survey.lifeSkills[0]}</p>
                                 <p>{survey.lifeSkills[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Mental Health</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("mentalHealth") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["mentalHealth"]}</strong></p>
                                 <p>Score: {survey.mentalHealth[0]}</p>
                                 <p>{survey.mentalHealth[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Money</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("money") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["money"]}</strong></p>
                                 <p>Score: {survey.money[0]}</p>
                                 <p>{survey.money[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Parenting Skills</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("parentingSkills") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["parentingSkills"]}</strong></p>
                                 <p>Score: {survey.parentingSkills[0]}</p>
                                 <p>{survey.parentingSkills[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Racism Bigotry</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("racismBigotry") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["racismBigotry"]}</strong></p>
                                 <p>Score: {survey.racismBigotry[0]}</p>
                                 <p>{survey.racismBigotry[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Safety</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("safety") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["safety"]}</strong></p>
                                 <p>Score: {survey.safety[0]}</p>
                                 <p>{survey.safety[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Substances</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("substances") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["substances"]}</strong></p>
                                 <p>Score: {survey.substances[0]}</p>
                                 <p>{survey.substances[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Transportation</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("transportation") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["transportation"]}</strong></p>
                                 <p>Score: {survey.transportation[0]}</p>
                                 <p>{survey.transportation[1]}</p>
                             </div>
 
-                            <div className={"p-2"}>
-                                <p><strong>Work</strong></p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("work") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["work"]}</strong></p>
                                 <p>Score: {survey.work[0]}</p>
                                 <p>{survey.work[1]}</p>
                             </div>
