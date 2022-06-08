@@ -2,18 +2,22 @@ import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
 import Head from "next/head";
 import ReferralContainer from "../components/referralContainer";
+import {useState} from "react";
 
 export default function CarePlans({pageDataJson}) {
+
     const {user, referrals, notes} = pageDataJson
+    const [userReferrals, setUserReferrals] = useState(referrals)
+
     return (
         <Layout title={"Care Plans"} session={user}>
             <Head>
                 <title>TTS / Care Plans</title>
             </Head>
             <h2 className={"uppercase text-gray-500 mb-4"}>Manage Care Plans</h2>
-            {referrals.map(item => {
+            {userReferrals.map(item => {
                 return (
-                    <ReferralContainer key={item._id} item={item} user={user} notes={notes}/>
+                    <ReferralContainer key={item._id} item={item} user={user} notes={notes} setUserReferrals={setUserReferrals}/>
                 )
             })}
         </Layout>
