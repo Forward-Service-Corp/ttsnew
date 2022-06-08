@@ -4,7 +4,7 @@ function CurrentReferral({currentReferral}) {
     if(Object.keys(currentReferral).length === 0){
         return (
             <div className={"flex-1 mr-10 shadow rounded overflow-hidden"}>
-                <div className={"bg-indigo-600 text-white p-3"}>Selected referral details:</div>
+                <div className={"bg-gray-700 text-white p-3"}>Selected referral details:</div>
                 <div className={"flex flex-col align-middle items-center justify-around mt-3"}>
                     <div>
                         <HandPalm size={200} weight="thin" color={"orange"}/>
@@ -16,7 +16,7 @@ function CurrentReferral({currentReferral}) {
     }
     return (
         <div className={"flex-1 mr-10 shadow rounded overflow-hidden"}>
-            <div className={"bg-indigo-600 text-white p-3"}>Selected referral details:</div>
+            <div className={"bg-gray-700 text-white p-3"}>Selected referral details:</div>
 
             <div className={"p-8"}>
                 {currentReferral.name !== undefined ? (

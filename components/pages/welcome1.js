@@ -1,9 +1,9 @@
-import {Trophy} from "phosphor-react";
+import Image from "next/image";
 
 function Welcome1() {
     return (
         <div className={"font-light"}>
-            <h1 className={"text-2xl text-indigo-600"}>Welcome to Transition To Success and Map of My Dreams</h1>
+            <h1 className={"text-2xl text-orange-600 font-serif"}>Welcome to Transition To Success and Map of My Dreams</h1>
             <p className={"text-sm"}>
                 Welcome to Transition To Success&reg; (TTS). This TTS Workbook and Guide is designed specifically
                 for YOU. Together with your Transition To Success (TTS) Coach, you will map your journey to your dreams
@@ -13,7 +13,7 @@ function Welcome1() {
                 dreams.
             </p>
 
-            <h2 className={"my-5 font-bold text-indigo-600"}>How do I make my dreams come true?</h2>
+            <h2 className={"my-5 font-bold text-orange-600 font-serif"}>How do I make my dreams come true?</h2>
             <p className={"text-sm"}>
                 Just ask anyone, &quot;What&apos;s your dream?&quot;. You will find there are as many dreams as
                 there are people. Having dreams is the easy part. Making your dreams come true is the tough part and
@@ -30,15 +30,15 @@ function Welcome1() {
                 next.
             </p>
 
-            <div className={"p-5 bg-gradient-to-r from-indigo-800 to-indigo-500 my-5 rounded flex flex-wrap justify-between align-middle"}>
+            <div className={"p-5 bg-[#eeeada] my-5 rounded flex flex-wrap justify-between align-middle"}>
                 <div className={"flex-none"}>
-                    <Trophy size={200} weight={"thin"} color={"white"}/>
+                    <Image src={"/img/Transition+to+Success+Map copy.png"} width={250} height={200} alt={"image for quotes"}/>
                 </div>
                 <div className={"flex-grow ml-10"}>
-                    <p className={"font-bold text-white"}>&quot;If at first you don&apos;t succeed try and try
+                    <p className={"font-bold  font-serif"}>&quot;If at first you don&apos;t succeed try and try
                     again.&quot;</p>
-                    <p className={"font-bold text-white my-3"}>Did you know –</p>
-                    <ul className={"list-disc px-5 text-white"}>
+                    <p className={"font-bold  my-3"}>Did you know –</p>
+                    <ul className={"list-disc px-5"}>
                         <li>Michael Jordan did not make the cut for his high school basketball team.</li>
                         <li>Thomas Edison had over 1000 failed attempts at a light bulb.</li>
                         <li>Oprah was told she didn&apos;t have a &quot;face&quot; for television.</li>

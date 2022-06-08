@@ -1,11 +1,10 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
-import Link from "next/link";
 import Head from "next/head";
 import ReferralContainer from "../components/referralContainer";
 
 export default function CarePlans({pageDataJson}) {
-    const {user, referrals, tasks, notes, surveys} = pageDataJson
+    const {user, referrals, notes} = pageDataJson
     return (
         <Layout title={"Care Plans"} session={user}>
             <Head>
@@ -17,26 +16,6 @@ export default function CarePlans({pageDataJson}) {
                     <ReferralContainer key={item._id} item={item} user={user} notes={notes}/>
                 )
             })}
-            {/*{surveys.map(survey => {*/}
-            {/*    return (*/}
-            {/*        <div className={"rounded border mb-3 shadow flex overflow-hidden"} key={survey._id}>*/}
-            {/*            <div className={"flex-grow p-3 "}>*/}
-            {/*                <p>{survey.dream}</p>*/}
-            {/*                <Link passhref href={"/care-plan/" + survey._id}>*/}
-            {/*                    <a className={"text-indigo-600 underline text-xs"}>Manage this care plan</a>*/}
-            {/*                </Link>*/}
-            {/*            </div>*/}
-            {/*            <div className={"bg-indigo-500 text-white py-3 px-6 text-center text-xs flex-initial"}>*/}
-            {/*                <p>To-do items:</p>*/}
-            {/*                <p className={"text-xl"}>{tasks.filter(task => task.surveyId === survey._id).length}</p>*/}
-            {/*            </div>*/}
-            {/*            <div className={"bg-indigo-600 text-white py-3 px-6 text-center text-xs flex-initial"}>*/}
-            {/*                <p>Total referrals:</p>*/}
-            {/*                <p className={"text-xl"}>{referrals.filter(referral => referral.surveyId === survey._id).length}</p>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    )*/}
-            {/*})}*/}
         </Layout>
     )
 }

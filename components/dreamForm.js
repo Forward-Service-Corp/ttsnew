@@ -27,40 +27,54 @@ function DreamForm({setSavedDreams, user, setIsLoading}) {
     }
 
     return (
-        <div className={"py-8 border-t-2 border-b-2 mt-8"}>
-            <h2 className={"text-xl uppercase mb-5"}>Define a new dream</h2>
+        <div className={""}>
+            <h2 className={"font-serif uppercase mb-5 mt-10 md:mt-0"}>Define a new dream</h2>
 
-            <p className={"uppercase mb-2 text-sm text-gray-500"}>Your dream</p>
-            <input className={"w-full rounded"} type={"text"} onChange={(e) => {
-                setDream(e.target.value)
-            }} value={dream}/>
+            <p className={" text-sm text-orange-600"}>Your dream</p>
+            <input
+                className={"w-full border-r-0 border-t-0 border-l-0 border-black border-b-[1px] placeholder:text-xs pl-1"}
+                type={"text"}
+                placeholder={"Type your dream here..."}
+                onChange={(e) => {
+                    setDream(e.target.value)
+                }} value={dream}/>
 
-            <p className={"uppercase mb-2 mt-5 text-sm text-gray-500"}>What do you need to do to achieve this
+            <p className={" mt-5 text-sm text-orange-600"}>What do you need to do to achieve this
                 dream?</p>
-            <input className={"w-full rounded"} type={"text"} onChange={(e) => {
-                setDreamNeed(e.target.value)
-            }} value={dreamNeed}/>
+            <input
+                className={"w-full border-r-0 border-t-0 border-l-0 border-black border-b-[1px] placeholder:text-xs pl-1"}
+                type={"text"}
+                placeholder={"Type what you need here..."}
+                onChange={(e) => {
+                    setDreamNeed(e.target.value)
+                }} value={dreamNeed}/>
 
-            <p className={"uppercase mb-2 mt-5 text-sm text-gray-500"}>Whose help do you need to achieve this
+            <p className={" mt-5 text-sm text-orange-600"}>Whose help do you need to achieve this
                 dream?</p>
-            <input className={"w-full rounded"} type={"text"} onChange={(e) => {
-                setDreamHelp(e.target.value)
-            }} value={dreamHelp}/>
+            <input
+                className={"w-full border-r-0 border-t-0 border-l-0 border-black border-b-[1px] placeholder:text-xs pl-1"}
+                type={"text"}
+                placeholder={"Type whose help you need here..."}
+                onChange={(e) => {
+                    setDreamHelp(e.target.value)
+                }} value={dreamHelp}/>
 
-            <button className={"p-2 mt-4 bg-indigo-700 text-white rounded text-xs"} onClick={() => {
-                setIsLoading(true)
-                saveDream()
-                    .then(() => {
-                        getDreams().then(res => console.log(res)).catch(err => console.warn(err))
-                    })
-                    .then(() => {
-                        setIsLoading(false)
-                    })
-                    .catch(err => console.warn(err))
-                setDream("")
-                setDreamNeed("")
-                setDreamHelp("")
-            }}>Save dream
+            <button className={"p-2 mt-4 text-white rounded text-xs bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
+                    disabled={dream === ""}
+                    onClick={() => {
+                        setIsLoading(true)
+                        saveDream()
+                            .then(() => {
+                                getDreams().then(res => console.log(res)).catch(err => console.warn(err))
+                            })
+                            .then(() => {
+                                setIsLoading(false)
+                            })
+                            .catch(err => console.warn(err))
+                        setDream("")
+                        setDreamNeed("")
+                        setDreamHelp("")
+                    }}>Save dream
             </button>
         </div>
     );

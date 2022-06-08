@@ -43,11 +43,11 @@ export default function Home({pageDataJson}) {
                 <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
                     {stats.map((item) => (
                         <div key={item.name}
-                             className="px-4 py-5 bg-gradient-to-t from-indigo-800 to-indigo-500 shadow rounded-lg overflow-hidden sm:p-6 text-center text-white shadow-lg shadow-indigo-500/50">
-                            <dt className="text-xl font-light uppercase">{item.name}</dt>
+                             className="px-4 py-5 bg-[#eeeada] shadow rounded-lg overflow-hidden sm:p-6 text-center shadow-lg ">
+                            <dt className="text-xl font-light  font-serif">{item.name}</dt>
                             <dd className="mt-1 text-3xl font-semibold ">{item.stat}</dd>
                             <Link href={item.link}><a
-                                className={"text-white underline text-xs"}>{item.label}</a></Link>
+                                className={"text-orange-500 underline text-xs"}>{item.label}</a></Link>
                         </div>
                     ))}
                 </dl>
@@ -55,13 +55,13 @@ export default function Home({pageDataJson}) {
             <div className={"flex justify-between py-8"}>
                 <div>
                     <button disabled={currentTab === 1} onClick={prevPage}
-                            className={"py-2 px-6 text-white text-sm rounded bg-indigo-700 disabled:bg-gray-300"}>Previous
+                            className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Previous
                         page
                     </button>
                 </div>
                 <div>
                     <button onClick={nextPage}
-                            className={"py-2 px-6 text-white text-sm rounded bg-indigo-700 disabled:bg-gray-300"}>{currentTab === 3 ? "Continue to Dreams" : "Next page"}</button>
+                            className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>{currentTab === 3 ? "Continue to Dreams" : "Next page"}</button>
                 </div>
             </div>
             <div className={currentTab === 1 ? "visible" : "hidden"}>

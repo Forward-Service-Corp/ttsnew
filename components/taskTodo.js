@@ -76,15 +76,16 @@ function TaskTodo({task, setAllTasks, user, item, setAllNotes}) {
             </div>
             <div className={`mb-3 ${noteOpen ? "visible" : "hidden"}`}>
                 <input type={"text"} value={note} placeholder={"Enter  note here..."}
-                       className={"p-1 text-sm border-0 border-b-[1px] border-indigo-500 text-sm font-light w-full"}
+                       className={"p-1 text-sm border-0 border-b-[1px] text-sm font-light w-full"}
                        onChange={(e) => {
                            setNote(e.target.value)
                        }}/>
                 <div className={"flex justify-end"}>
                     <button disabled={note === ""}
-                            className={"bg-indigo-600 text-white px-4 py-1 text-xs rounded mt-2 disabled:bg-gray-400"}
+                            className={"text-white px-4 py-1 text-xs rounded mt-2 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
                             onClick={() => {
                                 saveNote().then(getNotes)
+                                setNoteOpen(false)
                             }}>Save note
                     </button>
                 </div>

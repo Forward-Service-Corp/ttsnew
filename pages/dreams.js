@@ -20,8 +20,11 @@ export default function Dreams({pageDataJson}) {
                 <title>TTS / Dreams</title>
             </Head>
             <div className={""}>
-                <DreamIntro/>
-                <DreamForm setSavedDreams={setSavedDreams} user={user} setIsLoading={setIsLoading}/>
+                <div className={"grid grid-cols-1 md:grid-cols-2 gap-4"}>
+                    <DreamIntro/>
+                    <DreamForm setSavedDreams={setSavedDreams} user={user} setIsLoading={setIsLoading}/>
+                </div>
+
                 <SavedDreams savedDreams={savedDreams} setLoadingState={setIsLoading} saveDreams={setSavedDreams}
                              user={user}/>
             </div>

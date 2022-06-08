@@ -5,6 +5,7 @@ import NewLifeAreaSurveyForm from "../components/newLifeAreaSurveyForm";
 import {useState} from "react";
 import {useRouter} from "next/router";
 
+
 export default function NewLifeAreaSurvey({pageDataJson}) {
 
     const {user} = pageDataJson
@@ -68,11 +69,11 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                 <div>Dream: {router.query.dreamName}</div>
             </div>
             <div
-                className={`bg-indigo-600 p-2 rounded text-center text-white text-xs mb-6 ${Object.keys(answered).length === 21 ? "hidden" : null}`}>
+                className={`bg-red-600 p-2 rounded text-center text-white text-xs mb-2 ${Object.keys(answered).length === 21 ? "hidden" : null}`}>
                 You&apos;ve completed {Object.keys(answered).length} of 21 life areas. Keep going!
             </div>
             <div
-                className={`bg-indigo-600 p-2 rounded text-center text-white text-xs mb-6 ${domains.length > 0 ? "hidden" : null}`}>
+                className={`bg-red-600 p-2 rounded text-center text-white text-xs mb-6 ${domains.length > 0 ? "hidden" : null}`}>
                 Please select at least one life area as a priority by using the toggle.
             </div>
             <div className={"flex"}>
@@ -81,6 +82,12 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                                       answered={answered} domains={domains}/>
                 </div>
                 <div className={"flex-grow"}>
+                    <div className={"p-4 bg-gray-200 m-0 md:m-4 my-2 md:my-0"}>
+                        <h2>Instructions</h2>
+                        <p className={"text-xs"}>Click or tap on each of the life areas and answer the corresponding question.
+                        There are 21 total areas, so you may need to scroll down if you&apos;re using a mobile device.</p>
+                        <p className={"text-xs"}> Life areas that you have marked as a priority with the toggle will have a red flag in the life areas list.</p>
+                    </div>
                     <NewLifeAreaSurveyForm activeDomain={activeDomain} setAnswered={setAnswered} answered={answered}
                                            domains={domains} setDomains={setDomains} score={score}
                                            setScore={setScore}/>
@@ -88,7 +95,7 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
             </div>
             <div className={"flex justify-end"}>
                 <button disabled={domains.length === 0 || Object.keys(answered).length !== 21}
-                        className={`bg-indigo-600 text-white text-sm rounded py-2 px-4 disabled:bg-gray-400`}
+                        className={`text-white text-sm rounded py-2 px-4 mt-5 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400`}
                         onClick={async () => {
                             await setScore(getScore)
                             await saveSurvey().then()

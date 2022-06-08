@@ -12,9 +12,9 @@ export default function SurveyDomainList({setActiveDomain, activeDomain, answere
 
     return (
         <div
-            className={`${styles.surveyDomainList} ${open ? styles.open : null}  rounded relative bg-gray-200`}>
+            className={`${styles.surveyDomainList} ${open ? styles.open : null}   relative bg-gray-200`}>
 
-            <div className={`${styles.openButton} bg-gradient-to-r from-indigo-700 to-indigo-500`} onClick={() => {
+            <div className={`${styles.openButton} bg-gradient-to-r from-green-700 to-green-500`} onClick={() => {
                 setOpen(!open)
                 setTapped(true)
             }}>
@@ -23,12 +23,10 @@ export default function SurveyDomainList({setActiveDomain, activeDomain, answere
                 <div
                     className={`absolute rounded-full w-3 h-3 bg-orange-500 top-0 right-[-5px] ${!tapped ? "animate-ping" : "hidden"}`}></div>
             </div>
-            <div className={`${styles.listInner} rounded divide-y divide-white divide-opacity-20 overflow-hidden`}>
-                <div className={"bg-gradient-to-r from-indigo-800 to-indigo-500 py-3 px-4 text-white font-light"}>
+            <div className={`${styles.listInner}  divide-y divide-white divide-opacity-20 overflow-hidden`}>
+                <div className={"bg-gradient-to-r from-orange-600 to-orange-400 py-3 px-4 text-white font-light"}>
                     <p className={"uppercase"}>Life areas</p>
-                    <p className={"text-xs"}>Tap on each of the life areas and answer the corresponding question. There
-                        are 21 total areas, so you may need to scroll down if you&apos;re using a mobile device.</p><p className={"text-xs"}> Life
-                        areas that you have marked as a priority with the toggle will have a red flag below.</p>
+
                 </div>
                 {list.map((item, i) => {
                     return (

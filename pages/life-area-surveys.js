@@ -1,8 +1,5 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
-
-import LifeAreaSurveyForm from "../components/lifeAreaSurveyForm";
-import Link from "next/link";
 import {useEffect, useState} from "react";
 import LasHistory from "../components/lasHistory";
 import Head from "next/head";
@@ -10,7 +7,7 @@ import LasCurrent from "../components/lasCurrent";
 
 export default function LifeAreaSurveys({pageDataJson, incomingDream}) {
 
-    const {user, dreams, surveys} = pageDataJson
+    const {user, surveys} = pageDataJson
     const [currentDream, setCurrentDream] = useState("")
     const [currentDreamId, setCurrentDreamId] = useState("")
     const [surveysList, setSurveysList] = useState(surveys)
@@ -28,12 +25,12 @@ export default function LifeAreaSurveys({pageDataJson, incomingDream}) {
                 <title>TTS / Life Area Surveys</title>
             </Head>
             <div className={"w-full border-b-[1px] pb-2 mb-5"}>
-                <h2 className={"uppercase text-gray-500 "}>Active Life Area Survey</h2>
+                <h2 className={"uppercase text-orange-600 "}>Active Life Area Survey</h2>
             </div>
             <LasCurrent user={user} surveys={surveysList} setSurveys={setSurveysList}
                         dreamId={currentDreamId} dream={currentDream}/>
-            <div className={"w-full border-b-[1px] pb-2 mb-5"}>
-                <h2 className={"uppercase text-gray-500 mb-5"}>Life Area Survey History</h2>
+            <div className={"w-full border-b-[1px] pb-2 mb-5 mt-10"}>
+                <h2 className={"uppercase text-orange-600 mb-5"}>Life Area Survey History</h2>
             </div>
             <LasHistory user={user} surveys={surveysList} setSurveys={setSurveysList}
                         dreamId={currentDreamId} dream={currentDream}/>

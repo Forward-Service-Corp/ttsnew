@@ -1,7 +1,6 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
-import Link from "next/link"
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Head from "next/head";
 import ServicesTable from "../components/servicesTable";
 
@@ -45,7 +44,7 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    const pageDataUrl = baseUrl + "/api/pages/pageDataWithServices?userId=" + session.user.email
     const getPageData = await fetch(pageDataUrl)
     const pageDataJson = await getPageData.json()
 

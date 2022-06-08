@@ -13,10 +13,10 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
     }
 
     return (
-        <div className={"p-4"}>
+        <div className={"p-0 md:p-4"}>
             <div className={"md:flex justify-between"}>
                 <div className={""}>
-                    <h2 className={"uppercase text-indigo-600 text-xl"}>{labelMap[activeDomain]}</h2>
+                    <h2 className={"uppercase text-orange-600 text-xl font-serif"}>{labelMap[activeDomain]}</h2>
                 </div>
                 <div>
                     <span className={"text-sm text-red-600 mr-4"}>Set as a priority life area</span>
@@ -49,10 +49,10 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
                                 data-statement={"This does not apply to me."}
                                 name={activeDomain}/>
                             <label
-                                className={"block p-2 hover:bg-gray-300 peer-checked:bg-green-300 mb-2 border"}
+                                className={"block p-2 hover:bg-gray-300 peer-checked:bg-green-300 mb-2 border text-sm"}
                                 htmlFor={activeDomain + "-0"}>This does not apply to me.</label>
                         </div>
-                        <div className={"flex justify-center items-center mb-2 bg-indigo-600 text-white w-[50px]"}>
+                        <div className={"flex justify-center items-center mb-2 bg-orange-600 text-white w-[50px]"}>
                             <div className={"text-2xl"}>0</div>
                         </div>
                     </div>
@@ -65,10 +65,10 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
                                    data-statement={lasList[activeDomain].statements[1]}
                                    name={activeDomain}/>
                             <label
-                                className={"block p-2 hover:bg-gray-300 peer-checked:bg-green-300 mb-2 border"}
+                                className={"block p-2 hover:bg-gray-300 peer-checked:bg-green-300 mb-2 border text-sm"}
                                 htmlFor={activeDomain + "-1"}>{lasList[activeDomain].statements[1]}</label>
                         </div>
-                        <div className={"flex justify-center items-center mb-2 bg-indigo-600 text-white w-[50px]"}>
+                        <div className={"flex justify-center items-center mb-2 bg-orange-600 text-white w-[50px]"}>
                             <div className={"text-2xl"}>1</div>
                         </div>
                     </div>
@@ -79,10 +79,10 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
                                className={"hidden peer"} type={"radio"} id={activeDomain + "-2"}
                                data-statement={lasList[activeDomain].statements[2]}
                                name={activeDomain}/>
-                        <label className={"block p-2 hover:bg-gray-300 peer-checked:bg-green-300  mb-2 border"}
+                        <label className={"block p-2 hover:bg-gray-300 peer-checked:bg-green-300  mb-2 border text-sm"}
                                htmlFor={activeDomain + "-2"}>{lasList[activeDomain].statements[2]}</label>
                         </div>
-                        <div className={"flex justify-center items-center mb-2 bg-indigo-600 text-white w-[50px]"}>
+                        <div className={"flex justify-center items-center mb-2 bg-orange-600 text-white w-[50px]"}>
                             <div className={"text-2xl"}>2</div>
                         </div>
                     </div>
@@ -93,10 +93,10 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
                                className={"hidden peer"} type={"radio"} id={activeDomain + "-3"}
                                data-statement={lasList[activeDomain].statements[3]}
                                name={activeDomain}/>
-                        <label className={"block p-2 hover:bg-gray-300 peer-checked:bg-green-300  mb-2 border"}
+                        <label className={"block p-2 hover:bg-gray-300 peer-checked:bg-green-300  mb-2 border text-sm"}
                                htmlFor={activeDomain + "-3"}>{lasList[activeDomain].statements[3]}</label>
                         </div>
-                        <div className={"flex justify-center items-center mb-2 bg-indigo-600 text-white w-[50px]"}>
+                        <div className={"flex justify-center items-center mb-2 bg-orange-600 text-white w-[50px]"}>
                             <div className={"text-2xl"}>3</div>
                         </div>
                     </div>
@@ -107,10 +107,10 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
                                className={"hidden peer"} type={"radio"} id={activeDomain + "-4"}
                                data-statement={lasList[activeDomain].statements[4]}
                                name={activeDomain}/>
-                        <label className={"block p-2 hover:bg-gray-300 peer-checked:bg-green-300  mb-2 border"}
+                        <label className={"block p-2 hover:bg-gray-300 peer-checked:bg-green-300  mb-2 border text-sm"}
                                htmlFor={activeDomain + "-4"}>{lasList[activeDomain].statements[4]}</label>
                         </div>
-                        <div className={"flex justify-center items-center mb-2 bg-indigo-600 text-white w-[50px]"}>
+                        <div className={"flex justify-center items-center mb-2 bg-orange-600 text-white w-[50px]"}>
                             <div className={"text-2xl"}>4</div>
                         </div>
                     </div>
@@ -121,10 +121,10 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
                                className={"hidden peer"} type={"radio"} id={activeDomain + "-5"}
                                data-statement={lasList[activeDomain].statements[5]}
                                name={activeDomain}/>
-                        <label className={"block p-2 hover:bg-gray-300 peer-checked:bg-green-300  mb-2 border"}
+                        <label className={"block p-2 hover:bg-gray-300 peer-checked:bg-green-300  mb-2 border text-sm"}
                                htmlFor={activeDomain + "-5"}>{lasList[activeDomain].statements[5]}</label>
                         </div>
-                        <div className={"flex justify-center items-center mb-2 bg-indigo-600 text-white w-[50px]"}>
+                        <div className={"flex justify-center items-center mb-2 bg-orange-600 text-white w-[50px]"}>
                             <div className={"text-2xl"}>5</div>
                         </div>
                     </div>

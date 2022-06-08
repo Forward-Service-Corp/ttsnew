@@ -2,20 +2,9 @@ import {useRouter} from "next/router";
 import {labelMap} from "../lib/serviceLabelsMap";
 import moment from "moment";
 
-function LasHistory({surveys, setSurveys, user}) {
+function LasHistory({surveys}) {
 
     const router = useRouter()
-
-    async function deleteSurvey(id) {
-        await fetch("/api/delete-survey?surveyId=" + id)
-    }
-
-    async function getSurveys() {
-        const fetchedSurveys = await fetch("/api/get-surveys?userId=" + user._id)
-            .then(res => res.json())
-            .catch(err => console.warn(err))
-        setSurveys(fetchedSurveys)
-    }
 
     return (
         <div className={"grid grid-cols-1 lg:grid-cols-2"}>
@@ -26,7 +15,7 @@ function LasHistory({surveys, setSurveys, user}) {
                             className={"rounded shadow mr-5 mb-5 text-sm overflow-hidden relative flex flex-col justify-between"}
                             key={survey.dream}>
                             <div
-                                className={"bg-indigo-600 p-3 truncate font-light text-white"}>{moment(survey.datestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}</div>
+                                className={"bg-gray-700 p-3 truncate font-light text-white"}>{moment(survey.datestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}</div>
                             <div className={"flex flex-wrap"}>
                                 <div className={"flex-grow p-4"}>
                                     <div className={"my-2"}>
@@ -36,15 +25,12 @@ function LasHistory({surveys, setSurveys, user}) {
                                                 return <li key={i}>{labelMap[item]}</li>
                                             })}
                                         </ul>
+                                        <p className={"text-xs text-gray-600"}>Dream:</p>
+                                        <p className={"mt-0"}>{survey.dream}</p>
                                     </div>
-                                    <div>
-                                        <span
-                                            className={"text-gray-500 text-xs"}>Total Score:</span> {survey.totalScore}
-                                    </div>
-
                                 </div>
                             </div>
-                            <div className={"bg-gray-400 flex text-center text-white text-xs"}>
+                            <div className={"flex text-center text-white text-xs"}>
                                 {/*<div className={"bg-indigo-600 p-3 flex-1 cursor-pointer hover:bg-indigo-500"}
                                      onClick={() => {
                                          router.push({
@@ -59,7 +45,7 @@ function LasHistory({surveys, setSurveys, user}) {
                                          })
                                      }}>Map this survey
                                 </div>*/}
-                                <div className={"bg-gray-600 p-3 flex-1 cursor-pointer hover:bg-gray-500"}
+                                <div className={"p-3 flex-1 cursor-pointer bg-gradient-to-t from-green-600 to-green-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
                                      onClick={() => {
                                          router.push("/surveys/" + survey._id)
                                      }}>Review

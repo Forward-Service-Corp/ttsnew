@@ -1,12 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import {labelMap} from "../lib/serviceLabelsMap";
+import UserReferralItem from "./userReferralItem";
 
-function ReferralSelects({domains, setCurrentReferral, currentReferral, data, user, router, referrals}) {
-
-    const [userReferrals, setUserReferrals] = useState(referrals)
+function ReferralSelects({domains, setCurrentReferral, currentReferral, user, router, referrals, userReferrals, setUserReferrals}) {
 
     async function getUserReferrals() {
-        const userReferrals = await fetch("/api/get-referrals?userId=" + user.email + "&surveyId=" + router.query.surveyId)
+        const userReferrals = await fetch("/api/get-referrals?userId=" + user.email)
             .then(res => res.json())
         await setUserReferrals(userReferrals)
     }
@@ -39,6 +38,10 @@ function ReferralSelects({domains, setCurrentReferral, currentReferral, data, us
         })
     }
 
+    useEffect(() => {
+        getUserReferrals().then()
+    }, [])
+
     return (
         <div className={"flex-1"}>
             {domains.map((domain, i) => {
@@ -46,12 +49,12 @@ function ReferralSelects({domains, setCurrentReferral, currentReferral, data, us
                     <div key={i} className={" my-4 border-b-2 pb-4"}>
                         <div className={"text-sm mb-2"}><span
                             className={"text-gray-500"}>Life Area:</span> <p
-                            className={"text-indigo-600 text-lg"}>{labelMap[domain]}</p>
+                            className={"text-orange-600 text-lg"}>{labelMap[domain]}</p>
                         </div>
 
                         <div className={"flex"}>
                             <div className={"w-full"}>
-                                <select className={"w-full"} onChange={(e) => {
+                                <select id={domain} className={"w-full text-sm rounded"} onChange={(e) => {
                                     setCurrentReferral({
                                         domain: domain,
                                         name: e.target[e.target.selectedIndex].dataset.name,
@@ -63,9 +66,10 @@ function ReferralSelects({domains, setCurrentReferral, currentReferral, data, us
                                         contact: e.target[e.target.selectedIndex].dataset.contact,
                                         needs: e.target[e.target.selectedIndex].dataset.needs
                                     })
+
                                 }}>
-                                    <option value={""}></option>
-                                    {data.referrals && data.referrals.filter(item => item.service === domain).map((referral, i) => {
+                                    <option value={`Please select a referral for ${labelMap[domain]}...`}>Please select a referral for {labelMap[domain]}...</option>
+                                    {referrals && referrals.filter(item => item.service === domain).map((referral, i) => {
                                         return (
                                             <option key={i} value={referral._id}
                                                     data-name={referral.name}
@@ -84,27 +88,21 @@ function ReferralSelects({domains, setCurrentReferral, currentReferral, data, us
                                 </select>
                                 <button
                                     disabled={Object.keys(currentReferral).length === 0 || currentReferral.domain !== domain}
-                                    className={"bg-indigo-600 text-white px-4 py-2 text-xs rounded mt-3 mb-4 disabled:bg-gray-400"}
+                                    className={"text-white px-4 py-2 text-xs rounded mt-3 mb-4 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
                                     onClick={() => {
-                                        saveReferral(domain)
+                                        saveReferral()
                                             .then(() => {
                                                 getUserReferrals().then(() => {
                                                     setCurrentReferral({})
                                                 })
                                             })
+                                        document.getElementById(domain).selectedIndex = 0
                                     }}>+ Save
                                 </button>
                                 <div>
-                                    {userReferrals && userReferrals.filter(item => item.domain === domain).map((referral, i) => {
+                                    {userReferrals && userReferrals.filter(item => item.domain === domain).map((referral) => {
                                         return (
-                                            <div key={i}><span
-                                                className={"text-sm"}>{referral.name}</span> - <span
-                                                className={"text-xs underline text-red-600 cursor-pointer"}
-                                                onClick={() => {
-                                                    deleteReferral(referral._id)
-                                                        .then(() => getUserReferrals())
-                                                }}>delete</span>
-                                            </div>
+                                            <UserReferralItem key={referral._id} deleteReferral={deleteReferral} getUserReferrals={getUserReferrals} referral={referral}/>
                                         )
                                     })}
                                 </div>

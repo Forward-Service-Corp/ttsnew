@@ -1,49 +1,21 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
-import {useEffect, useState} from "react";
-import {labelMap} from "../lib/serviceLabelsMap";
+import {useState} from "react";
 import {useRouter} from "next/router";
 import CurrentReferral from "../components/currentReferral";
 import Link from "next/link";
 import Head from "next/head";
 import moment from "moment";
 import ReferralSelects from "../components/referralSelects";
+import {WarningCircle} from "phosphor-react";
 
-export default function MapOfMyDreams({pageDataJson}) {
-    const {user, surveys, referrals} = pageDataJson
+export default function MapOfMyDreams({pageDataJson, referralJson}) {
+    const {user, surveys} = pageDataJson
+    const {referrals, domains} = referralJson
     const router = useRouter()
-    const [data, setData] = useState({})
-    const [domains, setDomains] = useState([])
-    const [currentSurvey, setCurrentSurvey] = useState(surveys.filter(survey => survey._id === router.query.surveyId))
+    const currentSurvey = surveys.filter(survey => survey._id === router.query.surveyId)
     const [currentReferral, setCurrentReferral] = useState({})
-
-
-    async function getReferrals() {
-        const data = await fetch("/api/get-referral-alt", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                county: router.query.county,
-                domain: router.query.domain
-            })
-        }).then(res => res.json())
-
-        await setData(data)
-
-        if (data.domain && Array.isArray(data.domain)) {
-            await setDomains(data.domain)
-        } else {
-            await setDomains(data.domain.split(" "))
-        }
-    }
-
-    useEffect(() => {
-        getReferrals()
-            .then(res => console.log(res))
-            .catch(err => console.warn(err))
-    }, [])
+    const [userReferrals, setUserReferrals] = useState(referrals)
 
     if (currentSurvey.length === 0) {
         return (
@@ -61,8 +33,10 @@ export default function MapOfMyDreams({pageDataJson}) {
             <Head>
                 <title>TTS / Map of My Dreams</title>
             </Head>
-            <div className={"p-3 text-sm text-white bg-indigo-600 rounded shadow"}>Please select a referral for each
-                priority area.
+            <div
+                className={`p-3 text-sm text-white bg-red-600 rounded flex justify-start items-center ${userReferrals.length >= domains.length ? "hidden" : "visible"}`}>
+                <span className={"mr-2"}><WarningCircle size={32} weight="thin" color={"white"}/></span>
+                <span className={""}>Please select a referral for each priority area.</span>
             </div>
             <div className={""}>
                 <div className={"flex py-4 w-full"}>
@@ -78,12 +52,20 @@ export default function MapOfMyDreams({pageDataJson}) {
 
                 <div className={"flex flex-col md:flex-row"}>
                     <CurrentReferral currentReferral={currentReferral}/>
-                    <ReferralSelects domains={domains} currentReferral={currentReferral} setCurrentReferral={setCurrentReferral} data={data} user={user} router={router} referrals={referrals}/>
+                    <ReferralSelects domains={domains}
+                                     currentReferral={currentReferral}
+                                     setCurrentReferral={setCurrentReferral}
+                                     user={user}
+                                     router={router}
+                                     referrals={referrals}
+                                     userReferrals={userReferrals}
+                                     setUserReferrals={setUserReferrals}/>
 
                 </div>
                 <div className={"flex justify-end"}>
                     <Link href={"/care-plans"} passhref>
-                        <a className={"px-6 py-2 bg-indigo-600 text-xs rounded text-white"}>Go to Care Plans</a>
+                        <a className={"px-6 py-2 text-xs rounded text-white bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Go
+                            to Care Plans</a>
                     </Link>
                 </div>
             </div>
@@ -96,6 +78,8 @@ export async function getServerSideProps(context) {
     if (!session) return {redirect: {destination: "/login", permanent: false}}
     const {req} = context;
 
+    console.log(context.query)
+
     const protocol = req.headers['x-forwarded-proto'] || 'http'
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
@@ -104,9 +88,14 @@ export async function getServerSideProps(context) {
     const getPageData = await fetch(pageDataUrl)
     const pageDataJson = await getPageData.json()
 
+    //referral options
+    const referralOptionsUrl = baseUrl + "/api/get-referral-options?county=" + context.query.county + "&domain=" + context.query.domain
+    const getReferralOptions = await fetch(referralOptionsUrl)
+    const referralJson = await getReferralOptions.json()
+
     return {
         props: {
-            pageDataJson,
+            pageDataJson, referralJson
         }
     }
 

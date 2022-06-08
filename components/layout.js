@@ -24,21 +24,24 @@ export default function Layout({children, title, session, loadingState}) {
     const router = useRouter()
     return (
         <>
-            <div className={`fixed w-full h-full bg-gray-600 bg-opacity-50 flex align-middle justify-center ${loadingState ? "visible" : "hidden"}`}>
-                <div className={"uppercase text-white self-center rounded-full p-5 bg-orange-600 shadow"}>loading...</div></div>
+            <div
+                className={`fixed w-full h-full bg-gray-600 bg-opacity-50 flex align-middle justify-center ${loadingState ? "visible" : "hidden"}`}>
+                <div className={"uppercase text-white self-center rounded-full p-5 bg-orange-600 shadow"}>loading...
+                </div>
+            </div>
             <div className="min-h-full">
-                <div className="bg-gradient-to-r from-gray-900 to-gray-800 pb-32 print:hidden">
-                    <Disclosure as="nav" className="bg-gradient-to-r from-gray-900 to-gray-800">
+                <div className="bg-gradient-to-r from-orange-600 to-orange-400 pb-32 print:hidden">
+                    <Disclosure as="nav" className="bg-gradient-to-r from-orange-600 to-orange-400">
                         {({open}) => (
                             <>
                                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                                    <div className="border-b border-gray-700">
+                                    <div className="border-b border-orange-400">
                                         <div className="flex items-center justify-between h-16 px-4 sm:px-0">
                                             <div className="flex items-center">
                                                 <div className="flex-shrink-0">
                                                     <img
-                                                        className="h-8 w-8"
-                                                        src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                                                        className="w-[90px]"
+                                                        src="/img/TTS_Logo2_vertical.png"
                                                         alt="Workflow"
                                                     />
                                                 </div>
@@ -50,8 +53,8 @@ export default function Layout({children, title, session, loadingState}) {
                                                                 href={item.href}
                                                                 className={classNames(
                                                                     router.pathname === item.href
-                                                                        ? 'bg-gray-900 text-white'
-                                                                        : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                                                        ? 'bg-orange-700 text-white'
+                                                                        : 'text-white hover:bg-orange-400 hover:text-white',
                                                                     'px-3 py-2 rounded-md text-sm font-medium'
                                                                 )}
                                                                 aria-current={item.current ? 'page' : undefined}
@@ -63,8 +66,8 @@ export default function Layout({children, title, session, loadingState}) {
                                                             href={"/users"}
                                                             className={classNames(
                                                                 router.pathname === "/users"
-                                                                    ? 'bg-gray-900 text-white'
-                                                                    : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                                                    ? 'bg-orange-700 text-white'
+                                                                    : 'text-white hover:bg-orange-400 hover:text-white',
                                                                 'px-3 py-2 rounded-md text-sm font-medium'
                                                             )}
                                                             aria-current={router.pathname === "/users" ? 'page' : undefined}
@@ -75,8 +78,8 @@ export default function Layout({children, title, session, loadingState}) {
                                                             href={"/directory"}
                                                             className={classNames(
                                                                 router.pathname === "/directory"
-                                                                    ? 'bg-gray-900 text-white'
-                                                                    : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                                                    ? 'bg-orange-700 text-white'
+                                                                    : 'text-white hover:bg-orange-400 hover:text-white',
                                                                 'px-3 py-2 rounded-md text-sm font-medium'
                                                             )}
                                                             aria-current={router.pathname === "/directory" ? 'page' : undefined}
@@ -88,13 +91,13 @@ export default function Layout({children, title, session, loadingState}) {
                                             </div>
                                             <div className="hidden md:block">
                                                 <div className="ml-4 flex items-center md:ml-6">
-                                                    <button
-                                                        type="button"
-                                                        className="bg-gray-800 p-1 text-gray-400 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                                                    >
-                                                        <span className="sr-only">View notifications</span>
-                                                        <BellIcon className="h-6 w-6" aria-hidden="true"/>
-                                                    </button>
+                                                    {/*<button*/}
+                                                    {/*    type="button"*/}
+                                                    {/*    className="bg-orange-500 p-1 text-gray-400 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-orange-200 focus:ring-white"*/}
+                                                    {/*>*/}
+                                                    {/*    <span className="sr-only">View notifications</span>*/}
+                                                    {/*    <BellIcon className="h-6 w-6" aria-hidden="true"/>*/}
+                                                    {/*</button>*/}
 
                                                     {/* Profile dropdown */}
                                                     <Menu as="div" className="ml-3 relative">
@@ -102,7 +105,8 @@ export default function Layout({children, title, session, loadingState}) {
                                                             <Menu.Button
                                                                 className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                                                                 <span className="sr-only">Open user menu</span>
-                                                                <img className="h-8 w-8 rounded-full" src={session.image} alt="" />
+                                                                <img className="h-8 w-8 rounded-full"
+                                                                     src={session.image} alt=""/>
                                                             </Menu.Button>
                                                         </div>
                                                         <Transition
@@ -123,7 +127,7 @@ export default function Layout({children, title, session, loadingState}) {
                                                                                 href={item.href}
                                                                                 className={classNames(
                                                                                     active ? 'bg-gray-100' : '',
-                                                                                    'block px-4 py-2 text-sm text-gray-700'
+                                                                                    'block px-4 py-2 text-sm text-white'
                                                                                 )}
                                                                             >
                                                                                 {item.name}
@@ -178,7 +182,7 @@ export default function Layout({children, title, session, loadingState}) {
                                                 as="a"
                                                 href={item.href}
                                                 className={classNames(
-                                                    router.pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                                    router.pathname === item.href ? 'bg-orange-700 text-white' : 'text-white hover:bg-gray-700 hover:text-white',
                                                     'block px-3 py-2 rounded-md text-base font-medium'
                                                 )}
                                                 aria-current={item.current ? 'page' : undefined}
@@ -196,15 +200,15 @@ export default function Layout({children, title, session, loadingState}) {
                                                 <div
                                                     className="text-base font-medium leading-none text-white">{session.name}</div>
                                                 <div
-                                                    className="text-sm font-medium leading-none text-gray-400">{session.email}</div>
+                                                    className="text-sm font-medium leading-none text-white">{session.email}</div>
                                             </div>
-                                            <button
-                                                type="button"
-                                                className="ml-auto bg-gray-800 flex-shrink-0 p-1 text-gray-400 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                                            >
-                                                <span className="sr-only">View notifications</span>
-                                                <BellIcon className="h-6 w-6" aria-hidden="true"/>
-                                            </button>
+                                            {/*<button*/}
+                                            {/*    type="button"*/}
+                                            {/*    className="ml-auto bg-gray-800 flex-shrink-0 p-1 text-gray-400 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"*/}
+                                            {/*>*/}
+                                            {/*    <span className="sr-only">View notifications</span>*/}
+                                            {/*    <BellIcon className="h-6 w-6" aria-hidden="true"/>*/}
+                                            {/*</button>*/}
                                         </div>
                                         <div className="mt-3 px-2 space-y-1">
                                             {userNavigation.map((item) => (
@@ -212,13 +216,13 @@ export default function Layout({children, title, session, loadingState}) {
                                                     key={item.name}
                                                     as="a"
                                                     href={item.href}
-                                                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+                                                    className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
                                                 >
                                                     {item.name}
                                                 </Disclosure.Button>
                                             ))}
                                             <Disclosure.Button
-                                                className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+                                                className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
                                                 onClick={() => {
                                                     signOut()
                                                         .then(() => {
@@ -236,7 +240,7 @@ export default function Layout({children, title, session, loadingState}) {
                     </Disclosure>
                     <header className="py-10">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <h1 className="text-3xl font-light text-white">{title}</h1>
+                            <h1 className="text-3xl font-light text-white font-serif">{title}</h1>
                         </div>
                     </header>
                 </div>
