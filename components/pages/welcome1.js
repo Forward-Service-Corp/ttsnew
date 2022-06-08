@@ -32,7 +32,7 @@ function Welcome1() {
 
             <div className={"p-5 bg-[#eeeada] my-5 rounded flex flex-wrap justify-between align-middle"}>
                 <div className={"flex-none"}>
-                    <Image src={"/img/Transition+to+Success+Map copy.png"} width={250} height={200} alt={"image for quotes"}/>
+                    <Image src={"/img/birdsroad.png"} width={250} height={200} alt={"image for quotes"}/>
                 </div>
                 <div className={"flex-grow ml-10"}>
                     <p className={"font-bold  font-serif"}>&quot;If at first you don&apos;t succeed try and try
