@@ -2,10 +2,20 @@ import Layout from "../../components/layout";
 import {getSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import Head from "next/head";
+import {useEffect, useState} from "react";
 
-export default function User({viewingUser, pageDataJson}) {
+export default function User({viewingUser, pageDataJson, coachesJson}) {
 
-    const {user, dreams} = pageDataJson
+    const {user} = pageDataJson
+    const [role, setRole] = useState(viewingUser.level)
+    const [roleChanged, setRoleChanged] = useState(false)
+    const [newCoaches, setNewCoaches] = useState(viewingUser.coach)
+    const [dataChanged, setDataChanged] = useState(false)
+
+
+    useEffect(() => {
+       document.getElementById("roleSelect").value = role
+    },[])
 
     return (
         <Layout title={viewingUser.name} session={user}>
@@ -50,15 +60,47 @@ export default function User({viewingUser, pageDataJson}) {
                 </div>
             </div>
             <div className={"py-6"}>
-                <h2 className={"uppercase text-gray-500"}>Dreams</h2>
-                {dreams.map((dream, i) => {
+                <h2 className={"uppercase text-gray-500"}>Role</h2>
+                <select id={"roleSelect"} onChange={(e) => {
+                    setRole(e.target.value)
+                    setRoleChanged(true)
+                }}>
+                    <option value={""}>Select a new role...</option>
+                    <option value={"client"}>client</option>
+                    <option value={"coach"}>coach</option>
+                    <option value={"admin"}>admin</option>
+                </select>
+                <button disabled={!roleChanged}
+                        className={" ml-3 py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Save role updates</button>
+            </div>
+            <div className={"bg-gray-200 p-6 mb-5 rounded"}>
+                <h2 className={"uppercase text-gray-500"}>Coach Assignments</h2>
+                {coachesJson && coachesJson.sort((a, b) => b.name - a.name).map(coach => {
                     return (
-                        <div key={i}>{dream.dream}</div>
+                        <div key={coach.email} className={"p-1"}>
+                            <input className={"mr-1"}
+                                defaultChecked={newCoaches.indexOf(coach.email) > -1}
+                                onChange={(e) => {
+                                    if(newCoaches.indexOf(e.target.value) === -1){
+                                        setNewCoaches(prevState => [...prevState, e.target.value])
+                                    }else{
+                                        setNewCoaches(prevState => prevState.filter(coach => coach !== e.target.value))
+                                    }
+                                }}
+                                value={coach.email}
+                                type={"checkbox"}
+                                id={coach.email}
+                                name={coach.name}/>
+                            <label htmlFor={coach.email}>{coach.name}</label>
+                        </div>
                     )
                 })}
             </div>
             <div>
-                <h2 className={"uppercase text-gray-500"}>Surveys</h2>
+                <div className={"flex justify-end"}>
+                    <button disabled={!dataChanged}
+                        className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Save coach updates</button>
+                </div>
             </div>
         </Layout>
     )
@@ -82,9 +124,14 @@ export async function getServerSideProps(context) {
     const getViewingUser = await fetch(userUrl)
     const viewingUserJson = await getViewingUser.json()
 
+    // all coaches data
+    const coachesUrl = baseUrl + "/api/get-all-coaches"
+    const getCoaches = await fetch(coachesUrl)
+    const coachesJson = await getCoaches.json()
+
     return {
         props: {
-            pageDataJson,
+            pageDataJson, coachesJson,
             viewingUser: viewingUserJson,
         }
     }
