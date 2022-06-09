@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import CarePlanDomain from "./carePlanDomain";
-import {CaretDoubleDown, CaretDoubleUp, Trash} from "phosphor-react";
+import {CaretDoubleDown, CaretDoubleUp, Trash, CheckCircle} from "phosphor-react";
 import TaskTodo from "./taskTodo";
 import NoteItem from "./noteItem";
 import {labelMap} from "../lib/serviceLabelsMap";
@@ -41,6 +41,10 @@ function ReferralContainer({item, user, notes, setUserReferrals}) {
         await fetch("/api/delete-referral?referralId=" + referralId)
     }
 
+    async function setReferralStatus(referralId, status) {
+        await fetch("/api/set-referral-status?referralId=" + referralId + "&status=" + status)
+    }
+
     async function getReferrals() {
         const fetchedReferrals = await fetch("/api/get-referrals?userId=" + user.email)
             .then(res => res.json())
@@ -67,15 +71,35 @@ function ReferralContainer({item, user, notes, setUserReferrals}) {
                 </div>
             </div>
             <div className={`flex justify-end items-center bg-gray-200 p-2 ${open ? "visible" : "hidden"}`}>
-                <div className={"flex items-center cursor-pointer"} onClick={() => {
-                    if(confirm("You are about to delete this referral and all of its details. This cannot be undone.")){
-                        deleteReferral(item._id).then(getReferrals)
-                    }
+                {item.hasOwnProperty("archived") && item.archived === "true" ?
+                    <div className={"flex items-center cursor-pointer"} onClick={() => {
+                        setReferralStatus(item._id, false).then(getReferrals)
+                    }}>
+                        <div><CheckCircle size={20} weight={"thin"} color={"blue"}/></div>
+                        <div className={"text-blue-600 text-xs cursor-pointer"}>Make active again</div>
+                    </div>
+                    :
+                    <div className={"flex items-center cursor-pointer"} onClick={() => {
+                        setReferralStatus(item._id, true).then(getReferrals)
+                    }}>
+                        <div><CheckCircle size={20} weight={"thin"} color={"blue"}/></div>
+                        <div className={"text-blue-600 text-xs cursor-pointer"}>Mark referral complete</div>
+                    </div>
+                }
 
-                }}>
-                    <div><Trash size={20} weight={"thin"} color={"red"}/></div>
-                    <div className={"text-red-600 text-xs"}>Delete this referral</div>
-                </div>
+
+                {item.hasOwnProperty("archived") && item.archived === "true" ?
+                    <div className={"flex items-center cursor-pointer ml-5"} onClick={() => {
+                        if (confirm("You are about to delete this referral and all of its details. This cannot be undone.")) {
+                            deleteReferral(item._id).then(getReferrals)
+                        }
+                    }}>
+                        <div><Trash size={20} weight={"thin"} color={"red"}/></div>
+                        <div className={"text-red-600 text-xs cursor-pointer"}>Delete this referral</div>
+                    </div>
+                : null}
+
+
             </div>
             <div className={`flex ${open ? "visible" : "hidden"} flex-col md:flex-row`}>
                 <CarePlanDomain item={item}/>

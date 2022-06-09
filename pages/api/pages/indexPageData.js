@@ -15,7 +15,7 @@ export default async(req, res) => {
     const user = await db.collection("users").findOne(userQuery)
     const dreams = await db.collection("dreams").find(UID).toArray()
     const surveys = await db.collection("lifeAreaSurveys").find(UID).toArray()
-    const referrals = await db.collection("referrals").find(UID).toArray()
+    const referrals = await db.collection("referrals").find(UID).sort("domain").toArray()
     const tasks = await db.collection("todos").find(UID).toArray()
     const notes = await db.collection("notes").find(UID).toArray()
 

@@ -6,12 +6,32 @@ import {useEffect, useState} from "react";
 
 export default function User({viewingUser, pageDataJson, coachesJson}) {
 
+    const router = useRouter()
     const {user} = pageDataJson
     const [role, setRole] = useState(viewingUser.level)
     const [roleChanged, setRoleChanged] = useState(false)
     const [newCoaches, setNewCoaches] = useState(viewingUser.coach || [])
     const [dataChanged, setDataChanged] = useState(false)
 
+    async function saveRole(){
+        await fetch("/api/save-role?role=" + role)
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => console.warn(err))
+        router.reload()
+    }
+
+    async function saveCoaches(){
+        await fetch("/api/save-coaches", {
+            headers
+        })
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => console.warn(err))
+        router.reload()
+    }
 
     useEffect(() => {
        document.getElementById("roleSelect").value = role

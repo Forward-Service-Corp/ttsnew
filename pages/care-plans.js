@@ -15,7 +15,14 @@ export default function CarePlans({pageDataJson}) {
                 <title>TTS / Care Plans</title>
             </Head>
             <h2 className={"uppercase text-gray-500 mb-4"}>Manage Care Plans</h2>
-            {userReferrals.map(item => {
+            {userReferrals.filter(item => !item.hasOwnProperty("archived") || item.archived === "false").map(item => {
+                return (
+                    <ReferralContainer key={item._id} item={item} user={user} notes={notes} setUserReferrals={setUserReferrals}/>
+                )
+            })}
+
+            <h2 className={"uppercase text-gray-500 mb-4 mt-10"}>Archived Care Plans</h2>
+            {userReferrals.filter(item => item.hasOwnProperty("archived") && item.archived === "true").map(item => {
                 return (
                     <ReferralContainer key={item._id} item={item} user={user} notes={notes} setUserReferrals={setUserReferrals}/>
                 )
