@@ -3,13 +3,14 @@ import {signOut} from "next-auth/react"
 import {Disclosure, Menu, Transition} from '@headlessui/react'
 import {BellIcon, MenuIcon, XIcon} from '@heroicons/react/outline'
 import {useRouter} from "next/router";
+import {UserCircleGear, UserCircle} from "phosphor-react";
 
 const navigation = [
     {name: 'Dashboard', href: '/', current: true},
     {name: 'Dreams', href: '/dreams', current: false},
     {name: 'Life Area Surveys', href: '/life-area-surveys', current: false},
-    // {name: 'Map of My Dreams', href: '/map-of-my-dreams', current: false},
     {name: 'Care Plans', href: '/care-plans', current: false},
+    {name: 'Directory', href: '/directory', current: false},
 ]
 const userNavigation = [
     {name: 'Your Profile', href: '/profile'},
@@ -62,30 +63,38 @@ export default function Layout({children, title, session, loadingState}) {
                                                                 {item.name}
                                                             </a>
                                                         ))}
-                                                        <a
-                                                            href={"/users"}
-                                                            className={classNames(
-                                                                router.pathname === "/users"
-                                                                    ? 'bg-orange-700 text-white'
-                                                                    : 'text-white hover:bg-orange-400 hover:text-white',
-                                                                'px-3 py-2 rounded-md text-sm font-medium'
-                                                            )}
-                                                            aria-current={router.pathname === "/users" ? 'page' : undefined}
-                                                        >
-                                                            My Clients
-                                                        </a>
-                                                        <a
-                                                            href={"/directory"}
-                                                            className={classNames(
-                                                                router.pathname === "/directory"
-                                                                    ? 'bg-orange-700 text-white'
-                                                                    : 'text-white hover:bg-orange-400 hover:text-white',
-                                                                'px-3 py-2 rounded-md text-sm font-medium'
-                                                            )}
-                                                            aria-current={router.pathname === "/directory" ? 'page' : undefined}
-                                                        >
-                                                            Directory
-                                                        </a>
+                                                        {/*Conditional Navigation*/}
+                                                        {session.level === "coach" || session.level === "admin" ?
+                                                            <a
+                                                                href={"/clients"}
+                                                                className={classNames(
+                                                                    router.pathname === "/clients"
+                                                                        ? 'bg-orange-700 text-white'
+                                                                        : 'text-white hover:bg-orange-400 hover:text-white',
+                                                                    'px-3 py-2 rounded-md text-sm font-medium'
+                                                                )}
+                                                                aria-current={router.pathname === "/clients" ? 'page' : undefined}
+                                                            >
+                                                                My Clients
+                                                            </a> : null
+                                                        }
+
+                                                        {session.level === "admin" ?
+                                                            <a
+                                                                href={"/users"}
+                                                                className={classNames(
+                                                                    router.pathname === "/users"
+                                                                        ? 'bg-orange-700 text-white'
+                                                                        : 'text-white hover:bg-orange-400 hover:text-white',
+                                                                    'px-3 py-2 rounded-md text-sm font-medium'
+                                                                )}
+                                                                aria-current={router.pathname === "/users" ? 'page' : undefined}
+                                                            >
+                                                                Users
+                                                            </a> : null
+                                                        }
+
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -103,10 +112,13 @@ export default function Layout({children, title, session, loadingState}) {
                                                     <Menu as="div" className="ml-3 relative">
                                                         <div>
                                                             <Menu.Button
-                                                                className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                                                                className="max-w-xs bg-orange-600 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                                                                 <span className="sr-only">Open user menu</span>
-                                                                <img className="h-8 w-8 rounded-full"
-                                                                     src={session.image} alt=""/>
+                                                                {session.image ? <img className="h-8 w-8 rounded-full"
+                                                                                      src={session.image} alt=""/> :
+                                                                    <UserCircleGear size={32} weight="thin"
+                                                                                    color={"white"}/>}
+
                                                             </Menu.Button>
                                                         </div>
                                                         <Transition
@@ -127,7 +139,7 @@ export default function Layout({children, title, session, loadingState}) {
                                                                                 href={item.href}
                                                                                 className={classNames(
                                                                                     active ? 'bg-gray-100' : '',
-                                                                                    'block px-4 py-2 text-sm text-white'
+                                                                                    'block px-4 py-2 text-sm text-black'
                                                                                 )}
                                                                             >
                                                                                 {item.name}
@@ -194,7 +206,11 @@ export default function Layout({children, title, session, loadingState}) {
                                     <div className="pt-4 pb-3 border-t border-gray-700">
                                         <div className="flex items-center px-5">
                                             <div className="flex-shrink-0">
-                                                <img className="h-10 w-10 rounded-full" src={session.image} alt=""/>
+                                                {session.image ?
+                                                    <img className="h-10 w-10 rounded-full" src={session.image}
+                                                         alt=""/> :
+                                                    <UserCircle size={32} weight="thin" color={"white"}/>}
+
                                             </div>
                                             <div className="ml-3">
                                                 <div

@@ -16,6 +16,10 @@ export default function User({viewingUser, pageDataJson}) {
                 <h2 className={"uppercase text-gray-500 mb-3"}>Personal Details</h2>
                 <div className={"flex"}>
                     <div className={"flex-1"}>
+                        <div>
+                            <p className={"text-gray-500 text-xs"}>Name</p>
+                            <p>{viewingUser.name}</p>
+                        </div>
                         <p className={"text-gray-500 text-xs"}>Email</p>
                         <p>{viewingUser.email}</p>
                         <p className={"text-gray-500 text-xs mt-4"}>Phone</p>
@@ -24,7 +28,7 @@ export default function User({viewingUser, pageDataJson}) {
                         <p>{viewingUser._id}</p>
                         <p className={"text-gray-500 text-xs mt-4"}>County</p>
                         <ul>
-                            {viewingUser.county.map(county => (
+                            {viewingUser.county && viewingUser.county.map(county => (
                                 <li key={county}>{county}</li>
                             ))}
                         </ul>
@@ -38,8 +42,8 @@ export default function User({viewingUser, pageDataJson}) {
                         <p>{viewingUser.state}</p>
                         <p className={"text-gray-500 text-xs mt-4"}>Programs</p>
                         <ul>
-                            {viewingUser.programs.map((county, i) => (
-                                <li key={i}>{county}</li>
+                            {viewingUser.programs && viewingUser.programs.map((program, i) => (
+                                <li key={i}>{program}</li>
                             ))}
                         </ul>
                     </div>

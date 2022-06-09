@@ -6,7 +6,8 @@ export default async(req, res) => {
         dream: req.body.dream,
         dreamNeed: req.body.dreamNeed,
         dreamHelp: req.body.dreamHelp,
-        userId: req.body.userId
+        userId: req.body.userId,
+        timestamp: new Date()
     }
 
     const {db} = await connectToDatabase()
