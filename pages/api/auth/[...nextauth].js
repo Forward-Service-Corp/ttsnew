@@ -18,4 +18,13 @@ export default NextAuth({
     ],
     secret: process.env.NEXTAUTH_SECRET,
     url: process.env.NEXTAUTH_URL,
+    callbacks: {
+        async signIn({user, account, profile, email, credentials}){
+            if(!user?.level){
+                user.level = "client"
+                user.timestamp = new Date()
+            }
+            return true
+        }
+    }
 })

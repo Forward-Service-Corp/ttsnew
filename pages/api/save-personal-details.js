@@ -10,11 +10,12 @@ export default async (req, res) => {
             { _id: ObjectId(req.body.userId) },
             {
                 $set: {
+                    name: req.body.name,
                     street: req.body.street,
                     city: req.body.city,
                     state: req.body.state,
                     zip: req.body.zip,
-                    county: req.body.county,
+                    county: req.body.counties,
                     phone: req.body.phone
                 }
             }

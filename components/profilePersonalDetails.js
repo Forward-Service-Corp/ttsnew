@@ -24,7 +24,7 @@ function ProfilePersonalDetails({user}) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                street, city, state, zip, counties, phone,
+                name, street, city, state, zip, counties, phone,
                 userId: user._id
             })
         })
@@ -53,7 +53,7 @@ function ProfilePersonalDetails({user}) {
             <h2 className={"uppercase text-gray-500 font-light mb-3"}>Personal Details</h2>
             <div className={"flex flex-col lg:flex-row"}>
                 <div className={"lg:flex-1 lg:mr-10"}>
-                    {inputJSX("Name", name, setName, true)}
+                    {inputJSX("Name", name, setName)}
                     {inputJSX("Street", street, setStreet)}
                     {inputJSX("City", city, setCity)}
                     {inputJSX("State", state, setState)}

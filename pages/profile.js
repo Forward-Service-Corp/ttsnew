@@ -3,6 +3,7 @@ import {getSession} from "next-auth/react";
 import {useState} from "react";
 import ProfilePrograms from "../components/profilePrograms";
 import ProfilePersonalDetails from "../components/profilePersonalDetails";
+import OrganizationInformation from "../components/organizationInformation";
 
 export default function Profile({user}) {
 
@@ -38,7 +39,7 @@ export default function Profile({user}) {
             </div>
 
             <div className={`${currentTab === "tab3" ? "visible" : "hidden"}`}>
-                <h2 className={"uppercase text-gray-600 font-light mb-3"}>Organization Information</h2>
+                <OrganizationInformation user={user}/>
             </div>
         </Layout>
     )

@@ -11,7 +11,7 @@ export default function Clients({user, users}) {
     const [usersData, setUsersData] = useState()
 
     return (
-        <Layout title={"Users"} session={user}>
+        <Layout title={"My Clients"} session={user}>
             <Head>
                 <title>TTS / My Clients</title>
             </Head>
