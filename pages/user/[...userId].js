@@ -9,7 +9,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
     const {user} = pageDataJson
     const [role, setRole] = useState(viewingUser.level)
     const [roleChanged, setRoleChanged] = useState(false)
-    const [newCoaches, setNewCoaches] = useState(viewingUser.coach)
+    const [newCoaches, setNewCoaches] = useState(viewingUser.coach || [])
     const [dataChanged, setDataChanged] = useState(false)
 
 
@@ -79,9 +79,9 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
                     return (
                         <div key={coach.email} className={"p-1"}>
                             <input className={"mr-1"}
-                                defaultChecked={newCoaches.indexOf(coach.email) > -1}
+                                defaultChecked={newCoaches && newCoaches.indexOf(coach.email) > -1}
                                 onChange={(e) => {
-                                    if(newCoaches.indexOf(e.target.value) === -1){
+                                    if(newCoaches && newCoaches.indexOf(e.target.value) === -1){
                                         setNewCoaches(prevState => [...prevState, e.target.value])
                                     }else{
                                         setNewCoaches(prevState => prevState.filter(coach => coach !== e.target.value))
