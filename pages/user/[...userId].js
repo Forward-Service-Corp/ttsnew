@@ -13,8 +13,8 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
     const [newCoaches, setNewCoaches] = useState(viewingUser.coach || [])
     const [dataChanged, setDataChanged] = useState(false)
 
-    async function saveRole(){
-        await fetch("/api/save-role?role=" + role)
+    async function saveRole() {
+        await fetch("/api/save-role?userId=" + viewingUser._id + "&role=" + role)
             .then(res => {
                 console.log(res)
             })
@@ -22,9 +22,16 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
         router.reload()
     }
 
-    async function saveCoaches(){
+    async function saveCoaches() {
         await fetch("/api/save-coaches", {
-            headers
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                userId: viewingUser._id,
+                coaches: newCoaches
+            })
         })
             .then(res => {
                 console.log(res)
@@ -34,8 +41,8 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
     }
 
     useEffect(() => {
-       document.getElementById("roleSelect").value = role
-    },[])
+        document.getElementById("roleSelect").value = role
+    }, [])
 
     return (
         <Layout title={viewingUser.name} session={user}>
@@ -91,7 +98,10 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
                     <option value={"admin"}>admin</option>
                 </select>
                 <button disabled={!roleChanged}
-                        className={" ml-3 py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Save role updates</button>
+                        onClick={saveRole}
+                        className={" ml-3 py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Save
+                    role updates
+                </button>
             </div>
             <div className={"bg-gray-200 p-6 mb-5 rounded"}>
                 <h2 className={"uppercase text-gray-500"}>Coach Assignments</h2>
@@ -99,18 +109,19 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
                     return (
                         <div key={coach.email} className={"p-1"}>
                             <input className={"mr-1"}
-                                defaultChecked={newCoaches && newCoaches.indexOf(coach.email) > -1}
-                                onChange={(e) => {
-                                    if(newCoaches && newCoaches.indexOf(e.target.value) === -1){
-                                        setNewCoaches(prevState => [...prevState, e.target.value])
-                                    }else{
-                                        setNewCoaches(prevState => prevState.filter(coach => coach !== e.target.value))
-                                    }
-                                }}
-                                value={coach.email}
-                                type={"checkbox"}
-                                id={coach.email}
-                                name={coach.name}/>
+                                   defaultChecked={newCoaches && newCoaches.indexOf(coach.email) > -1}
+                                   onChange={(e) => {
+                                       if (newCoaches && newCoaches.indexOf(e.target.value) === -1) {
+                                           setNewCoaches(prevState => [...prevState, e.target.value])
+                                       } else {
+                                           setNewCoaches(prevState => prevState.filter(coach => coach !== e.target.value))
+                                       }
+                                       setDataChanged(true)
+                                   }}
+                                   value={coach.email}
+                                   type={"checkbox"}
+                                   id={coach.email}
+                                   name={coach.name}/>
                             <label htmlFor={coach.email}>{coach.name}</label>
                         </div>
                     )
@@ -119,7 +130,10 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
             <div>
                 <div className={"flex justify-end"}>
                     <button disabled={!dataChanged}
-                        className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Save coach updates</button>
+                            onClick={saveCoaches}
+                            className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Save
+                        coach updates
+                    </button>
                 </div>
             </div>
         </Layout>
