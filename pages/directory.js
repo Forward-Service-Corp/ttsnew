@@ -28,7 +28,7 @@ export default function Directory({pageDataJson}) {
     }
 
     return (
-        <Layout title={"Directory"} session={user}>
+        <Layout title={"Referral Directory"} session={user}>
             <Head>
                 <title>TTS / Directory</title>
             </Head>
