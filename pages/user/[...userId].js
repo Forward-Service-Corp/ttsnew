@@ -45,9 +45,9 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
     }, [])
 
     return (
-        <Layout title={viewingUser.name} session={user}>
+        <Layout title={viewingUser.name || viewingUser.email} session={user}>
             <Head>
-                <title>TTS / User / {viewingUser.name}</title>
+                <title>TTS / User / {viewingUser.name || viewingUser.email}</title>
             </Head>
             <div>
                 <h2 className={"uppercase text-gray-500 mb-3"}>Personal Details</h2>

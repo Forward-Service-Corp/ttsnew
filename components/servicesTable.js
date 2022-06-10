@@ -46,8 +46,8 @@ export default function ServicesTable({services}) {
                                         </td>
                                         <td className=" px-1 py-1 text-sm text-gray-500">{service.service}</td>
                                         <td className="relative py-1 pl-1 pr-1 text-right text-sm font-medium sm:pr-6">
-                                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                Edit<span className="sr-only">, {service.name}</span>
+                                            <a href={"/referral/" + service._id} className="text-orange-600 hover:text-orange-900">
+                                                View/Edit<span className="sr-only">, {service.name}</span>
                                             </a>
                                         </td>
                                     </tr>

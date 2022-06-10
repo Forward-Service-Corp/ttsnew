@@ -48,10 +48,19 @@ export default function User({viewingUserData, pageDataJson}) {
             <div>
                 <div className={"flex justify-between"}>
                     <div><h2 className={"uppercase text-gray-500 mb-3"}>Personal Details</h2></div>
-                    <div className={"text-sm text-orange-500 underline cursor-pointer"} onClick={() => {
-                        setEditMode(!editMode)
-                    }}>Edit this client
-                    </div>
+                    {editMode ?
+                        <div className={"text-sm text-red-500 underline cursor-pointer"} onClick={() => {
+                            setEditMode(!editMode)
+                            router.reload()
+                        }}>Cancel editing
+                        </div>
+                        :
+                        <div className={"text-sm text-orange-500 underline cursor-pointer"} onClick={() => {
+                            setEditMode(!editMode)
+                        }}>Edit this client
+                        </div>
+                    }
+
                 </div>
 
                 <div className={"flex"}>
@@ -238,7 +247,8 @@ export default function User({viewingUserData, pageDataJson}) {
                     return (
                         <div key={i} onClick={() => {
                             router.push("/client/survey/" + survey._id)
-                        }} className={"text-sm text-orange-500 underline"}>{moment(survey.datestamp).format("MMMM-DD-yyyy")}</div>
+                        }}
+                             className={"text-sm text-orange-500 underline"}>{moment(survey.datestamp).format("MMMM-DD-yyyy")}</div>
                     )
                 })}
             </div>
