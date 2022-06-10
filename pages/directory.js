@@ -8,7 +8,7 @@ import {labelMap} from "../lib/serviceLabelsMap";
 
 export default function Directory({pageDataJson}) {
 
-    const {user, services} = pageDataJson
+    const {user} = pageDataJson
     const [loadedServices, setLoadedServices] = useState([])
     const [keyword, setKeyword] = useState("")
     const [domain, setDomain] = useState("")
@@ -28,7 +28,7 @@ export default function Directory({pageDataJson}) {
     }
 
     return (
-        <Layout title={"Directory"} session={user}>
+        <Layout title={"Referral Directory"} session={user}>
             <Head>
                 <title>TTS / Directory</title>
             </Head>
