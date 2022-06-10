@@ -1,3 +1,5 @@
+import {labelMap} from "../lib/serviceLabelsMap";
+
 export default function ServicesTable({services}) {
 
 
@@ -47,9 +49,9 @@ export default function ServicesTable({services}) {
                                         <td className="max-w-[200px] py-1 px-1 text-sm font-medium text-gray-900 sm:pl-6 truncate">
                                             {service.name}
                                         </td>
-                                        <td className=" px-1 py-1 text-sm text-gray-500 hidden md:table-cell">{service.service}</td>
+                                        <td className=" px-1 py-1 text-sm text-gray-500 hidden md:table-cell">{labelMap[service.service]}</td>
                                         <td className=" px-1 text-sm text-gray-500 hidden md:table-cell">{service.county}</td>
-                                        <td className="relative py-1 px-1 text-right text-sm font-medium sm:pr-6">
+                                        <td className="relative py-3 md:py-1 px-1 text-right text-sm font-medium sm:pr-6">
                                             <a href={"/referral/" + service._id} className="text-orange-600 hover:text-orange-900">
                                                 View<span className="sr-only">, {service.name}</span>
                                             </a>
