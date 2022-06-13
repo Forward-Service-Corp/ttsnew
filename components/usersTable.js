@@ -1,6 +1,9 @@
 import Link from "next/link";
+import {useState} from "react";
 
 export default function UsersTable({users}) {
+    const [searchTerm, setSearchTerm] = useState("")
+    const [userType, setUserType] = useState("")
     return (
         <div className="px-4 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-center">
@@ -9,6 +12,19 @@ export default function UsersTable({users}) {
                     <p className="mt-2 text-sm text-gray-700">
                         A list of all the users in your account including their name, title, email and role.
                     </p>
+                </div>
+                <div className={""}>
+                    <input type="text" value={searchTerm} placeholder={"Search users..."} onChange={(e) => {
+                        setSearchTerm(e.target.value)
+                    }}/>
+                    <select onChange={(e) => {
+                        setUserType(e.target.value)
+                    }}>
+                        <option value={""}>All</option>
+                        <option value={"client"}>Client</option>
+                        <option value={"coach"}>Coach</option>
+                        <option value={"admin"}>Admin</option>
+                    </select>
                 </div>
                 <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                     {/*<button*/}
@@ -26,16 +42,20 @@ export default function UsersTable({users}) {
                             <table className="min-w-full divide-y divide-gray-300">
                                 <thead className="bg-gray-50">
                                 <tr>
-                                    <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                                    <th scope="col"
+                                        className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                                         Name
                                     </th>
-                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    <th scope="col"
+                                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                         Phone
                                     </th>
-                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    <th scope="col"
+                                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                         Email
                                     </th>
-                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    <th scope="col"
+                                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                         Level
                                     </th>
                                     <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
@@ -44,7 +64,9 @@ export default function UsersTable({users}) {
                                 </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200 bg-white">
-                                {users.map((person) => (
+                                {users.filter(person => person.email.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) || person.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()))
+                                    .filter(person => person.level.includes(userType))
+                                    .map((person) => (
                                     <tr key={person.email}>
                                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                                             {person.name}
@@ -55,8 +77,8 @@ export default function UsersTable({users}) {
                                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                             <Link href={"/user/" + person._id}>
                                                 <a className="text-orange-600 hover:text-orange-900">
-                                                View/Edit<span className="sr-only">, {person.name}</span>
-                                            </a>
+                                                    View/Edit<span className="sr-only">, {person.name}</span>
+                                                </a>
                                             </Link>
                                         </td>
                                     </tr>
