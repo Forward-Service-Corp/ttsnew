@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import CarePlanDomain from "./carePlanDomain";
-import {CaretDoubleDown, CaretDoubleUp, Trash, CheckCircle} from "phosphor-react";
+import {CaretDoubleDown, CaretDoubleUp, Trash, CheckCircle, Files} from "phosphor-react";
 import TaskTodo from "./taskTodo";
 import NoteItem from "./noteItem";
 import {labelMap} from "../lib/serviceLabelsMap";
+import {useRouter} from "next/router";
+
 
 function ReferralContainer({item, user, notes, setUserReferrals}) {
+
+    const router = useRouter()
     const [open, setOpen] = useState(false)
     const [task, setTask] = useState("")
     const [allTasks, setAllTasks] = useState([])
@@ -70,7 +74,14 @@ function ReferralContainer({item, user, notes, setUserReferrals}) {
                         <CaretDoubleDown size={20} weight="thin"/>}</div>
                 </div>
             </div>
-            <div className={`flex justify-end items-center bg-gray-200 p-2 ${open ? "visible" : "hidden"}`}>
+            <div className={`flex justify-between items-center bg-gray-200 p-2 ${open ? "visible" : "hidden"}`}>
+                <div className={"flex items-center text-xs"} onClick={() => {
+                    router.push("/surveys/" + item.surveyId)
+                }}>
+                    <Files size={20} weight="thin" color={"blue"}/>
+                    <span className={"text-blue-600"}>View associated Life Area Survey</span>
+
+                </div>
                 {item.hasOwnProperty("archived") && item.archived === "true" ?
                     <div className={"flex items-center cursor-pointer"} onClick={() => {
                         setReferralStatus(item._id, false).then(getReferrals)
