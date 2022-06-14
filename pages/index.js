@@ -8,19 +8,19 @@ import Welcome1 from "../components/pages/welcome1"
 import Welcome2 from "../components/pages/welcome2"
 import Welcome3 from "../components/pages/welcome3"
 
-export default function Home({pageDataJson}) {
+export default function Home() {
 
     const router = useRouter()
-    const {user, dreams, surveys, referrals, tasks} = pageDataJson
-    const completedTasks = tasks.filter(task => eval(task.completed) === true).length
+    // const {user, dreams, surveys, referrals, tasks} = pageDataJson
+    // const completedTasks = tasks.filter(task => eval(task.completed) === true).length
     const [currentTab, setCurrentTab] = useState(1)
 
-    const stats = [
-        {name: 'Dreams', stat: dreams.length, link: "/dreams", label: "Add a dream"},
-        {name: 'Life Area Surveys', stat: surveys.length, link: "/life-area-surveys", label: "Complete a survey"},
-        {name: 'Referrals', stat: referrals.length, link: "/care-plans", label: "View all"},
-        {name: 'To-Do List', stat: completedTasks + " of " + tasks.length, link: "/", label: "Completed"},
-    ]
+    // const stats = [
+    //     {name: 'Dreams', stat: dreams.length, link: "/dreams", label: "Add a dream"},
+    //     {name: 'Life Area Surveys', stat: surveys.length, link: "/life-area-surveys", label: "Complete a survey"},
+    //     {name: 'Referrals', stat: referrals.length, link: "/care-plans", label: "View all"},
+    //     {name: 'To-Do List', stat: completedTasks + " of " + tasks.length, link: "/", label: "Completed"},
+    // ]
 
     function prevPage() {
         setCurrentTab(prevState => prevState - 1)
@@ -35,23 +35,23 @@ export default function Home({pageDataJson}) {
     }
 
     return (
-        <Layout title={"Dashboard"} session={user}>
+        <Layout title={"Dashboard"} session={{name: "", email: "", image: ""}}>
             <Head>
                 <title>TTS / Dashboard</title>
             </Head>
-            <div>
-                <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
-                    {stats.map((item) => (
-                        <div key={item.name}
-                             className="px-4 py-5 bg-[#eeeada] shadow rounded-lg overflow-hidden sm:p-6 text-center shadow-lg ">
-                            <dt className="text-xl font-light  font-serif">{item.name}</dt>
-                            <dd className="mt-1 text-3xl font-semibold ">{item.stat}</dd>
-                            <Link href={item.link}><a
-                                className={"text-orange-500 underline text-xs"}>{item.label}</a></Link>
-                        </div>
-                    ))}
-                </dl>
-            </div>
+            {/*<div>*/}
+            {/*    <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">*/}
+            {/*        {stats.map((item) => (*/}
+            {/*            <div key={item.name}*/}
+            {/*                 className="px-4 py-5 bg-[#eeeada] shadow rounded-lg overflow-hidden sm:p-6 text-center shadow-lg ">*/}
+            {/*                <dt className="text-xl font-light  font-serif">{item.name}</dt>*/}
+            {/*                <dd className="mt-1 text-3xl font-semibold ">{item.stat}</dd>*/}
+            {/*                <Link href={item.link}><a*/}
+            {/*                    className={"text-orange-500 underline text-xs"}>{item.label}</a></Link>*/}
+            {/*            </div>*/}
+            {/*        ))}*/}
+            {/*    </dl>*/}
+            {/*</div>*/}
             <div className={"flex justify-between py-8"}>
                 <div>
                     <button disabled={currentTab === 1} onClick={prevPage}
@@ -87,12 +87,12 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
-    const getPageData = await fetch(pageDataUrl)
-    const pageDataJson = await getPageData.json()
+    // const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    // const getPageData = await fetch(pageDataUrl)
+    // const pageDataJson = await getPageData.json()
 
     return {
-        props: {pageDataJson}
+        props: {}
     }
 
 }
