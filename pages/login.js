@@ -7,7 +7,7 @@ export default function Login() {
     const router = useRouter()
 
     if (session) {
-        router.push("/")
+        router.push("/").then()
         return (
             <div className={"h-screen w-screen bg-gray-700 flex align-middle justify-center"}>
                 <div className={"bg-white max-h-[300px] self-center p-4 text-center rounded shadow"}>
