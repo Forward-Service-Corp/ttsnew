@@ -12,8 +12,6 @@ export default function Dreams({pageDataJson}) {
     const [savedDreams, setSavedDreams] = useState(dreams)
     const [isLoading, setIsLoading] = useState(false)
 
-
-
     return (
         <Layout title={"Dreams"} session={user} loadingState={isLoading}>
             <Head>

@@ -3,41 +3,55 @@ import {getSession} from "next-auth/react";
 import {WICountiesList} from "../../lib/WI_Counties";
 import Head from "next/head";
 import {useState} from "react";
-import {XCircle} from "phosphor-react";
+import {CaretDoubleDown, CaretDoubleUp, XCircle} from "phosphor-react";
 import {useRouter} from "next/router";
 import moment from "moment";
+import ClientDetails from "../../components/clientDetails";
+import DreamSingle from "../../components/dreamSingle";
+import LasCurrent from "../../components/lasCurrent";
+import LasHistory from "../../components/lasHistory";
 
 export default function User({viewingUserData, pageDataJson}) {
 
     const router = useRouter()
     const {user} = pageDataJson
     const {dreams, surveys, tasks, referrals} = viewingUserData
+
     const [editMode, setEditMode] = useState(false)
     const [viewingUser, setViewingUser] = useState(viewingUserData.user)
+    const [savedDreams, setSavedDreams] = useState(dreams)
+    const [newDreamOpen, setNewDreamOpen] = useState(false)
+    const [dream, setDream] = useState("")
+    const [dreamNeed, setDreamNeed] = useState("")
+    const [dreamHelp, setDreamHelp] = useState("")
+    const [dreamSectionOpen, setDreamSectionOpen] = useState(false)
+    const [lasSectionOpen, setLasSectionOpen] = useState(false)
 
-    const [name, setName] = useState(viewingUser.name ? viewingUser.name : "")
-    const [email, setEmail] = useState(viewingUser.email ? viewingUser.email : "")
-    const [street, setStreet] = useState(viewingUser.street ? viewingUser.street : "")
-    const [city, setCity] = useState(viewingUser.city ? viewingUser.city : "")
-    const [state, setState] = useState(viewingUser.state ? viewingUser.state : "WI")
-    const [zip, setZip] = useState(viewingUser.zip ? viewingUser.zip : "")
-    const [counties, setCounties] = useState(viewingUser.county ? viewingUser.county : [])
-    const [phone, setPhone] = useState(viewingUser.phone || "")
+    async function getDreams() {
+        const newDreams = await fetch("/api/get-dreams?userId=" + viewingUser.email)
+            .then(res => res.json())
+        setSavedDreams(newDreams)
+    }
 
-    const [dataChanged, setDataChanged] = useState(false)
+    async function deleteDream(dreamId) {
+        await fetch("/api/delete-dream?dreamId=" + dreamId)
+        getDreams().then(() => {
+        })
+    }
 
-    async function saveClientDetails() {
-        await fetch("/api/save-client-details", {
+    async function saveDream() {
+        await fetch("/api/post-dream", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                name, street, city, state, zip, counties, phone,
-                userId: viewingUser._id
+                dream,
+                dreamNeed,
+                dreamHelp,
+                userId: viewingUser.email
             })
         })
-        router.reload()
     }
 
     return (
@@ -60,208 +74,78 @@ export default function User({viewingUserData, pageDataJson}) {
                         }}>Edit this client
                         </div>
                     }
-
                 </div>
 
-                <div className={"flex"}>
-                    <div className={"flex-1"}>
+                <ClientDetails viewingUser={viewingUser} editMode={editMode}/>
 
-                        <div>
-                            <p className={"text-gray-500 text-xs"}>Name</p>
-                            <div className={`${editMode ? "hidden" : "visible"}`}>{name ||
-                                <span className={"text-red-600 text-sm"}>Please add name to profile.</span>}</div>
-                            <div className={`${editMode ? "visible" : "hidden"}`}>
-                                <input type={"text"}
-                                       className={"min-w-[300px] text-sm"}
-                                       placeholder={name || "Enter name here..."}
-                                       onChange={(e) => {
-                                           setName(e.target.value)
-                                           setDataChanged(true)
-                                       }}/>
-                            </div>
-                        </div>
-
-                        <div>
-                            <p className={"text-gray-500 text-xs"}>Email</p>
-                            <div className={`${editMode ? "hidden" : "visible"}`}>{email ||
-                                <span className={"text-red-600 text-sm"}>Please add email to profile.</span>}</div>
-                            <div className={`${editMode ? "visible" : "hidden"}`}>
-                                <input disabled={true} type={"text"}
-                                       className={"min-w-[300px] text-sm"}
-                                       placeholder={email || "Enter email here..."}
-                                       onChange={(e) => {
-                                           setEmail(e.target.value)
-                                           setDataChanged(true)
-                                       }}
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <p className={"text-gray-500 text-xs"}>Phone</p>
-                            <div className={`${editMode ? "hidden" : "visible"}`}>{phone || <span
-                                className={"text-red-600 text-sm"}>Please add phone number to profile.</span>}</div>
-                            <div className={`${editMode ? "visible" : "hidden"}`}>
-                                <input type={"text"}
-                                       className={"min-w-[300px] text-sm"}
-                                       placeholder={phone || "Enter phone number here..."}
-                                       onChange={(e) => {
-                                           setPhone(e.target.value)
-                                           setDataChanged(true)
-                                       }}
-                                />
-                            </div>
-                        </div>
-
-                        <p className={"text-gray-500 text-xs mt-4"}>Counties</p>
-                        <div className={`${editMode ? "hidden" : "visible"}`}>
-                            <ul className={"text-sm"}>
-                                {counties && counties.map(county => (
-                                    <li key={county}>{county}</li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        <div className={`${editMode ? "visible" : "hidden"}`}>
-                            <div className={"flex"}>
-                                {counties.map((currentCounty) => {
-                                    return (
-                                        <div key={currentCounty}
-                                             className={"cursor-pointer rounded border py-1 px-2 h-8 mr-2 mb-2 flex justify-between align-middle text-sm max-w-[180px] truncate"}
-                                             onClick={() => {
-                                                 setCounties(prevState => prevState.filter(item => item !== currentCounty))
-                                                 setDataChanged(true)
-                                             }}>
-                                            <div className={"inline-block mr-1"}>{currentCounty}</div>
-                                            <div className={"inline-block"}><XCircle size={20} weight="thin"
-                                                                                     color={"red"}/></div>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                            <select multiple className={"min-w-[300px] min-h-[300px] text-sm"} onChange={(e) => {
-                                setCounties(prevState => {
-                                    if (counties.indexOf(e.target.value) === -1) {
-                                        setDataChanged(true)
-                                        return [...prevState, e.target.value]
-                                    } else {
-                                        return prevState
-                                    }
-                                })
-                            }}>
-                                {WICountiesList.map(county => {
-                                    return <option key={county} value={county}>{county}</option>
-                                })}
-                            </select>
-                        </div>
-
+            </div>
+            <div className={`mt-5 p-6 bg-gray-50 rounded ${dreamSectionOpen ? "h-auto" : "h-[80px] overflow-hidden"}`}>
+                <div className={"flex justify-between"}>
+                    <div className={"uppercase text-gray-500 flex items-center"}>Client Dreams<span
+                        className={"rounded-full text-xs bg-orange-600 text-white p-1 w-[24px] inline-block text-center ml-2"}>{savedDreams.length}</span>
                     </div>
-
-
-                    <div className={"flex-1"}>
-                        <div>
-                            <p className={"text-gray-500 text-xs"}>Address</p>
-                            <div className={`${editMode ? "hidden" : "visible"}`}>{street ||
-                                <span className={"text-red-600 text-sm"}>Please add address to profile.</span>}</div>
-                            <div className={`${editMode ? "visible" : "hidden"}`}>
-                                <input type={"text"}
-                                       className={"min-w-[300px] text-sm"}
-                                       placeholder={street || "Enter street address here..."}
-                                       onChange={(e) => {
-                                           setStreet(e.target.value)
-                                           setDataChanged(true)
-                                       }}
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <p className={"text-gray-500 text-xs"}>City</p>
-                            <div className={`${editMode ? "hidden" : "visible"}`}>{city ||
-                                <span className={"text-red-600 text-sm"}>Please add city to profile.</span>}</div>
-                            <div className={`${editMode ? "visible" : "hidden"}`}>
-                                <input type={"text"}
-                                       className={"min-w-[300px] text-sm"}
-                                       placeholder={city || "Enter city here..."}
-                                       onChange={(e) => {
-                                           setCity(e.target.value)
-                                           setDataChanged(true)
-                                       }}
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <p className={"text-gray-500 text-xs"}>State</p>
-                            <div className={`${editMode ? "hidden" : "visible"}`}>{state ||
-                                <span className={"text-red-600 text-sm"}>Please add state to profile.</span>}</div>
-                            <div className={`${editMode ? "visible" : "hidden"}`}>
-                                <input type={"text"}
-                                       className={"min-w-[300px] text-sm"}
-                                       value={state}
-                                       placeholder={state || "Enter state here..."}
-                                       onChange={(e) => {
-                                           setState(e.target.value)
-                                           setDataChanged(true)
-                                       }}
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <p className={"text-gray-500 text-xs"}>Zip Code</p>
-                            <div className={`${editMode ? "hidden" : "visible"}`}>{zip ||
-                                <span className={"text-red-600 text-sm"}>Please add zip code to profile.</span>}</div>
-                            <div className={`${editMode ? "visible" : "hidden"}`}>
-                                <input type={"text"}
-                                       className={"min-w-[300px] text-sm"}
-                                       value={zip}
-                                       placeholder={zip || "Enter zip code here..."}
-                                       onChange={(e) => {
-                                           setZip(e.target.value)
-                                           setDataChanged(true)
-                                       }}
-                                />
-                            </div>
-                        </div>
-
-                        <p className={"text-gray-500 text-xs mt-4"}>Programs</p>
-                        <ul>
-                            {viewingUser.programs && viewingUser.programs.map((program, i) => (
-                                <li key={i}>{program}</li>
-                            ))}
-                        </ul>
-                    </div>
+                    <div onClick={() => {setDreamSectionOpen(!dreamSectionOpen)}}>{dreamSectionOpen ? <CaretDoubleUp size={22}/> : <CaretDoubleDown size={22}/> }</div>
                 </div>
-            </div>
-            <div className={"py-6"}>
-                <h2 className={"uppercase text-gray-500"}>Dreams</h2>
-                {dreams.map((dream, i) => {
-                    return (
-                        <div key={i}>{dream.dream}</div>
-                    )
-                })}
-            </div>
-            <div>
-                <h2 className={"uppercase text-gray-500"}>Surveys</h2>
-                {surveys.map((survey, i) => {
-                    return (
-                        <div key={i} onClick={() => {
-                            router.push("/client/survey/" + survey._id)
-                        }}
-                             className={"text-sm text-orange-500 underline"}>{moment(survey.datestamp).format("MMMM-DD-yyyy")}</div>
-                    )
-                })}
-            </div>
-            <div className={"flex justify-end"}>
-                <div>
+                <div
+                    className={`text-orange-600 underline text-xs cursor-pointer mt-2 ${dreamSectionOpen ? "visible" : "hidden"}`}
+                    onClick={() => {
+                        setNewDreamOpen(!newDreamOpen)
+                    }}>{newDreamOpen ? "Close quick add panel" : "Quick add new client dream"}</div>
+                <div
+                    className={`grid grid-cols-3 gap-4 text-xs border-t-[1px] mt-3 overflow-hidden transition ease-in-out p-3 bg-gray-100 ${newDreamOpen ? "h-auto" : "h-0 p-0"}`}>
+                    <input className={"text-xs p-1 border-0 border-b-[1px] bg-transparent"}
+                           type="text"
+                           value={dream}
+                           placeholder={"Enter dream here..."}
+                           onChange={(e) => {
+                               setDream(e.target.value)
+                           }}/>
+                    <input className={"text-xs p-1 border-0 border-b-[1px] bg-transparent"}
+                           type="text"
+                           value={dreamNeed}
+                           placeholder={"What do you need..."}
+                           onChange={(e) => {
+                               setDreamNeed(e.target.value)
+                           }}/>
+                    <input className={"text-xs p-1 border-0 border-b-[1px] bg-transparent"}
+                           type="text"
+                           value={dreamHelp}
+                           placeholder={"Who do you need..."}
+                           onChange={(e) => {
+                               setDreamHelp(e.target.value)
+                           }}/>
                     <button
-                        disabled={!dataChanged}
-                        className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400 cursor-pointer"}
-                        onClick={saveClientDetails}>
-                        Save
+                        className={"py-2 px-6 text-white text-xs rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400 w-[150px]"}
+                        disabled={dream === ""}
+                        onClick={() => {
+                            saveDream().then(getDreams)
+                            setDream("")
+                            setDreamNeed("")
+                            setDreamHelp("")
+                        }}>Save dream
                     </button>
                 </div>
+                <div className={"grid grid-cols-3 gap-4 mt-6"}>{savedDreams?.map((dream, i) => {
+                    return <DreamSingle key={i} dream={dream} deleteDream={deleteDream} isClientDream={true}
+                                        clientId={viewingUser.email}/>
+                })}</div>
             </div>
+            <div className={"mt-5 p-6 bg-gray-50 rounded"}>
+                <h2 className={"uppercase text-gray-500 mb-6"}>Current Life Area Survey</h2>
+                <LasCurrent user={viewingUser} surveys={surveys} isClientSurvey={true} clientId={viewingUser.email}/>
+
+                <div className={"flex justify-between mt-6 mb-6"}>
+                    <div className={"uppercase text-gray-500 flex items-center"}>Life Area Survey History<span
+                        className={"rounded-full text-xs bg-orange-600 text-white p-1 w-[24px] inline-block text-center ml-2"}>{surveys.length - 1}</span>
+                    </div>
+                    <div onClick={() => {setLasSectionOpen(!lasSectionOpen)}}>{lasSectionOpen ? <CaretDoubleUp size={22}/> : <CaretDoubleDown size={22}/> }</div>
+                </div>
+                <div className={`${lasSectionOpen ? "visible" : "hidden"}`}>
+                    <LasHistory surveys={surveys}/>
+                </div>
+
+            </div>
+
         </Layout>
     )
 }

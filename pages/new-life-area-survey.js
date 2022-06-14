@@ -13,15 +13,6 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
     const [activeDomain, setActiveDomain] = useState("food")
     const [answered, setAnswered] = useState({})
     const [domains, setDomains] = useState([])
-    const [score, setScore] = useState(0)
-
-    function getScore() {
-        let score = 0
-        for (const key in answered) {
-            score += answered[key].selection
-        }
-        return score
-    }
 
     async function saveSurvey() {
         await fetch("/api/post-life-area-survey", {
@@ -32,7 +23,6 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
             body: JSON.stringify({
                 dreamId: router.query.dreamId,
                 dream: router.query.dreamName,
-                totalScore: score,
                 priority: domains,
                 food: [answered.food.selection, answered.food.statement],
                 money: [answered.money.selection, answered.money.statement],
@@ -55,15 +45,14 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                 racismBigotry: [answered.racismBigotry.selection, answered.racismBigotry.statement],
                 internetAccess: [answered.internetAccess.selection, answered.internetAccess.statement],
                 housing: [answered.housing.selection, answered.housing.statement],
-                userId: user.email
+                userId: router.query.clientId === undefined ? user.email : router.query.clientId
             })
         })
     }
 
     return (
         <Layout title={"Life Area Survey"} session={user}>
-            <div className={"bg-gray-600 text-center p-2 text-white mb-3 rounded flex justify-around font-light text-sm grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4"}>
-                <div>Total: <strong>{score}</strong></div>
+            <div className={"bg-gray-600 text-center p-2 text-white mb-3 rounded flex justify-around font-light text-sm grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}>
                 <div>Priorities: <strong>{domains.length}</strong></div>
                 <div>Answered: <strong>{Object.keys(answered).length}/21</strong></div>
                 <div>Dream: {router.query.dreamName}</div>
@@ -89,17 +78,20 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                         <p className={"text-xs"}> Life areas that you have marked as a priority with the toggle will have a red flag in the life areas list.</p>
                     </div>
                     <NewLifeAreaSurveyForm activeDomain={activeDomain} setAnswered={setAnswered} answered={answered}
-                                           domains={domains} setDomains={setDomains} score={score}
-                                           setScore={setScore}/>
+                                           domains={domains} setDomains={setDomains}/>
                 </div>
             </div>
             <div className={"flex justify-end"}>
                 <button disabled={domains.length === 0 || Object.keys(answered).length !== 21}
                         className={`text-white text-sm rounded py-2 px-4 mt-5 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400`}
                         onClick={async () => {
-                            await setScore(getScore)
                             await saveSurvey().then()
-                            router.push("/life-area-surveys")
+                            if(router.query.clientId === undefined){
+                                router.push("/life-area-surveys").then()
+                            }else{
+                                router.back()
+                            }
+
                         }}>Save this
                     survey
                 </button>

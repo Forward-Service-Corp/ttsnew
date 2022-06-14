@@ -9,24 +9,12 @@ import moment from "moment";
 import ReferralSelects from "../components/referralSelects";
 import {WarningCircle} from "phosphor-react";
 
-export default function MapOfMyDreams({pageDataJson, referralJson}) {
-    const {user, surveys} = pageDataJson
+export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) {
+    const {user} = pageDataJson
     const {referrals, domains} = referralJson
     const router = useRouter()
-    const currentSurvey = surveys.filter(survey => survey._id === router.query.surveyId)
     const [currentReferral, setCurrentReferral] = useState({})
-    const [userReferrals, setUserReferrals] = useState(referrals)
-
-    if (currentSurvey.length === 0) {
-        return (
-            <Layout title={"Map of My Dreams"} session={user}>
-                <Head>
-                    <title>TTS / Map of My Dreams</title>
-                </Head>
-                Please go to your completed Life Area Surveys page and select a dream to map.
-            </Layout>
-        )
-    }
+    const [userReferrals, setUserReferrals] = useState(pageDataJson.hasOwnProperty("clientReferrals") ? pageDataJson.clientReferrals : pageDataJson.referrals)
 
     return (
         <Layout title={"Map of My Dreams"} session={user}>
@@ -39,14 +27,16 @@ export default function MapOfMyDreams({pageDataJson, referralJson}) {
                 <span className={""}>Please select a referral for each priority area.</span>
             </div>
             <div className={""}>
+                <div className={`${router.query.clientId ? "visible" : "hidden"} text-red-600`}>MAPPING FOR CLIENT {router.query.clientId}</div>
                 <div className={"flex py-4 w-full"}>
+
                     <div className={"flex-1"}>
                         <p className={"text-sm text-gray-600"}>Dream:</p>
-                        <p className={"uppercase"}>{currentSurvey[0].dream}</p>
+                        <p className={"uppercase"}>{surveyJson.dream}</p>
                     </div>
                     <div className={"flex-1"}>
                         <p className={"text-sm text-gray-600"}>Survey Completed:</p>
-                        <p className={"uppercase"}>{moment(currentSurvey[0].datestamp).format("MMMM Do YYYY, h:mm:ss a")}</p>
+                        <p className={"uppercase"}>{moment(surveyJson.datestamp).format("MMMM Do YYYY, h:mm:ss a")}</p>
                     </div>
                 </div>
 
@@ -59,7 +49,8 @@ export default function MapOfMyDreams({pageDataJson, referralJson}) {
                                      router={router}
                                      referrals={referrals}
                                      userReferrals={userReferrals}
-                                     setUserReferrals={setUserReferrals}/>
+                                     setUserReferrals={setUserReferrals}
+                                     clientId={router.query.clientId}/>
 
                 </div>
                 <div className={"flex justify-end"}>
@@ -84,7 +75,13 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    let pageDataUrl
+    if (context.query.clientId === undefined) {
+        pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    } else {
+        pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email + "&clientId=" + context.query.clientId
+    }
+
     const getPageData = await fetch(pageDataUrl)
     const pageDataJson = await getPageData.json()
 
@@ -93,9 +90,14 @@ export async function getServerSideProps(context) {
     const getReferralOptions = await fetch(referralOptionsUrl)
     const referralJson = await getReferralOptions.json()
 
+    // single survey data
+    const surveyUrl = baseUrl + "/api/get-survey-by-id?surveyId=" + context.query.surveyId
+    const getSurvey = await fetch(surveyUrl)
+    const surveyJson = await getSurvey.json()
+
     return {
         props: {
-            pageDataJson, referralJson
+            pageDataJson, referralJson, surveyJson
         }
     }
 

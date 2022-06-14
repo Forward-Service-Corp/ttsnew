@@ -18,7 +18,8 @@ export default async(req, res) => {
     const referrals = await db.collection("referrals").find(UID).sort("domain").toArray()
     const tasks = await db.collection("todos").find(UID).toArray()
     const notes = await db.collection("notes").find(UID).toArray()
+    const clientReferrals = await db.collection("referrals").find({ userId: req.query.clientId }).toArray()
 
-    res.json({user, dreams, surveys, referrals, tasks, notes})
+    res.json({user, dreams, surveys, referrals, tasks, notes, clientReferrals})
 
 }

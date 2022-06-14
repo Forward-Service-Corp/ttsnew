@@ -2,12 +2,24 @@ import React, {useEffect} from 'react';
 import {labelMap} from "../lib/serviceLabelsMap";
 import UserReferralItem from "./userReferralItem";
 
-function ReferralSelects({domains, setCurrentReferral, currentReferral, user, router, referrals, userReferrals, setUserReferrals}) {
+function ReferralSelects({
+                             domains,
+                             setCurrentReferral,
+                             currentReferral,
+                             user,
+                             router,
+                             referrals,
+                             userReferrals,
+                             setUserReferrals,
+                             clientId
+                         }) {
 
     async function getUserReferrals() {
-        const userReferrals = await fetch("/api/get-referrals?userId=" + user.email)
+        const id = clientId === undefined ? user.email : clientId
+        const referrals = await fetch("/api/get-referrals?userId=" + id)
             .then(res => res.json())
-        await setUserReferrals(userReferrals)
+        console.log("referrals")
+        await setUserReferrals(referrals)
     }
 
     async function deleteReferral(id) {
@@ -23,7 +35,7 @@ function ReferralSelects({domains, setCurrentReferral, currentReferral, user, ro
             body: JSON.stringify({
                 dreamId: router.query.dreamId,
                 surveyId: router.query.surveyId,
-                userId: user.email,
+                userId: clientId === undefined ? user.email : clientId,
                 dream: router.query.dream,
                 domain: currentReferral.domain,
                 name: currentReferral.name,
@@ -38,9 +50,6 @@ function ReferralSelects({domains, setCurrentReferral, currentReferral, user, ro
         })
     }
 
-    useEffect(() => {
-        getUserReferrals().then()
-    }, [])
 
     return (
         <div className={"flex-1"}>
@@ -68,7 +77,9 @@ function ReferralSelects({domains, setCurrentReferral, currentReferral, user, ro
                                     })
 
                                 }}>
-                                    <option value={`Please select a referral for ${labelMap[domain]}...`}>Please select a referral for {labelMap[domain]}...</option>
+                                    <option value={`Please select a referral for ${labelMap[domain]}...`}>Please select
+                                        a referral for {labelMap[domain]}...
+                                    </option>
                                     {referrals && referrals.filter(item => item.service === domain).map((referral, i) => {
                                         return (
                                             <option key={i} value={referral._id}
@@ -90,19 +101,18 @@ function ReferralSelects({domains, setCurrentReferral, currentReferral, user, ro
                                     disabled={Object.keys(currentReferral).length === 0 || currentReferral.domain !== domain}
                                     className={"text-white px-4 py-2 text-xs rounded mt-3 mb-4 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
                                     onClick={() => {
-                                        saveReferral()
-                                            .then(() => {
-                                                getUserReferrals().then(() => {
-                                                    setCurrentReferral({})
-                                                })
-                                            })
+                                        saveReferral().then(() => {
+                                            getUserReferrals()
+                                        })
+                                        setCurrentReferral({})
                                         document.getElementById(domain).selectedIndex = 0
                                     }}>+ Save
                                 </button>
                                 <div>
                                     {userReferrals && userReferrals.filter(item => item.domain === domain).map((referral) => {
                                         return (
-                                            <UserReferralItem key={referral._id} deleteReferral={deleteReferral} getUserReferrals={getUserReferrals} referral={referral}/>
+                                            <UserReferralItem key={referral._id} deleteReferral={deleteReferral}
+                                                              getUserReferrals={getUserReferrals} referral={referral}/>
                                         )
                                     })}
                                 </div>

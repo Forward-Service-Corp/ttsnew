@@ -6,7 +6,6 @@ export default async (req, res) => {
     const survey = {
         dream: req.body.dream,
         dreamId: req.body.dreamId,
-        totalScore: req.body.totalScore,
         priority: req.body.priority,
         food: req.body.food,
         money: req.body.money,

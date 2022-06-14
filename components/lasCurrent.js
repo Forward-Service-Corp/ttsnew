@@ -2,7 +2,7 @@ import {useRouter} from "next/router";
 import {labelMap} from "../lib/serviceLabelsMap";
 import moment from "moment";
 
-function LasHistory({surveys, user}) {
+function LasCurrent({surveys, user, isClientSurvey, clientId}) {
 
     const router = useRouter()
 
@@ -29,16 +29,31 @@ function LasHistory({surveys, user}) {
                             </div>
                             <div className={"bg-gray-400 flex text-center text-white text-xs"}>
                                 <div className={"p-3 flex-1 cursor-pointer bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"} onClick={() => {
-                                    router.push({
-                                        pathname: "/map-of-my-dreams",
-                                        query: {
-                                            dreamId: survey.dreamId,
-                                            dream: survey.dream,
-                                            surveyId: survey._id,
-                                            county: user.county,
-                                            domain: survey.priority
-                                        }
-                                    })
+                                    if(isClientSurvey){
+                                        router.push({
+                                            pathname: "/map-of-my-dreams",
+                                            query: {
+                                                dreamId: survey.dreamId,
+                                                dream: survey.dream,
+                                                surveyId: survey._id,
+                                                county: user.county,
+                                                domain: survey.priority,
+                                                clientId: clientId
+                                            }
+                                        })
+                                    }else{
+                                        router.push({
+                                            pathname: "/map-of-my-dreams",
+                                            query: {
+                                                dreamId: survey.dreamId,
+                                                dream: survey.dream,
+                                                surveyId: survey._id,
+                                                county: user.county,
+                                                domain: survey.priority
+                                            }
+                                        })
+                                    }
+
                                 }}>Map this survey</div>
                                 <div className={"p-3 flex-1 cursor-pointer bg-gradient-to-t from-green-600 to-green-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"} onClick={() => {
                                     router.push("/surveys/" + survey._id)
@@ -64,4 +79,4 @@ function LasHistory({surveys, user}) {
     );
 }
 
-export default LasHistory;
+export default LasCurrent;

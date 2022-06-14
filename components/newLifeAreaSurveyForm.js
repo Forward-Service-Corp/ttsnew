@@ -38,7 +38,6 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
                             statement: event.target.dataset.statement
                         }
                     }))
-                    await setScore(getScore)
                 }}>
 
                     <div className={"flex justify-center align-middle"}>
