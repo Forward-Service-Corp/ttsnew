@@ -64,7 +64,7 @@ export default function Layout({children, title, session, loadingState}) {
                                                             </a>
                                                         ))}
                                                         {/*Conditional Navigation*/}
-                                                        {session.level === "coach" || session.level === "admin" ?
+                                                        {session?.level === "coach" || session?.level === "admin" ?
                                                             <a
                                                                 href={"/clients"}
                                                                 className={classNames(
@@ -79,7 +79,7 @@ export default function Layout({children, title, session, loadingState}) {
                                                             </a> : null
                                                         }
 
-                                                        {session.level === "admin" ?
+                                                        {session?.level === "admin" ?
                                                             <a
                                                                 href={"/users"}
                                                                 className={classNames(
@@ -114,7 +114,7 @@ export default function Layout({children, title, session, loadingState}) {
                                                             <Menu.Button
                                                                 className="max-w-xs bg-orange-600 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                                                                 <span className="sr-only">Open user menu</span>
-                                                                {session.image ? <img className="h-8 w-8 rounded-full"
+                                                                {session?.image ? <img className="h-8 w-8 rounded-full"
                                                                                       src={session.image} alt=""/> :
                                                                     <UserCircleGear size={32} weight="thin"
                                                                                     color={"white"}/>}
@@ -206,7 +206,7 @@ export default function Layout({children, title, session, loadingState}) {
                                     <div className="pt-4 pb-3 border-t border-gray-700">
                                         <div className="flex items-center px-5">
                                             <div className="flex-shrink-0">
-                                                {session.image ?
+                                                {session?.image ?
                                                     <img className="h-10 w-10 rounded-full" src={session.image}
                                                          alt=""/> :
                                                     <UserCircle size={32} weight="thin" color={"white"}/>}
@@ -214,9 +214,9 @@ export default function Layout({children, title, session, loadingState}) {
                                             </div>
                                             <div className="ml-3">
                                                 <div
-                                                    className="text-base font-medium leading-none text-white">{session.name}</div>
+                                                    className="text-base font-medium leading-none text-white">{session?.name}</div>
                                                 <div
-                                                    className="text-sm font-medium leading-none text-white">{session.email}</div>
+                                                    className="text-sm font-medium leading-none text-white">{session?.email}</div>
                                             </div>
                                             {/*<button*/}
                                             {/*    type="button"*/}
@@ -263,9 +263,9 @@ export default function Layout({children, title, session, loadingState}) {
 
                 <main className="-mt-32 print:mt-0">
                     <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
-                        <div className={`p-3 bg-red-500 rounded shadow mb-4 text-white ${session.name === "" || session.county.length === 0 ? "visible" : "hidden"}`}>
-                            Please enter your name and county in <a href={"/profile"} className={"underline cursor-pointer"}>your profile</a> before proceeding.
-                        </div>
+                        {/*<div className={`p-3 bg-red-500 rounded shadow mb-4 text-white ${session && session?.name === "" || session && session?.county.length === 0 ? "visible" : "hidden"}`}>*/}
+                        {/*    Please enter your name and county in <a href={"/profile"} className={"underline cursor-pointer"}>your profile</a> before proceeding.*/}
+                        {/*</div>*/}
                         <div className="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
                             {children}
                         </div>
