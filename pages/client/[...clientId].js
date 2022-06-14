@@ -10,6 +10,7 @@ import ClientDetails from "../../components/clientDetails";
 import DreamSingle from "../../components/dreamSingle";
 import LasCurrent from "../../components/lasCurrent";
 import LasHistory from "../../components/lasHistory";
+import ReferralContainer from "../../components/referralContainer";
 
 export default function User({viewingUserData, pageDataJson}) {
 
@@ -26,6 +27,7 @@ export default function User({viewingUserData, pageDataJson}) {
     const [dreamHelp, setDreamHelp] = useState("")
     const [dreamSectionOpen, setDreamSectionOpen] = useState(false)
     const [lasSectionOpen, setLasSectionOpen] = useState(false)
+    const [userReferrals, setUserReferrals] = useState(viewingUserData.referrals)
 
     async function getDreams() {
         const newDreams = await fetch("/api/get-dreams?userId=" + viewingUser.email)
@@ -84,7 +86,9 @@ export default function User({viewingUserData, pageDataJson}) {
                     <div className={"uppercase text-gray-500 flex items-center"}>Client Dreams<span
                         className={"rounded-full text-xs bg-orange-600 text-white p-1 w-[24px] inline-block text-center ml-2"}>{savedDreams.length}</span>
                     </div>
-                    <div onClick={() => {setDreamSectionOpen(!dreamSectionOpen)}}>{dreamSectionOpen ? <CaretDoubleUp size={22}/> : <CaretDoubleDown size={22}/> }</div>
+                    <div onClick={() => {
+                        setDreamSectionOpen(!dreamSectionOpen)
+                    }}>{dreamSectionOpen ? <CaretDoubleUp size={22}/> : <CaretDoubleDown size={22}/>}</div>
                 </div>
                 <div
                     className={`text-orange-600 underline text-xs cursor-pointer mt-2 ${dreamSectionOpen ? "visible" : "hidden"}`}
@@ -138,14 +142,32 @@ export default function User({viewingUserData, pageDataJson}) {
                     <div className={"uppercase text-gray-500 flex items-center"}>Life Area Survey History<span
                         className={"rounded-full text-xs bg-orange-600 text-white p-1 w-[24px] inline-block text-center ml-2"}>{surveys.length - 1}</span>
                     </div>
-                    <div onClick={() => {setLasSectionOpen(!lasSectionOpen)}}>{lasSectionOpen ? <CaretDoubleUp size={22}/> : <CaretDoubleDown size={22}/> }</div>
+                    <div onClick={() => {
+                        setLasSectionOpen(!lasSectionOpen)
+                    }}>{lasSectionOpen ? <CaretDoubleUp size={22}/> : <CaretDoubleDown size={22}/>}</div>
                 </div>
                 <div className={`${lasSectionOpen ? "visible" : "hidden"}`}>
                     <LasHistory surveys={surveys}/>
                 </div>
 
             </div>
+            <div className={"mt-5 p-6 bg-gray-50 rounded"}>
+                <h2 className={"uppercase text-gray-500 mb-4"}>Manage Care Plans</h2>
+                {userReferrals?.filter(item => !item.hasOwnProperty("archived") || item.archived === "false").map(item => {
+                    return (
+                        <ReferralContainer key={item._id} item={item} user={viewingUser} notes={viewingUserData.notes}
+                                           setUserReferrals={setUserReferrals}/>
+                    )
+                })}
 
+                <h2 className={"uppercase text-gray-500 mb-4 mt-10"}>Archived Care Plans</h2>
+                {userReferrals?.filter(item => item.hasOwnProperty("archived") && item.archived === "true").map(item => {
+                    return (
+                        <ReferralContainer key={item._id} item={item} user={viewingUser} notes={viewingUserData.notes}
+                                           setUserReferrals={setUserReferrals}/>
+                    )
+                })}
+            </div>
         </Layout>
     )
 }
