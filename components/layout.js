@@ -263,6 +263,9 @@ export default function Layout({children, title, session, loadingState}) {
 
                 <main className="-mt-32 print:mt-0">
                     <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
+                        <div className={`p-3 bg-red-500 rounded shadow mb-4 text-white ${session.name === "" || session.county.length === 0 ? "visible" : "hidden"}`}>
+                            Please enter your name and county in <a href={"/profile"} className={"underline cursor-pointer"}>your profile</a> before proceeding.
+                        </div>
                         <div className="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
                             {children}
                         </div>
