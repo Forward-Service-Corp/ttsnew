@@ -1,7 +1,6 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
-import Link from "next/link"
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import UsersTable from "../components/usersTable";
 import Head from "next/head";
 

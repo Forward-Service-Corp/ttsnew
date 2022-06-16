@@ -49,7 +49,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
             <Head>
                 <title>TTS / User / {viewingUser.name || viewingUser.email}</title>
             </Head>
-            <div>
+            <div className={"bg-gray-200 p-6 mb-5 rounded"}>
                 <h2 className={"uppercase text-gray-500 mb-3"}>Personal Details</h2>
                 <div className={"flex"}>
                     <div className={"flex-1"}>
@@ -86,7 +86,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
                     </div>
                 </div>
             </div>
-            <div className={"py-6"}>
+            <div className={"bg-gray-200 p-6 mb-5 rounded"}>
                 <h2 className={"uppercase text-gray-500"}>Role</h2>
                 <select id={"roleSelect"} onChange={(e) => {
                     setRole(e.target.value)
@@ -104,14 +104,15 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
                 </button>
             </div>
             <div className={"bg-gray-200 p-6 mb-5 rounded"}>
-                <h2 className={"uppercase text-gray-500"}>Coach Assignments</h2>
-                {coachesJson && coachesJson.sort((a, b) => b.name - a.name).map(coach => {
+                <h2 className={"uppercase text-gray-500 mb-3"}>Coach Assignments</h2>
+                <div className={"grid grid-cols-5 gap-4"}>
+                    {coachesJson && coachesJson.sort((a, b) => b.name - a.name).map(coach => {
                     return (
                         <div key={coach.email} className={"p-1"}>
-                            <input className={"mr-1"}
-                                   defaultChecked={newCoaches && newCoaches.indexOf(coach.email) > -1}
+                            <input className={"peer hidden"}
+                                   defaultChecked={newCoaches?.indexOf(coach.email) > -1}
                                    onChange={(e) => {
-                                       if (newCoaches && newCoaches.indexOf(e.target.value) === -1) {
+                                       if (newCoaches?.indexOf(e.target.value) === -1) {
                                            setNewCoaches(prevState => [...prevState, e.target.value])
                                        } else {
                                            setNewCoaches(prevState => prevState.filter(coach => coach !== e.target.value))
@@ -122,19 +123,25 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
                                    type={"checkbox"}
                                    id={coach.email}
                                    name={coach.name}/>
-                            <label htmlFor={coach.email}>{coach.name || coach.email}</label>
+                            <label className={"p-2 rounded text-black truncate peer-checked:bg-orange-600 peer-checked:text-white"}
+                                   htmlFor={coach.email}>{coach.name || coach.email}</label>
                         </div>
                     )
                 })}
-            </div>
-            <div>
-                <div className={"flex justify-end"}>
-                    <button disabled={!dataChanged}
-                            onClick={saveCoaches}
-                            className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Save
-                        coach updates
-                    </button>
                 </div>
+                <div>
+                    <div className={"flex justify-start mt-4 pt-4 border-t-[1px] border-gray-400"}>
+                        <button disabled={!dataChanged}
+                                onClick={saveCoaches}
+                                className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Save
+                            coach updates
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div className={"bg-gray-200 p-6 mb-5 rounded"}>
+                <h2 className={"uppercase text-gray-500"}>New email assignment</h2>
             </div>
         </Layout>
     )

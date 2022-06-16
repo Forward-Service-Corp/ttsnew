@@ -56,7 +56,7 @@ export default function UsersTable({users}) {
                                 </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200 bg-white">
-                                {users && users.filter(person => person.email?.includes(searchTerm) || person.name?.includes(searchTerm))
+                                {users && users.filter(person => person.email?.toLowerCase().includes(searchTerm.toLowerCase()) || person.name?.toLowerCase().includes(searchTerm.toLowerCase()))
                                     .filter(person => person.level?.includes(userType.toString()))
                                     .map((person) => (
                                     <tr key={person.email}>
