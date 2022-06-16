@@ -122,7 +122,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
                                    type={"checkbox"}
                                    id={coach.email}
                                    name={coach.name}/>
-                            <label htmlFor={coach.email}>{coach.name}</label>
+                            <label htmlFor={coach.email}>{coach.name || coach.email}</label>
                         </div>
                     )
                 })}
