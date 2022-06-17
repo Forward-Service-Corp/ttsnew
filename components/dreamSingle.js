@@ -5,7 +5,7 @@ import {Brain} from "phosphor-react";
 function DreamSingle({dream, deleteDream, isClientDream, clientId}) {
     const router = useRouter()
     return (
-        <div className={"mb-4 flex flex-col shadow rounded overflow-hidden justify-between"}>
+        <div className={"mb-4 flex flex-col shadow rounded overflow-hidden justify-between bg-white"}>
             <div className={"bg-gray-700 p-2 text-white text-sm font-light flex items-center"}>
                 <Brain size={26} weight="thin" />
                 <div className={"ml-2 truncate"}>{dream.dream}</div>

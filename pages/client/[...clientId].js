@@ -1,11 +1,9 @@
 import Layout from "../../components/layout";
 import {getSession} from "next-auth/react";
-import {WICountiesList} from "../../lib/WI_Counties";
 import Head from "next/head";
 import {useState} from "react";
-import {CaretDoubleDown, CaretDoubleUp, XCircle} from "phosphor-react";
+import {CaretDoubleDown, CaretDoubleUp} from "phosphor-react";
 import {useRouter} from "next/router";
-import moment from "moment";
 import ClientDetails from "../../components/clientDetails";
 import DreamSingle from "../../components/dreamSingle";
 import LasCurrent from "../../components/lasCurrent";
@@ -16,10 +14,10 @@ export default function User({viewingUserData, pageDataJson}) {
 
     const router = useRouter()
     const {user} = pageDataJson
-    const {dreams, surveys, tasks, referrals} = viewingUserData
+    const {dreams, surveys} = viewingUserData
 
     const [editMode, setEditMode] = useState(false)
-    const [viewingUser, setViewingUser] = useState(viewingUserData.user)
+    const viewingUser = viewingUserData.user
     const [savedDreams, setSavedDreams] = useState(dreams)
     const [newDreamOpen, setNewDreamOpen] = useState(false)
     const [dream, setDream] = useState("")
@@ -61,7 +59,7 @@ export default function User({viewingUserData, pageDataJson}) {
             <Head>
                 <title>TTS / User / {viewingUser.name || viewingUser.email}</title>
             </Head>
-            <div>
+            <div className={`mt-5 p-6 bg-gray-100 rounded`}>
                 <div className={"flex justify-between"}>
                     <div><h2 className={"uppercase text-gray-500 mb-3"}>Personal Details</h2></div>
                     {editMode ?
@@ -81,7 +79,7 @@ export default function User({viewingUserData, pageDataJson}) {
                 <ClientDetails viewingUser={viewingUser} editMode={editMode}/>
 
             </div>
-            <div className={`mt-5 p-6 bg-gray-50 rounded ${dreamSectionOpen ? "h-auto" : "h-[80px] overflow-hidden"}`}>
+            <div className={`mt-5 p-6 bg-gray-100 rounded ${dreamSectionOpen ? "h-auto" : "h-[80px] overflow-hidden"}`}>
                 <div className={"flex justify-between"}>
                     <div className={"uppercase text-gray-500 flex items-center"}>Client Dreams<span
                         className={"rounded-full text-xs bg-orange-600 text-white p-1 w-[24px] inline-block text-center ml-2"}>{savedDreams.length}</span>
@@ -134,7 +132,7 @@ export default function User({viewingUserData, pageDataJson}) {
                                         clientId={viewingUser.email}/>
                 })}</div>
             </div>
-            <div className={"mt-5 p-6 bg-gray-50 rounded"}>
+            <div className={"mt-5 p-6 bg-gray-100 rounded"}>
                 <h2 className={"uppercase text-gray-500 mb-6"}>Current Life Area Survey</h2>
                 <LasCurrent user={viewingUser} surveys={surveys} isClientSurvey={true} clientId={viewingUser.email}/>
 
@@ -151,7 +149,7 @@ export default function User({viewingUserData, pageDataJson}) {
                 </div>
 
             </div>
-            <div className={"mt-5 p-6 bg-gray-50 rounded"}>
+            <div className={"mt-5 p-6 bg-gray-100 rounded"}>
                 <h2 className={"uppercase text-gray-500 mb-4"}>Manage Care Plans</h2>
                 {userReferrals?.filter(item => !item.hasOwnProperty("archived") || item.archived === "false").map(item => {
                     return (

@@ -1,13 +1,9 @@
 import Layout from "../../components/layout";
 import {getSession} from "next-auth/react";
-import {useRouter} from "next/router";
-import {labelMap} from "../../lib/serviceLabelsMap";
 
 export default function CarePlan({pageDataJson, referralDataJson}) {
 
-    const router = useRouter()
     const {user} = pageDataJson
-    const {referralId} = router.query
 
     return (
         <Layout title={referralDataJson.name} session={user}>
@@ -54,7 +50,7 @@ export default function CarePlan({pageDataJson, referralDataJson}) {
                 <div>
                     <div>
                         <p className={"text-xs text-gray-500"}>Website</p>
-                        <div>{referralDataJson.url || <span className={"text-gray-500"}>No website listed</span>}</div>
+                        <div className={"truncate"}>{<a target={"_blank"} rel={"noreferrer"} className={"text-orange-500 underline"} href={referralDataJson.url}>Visit website</a> || <span className={"text-gray-500"}>No website listed</span>}</div>
                     </div>
                     <div>
                         <p className={"text-xs text-gray-500"}>Requirements</p>

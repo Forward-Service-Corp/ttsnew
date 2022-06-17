@@ -49,7 +49,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
             <Head>
                 <title>TTS / User / {viewingUser.name || viewingUser.email}</title>
             </Head>
-            <div className={"bg-gray-200 p-6 mb-5 rounded"}>
+            <div className={"bg-gray-100 p-6 mb-5 rounded"}>
                 <h2 className={"uppercase text-gray-500 mb-3"}>Personal Details</h2>
                 <div className={"flex"}>
                     <div className={"flex-1"}>
@@ -86,7 +86,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
                     </div>
                 </div>
             </div>
-            <div className={"bg-gray-200 p-6 mb-5 rounded"}>
+            <div className={"bg-gray-100 p-6 mb-5 rounded"}>
                 <h2 className={"uppercase text-gray-500"}>Role</h2>
                 <select id={"roleSelect"} onChange={(e) => {
                     setRole(e.target.value)
@@ -97,13 +97,15 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
                     <option value={"coach"}>coach</option>
                     <option value={"admin"}>admin</option>
                 </select>
-                <button disabled={!roleChanged}
-                        onClick={saveRole}
-                        className={" ml-3 py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Save
-                    role updates
-                </button>
+                <div className={"flex justify-start mt-4 pt-4 border-t-[1px] border-gray-400"}>
+                    <button disabled={!roleChanged}
+                            onClick={saveRole}
+                            className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Save
+                        role updates
+                    </button>
+                </div>
             </div>
-            <div className={"bg-gray-200 p-6 mb-5 rounded"}>
+            <div className={"bg-gray-100 p-6 mb-5 rounded"}>
                 <h2 className={"uppercase text-gray-500 mb-3"}>Coach Assignments</h2>
                 <div className={"grid grid-cols-5 gap-4"}>
                     {coachesJson && coachesJson.sort((a, b) => b.name - a.name).map(coach => {
@@ -123,7 +125,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
                                    type={"checkbox"}
                                    id={coach.email}
                                    name={coach.name}/>
-                            <label className={"p-2 rounded text-black truncate peer-checked:bg-orange-600 peer-checked:text-white"}
+                            <label className={"p-2 w-full block text-center border-[1px] rounded text-black truncate peer-checked:bg-orange-600 peer-checked:text-white"}
                                    htmlFor={coach.email}>{coach.name || coach.email}</label>
                         </div>
                     )
@@ -140,7 +142,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
                 </div>
             </div>
 
-            <div className={"bg-gray-200 p-6 mb-5 rounded"}>
+            <div className={"bg-gray-100 p-6 mb-5 rounded"}>
                 <h2 className={"uppercase text-gray-500"}>New email assignment</h2>
             </div>
         </Layout>
