@@ -31,6 +31,10 @@ export default function CarePlan({pageDataJson, referralDataJson}) {
                 <div>
                     <div>
                         <p className={"text-xs text-gray-500"}>City</p>
+                        <div>{referralDataJson.street || <span className={"text-gray-500"}>No address listed</span>}</div>
+                    </div>
+                    <div>
+                        <p className={"text-xs text-gray-500"}>City</p>
                         <div>{referralDataJson.city || <span className={"text-gray-500"}>No city listed</span>}</div>
                     </div>
                     <div>
