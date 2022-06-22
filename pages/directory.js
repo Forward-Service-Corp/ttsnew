@@ -33,34 +33,50 @@ export default function Directory({pageDataJson}) {
                 <title>TTS / Directory</title>
             </Head>
 
-            <div className={"grid grid-cols-1 md:grid-cols-4 gap-4 p-3 bg-gray-200 rounded shadow items-end"}>
-                <div className={""}>
-                    <p className={"text-xs text-gray-500"}>Search by keyword</p>
-                    <input  className={"w-full"} id={"searchField"} type={"text"} value={keyword} onChange={(e) => {
-                        setKeyword(e.target.value)
-                    }}/>
-                </div>
-                <div className={""}>
-                    <p className={"text-xs text-gray-500"}>Search my domain</p>
-                    <select id={"domainSelect"} className={"w-full"} onChange={(e) => {
-                        setDomain(e.target.value)
-                    }}>
-                        <option value={""}> </option>
-                        {domains.map(domain => <option key={domain} value={domain}>{labelMap[domain]}</option>)}
-                    </select>
-                </div>
-                <div className={""}>
-                    <p className={"text-xs text-gray-500"}>Search by county</p>
-                    <select  className={"w-full"} id={"countySelect"} onChange={(e) => {
-                        setCounty(e.target.value)
-                    }}>
-                        <option value={""}> </option>
-                        {WICountiesList.map(county => <option value={county} key={county}>{county}</option>)}
-                    </select>
-                </div>
-                <div className={"align-baseline"}>
-                    <button onClick={search} className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Search</button>
-                </div>
+            <div className={" p-3 bg-gray-200 rounded shadow"}>
+                <form className={"grid grid-cols-1 md:grid-cols-4 gap-4 items-end"} onSubmit={(e) => {
+                    e.preventDefault()
+                    search().then()
+                }}>
+                    <div className={""}>
+                        <p className={"text-xs text-gray-500"}>Search by keyword</p>
+                        <input className={"w-full"} id={"searchField"} type={"text"} value={keyword} onChange={(e) => {
+                            setKeyword(e.target.value)
+                        }}/>
+                    </div>
+                    <div className={""}>
+                        <p className={"text-xs text-gray-500"}>Search my domain</p>
+                        <select id={"domainSelect"} className={"w-full"} onChange={(e) => {
+                            setDomain(e.target.value)
+                        }}>
+                            <option value={""}></option>
+                            {domains.map(domain => <option key={domain} value={domain}>{labelMap[domain]}</option>)}
+                        </select>
+                    </div>
+                    <div className={""}>
+                        <p className={"text-xs text-gray-500"}>Search by county</p>
+                        <select className={"w-full"} id={"countySelect"} onChange={(e) => {
+                            setCounty(e.target.value)
+                        }}>
+                            <option value={""}></option>
+                            {WICountiesList.map(county => <option value={county} key={county}>{county}</option>)}
+                        </select>
+                    </div>
+                    <div className={"align-baseline"}>
+                        <button type={"submit"}
+                                className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Search
+                        </button>
+                        <button type={"reset"}
+                                className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
+                        onClick={() => {
+                            setKeyword("")
+                            setDomain("")
+                            setCounty("")
+                            setLoadedServices([])
+                        }}>Reset
+                        </button>
+                    </div>
+                </form>
             </div>
 
             <ServicesTable services={loadedServices}/>
