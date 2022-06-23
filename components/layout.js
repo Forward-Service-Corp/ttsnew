@@ -56,6 +56,9 @@ export default function Layout({children, title, session, loadingState}) {
                                                         alt="Workflow"
                                                     />
                                                 </div>
+                                                <div className="flex-shrink-0 ml-3 visible md:hidden">
+                                                    <a onClick={() => signOut()} className={"ml-16 px-3 py-2 text-white rounded border"}>Logout</a>
+                                                </div>
                                                 <div className="hidden md:block">
                                                     <div className="ml-10 flex items-baseline space-x-4">
                                                         {navigation.map((item) => (
@@ -74,6 +77,20 @@ export default function Layout({children, title, session, loadingState}) {
                                                             </a>
                                                         ))}
                                                         {/*Conditional Navigation*/}
+                                                        {session?.level === "client" ?
+                                                            <a
+                                                                onClick={() => signOut()}
+                                                                className={classNames(
+                                                                    router.pathname === "/clients"
+                                                                        ? 'bg-orange-700 text-white'
+                                                                        : 'text-white hover:bg-orange-400 hover:text-white',
+                                                                    'px-3 py-2 rounded-md text-sm font-medium cursor-pointer'
+                                                                )}
+                                                                aria-current={router.pathname === "/clients" ? 'page' : undefined}
+                                                            >
+                                                                Logout
+                                                            </a> : null
+                                                        }
                                                         {session?.level === "coach" || session?.level === "admin" ?
                                                             <a
                                                                 href={"/clients"}
