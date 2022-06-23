@@ -8,9 +8,9 @@ export default async(req, res) => {
     }
 
     const {db} = await connectToDatabase()
-
-    const dreams = await db.collection("lifeAreaSurveys").find(q).toArray()
-
-    res.json(dreams)
+    const cursor = await db.collection("lifeAreaSurveys").find(q)
+    const records = await cursor.toArray()
+    await cursor.close()
+    res.json(records)
 
 }

@@ -4,9 +4,9 @@ import {connectToDatabase} from "../../lib/dbConnect";
 export default async(req,res) => {
 
     const {db} = await connectToDatabase()
-
-    const services = await db.collection("services").find().toArray()
-
-    res.json(services)
+    const cursor = await db.collection("services").find()
+    const records = await cursor.toArray()
+    await cursor.close()
+    res.json(records)
 
 }

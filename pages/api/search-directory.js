@@ -1,13 +1,10 @@
 import {connectToDatabase} from "../../lib/dbConnect";
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async(req, res) => {
-    const q = {
-        userId: req.query.userId
-    }
+export default async (req, res) => {
 
     const {db} = await connectToDatabase()
-    const searchResults = await db
+    const cursor = await db
         .collection("services")
         .find({
             "name": {
@@ -21,8 +18,9 @@ export default async(req, res) => {
                 $regex: req.body.county
             }
         })
-        .toArray()
+    const records = await cursor.toArray()
+    await cursor.close()
 
-    res.json(searchResults)
+    res.json(records)
 
 }

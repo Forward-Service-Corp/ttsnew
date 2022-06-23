@@ -4,6 +4,7 @@ import {Disclosure, Menu, Transition} from '@headlessui/react'
 import {BellIcon, MenuIcon, XIcon} from '@heroicons/react/outline'
 import {useRouter} from "next/router";
 import {UserCircleGear, UserCircle} from "phosphor-react";
+import ProfileDetailsWarningModal from "./profileDetailsWarningModal";
 
 const navigation = [
     {name: 'Dashboard', href: '/', current: true},
@@ -30,6 +31,8 @@ export default function Layout({children, title, session, loadingState}) {
                 <div className={"uppercase text-white self-center rounded-full p-5 bg-orange-600 shadow"}>loading...
                 </div>
             </div>
+            {router.pathname !== "/profile" && router.pathname !== "/" && router.pathname !== "/directory" ? <ProfileDetailsWarningModal session={session}/> : null}
+
             <div className="min-h-full">
                 <div className="bg-gradient-to-r from-orange-600 to-orange-400 pb-32 print:hidden">
                     <Disclosure as="nav" className="bg-gradient-to-r from-orange-600 to-orange-400">
@@ -100,22 +103,13 @@ export default function Layout({children, title, session, loadingState}) {
                                             </div>
                                             <div className="hidden md:block">
                                                 <div className="ml-4 flex items-center md:ml-6">
-                                                    {/*<button*/}
-                                                    {/*    type="button"*/}
-                                                    {/*    className="bg-orange-500 p-1 text-gray-400 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-orange-200 focus:ring-white"*/}
-                                                    {/*>*/}
-                                                    {/*    <span className="sr-only">View notifications</span>*/}
-                                                    {/*    <BellIcon className="h-6 w-6" aria-hidden="true"/>*/}
-                                                    {/*</button>*/}
-
-                                                    {/* Profile dropdown */}
                                                     <Menu as="div" className="ml-3 relative">
                                                         <div>
                                                             <Menu.Button
                                                                 className="max-w-xs bg-orange-600 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                                                                 <span className="sr-only">Open user menu</span>
                                                                 {session?.image ? <img className="h-8 w-8 rounded-full"
-                                                                                      src={session.image} alt=""/> :
+                                                                                       src={session.image} alt=""/> :
                                                                     <UserCircleGear size={32} weight="thin"
                                                                                     color={"white"}/>}
 
@@ -218,13 +212,6 @@ export default function Layout({children, title, session, loadingState}) {
                                                 <div
                                                     className="text-sm font-medium leading-none text-white">{session?.email}</div>
                                             </div>
-                                            {/*<button*/}
-                                            {/*    type="button"*/}
-                                            {/*    className="ml-auto bg-gray-800 flex-shrink-0 p-1 text-gray-400 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"*/}
-                                            {/*>*/}
-                                            {/*    <span className="sr-only">View notifications</span>*/}
-                                            {/*    <BellIcon className="h-6 w-6" aria-hidden="true"/>*/}
-                                            {/*</button>*/}
                                         </div>
                                         <div className="mt-3 px-2 space-y-1">
                                             {userNavigation.map((item) => (
@@ -263,13 +250,9 @@ export default function Layout({children, title, session, loadingState}) {
 
                 <main className="-mt-32 print:mt-0">
                     <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
-                        {/*<div className={`p-3 bg-red-500 rounded shadow mb-4 text-white ${session && session?.name === "" || session && session?.county.length === 0 ? "visible" : "hidden"}`}>*/}
-                        {/*    Please enter your name and county in <a href={"/profile"} className={"underline cursor-pointer"}>your profile</a> before proceeding.*/}
-                        {/*</div>*/}
                         <div className="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
                             {children}
                         </div>
-
                     </div>
                 </main>
             </div>
