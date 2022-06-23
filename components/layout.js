@@ -49,6 +49,13 @@ export default function Layout({children, title, session, loadingState}) {
                                                         alt="Workflow"
                                                     />
                                                 </div>
+                                                <div className="flex-shrink-0 ml-3">
+                                                    <img
+                                                        className="w-[50px]"
+                                                        src="/img/fsc-logo.png"
+                                                        alt="Workflow"
+                                                    />
+                                                </div>
                                                 <div className="hidden md:block">
                                                     <div className="ml-10 flex items-baseline space-x-4">
                                                         {navigation.map((item) => (
