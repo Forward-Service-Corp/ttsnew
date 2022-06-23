@@ -1,14 +1,13 @@
 import {connectToDatabase} from "../../lib/dbConnect";
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async(req, res) => {
+export default async (req, res) => {
 
     const {db} = await connectToDatabase()
-    const clients = await db
-        .collection("users")
-        .find({ "coach": req.query.coachId })
-        .toArray()
+    const cursor = await db.collection("users").find({"coach": req.query.coachId})
+    const records = await cursor.toArray()
+    await cursor.close()
 
-    res.json(clients)
+    res.json(records)
 
 }

@@ -28,8 +28,10 @@ export default async (req, res) => {
 
 
     const {db} = await connectToDatabase()
-    const referrals = await db.collection("services").find(q).toArray()
+    const cursor = await db.collection("services").find(q)
+    const records = await cursor.toArray()
+    await cursor.close()
 
-    res.json({referrals, domains: domain})
+    res.json({referrals: records, domains: domain})
 
 }

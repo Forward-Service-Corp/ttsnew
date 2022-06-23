@@ -19,7 +19,7 @@ export default async(req, res) => {
     await dreamsCursor.close()
 
     const surveysCursor = await db.collection("lifeAreaSurveys").find(UID)
-    const surveys = await dreamsCursor.toArray()
+    const surveys = await surveysCursor.toArray()
     await surveysCursor.close()
 
     const referralsCursor = await db.collection("referrals").find(UID).sort("domain")

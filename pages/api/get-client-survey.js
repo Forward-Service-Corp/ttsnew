@@ -2,16 +2,13 @@ import {connectToDatabase} from "../../lib/dbConnect";
 import {ObjectId} from "mongodb";
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async(req, res) => {
-
-    const q = {
-        _id: ObjectId(req.query.surveyId)
-    }
+export default async (req, res) => {
 
     const {db} = await connectToDatabase()
+    const cursor = await db.collection("lifeAreaSurveys").find({_id: ObjectId(req.query.surveyId)})
+    const records = await cursor.toArray()
+    await cursor.close()
 
-    const dreams = await db.collection("lifeAreaSurveys").find(q).toArray()
-
-    res.json(dreams)
+    res.json(records)
 
 }

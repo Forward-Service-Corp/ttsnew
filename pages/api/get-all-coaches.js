@@ -4,16 +4,10 @@ import {connectToDatabase} from "../../lib/dbConnect";
 export default async(req, res) => {
 
     const {db} = await connectToDatabase()
-    const coaches = await db
-        .collection("users")
-        .find({
-            level: {
-                $in: ["admin", "coach"]
-            }
-        })
-        .toArray()
+    const cursor = await db.collection("users").find({level: {$in: ["admin", "coach"]}})
+    const records = await cursor.toArray()
+    await cursor.close()
 
-
-    res.json(coaches)
+    res.json(records)
 
 }

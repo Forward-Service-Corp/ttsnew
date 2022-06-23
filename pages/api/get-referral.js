@@ -37,14 +37,11 @@ export default async(req, res) => {
         }
     }
 
-
     const {db} = await connectToDatabase()
-    const referrals = await db
-        .collection("services")
-        .find(q)
-        .toArray()
+    const cursor = await db.collection("services").find(q)
+    const records = await cursor.toArray()
+    await cursor.close()
 
-
-    res.json({referrals: referrals, counties: req.query.county, domain: req.query.domain})
+    res.json({referrals: records, counties: req.query.county, domain: req.query.domain})
 
 }

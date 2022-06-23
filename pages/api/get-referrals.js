@@ -18,6 +18,7 @@ export default async (req, res) => {
     const cursor = await db.collection("referrals").find(q)
     const records = await cursor.toArray()
     await cursor.close()
+
     res.json(records)
 
 }
