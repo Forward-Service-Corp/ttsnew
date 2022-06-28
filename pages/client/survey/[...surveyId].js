@@ -2,6 +2,7 @@ import Layout from "../../../components/layout";
 import {getSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {labelMap} from "../../../lib/serviceLabelsMap";
+import {ArrowLeft, Printer} from "phosphor-react";
 
 export default function CarePlan({pageDataJson, surveyJson}) {
 
@@ -14,13 +15,25 @@ export default function CarePlan({pageDataJson, surveyJson}) {
             {surveyJson.filter(survey => survey._id.toString() === surveyId.toString()).map(survey => {
                 return (
                     <div key={survey._id} className={""}>
+                        <div className={"flex justify-between"}>
+                            <button
+                                onClick={() => router.back()}
+                                className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400 flex items-center"}>
+                                <span className={"inline-block mr-2"}><ArrowLeft size={22} /></span><span className={"inline-block"}>Back</span>
+
+                            </button>
+                            <button
+                                onClick={() => window.print()}
+                                className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400 flex items-center max-w-[180px]"}>
+                                <span className={"inline-block mr-2"}><Printer size={22} /></span><span className={"inline-block"}>Print</span>
+                            </button>
+                        </div>
                         <div className={"flex justify-between p-2"}>
                             <div>
                                 <p>Client ID: {survey.userId}</p>
                                 <p>Associated dream: {survey.dream}</p>
                             </div>
                             <div className={"text-right"}>
-                                <p>Total score: {survey.totalScore}</p>
                                 <p>Priority life areas: {survey.priority.map(p => {
                                     return (
                                         <span className={"border p-1 ml-1 rounded"} key={p}>{p}</span>

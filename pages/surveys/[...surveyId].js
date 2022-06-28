@@ -4,7 +4,7 @@ import {useRouter} from "next/router";
 import {labelMap} from "../../lib/serviceLabelsMap";
 import {ArrowLeft, Printer} from "phosphor-react";
 
-export default function CarePlan({pageDataJson}) {
+export default function SurveyId({pageDataJson}) {
 
     const router = useRouter()
     const {user, surveys} = pageDataJson

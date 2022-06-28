@@ -56,7 +56,12 @@ function LasCurrent({surveys, user, isClientSurvey, clientId}) {
 
                                 }}>Map this survey</div>
                                 <div className={"p-3 flex-1 cursor-pointer bg-gradient-to-t from-green-600 to-green-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"} onClick={() => {
-                                    router.push("/surveys/" + survey._id)
+                                    if(isClientSurvey) {
+                                        router.push("/client/survey/" + survey._id)
+                                    }else{
+                                        router.push("/surveys/" + survey._id)
+                                    }
+
                                 }}>Review</div>
                                 {/*<div className={"bg-red-600 p-3 flex-1 cursor-pointer hover:bg-red-500"} onClick={() => {*/}
                                 {/*    if (confirm("Are you sure you want to delete this survey? This action is permanent.")) {*/}
