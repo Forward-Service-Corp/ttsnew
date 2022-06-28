@@ -2,7 +2,7 @@ import {useRouter} from "next/router";
 import {labelMap} from "../lib/serviceLabelsMap";
 import moment from "moment";
 
-function LasHistory({surveys}) {
+function LasHistory({surveys, isClientView}) {
 
     const router = useRouter()
 
@@ -47,7 +47,12 @@ function LasHistory({surveys}) {
                                 </div>*/}
                                 <div className={"p-3 flex-1 cursor-pointer bg-gradient-to-t from-green-600 to-green-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
                                      onClick={() => {
-                                         router.push("/surveys/" + survey._id)
+                                         if(isClientView){
+                                             router.push("/client/survey/" + survey._id).then()
+                                         }else{
+                                             router.push("/surveys/" + survey._id).then()
+                                         }
+
                                      }}>Review
                                 </div>
                                 {/*<div className={"bg-red-600 p-3 flex-1 cursor-pointer hover:bg-red-500"} onClick={() => {

@@ -145,7 +145,7 @@ export default function User({viewingUserData, pageDataJson}) {
                     }}>{lasSectionOpen ? <CaretDoubleUp size={22}/> : <CaretDoubleDown size={22}/>}</div>
                 </div>
                 <div className={`${lasSectionOpen ? "visible" : "hidden"}`}>
-                    <LasHistory surveys={surveys}/>
+                    <LasHistory surveys={surveys} isClientView={true}/>
                 </div>
 
             </div>
