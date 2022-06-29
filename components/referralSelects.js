@@ -17,7 +17,6 @@ function ReferralSelects({
         const id = clientId === undefined ? user.email : clientId
         const referrals = await fetch("/api/get-referrals?userId=" + id)
             .then(res => res.json())
-        console.log("referrals")
         await setUserReferrals(referrals)
     }
 

@@ -14,7 +14,6 @@ export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) 
     const router = useRouter()
     const [currentReferral, setCurrentReferral] = useState({})
     const [userReferrals, setUserReferrals] = useState(router.query.clientId ? pageDataJson.clientReferrals : pageDataJson.referrals)
-    console.log(pageDataJson.referrals)
     return (
         <Layout title={"Map of My Dreams"} session={user}>
             <Head>
