@@ -49,6 +49,9 @@ function ReferralSelects({
         })
     }
 
+    function checkUserReferrals () {
+        return userReferrals.filter(referral => referral.name === currentReferral.name)
+    }
 
     return (
         <div className={"flex-1"}>
@@ -64,14 +67,13 @@ function ReferralSelects({
                             <div className={"w-full"}>
                                 <select id={domain} className={"w-full text-sm rounded"}
                                         onChange={(e) => {
-                                            userReferrals.map(referral => {
-                                                // if(referral.name === e.target[e.target.selectedIndex].dataset.name){
-                                                //     alert("You have already selected this referral. ")
-                                                //     setCurrentReferral({})
-                                                //     document.getElementById(domain).selectedIndex = 0
-                                                // }else{
-                                                //
-                                                // }
+                                            // userReferrals.map(referral => {
+                                            //
+                                            //
+                                            // })
+                                            if (e.target.value === "") {
+                                                setCurrentReferral({})
+                                            } else {
                                                 setCurrentReferral({
                                                     domain: domain,
                                                     name: e.target[e.target.selectedIndex].dataset.name,
@@ -83,15 +85,13 @@ function ReferralSelects({
                                                     contact: e.target[e.target.selectedIndex].dataset.contact,
                                                     needs: e.target[e.target.selectedIndex].dataset.needs
                                                 })
-                                            })
-
-
+                                            }
 
                                         }}>
-                                    <option value={null}>
+                                    <option value={""}>
                                         Please select a referral for {labelMap[domain]}...
                                     </option>
-                                    {referrals && referrals.filter(item => item.service === domain).map((referral, i) => {
+                                    {referrals?.filter(item => item.service === domain).map((referral, i) => {
                                         return (
                                             <option key={i} value={referral._id}
                                                     data-name={referral.name}
@@ -112,11 +112,21 @@ function ReferralSelects({
                                     disabled={Object.keys(currentReferral).length === 0 || currentReferral.domain !== domain}
                                     className={"text-white px-4 py-2 text-xs rounded mt-3 mb-4 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
                                     onClick={() => {
+
+                                    if(checkUserReferrals().length === 0){
+                                        // save referral
                                         saveReferral().then(() => {
                                             getUserReferrals().then()
                                         })
                                         setCurrentReferral({})
                                         document.getElementById(domain).selectedIndex = 0
+                                        // end save referral
+                                    }else{
+                                        alert("You have already selected this referral. Please choose another referral.")
+                                        setCurrentReferral({})
+                                        document.getElementById(domain).selectedIndex = 0
+                                    }
+
                                     }}>+ Save
                                 </button>
                                 <div>
