@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {FilePlus, Trash} from "phosphor-react";
+import moment from "moment";
 
 function TaskTodo({task, setAllTasks, user, item, setAllNotes}) {
 
@@ -54,10 +55,11 @@ function TaskTodo({task, setAllTasks, user, item, setAllNotes}) {
                                 getTasks().then()
                             })
                     }}/>
-                    <div className={"text-xs "}>{task.task}</div>
+                    <div className={"text-xs "}><span
+                        className={"text-gray-500"}>{moment(task.timestamp).format("MMMM Do YYYY")}</span> - {task.task}</div>
                 </div>
                 <div className={"flex"}>
-                    <div className={"cursor-pointer mr-3"}
+                    <div className={"cursor-pointer mr-3 ml-4"}
                          onClick={() => {
                              setNoteOpen(!noteOpen)
                          }}><FilePlus size={16} weight="thin"/>

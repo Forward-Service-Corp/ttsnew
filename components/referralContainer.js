@@ -75,8 +75,8 @@ function ReferralContainer({item, user, notes, setUserReferrals}) {
                 </div>
             </div>
             <div className={`flex justify-between items-center bg-gray-200 p-2 ${open ? "visible" : "hidden"}`}>
-                <div className={"flex items-center text-xs"} onClick={() => {
-                    router.push("/surveys/" + item.surveyId)
+                <div className={"flex items-center text-xs cursor-pointer"} onClick={() => {
+                    router.push("/surveys/" + item.surveyId).then()
                 }}>
                     <Files size={20} weight="thin" color={"blue"}/>
                     <span className={"text-blue-600"}>View associated Life Area Survey</span>

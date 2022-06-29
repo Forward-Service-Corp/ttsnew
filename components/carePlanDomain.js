@@ -14,13 +14,13 @@ function CarePlanDomain({item}) {
                 <p>{item.phone}</p></div>) : null}
 
             {item.email !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Email: </p>
-                <p>{item.email}</p></div>) : null}
+                <p><a className={"text-blue-600 underline"} href={`mailto:${item.email}`}>Click to email</a></p></div>) : null}
 
             {item.contact !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Contact person: </p>
                 <p>{item.contact}</p></div>) : null}
 
             {item.url !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Website: </p>
-                <p>{item.url}</p></div>) : null}
+                <p><a className={"text-blue-600 underline"} target={"_blank"} rel={"noreferrer"} href={item.url}>Click to visit site</a></p></div>) : null}
 
             {item.requirements !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Requirements: </p>
                 <p>{item.requirements}</p></div>) : null}

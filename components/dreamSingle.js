@@ -1,6 +1,7 @@
 import React from 'react';
 import {useRouter} from "next/router";
 import {Brain} from "phosphor-react";
+import moment from "moment";
 
 function DreamSingle({dream, deleteDream, isClientDream, clientId}) {
     const router = useRouter()
@@ -10,6 +11,7 @@ function DreamSingle({dream, deleteDream, isClientDream, clientId}) {
                 <Brain size={26} weight="thin" />
                 <div className={"ml-2 truncate"}>{dream.dream}</div>
             </div>
+            <div className={"bg-gray-200 px-2 py-2 text-xs"}>{moment(dream.timestamp).format("MMMM Do YYYY @ h:mm a")}</div>
             <div className={"p-5"}>
                 <p className={"text-xs text-gray-500 "}>What I need: </p>
                 <p className={"text-sm mt-0"}>{dream.dreamNeed}</p>
@@ -22,9 +24,9 @@ function DreamSingle({dream, deleteDream, isClientDream, clientId}) {
                 <div className={"bg-gradient-to-t from-orange-600 to-orange-400 text-white p-2 flex-1 cursor-pointer"}
                      onClick={() => {
                          if(isClientDream){
-                             router.push("/new-life-area-survey?dreamName=" + dream.dream + "&dreamId=" + dream._id + "&clientId=" + clientId)
+                             router.push("/new-life-area-survey?dreamName=" + dream.dream + "&dreamId=" + dream._id + "&clientId=" + clientId).then()
                          }else{
-                             router.push("/new-life-area-survey?dreamName=" + dream.dream + "&dreamId=" + dream._id)
+                             router.push("/new-life-area-survey?dreamName=" + dream.dream + "&dreamId=" + dream._id).then()
                          }
 
                      }}>Survey
