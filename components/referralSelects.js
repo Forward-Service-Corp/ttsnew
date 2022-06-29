@@ -65,29 +65,30 @@ function ReferralSelects({
                                 <select id={domain} className={"w-full text-sm rounded"}
                                         onChange={(e) => {
                                             userReferrals.map(referral => {
-                                                if(referral.name === e.target[e.target.selectedIndex].dataset.name){
-                                                    alert("You have already selected this referral. ")
-                                                    setCurrentReferral({})
-                                                    document.getElementById(domain).selectedIndex = 0
-                                                }else{
-                                                    setCurrentReferral({
-                                                        domain: domain,
-                                                        name: e.target[e.target.selectedIndex].dataset.name,
-                                                        email: e.target[e.target.selectedIndex].dataset.email,
-                                                        phone: e.target[e.target.selectedIndex].dataset.phone,
-                                                        hours: e.target[e.target.selectedIndex].dataset.hours,
-                                                        requirements: e.target[e.target.selectedIndex].dataset.requirements,
-                                                        url: e.target[e.target.selectedIndex].dataset.url,
-                                                        contact: e.target[e.target.selectedIndex].dataset.contact,
-                                                        needs: e.target[e.target.selectedIndex].dataset.needs
-                                                    })
-                                                }
+                                                // if(referral.name === e.target[e.target.selectedIndex].dataset.name){
+                                                //     alert("You have already selected this referral. ")
+                                                //     setCurrentReferral({})
+                                                //     document.getElementById(domain).selectedIndex = 0
+                                                // }else{
+                                                //
+                                                // }
+                                                setCurrentReferral({
+                                                    domain: domain,
+                                                    name: e.target[e.target.selectedIndex].dataset.name,
+                                                    email: e.target[e.target.selectedIndex].dataset.email,
+                                                    phone: e.target[e.target.selectedIndex].dataset.phone,
+                                                    hours: e.target[e.target.selectedIndex].dataset.hours,
+                                                    requirements: e.target[e.target.selectedIndex].dataset.requirements,
+                                                    url: e.target[e.target.selectedIndex].dataset.url,
+                                                    contact: e.target[e.target.selectedIndex].dataset.contact,
+                                                    needs: e.target[e.target.selectedIndex].dataset.needs
+                                                })
                                             })
 
 
 
                                         }}>
-                                    <option value={`Please select a referral for ${labelMap[domain]}...`}>
+                                    <option value={null}>
                                         Please select a referral for {labelMap[domain]}...
                                     </option>
                                     {referrals && referrals.filter(item => item.service === domain).map((referral, i) => {
