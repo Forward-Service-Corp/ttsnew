@@ -3,7 +3,6 @@ import {getSession} from "next-auth/react";
 import {useState} from "react";
 import {useRouter} from "next/router";
 import CurrentReferral from "../components/currentReferral";
-import Link from "next/link";
 import Head from "next/head";
 import moment from "moment";
 import ReferralSelects from "../components/referralSelects";
@@ -27,7 +26,9 @@ export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) 
                 <span className={""}>Please select a referral for each priority area.</span>
             </div>
             <div className={""}>
-                <div className={`${router.query.clientId ? "visible" : "hidden"} text-red-600`}>MAPPING FOR CLIENT {router.query.clientId}</div>
+                <div className={`${router.query.clientId ? "visible" : "hidden"} text-red-600`}>
+                    MAPPING FOR CLIENT {router.query.clientId}
+                </div>
                 <div className={"flex py-4 w-full"}>
 
                     <div className={"flex-1"}>
@@ -54,10 +55,17 @@ export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) 
 
                 </div>
                 <div className={"flex justify-end"}>
-                    <Link href={"/care-plans"} passhref>
-                        <a className={"px-6 py-2 text-xs rounded text-white bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Go
-                            to Care Plans</a>
-                    </Link>
+                    <button
+                        className={"px-6 py-2 text-xs rounded text-white bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
+                        onClick={() => {
+                            if (router.query.clientId) {
+                                router.back()
+                            } else {
+                                router.push("/care-plans").then()
+                            }
+                        }}>
+                        Go to Care Plans
+                    </button>
                 </div>
             </div>
         </Layout>

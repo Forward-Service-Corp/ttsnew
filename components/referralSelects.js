@@ -1,4 +1,3 @@
-import React, {useEffect} from 'react';
 import {labelMap} from "../lib/serviceLabelsMap";
 import UserReferralItem from "./userReferralItem";
 
@@ -63,22 +62,33 @@ function ReferralSelects({
 
                         <div className={"flex"}>
                             <div className={"w-full"}>
-                                <select id={domain} className={"w-full text-sm rounded"} onChange={(e) => {
-                                    setCurrentReferral({
-                                        domain: domain,
-                                        name: e.target[e.target.selectedIndex].dataset.name,
-                                        email: e.target[e.target.selectedIndex].dataset.email,
-                                        phone: e.target[e.target.selectedIndex].dataset.phone,
-                                        hours: e.target[e.target.selectedIndex].dataset.hours,
-                                        requirements: e.target[e.target.selectedIndex].dataset.requirements,
-                                        url: e.target[e.target.selectedIndex].dataset.url,
-                                        contact: e.target[e.target.selectedIndex].dataset.contact,
-                                        needs: e.target[e.target.selectedIndex].dataset.needs
-                                    })
+                                <select id={domain} className={"w-full text-sm rounded"}
+                                        onChange={(e) => {
+                                            userReferrals.map(referral => {
+                                                if(referral.name === e.target[e.target.selectedIndex].dataset.name){
+                                                    alert("You have already selected this referral. ")
+                                                    setCurrentReferral({})
+                                                    document.getElementById(domain).selectedIndex = 0
+                                                }else{
+                                                    setCurrentReferral({
+                                                        domain: domain,
+                                                        name: e.target[e.target.selectedIndex].dataset.name,
+                                                        email: e.target[e.target.selectedIndex].dataset.email,
+                                                        phone: e.target[e.target.selectedIndex].dataset.phone,
+                                                        hours: e.target[e.target.selectedIndex].dataset.hours,
+                                                        requirements: e.target[e.target.selectedIndex].dataset.requirements,
+                                                        url: e.target[e.target.selectedIndex].dataset.url,
+                                                        contact: e.target[e.target.selectedIndex].dataset.contact,
+                                                        needs: e.target[e.target.selectedIndex].dataset.needs
+                                                    })
+                                                }
+                                            })
 
-                                }}>
-                                    <option value={`Please select a referral for ${labelMap[domain]}...`}>Please select
-                                        a referral for {labelMap[domain]}...
+
+
+                                        }}>
+                                    <option value={`Please select a referral for ${labelMap[domain]}...`}>
+                                        Please select a referral for {labelMap[domain]}...
                                     </option>
                                     {referrals && referrals.filter(item => item.service === domain).map((referral, i) => {
                                         return (
@@ -102,7 +112,7 @@ function ReferralSelects({
                                     className={"text-white px-4 py-2 text-xs rounded mt-3 mb-4 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
                                     onClick={() => {
                                         saveReferral().then(() => {
-                                            getUserReferrals()
+                                            getUserReferrals().then()
                                         })
                                         setCurrentReferral({})
                                         document.getElementById(domain).selectedIndex = 0
