@@ -121,7 +121,12 @@ function ClientDetails({editMode, viewingUser}) {
                         })}
                     </select>
                 </div>
-
+            <div>
+                <p className={"text-gray-500 text-xs mt-4"}>Coaches</p>
+                {viewingUser.coach.map((coach, i) => {
+                    return (<li key={i}>{coach}</li>)
+                })}
+            </div>
             </div>
 
 
