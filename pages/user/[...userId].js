@@ -3,6 +3,7 @@ import {getSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import Head from "next/head";
 import {useEffect, useState} from "react";
+import NewEmailAssignment from "../../components/newEmailAssignment";
 
 export default function User({viewingUser, pageDataJson, coachesJson}) {
 
@@ -143,7 +144,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
             </div>
 
             <div className={"bg-gray-100 p-6 mb-5 rounded"}>
-                <h2 className={"uppercase text-gray-500"}>New email assignment</h2>
+                <NewEmailAssignment user={viewingUser.email}/>
             </div>
         </Layout>
     )
