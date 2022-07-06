@@ -1,6 +1,7 @@
 import {useRouter} from "next/router";
 import {labelMap} from "../lib/serviceLabelsMap";
 import moment from "moment";
+import {ListNumbers} from "phosphor-react";
 
 function LasHistory({surveys, isClientView}) {
 
@@ -14,10 +15,16 @@ function LasHistory({surveys, isClientView}) {
                         <div
                             className={"rounded shadow mr-5 mb-5 text-sm overflow-hidden relative flex flex-col justify-between"}
                             key={survey.dream}>
-                            <div
-                                className={"bg-gray-700 p-3 truncate font-light text-white"}>{moment(survey.datestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}</div>
+                            <div>
+                                <div className={"bg-gray-700 p-3 truncate font-light text-white flex justify-start"}>
+                                    <div><ListNumbers size={22}/></div>
+                                    <div className={"ml-2"}>{survey.dream}</div>
+                                </div>
+                                <div
+                                    className={"bg-gray-100 p-2 text-xs"}>{moment(survey.datestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}</div>
+                            </div>
                             <div className={"flex flex-wrap"}>
-                                <div className={"flex-grow p-4"}>
+                                <div className={"flex-grow p-3"}>
                                     <div className={"my-2"}>
                                         <p className={"text-xs text-gray-600"}>Priority domains:</p>
                                         <ul className={"list-disc pl-5"}>
@@ -25,8 +32,6 @@ function LasHistory({surveys, isClientView}) {
                                                 return <li key={i}>{labelMap[item]}</li>
                                             })}
                                         </ul>
-                                        <p className={"text-xs text-gray-600"}>Dream:</p>
-                                        <p className={"mt-0"}>{survey.dream}</p>
                                     </div>
                                 </div>
                             </div>

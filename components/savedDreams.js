@@ -19,7 +19,7 @@ function SavedDreams({savedDreams, setLoadingState, saveDreams, user}) {
     return (
         <div>
             <div>{savedDreams && savedDreams.length ?
-                <h2 className={"font-serif mt-14 mb-5 uppercase"}>My Dreams</h2> : null}</div>
+                <h2 className={"font-serif mb-5 uppercase"}>My Dreams</h2> : null}</div>
 
             <div className={"grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"}>
                 {savedDreams && savedDreams.map((dream, i) => (

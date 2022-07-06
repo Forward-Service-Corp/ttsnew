@@ -7,6 +7,7 @@ import {useState} from "react"
 import Welcome1 from "../components/pages/welcome1"
 import Welcome2 from "../components/pages/welcome2"
 import Welcome3 from "../components/pages/welcome3"
+import {Brain, Bookmarks, CheckSquare, ListNumbers} from "phosphor-react";
 
 export default function Home({pageDataJson}) {
 
@@ -15,21 +16,14 @@ export default function Home({pageDataJson}) {
     const completedTasks = tasks.filter(task => eval(task.completed) === true).length
     const [currentTab, setCurrentTab] = useState(1)
 
-    const stats = [
-        {name: 'Dreams', stat: dreams.length, link: "/dreams", label: "Add a dream"},
-        {name: 'Life Area Surveys', stat: surveys.length, link: "/life-area-surveys", label: "Complete a survey"},
-        {name: 'Referrals', stat: referrals.length, link: "/care-plans", label: "View all"},
-        {name: 'To-Do List', stat: completedTasks + " of " + tasks.length, link: "/", label: "Completed"},
-    ]
-
     function prevPage() {
         setCurrentTab(prevState => prevState - 1)
     }
 
     function nextPage() {
-        if(currentTab === 3){
+        if (currentTab === 3) {
             router.push("/dreams")
-        }else{
+        } else {
             setCurrentTab(prevState => prevState + 1)
         }
     }
@@ -40,16 +34,59 @@ export default function Home({pageDataJson}) {
                 <title>TTS / Dashboard</title>
             </Head>
             <div>
-                <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
-                    {stats.map((item) => (
-                        <div key={item.name}
-                             className="px-4 py-5 bg-[#eeeada] shadow rounded-lg overflow-hidden sm:p-6 text-center shadow-lg ">
-                            <dt className="text-xl font-light  font-serif">{item.name}</dt>
-                            <dd className="mt-1 text-3xl font-semibold ">{item.stat}</dd>
-                            <Link href={item.link}><a
-                                className={"text-orange-500 underline text-xs"}>{item.label}</a></Link>
+                <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-4">
+                    <div className="rounded overflow-hidden text-center shadow flex flex-col justify-between">
+                        <div className={"flex align-middle items-center justify-center text-white bg-gray-700 p-2"}>
+                            <Brain size={22}/>
+                            <dt className=" font-light uppercase ml-2">Dreams</dt>
                         </div>
-                    ))}
+                        <dd className="my-4 text-3xl font-semibold ">{dreams.length}</dd>
+                        <div className={"flex align-middle items-center justify-center text-white bg-gray-200 p-2"}>
+                            <Link href={"/dreams"}>
+                                <a className={"text-black text-xs"}>+ add a dream</a>
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div className="rounded overflow-hidden text-center shadow flex flex-col justify-between">
+                        <div className={"flex align-middle items-center justify-center text-white bg-gray-700 p-2"}>
+                            <ListNumbers size={22}/>
+                            <dt className=" font-light uppercase ml-2">Life Area Surveys</dt>
+                        </div>
+                        <dd className="my-4 text-3xl font-semibold ">{surveys.length}</dd>
+                        <div className={"flex align-middle items-center justify-center text-white bg-gray-200 p-2"}>
+                            <Link href={"/dreams"}>
+                                <a className={"text-black text-xs"}>complete a survey</a>
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div className="rounded overflow-hidden text-center shadow flex flex-col justify-between">
+                        <div className={"flex align-middle items-center justify-center text-white bg-gray-700 p-2"}>
+                            <Bookmarks size={22}/>
+                            <dt className=" font-light uppercase ml-2">Referrals</dt>
+                        </div>
+                        <dd className="my-4 text-3xl font-semibold ">{referrals.length}</dd>
+                        <div className={"flex align-middle items-center justify-center text-white bg-gray-200 p-2"}>
+                            <Link href={"/care-plans"}>
+                                <a className={"text-black text-xs"}>see referrals</a>
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div className="rounded overflow-hidden text-center shadow flex flex-col justify-between">
+                        <div className={"flex align-middle items-center justify-center text-white bg-gray-700 p-2"}>
+                            <CheckSquare size={22}/>
+                            <dt className=" font-light uppercase ml-2">Tasks</dt>
+                        </div>
+                        <dd className="my-4 text-3xl font-semibold ">{completedTasks} of {tasks.length}</dd>
+                        <div className={"flex align-middle items-center justify-center text-white bg-gray-200 p-2"}>
+                            <Link href={"/care-plans"}>
+                                <a className={"text-black text-xs"}>+ add a task</a>
+                            </Link>
+                        </div>
+                    </div>
+
                 </dl>
             </div>
             <div className={"flex justify-between py-8"}>

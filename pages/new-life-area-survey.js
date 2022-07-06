@@ -55,7 +55,7 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
             <div className={"bg-gray-600 text-center p-2 text-white mb-3 rounded flex justify-around font-light text-sm grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}>
                 <div>Priorities: <strong>{domains.length}</strong></div>
                 <div>Answered: <strong>{Object.keys(answered).length}/21</strong></div>
-                <div>Dream: {router.query.dreamName}</div>
+                <div className={"truncate"}>Dream: {router.query.dreamName}</div>
             </div>
             <div
                 className={`bg-red-600 p-2 rounded text-center text-white text-xs mb-2 ${Object.keys(answered).length === 21 ? "hidden" : null}`}>
