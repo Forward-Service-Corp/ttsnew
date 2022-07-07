@@ -14,7 +14,7 @@ function CarePlanDomain({item}) {
                 <p>{item.phone}</p></div>) : null}
 
             {item.email !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Email: </p>
-                <p><a className={"text-blue-600 underline"} href={`mailto:${item.email}`}>Click to email</a></p></div>) : null}
+                <p><a className={"text-blue-600 underline"} href={`mailto:${item.email}`}>{item.email}</a></p></div>) : null}
 
             {item.contact !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Contact person: </p>
                 <p>{item.contact}</p></div>) : null}

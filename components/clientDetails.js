@@ -124,7 +124,7 @@ function ClientDetails({editMode, viewingUser}) {
             <div>
                 <p className={"text-gray-500 text-xs mt-4"}>Coaches</p>
                 {viewingUser.coach.map((coach, i) => {
-                    return (<li key={i}>{coach}</li>)
+                    return (<li key={i}><a className={"underline text-orange-500"} href={`mailto:${coach}`}>{coach}</a></li>)
                 })}
             </div>
             </div>
