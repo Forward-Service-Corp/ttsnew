@@ -1,6 +1,16 @@
 import React from 'react';
 
-function ReferralSelectsButton({userReferrals, currentReferral, domain, setCurrentReferral, router, clientId, setUserReferrals, user, visible}) {
+function ReferralSelectsButton({
+                                   userReferrals,
+                                   currentReferral,
+                                   domain,
+                                   setCurrentReferral,
+                                   router,
+                                   clientId,
+                                   setUserReferrals,
+                                   user,
+                                   visible
+                               }) {
 
     async function saveReferral() {
         await fetch("/api/save-referral", {
@@ -34,7 +44,7 @@ function ReferralSelectsButton({userReferrals, currentReferral, domain, setCurre
     }
 
 
-    function checkUserReferrals () {
+    function checkUserReferrals() {
         return userReferrals.filter(referral => referral.name === currentReferral.name)
     }
 
@@ -44,7 +54,7 @@ function ReferralSelectsButton({userReferrals, currentReferral, domain, setCurre
             className={`${visible ? "visible" : "hidden"} text-white px-4 py-2 text-xs rounded mt-3 mb-4 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400`}
             onClick={() => {
 
-                if(checkUserReferrals().length === 0){
+                if (checkUserReferrals().length === 0) {
                     // save referral
                     saveReferral().then(() => {
                         getUserReferrals().then()
@@ -52,7 +62,7 @@ function ReferralSelectsButton({userReferrals, currentReferral, domain, setCurre
                     setCurrentReferral({})
                     document.getElementById(domain).selectedIndex = 0
                     // end save referral
-                }else{
+                } else {
                     alert("You have already selected this referral. Please choose another referral.")
                     setCurrentReferral({})
                     document.getElementById(domain).selectedIndex = 0

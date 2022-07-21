@@ -28,7 +28,7 @@ export default function Directory({pageDataJson}) {
     }
 
     return (
-        <Layout title={"Referral Directory"} session={user}>
+        <Layout title={"Care Network"} session={user}>
             <Head>
                 <title>TTS / Directory</title>
             </Head>
@@ -62,9 +62,9 @@ export default function Directory({pageDataJson}) {
                             {WICountiesList.map(county => <option value={county} key={county}>{county}</option>)}
                         </select>
                     </div>
-                    <div className={"align-baseline"}>
+                    <div className={"flex items-center"}>
                         <button type={"submit"}
-                                className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Search
+                                className={"py-2 px-6 mr-2 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Search
                         </button>
                         <button type={"reset"}
                                 className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}

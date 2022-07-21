@@ -45,8 +45,16 @@ function ReferralContainer({item, user, notes, setUserReferrals}) {
         await fetch("/api/delete-referral?referralId=" + referralId)
     }
 
+    async function deleteCustomReferral(id) {
+        await fetch("/api/delete-custom-referral?referralId=" + id)
+    }
+
     async function setReferralStatus(referralId, status) {
         await fetch("/api/set-referral-status?referralId=" + referralId + "&status=" + status)
+    }
+
+    async function setCustomReferralStatus(referralId, status) {
+        await fetch("/api/set-custom-referral-status?referralId=" + referralId + "&status=" + status)
     }
 
     async function getReferrals() {
@@ -91,7 +99,12 @@ function ReferralContainer({item, user, notes, setUserReferrals}) {
                     </div>
                     :
                     <div className={"flex items-center cursor-pointer"} onClick={() => {
-                        setReferralStatus(item._id, true).then(getReferrals)
+                        if(item.isCustom){
+                            setCustomReferralStatus(item._id, true).then(getReferrals)
+                        }else{
+                            setReferralStatus(item._id, true).then(getReferrals)
+                        }
+
                     }}>
                         <div><CheckCircle size={20} weight={"thin"} color={"blue"}/></div>
                         <div className={"text-blue-600 text-xs cursor-pointer"}>Mark referral complete</div>
@@ -102,7 +115,12 @@ function ReferralContainer({item, user, notes, setUserReferrals}) {
                 {item.hasOwnProperty("archived") && item.archived === "true" ?
                     <div className={"flex items-center cursor-pointer ml-5"} onClick={() => {
                         if (confirm("You are about to delete this referral and all of its details. This cannot be undone.")) {
-                            deleteReferral(item._id).then(getReferrals)
+                            if(item.isCustom){
+                                deleteCustomReferral(item._id).then(getReferrals)
+                            }else{
+                                deleteReferral(item._id).then(getReferrals)
+                            }
+
                         }
                     }}>
                         <div><Trash size={20} weight={"thin"} color={"red"}/></div>

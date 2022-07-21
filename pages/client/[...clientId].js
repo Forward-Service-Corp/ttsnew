@@ -1,7 +1,7 @@
 import Layout from "../../components/layout";
 import {getSession} from "next-auth/react";
 import Head from "next/head";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {CaretDoubleDown, CaretDoubleUp} from "phosphor-react";
 import {useRouter} from "next/router";
 import ClientDetails from "../../components/clientDetails";
@@ -53,6 +53,18 @@ export default function User({viewingUserData, pageDataJson}) {
             })
         })
     }
+
+    async function getUserReferrals() {
+        console.log("getUserReferrals")
+        // const id = clientId === undefined ? user.email : clientId
+        const referrals = await fetch("/api/get-referrals?userId=" + viewingUser.email)
+            .then(res => res.json())
+        await setUserReferrals(referrals)
+    }
+
+    useEffect(() => {
+        getUserReferrals().then()
+    }, [])
 
     return (
         <Layout title={viewingUser.name || viewingUser.email} session={user}>
@@ -151,7 +163,9 @@ export default function User({viewingUserData, pageDataJson}) {
             </div>
             <div className={"mt-5 p-6 bg-gray-100 rounded"}>
                 <h2 className={"uppercase text-gray-500 mb-4"}>Manage Care Plans</h2>
-                {userReferrals?.filter(item => !item.hasOwnProperty("archived") || item.archived === "false").map(item => {
+                {userReferrals?.filter(item => !item.hasOwnProperty("archived") || item.archived === "false").sort((a,b) => {
+                    return b.domain.localeCompare(a.domain)
+                }).map(item => {
                     return (
                         <ReferralContainer key={item._id} item={item} user={viewingUser} notes={viewingUserData.notes}
                                            setUserReferrals={setUserReferrals}/>
@@ -159,7 +173,9 @@ export default function User({viewingUserData, pageDataJson}) {
                 })}
 
                 <h2 className={"uppercase text-gray-500 mb-4 mt-10"}>Archived Care Plans</h2>
-                {userReferrals?.filter(item => item.hasOwnProperty("archived") && item.archived === "true").map(item => {
+                {userReferrals?.filter(item => item.hasOwnProperty("archived") && item.archived === "true").sort((a,b) => {
+                    return b.domain.localeCompare(a.domain)
+                }).map(item => {
                     return (
                         <ReferralContainer key={item._id} item={item} user={viewingUser} notes={viewingUserData.notes}
                                            setUserReferrals={setUserReferrals}/>

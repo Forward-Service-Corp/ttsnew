@@ -20,9 +20,9 @@ export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) 
                 <title>TTS / Map of My Dreams</title>
             </Head>
             <div
-                className={`p-3 text-sm text-white bg-red-600 rounded flex justify-start items-center ${userReferrals.length >= domains.length ? "hidden" : "visible"}`}>
+                className={`p-3 text-sm text-white bg-red-600 rounded flex justify-start items-center ${userReferrals.length >0 ? "hidden" : "visible"}`}>
                 <span className={"mr-2"}><WarningCircle size={32} weight="thin" color={"white"}/></span>
-                <span className={""}>Please select a referral for each priority area.</span>
+                <span className={""}>Please select at least one referral.</span>
             </div>
             <div className={""}>
                 <div className={`${router.query.clientId ? "visible" : "hidden"} text-red-600`}>

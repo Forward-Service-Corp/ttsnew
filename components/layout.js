@@ -1,7 +1,7 @@
 import {Fragment} from 'react'
 import {signOut} from "next-auth/react"
 import {Disclosure, Menu, Transition} from '@headlessui/react'
-import {BellIcon, MenuIcon, XIcon} from '@heroicons/react/outline'
+import {MenuIcon, XIcon} from '@heroicons/react/outline'
 import {useRouter} from "next/router";
 import {UserCircleGear, UserCircle} from "phosphor-react";
 import ProfileDetailsWarningModal from "./profileDetailsWarningModal";
@@ -11,7 +11,7 @@ const navigation = [
     {name: 'Dreams', href: '/dreams', current: false},
     {name: 'Life Area Surveys', href: '/life-area-surveys', current: false},
     {name: 'Care Plans', href: '/care-plans', current: false},
-    {name: 'Directory', href: '/directory', current: false},
+    {name: 'Care Network', href: '/directory', current: false},
 ]
 const userNavigation = [
     {name: 'Your Profile', href: '/profile'},

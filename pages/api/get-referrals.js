@@ -15,10 +15,18 @@ export default async (req, res) => {
     }
 
     const {db} = await connectToDatabase()
+
     const cursor = await db.collection("referrals").find(q)
     const records = await cursor.toArray()
-    await cursor.close()
 
-    res.json(records)
+    const customCursor = await db.collection("customReferrals").find(q)
+    const customRecords = await customCursor.toArray()
+
+    await cursor.close()
+    await customCursor.close()
+
+    const allRecords = await records.concat(customRecords)
+
+    res.json(allRecords)
 
 }
