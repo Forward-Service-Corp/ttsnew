@@ -19,7 +19,7 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
                     <h2 className={"uppercase text-orange-600 text-xl font-serif"}>{labelMap[activeDomain]}</h2>
                 </div>
                 <div>
-                    <span className={"text-sm text-red-600 mr-4"}>Set as a priority life area</span>
+                    <span className={"text-sm text-red-600 mr-4"}>Set as a priority</span>
                     <Toggle domains={domains} setDomains={setDomains} activeDomain={activeDomain}/>
                 </div>
             </div>

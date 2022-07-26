@@ -52,10 +52,12 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
 
     return (
         <Layout title={"Life Area Survey"} session={user}>
-            <div className={"bg-gray-600 text-center p-2 text-white mb-3 rounded flex justify-around font-light text-sm grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}>
+            <div className={"text-xl text-center p-3 truncate"}>Dream: {router.query.dreamName}</div>
+            <div
+                className={"bg-gray-600 text-center p-2 text-white mb-3 rounded flex justify-around font-light text-sm grid grid-cols-1 md:grid-cols-2 "}>
                 <div>Priorities: <strong>{domains.length}</strong></div>
                 <div>Answered: <strong>{Object.keys(answered).length}/21</strong></div>
-                <div className={"truncate"}>Dream: {router.query.dreamName}</div>
+
             </div>
             <div
                 className={`bg-red-600 p-2 rounded text-center text-white text-xs mb-2 ${Object.keys(answered).length === 21 ? "hidden" : null}`}>
@@ -71,11 +73,17 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                                       answered={answered} domains={domains}/>
                 </div>
                 <div className={"flex-grow"}>
-                    <div className={"p-4 bg-gray-200 m-0 md:m-4 my-2 md:my-0"}>
-                        <h2>Instructions</h2>
-                        <p className={"text-xs"}>Click or tap on each of the life areas and answer the corresponding question.
-                        There are 21 total areas, so you may need to scroll down if you&apos;re using a mobile device.</p>
-                        <p className={"text-xs"}> Life areas that you have marked as a priority with the toggle will have a red flag in the life areas list.</p>
+                    <div className={"p-4 bg-gray-100 m-0 md:m-4 my-2 md:my-0"}>
+                        <h2 className={"uppercase text-gray-600"}>Instructions</h2>
+                        <p className={"text-xs"}>
+                            Click or tap on each of the life areas to choose the option that best describes where you
+                            are today.
+                            You may need to scroll down to see all 21 life areas.
+                            You must select an answer for each life area.
+                            If one does not apply to you, then select &quot;This does not apply to me.&quot;
+                            If the life area is something you want to work on, use the &quot;Set as priority&quot; toggle button.
+                            Life areas that you mark as a priority will have a red flag in the life areas list.
+                        </p>
                     </div>
                     <NewLifeAreaSurveyForm activeDomain={activeDomain} setAnswered={setAnswered} answered={answered}
                                            domains={domains} setDomains={setDomains}/>
@@ -86,9 +94,9 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                         className={`text-white text-sm rounded py-2 px-4 mt-5 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400`}
                         onClick={async () => {
                             await saveSurvey().then()
-                            if(router.query.clientId === undefined){
+                            if (router.query.clientId === undefined) {
                                 router.push("/life-area-surveys").then()
-                            }else{
+                            } else {
                                 router.back()
                             }
 

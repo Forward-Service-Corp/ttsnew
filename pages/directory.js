@@ -10,19 +10,20 @@ export default function Directory({pageDataJson}) {
 
     const {user, services} = pageDataJson
     const [loadedServices, setLoadedServices] = useState([])
+    const [searched, setSearched] = useState(false)
     const [keyword, setKeyword] = useState("")
     const [domain, setDomain] = useState("")
     const [county, setCounty] = useState("")
     const domains = Object.keys(labelMap)
 
-    async function search(){
+    async function search() {
         console.log("searching...")
         const fetchSearch = await fetch("/api/search-directory", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({keyword,domain,county})
+            body: JSON.stringify({keyword, domain, county})
         }).then(res => res.json())
         await setLoadedServices(fetchSearch)
     }
@@ -64,22 +65,33 @@ export default function Directory({pageDataJson}) {
                     </div>
                     <div className={"flex items-center"}>
                         <button type={"submit"}
-                                className={"py-2 px-6 mr-2 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Search
+                                className={"py-2 px-6 mr-2 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
+                                onClick={() => {
+                                    setSearched(true)
+                                }}>Search
                         </button>
                         <button type={"reset"}
                                 className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
-                        onClick={() => {
-                            setKeyword("")
-                            setDomain("")
-                            setCounty("")
-                            setLoadedServices([])
-                        }}>Reset
+                                onClick={() => {
+                                    setKeyword("")
+                                    setDomain("")
+                                    setCounty("")
+                                    setLoadedServices([])
+                                    setSearched(false)
+                                }}>Reset
                         </button>
                     </div>
                 </form>
             </div>
 
-            <ServicesTable services={loadedServices}/>
+            <div className={`text-center p-4 ${searched?"visible":"hidden"}`}>
+                {loadedServices.length === 0 ? "There were no results" : loadedServices.length + " results"}
+            </div>
+            <div className={`text-center p-4 ${!searched?"visible":"hidden"}`}>
+                Please enter your search criteria.
+            </div>
+            {loadedServices.length > 0 ? <ServicesTable services={loadedServices}/> : null}
+
         </Layout>
     )
 }

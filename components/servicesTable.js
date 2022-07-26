@@ -2,8 +2,6 @@ import {labelMap} from "../lib/serviceLabelsMap";
 
 export default function ServicesTable({services}) {
 
-
-
     return (
         <div className="px-4 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-center">
@@ -22,20 +20,23 @@ export default function ServicesTable({services}) {
                 {/*    </button>*/}
                 {/*</div>*/}
             </div>
-            <div className="mt-8 flex flex-col">
+            <div className="mt-3 flex flex-col">
                 <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                             <table className="min-w-full divide-y divide-gray-300">
                                 <thead className="bg-gray-50">
                                 <tr>
-                                    <th scope="col" className="py-1 pl-1 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                                    <th scope="col"
+                                        className="py-1 pl-1 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                                         Name
                                     </th>
-                                    <th scope="col" className="px-1 py-1 text-left text-sm font-semibold text-gray-900 hidden md:table-cell">
+                                    <th scope="col"
+                                        className="px-1 py-1 text-left text-sm font-semibold text-gray-900 hidden md:table-cell">
                                         Domain
                                     </th>
-                                    <th scope="col" className="px-1 py-1 text-left text-sm font-semibold text-gray-900 hidden md:table-cell">
+                                    <th scope="col"
+                                        className="px-1 py-1 text-left text-sm font-semibold text-gray-900 hidden md:table-cell">
                                         County
                                     </th>
                                     <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
@@ -52,7 +53,8 @@ export default function ServicesTable({services}) {
                                         <td className=" px-1 py-1 text-sm text-gray-500 hidden md:table-cell">{labelMap[service.service]}</td>
                                         <td className=" px-1 text-sm text-gray-500 hidden md:table-cell">{service.county}</td>
                                         <td className="relative py-3 md:py-1 px-1 text-right text-sm font-medium sm:pr-6">
-                                            <a href={"/referral/" + service._id} className="text-orange-600 hover:text-orange-900">
+                                            <a href={"/referral/" + service._id}
+                                               className="text-orange-600 hover:text-orange-900">
                                                 View<span className="sr-only">, {service.name}</span>
                                             </a>
                                         </td>
