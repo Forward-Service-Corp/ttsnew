@@ -24,7 +24,7 @@ export default function Dreams({pageDataJson}) {
                 </div>
                 <div className={"bg-gray-100 p-3 my-10 rounded"}>
                     <h2 className={"text-gray-600 uppercase"}><span className={"text-orange-500"}>Hint: </span>Completing a Life Area Survey</h2>
-                    <p className={"text-sm"}>Completing a Life Area Survey is easy! Simply choose a dream you would like to survey and click the &quot;Survey&quot; button to continue to a new survey page.</p>
+                    <p className={"text-sm"}>Completing a Life Area Survey is easy! Simply choose a dream you would like to survey and click the &quot;Life Area Survey&quot; button to continue to a new survey page.</p>
                 </div>
                 <SavedDreams savedDreams={savedDreams} setLoadingState={setIsLoading} saveDreams={setSavedDreams}
                              user={user}/>

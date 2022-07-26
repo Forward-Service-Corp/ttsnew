@@ -27,39 +27,41 @@ function DreamForm({setSavedDreams, user, setIsLoading}) {
     }
 
     return (
-        <div className={""}>
-            <h2 className={"font-serif uppercase mb-5 mt-10 md:mt-0"}>Define a new dream</h2>
+        <div className={" rounded shadow-xl overflow-hidden mt-10 md:mt-0"}>
+            <h2 className={"font-light uppercase px-4 py-2 bg-orange-600 text-white"}>Define a new dream</h2>
 
-            <p className={" text-sm text-orange-600"}>Your dream</p>
-            <input
-                className={"w-full border-r-0 border-t-0 border-l-0 border-black border-b-[1px] placeholder:text-xs pl-1"}
-                type={"text"}
-                placeholder={"Type your dream here..."}
-                onChange={(e) => {
-                    setDream(e.target.value)
-                }} value={dream}/>
+            <div className={"p-4"}>
+                <p className={" text-sm text-orange-600"}>Your dream</p>
+                <input
+                    className={"w-full border-r-0 border-t-0 border-l-0 border-black border-b-[1px] placeholder:text-xs pl-1"}
+                    type={"text"}
+                    placeholder={"Type your dream here..."}
+                    onChange={(e) => {
+                        setDream(e.target.value)
+                    }} value={dream}/>
 
-            <p className={" mt-5 text-sm text-orange-600"}>What do you need to do to achieve this
-                dream?</p>
-            <input
-                className={"w-full border-r-0 border-t-0 border-l-0 border-black border-b-[1px] placeholder:text-xs pl-1"}
-                type={"text"}
-                placeholder={"Type what you need here..."}
-                onChange={(e) => {
-                    setDreamNeed(e.target.value)
-                }} value={dreamNeed}/>
+                <p className={" mt-5 text-sm text-orange-600"}>What do you need to do to achieve this
+                    dream?</p>
+                <input
+                    className={"w-full border-r-0 border-t-0 border-l-0 border-black border-b-[1px] placeholder:text-xs pl-1"}
+                    type={"text"}
+                    placeholder={"Type what you need here..."}
+                    onChange={(e) => {
+                        setDreamNeed(e.target.value)
+                    }} value={dreamNeed}/>
 
-            <p className={" mt-5 text-sm text-orange-600"}>Whose help do you need to achieve this
-                dream?</p>
-            <input
-                className={"w-full border-r-0 border-t-0 border-l-0 border-black border-b-[1px] placeholder:text-xs pl-1"}
-                type={"text"}
-                placeholder={"Type whose help you need here..."}
-                onChange={(e) => {
-                    setDreamHelp(e.target.value)
-                }} value={dreamHelp}/>
+                <p className={" mt-5 text-sm text-orange-600"}>Whose help do you need to achieve this
+                    dream?</p>
+                <input
+                    className={"w-full border-r-0 border-t-0 border-l-0 border-black border-b-[1px] placeholder:text-xs pl-1"}
+                    type={"text"}
+                    placeholder={"Type whose help you need here..."}
+                    onChange={(e) => {
+                        setDreamHelp(e.target.value)
+                    }} value={dreamHelp}/>
 
-            <button className={"p-2 mt-4 text-white rounded text-xs bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
+                <button
+                    className={"p-2 mt-4 text-white rounded text-xs bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
                     disabled={dream === ""}
                     onClick={() => {
                         setIsLoading(true)
@@ -75,7 +77,8 @@ function DreamForm({setSavedDreams, user, setIsLoading}) {
                         setDreamNeed("")
                         setDreamHelp("")
                     }}>Save dream
-            </button>
+                </button>
+            </div>
         </div>
     );
 }

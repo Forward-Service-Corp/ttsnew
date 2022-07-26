@@ -33,7 +33,7 @@ export default function Profile({user}) {
                     className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab3" ? "border-b-2 border-b-orange-500" : ""}`}
                     onClick={() => {
                         setCurrentTab("tab3")
-                    }}>Organization Information
+                    }}>Coaches
                 </div>
             </div>
 

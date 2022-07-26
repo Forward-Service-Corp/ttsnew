@@ -16,6 +16,7 @@ function ProfilePersonalDetails({user}) {
     const [phone, setPhone] = useState(user.phone)
 
     const [dataChanged, setDataChanged] = useState(false)
+    const [changeConfirm, setChangeConfirm] = useState(false)
 
     async function savePersonalDetails() {
         await fetch("/api/save-personal-details", {
@@ -51,6 +52,7 @@ function ProfilePersonalDetails({user}) {
     return (
         <div>
             <h2 className={"uppercase text-gray-500 font-light mb-3"}>Personal Details</h2>
+            <div className={`bg-green-400 p-3 text-white rounded ${changeConfirm ? "visible" : "hidden"}`}>Details successfully saved.</div>
             <div className={"flex flex-col lg:flex-row"}>
                 <div className={"lg:flex-1 lg:mr-10"}>
                     {inputJSX("Name", name, setName)}
@@ -104,6 +106,10 @@ function ProfilePersonalDetails({user}) {
                     savePersonalDetails(user._id)
                         .then(res => console.log(res))
                         .catch(err => console.warn(err))
+                    setChangeConfirm(true)
+                    setTimeout(() => {
+                        setChangeConfirm(false)
+                    }, 3000)
                 }
             }} disabled={!dataChanged}>Save details
             </button>
