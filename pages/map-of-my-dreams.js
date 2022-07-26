@@ -22,7 +22,7 @@ export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) 
             <div
                 className={`p-3 text-sm text-white bg-red-600 rounded flex justify-start items-center ${userReferrals.length >0 ? "hidden" : "visible"}`}>
                 <span className={"mr-2"}><WarningCircle size={32} weight="thin" color={"white"}/></span>
-                <span className={""}>Please select at least one referral.</span>
+                <span className={""}>Please select a referral for at least one priority.</span>
             </div>
             <div className={""}>
                 <div className={`${router.query.clientId ? "visible" : "hidden"} text-red-600`}>
@@ -55,7 +55,8 @@ export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) 
                 </div>
                 <div className={"flex justify-end"}>
                     <button
-                        className={"px-6 py-2 text-xs rounded text-white bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
+                        disabled={userReferrals.length === 0}
+                        className={`px-6 py-2 text-xs rounded text-white bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400`}
                         onClick={() => {
                             if (router.query.clientId) {
                                 router.back()
