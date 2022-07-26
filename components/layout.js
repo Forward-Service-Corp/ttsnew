@@ -15,7 +15,7 @@ const navigation = [
 ]
 const userNavigation = [
     {name: 'Your Profile', href: '/profile'},
-    {name: 'Settings', href: '/settings'},
+    // {name: 'Settings', href: '/settings'},
 ]
 
 function classNames(...classes) {
