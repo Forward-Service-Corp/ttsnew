@@ -99,9 +99,9 @@ function ReferralContainer({item, user, notes, setUserReferrals}) {
                     </div>
                     :
                     <div className={"flex items-center cursor-pointer"} onClick={() => {
-                        if(item.isCustom){
+                        if (item.isCustom) {
                             setCustomReferralStatus(item._id, true).then(getReferrals)
-                        }else{
+                        } else {
                             setReferralStatus(item._id, true).then(getReferrals)
                         }
 
@@ -115,9 +115,9 @@ function ReferralContainer({item, user, notes, setUserReferrals}) {
                 {item.hasOwnProperty("archived") && item.archived === "true" ?
                     <div className={"flex items-center cursor-pointer ml-5"} onClick={() => {
                         if (confirm("You are about to delete this referral and all of its details. This cannot be undone.")) {
-                            if(item.isCustom){
+                            if (item.isCustom) {
                                 deleteCustomReferral(item._id).then(getReferrals)
-                            }else{
+                            } else {
                                 deleteReferral(item._id).then(getReferrals)
                             }
 
@@ -126,7 +126,7 @@ function ReferralContainer({item, user, notes, setUserReferrals}) {
                         <div><Trash size={20} weight={"thin"} color={"red"}/></div>
                         <div className={"text-red-600 text-xs cursor-pointer"}>Delete this referral</div>
                     </div>
-                : null}
+                    : null}
 
 
             </div>
@@ -156,11 +156,13 @@ function ReferralContainer({item, user, notes, setUserReferrals}) {
                             <div className={"border-l-[1px]"} key={i}>
                                 <TaskTodo item={item} task={task} user={user} setAllTasks={setAllTasks}
                                           setAllNotes={setAllNotes}/>
-                                {allNotes && allNotes.filter(note => note.taskId === task._id.toString()).map(noteItem => {
-                                    return (
-                                        <NoteItem key={noteItem._id} noteItem={noteItem}/>
-                                    )
-                                })}
+                                {allNotes && allNotes.filter(note => note.taskId === task._id.toString())
+                                    .sort((a, b) => b.timestamp.localeCompare(a.timestamp))
+                                    .map(noteItem => {
+                                        return (
+                                            <NoteItem key={noteItem._id} noteItem={noteItem}/>
+                                        )
+                                    })}
                             </div>
                         )
                     })}
