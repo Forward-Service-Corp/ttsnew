@@ -51,7 +51,7 @@ function LasCurrent({surveys, user, isClientSurvey, clientId}) {
                                                     domain: survey.priority,
                                                     clientId: clientId
                                                 }
-                                            })
+                                            }).then()
                                         } else {
                                             router.push({
                                                 pathname: "/map-of-my-dreams",
@@ -62,18 +62,18 @@ function LasCurrent({surveys, user, isClientSurvey, clientId}) {
                                                     county: user.county,
                                                     domain: survey.priority
                                                 }
-                                            })
+                                            }).then()
                                         }
 
-                                    }}>Map this survey
+                                    }}>Map your priorities
                                 </div>
                                 <div
                                     className={"p-3 flex-1 cursor-pointer bg-gradient-to-t from-green-600 to-green-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
                                     onClick={() => {
                                         if (isClientSurvey) {
-                                            router.push("/client/survey/" + survey._id)
+                                            router.push("/client/survey/" + survey._id).then()
                                         } else {
-                                            router.push("/surveys/" + survey._id)
+                                            router.push("/surveys/" + survey._id).then()
                                         }
 
                                     }}>Review

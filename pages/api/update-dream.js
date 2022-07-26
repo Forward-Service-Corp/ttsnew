@@ -17,6 +17,17 @@ export default async(req, res) => {
             }
         )
 
-    res.json(dream)
+    const survey = await db
+        .collection("lifeAreaSurveys")
+        .updateOne(
+            { dreamId: req.body.dreamId },
+            {
+                $set: {
+                    dream: req.body.dream,
+                }
+            }
+        )
+
+    res.json(dream, survey)
 
 }

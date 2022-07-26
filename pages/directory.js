@@ -45,7 +45,7 @@ export default function Directory({pageDataJson}) {
                         }}/>
                     </div>
                     <div className={""}>
-                        <p className={"text-xs text-gray-500"}>Search my domain</p>
+                        <p className={"text-xs text-gray-500"}>Search by domain</p>
                         <select id={"domainSelect"} className={"w-full"} onChange={(e) => {
                             setDomain(e.target.value)
                         }}>
