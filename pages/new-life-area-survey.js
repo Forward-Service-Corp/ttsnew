@@ -84,6 +84,7 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                             If the life area is something you want to work on, use the &quot;Set as priority&quot; toggle button.
                             Life areas that you mark as a priority will have a red flag in the life areas list.
                         </p>
+                        <p>MOST IMPORTANT TO YOU -- your priorities.</p>
                     </div>
                     <NewLifeAreaSurveyForm activeDomain={activeDomain} setAnswered={setAnswered} answered={answered}
                                            domains={domains} setDomains={setDomains}/>

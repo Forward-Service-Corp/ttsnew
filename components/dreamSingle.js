@@ -78,17 +78,6 @@ function DreamSingle({dream, deleteDream, isClientDream, clientId}) {
 
             <div className={"flex text-xs text-center"}>
 
-                <div className={"bg-gradient-to-t from-orange-600 to-orange-400 text-white p-2 flex-1 cursor-pointer"}
-                     onClick={() => {
-                         if (isClientDream) {
-                             router.push("/new-life-area-survey?dreamName=" + dream.dream + "&dreamId=" + dream._id + "&clientId=" + clientId).then()
-                         } else {
-                             router.push("/new-life-area-survey?dreamName=" + dream.dream + "&dreamId=" + dream._id).then()
-                         }
-
-                     }}>Life Area Survey
-                </div>
-
                 <div className={"bg-gradient-to-t from-gray-600 to-gray-400 text-white p-2 flex-1 cursor-pointer"}
                      onClick={() => {
                          setEditMode(!editMode)
@@ -109,6 +98,17 @@ function DreamSingle({dream, deleteDream, isClientDream, clientId}) {
                              deleteDream(dream._id).then()
                          }
                      }}>Delete
+                </div>
+
+                <div className={"bg-gradient-to-t from-orange-600 to-orange-400 text-white p-2 flex-1 cursor-pointer"}
+                     onClick={() => {
+                         if (isClientDream) {
+                             router.push("/new-life-area-survey?dreamName=" + dream.dream + "&dreamId=" + dream._id + "&clientId=" + clientId).then()
+                         } else {
+                             router.push("/new-life-area-survey?dreamName=" + dream.dream + "&dreamId=" + dream._id).then()
+                         }
+
+                     }}>Life Area Survey
                 </div>
 
             </div>

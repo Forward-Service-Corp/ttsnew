@@ -4,6 +4,7 @@ function Welcome1() {
     return (
         <div className={"font-light"}>
             <h1 className={"text-2xl text-orange-600 font-serif"}>Welcome to Transition To Success and Map of My Dreams</h1>
+            <h2 className={"my-5 font-bold text-orange-600 font-serif"}> Your Journey Begins Here</h2>
             <p className={"text-sm"}>
                 Welcome to Transition To Success&reg; (TTS). This TTS Workbook and Guide is designed specifically
                 for YOU. Together with your Transition To Success (TTS) Coach, you will map your journey to your dreams

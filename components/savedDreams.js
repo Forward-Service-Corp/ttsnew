@@ -22,9 +22,10 @@ function SavedDreams({savedDreams, setLoadingState, saveDreams, user}) {
                 <h2 className={" mb-5 uppercase"}>My Dreams</h2> : null}</div>
 
             <div className={"grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"}>
-                {savedDreams && savedDreams.map((dream, i) => (
-                    <DreamSingle key={i} dream={dream} deleteDream={deleteDream}/>
-                ))}
+                {savedDreams && savedDreams
+                    .sort((a, b) => b.timestamp.localeCompare(a.timestamp)).map((dream, i) => (
+                        <DreamSingle key={i} dream={dream} deleteDream={deleteDream}/>
+                    ))}
             </div>
         </div>
     );

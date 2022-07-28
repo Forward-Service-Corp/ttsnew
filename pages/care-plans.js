@@ -11,7 +11,6 @@ export default function CarePlans({pageDataJson}) {
     const [userReferrals, setUserReferrals] = useState(referrals)
 
     async function getUserReferrals() {
-        console.log("getUserReferrals")
         const referrals = await fetch("/api/get-referrals?userId=" + pageDataJson.user.email)
             .then(res => res.json())
         await setUserReferrals(referrals)
@@ -22,7 +21,7 @@ export default function CarePlans({pageDataJson}) {
     }, [])
 
     return (
-        <Layout title={"Care Plans"} session={user}>
+        <Layout title={"CARE Plans"} session={user}>
             <Head>
                 <title>TTS / Care Plans</title>
             </Head>

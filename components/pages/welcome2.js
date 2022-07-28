@@ -2,15 +2,15 @@ function Welcome1() {
     return (
         <div className={"font-light"}>
             <h1 className={"text-2xl text-orange-600 font-serif"}>Vision Without Backbone Is Merely Hallucination</h1>
-            <p className={"font-bold"}>Wishes don&apos;t make your dreams come true. Dreams come true because we work at them. We don&apos;t
-                give up.</p>
+            <p className={"font-bold"}>Wishes don&apos;t make your dreams come true. Dreams come true because we work at them. Stay strong.</p>
             <h2 className={"my-5 font-bold text-orange-600 font-serif"}>The Power of &quot;We&quot;</h2>
             <p className={"text-sm"}>
                 Very little in life is accomplished alone. Friends, family, teachers, and now your TTS Coach all play a
                 part in your success. Your TTS Coach is trained to help you with your MAP and to support you as YOU
-                journey toward your goals and dreams. Surround yourself with people that you believe in – and people who
-                believe in you.
+                journey toward your goals and dreams.
             </p>
+            <p className={"font-bold"}>Surround yourself with people that you believe in – and people who
+                believe in you.</p>
             <p className={"text-sm"}>
                 This is your Map, your Plan to make your dreams and goals come true. This is the beginning of your
                 journey and creating your Map is the first step.

@@ -4,12 +4,11 @@ function DreamIntro() {
             <div><h1 className={"text-2xl text-orange-600 uppercase font-light"}>My Dreams Today</h1>
                 <p className={"text-sm"}>This is your Map of your Dreams. As you take the time to think about your
                     dreams and hopes let your heart
-                    speak to you. Believe in what could be.</p>
+                    speak to you. <strong>Believe in what could be</strong>.</p>
 
                 <p className={"text-sm"}>Let your heart tell you what it wants. Don&apos;t let the barriers, challenges,
                     or fears interfere with
-                    knowing what your dreams are. Don&apos;t let negative messages interfere. Ask yourself the
-                    question:</p></div>
+                    knowing what your dreams are. Don&apos;t let negative messages interfere.</p></div>
 
             <div>
                 <p className={"font-bold "}>Ask yourself the question: <span className={"text-orange-600"}>What is my dream?</span></p>

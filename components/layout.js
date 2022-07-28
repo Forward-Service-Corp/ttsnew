@@ -10,8 +10,9 @@ const navigation = [
     {name: 'Dashboard', href: '/', current: true},
     {name: 'Dreams', href: '/dreams', current: false},
     {name: 'Life Area Surveys', href: '/life-area-surveys', current: false},
-    {name: 'Care Plans', href: '/care-plans', current: false},
-    {name: 'Care Network', href: '/directory', current: false},
+    {name: 'CARE Plans', href: '/care-plans', current: false},
+    {name: 'The Journey', href: '/journey', current: false},
+    {name: 'CARE Network', href: '/directory', current: false},
 ]
 const userNavigation = [
     {name: 'Your Profile', href: '/profile'},

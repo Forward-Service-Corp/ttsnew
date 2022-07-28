@@ -29,7 +29,7 @@ export default function Directory({pageDataJson}) {
     }
 
     return (
-        <Layout title={"Care Network"} session={user}>
+        <Layout title={"CARE Network"} session={user}>
             <Head>
                 <title>TTS / Directory</title>
             </Head>
