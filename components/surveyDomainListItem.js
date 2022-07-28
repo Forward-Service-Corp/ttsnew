@@ -5,7 +5,7 @@ export default function SurveyDomainListItem({item, activeDomain, setActiveDomai
     console.log(item)
     return (
         <div
-            className={`${activeDomain === item ? "bg-gray-300 " : ""} py-2 px-4 flex justify-between cursor-pointer w-full hover:border-l-4 hover:border-indigo-500 whitespace-nowrap`}
+            className={`${activeDomain === item ? "bg-gray-300 " : ""} py-2 px-4 flex justify-between cursor-pointer w-full hover:border-indigo-500 whitespace-nowrap`}
             key={item} onClick={() => {
             setActiveDomain(item)
             setOpen(false)

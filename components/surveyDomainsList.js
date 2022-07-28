@@ -12,7 +12,7 @@ export default function SurveyDomainList({setActiveDomain, activeDomain, answere
 
     return (
         <div
-            className={`${styles.surveyDomainList} ${open ? styles.open : null}   relative bg-gray-200`}>
+            className={`${styles.surveyDomainList} ${open ? styles.open : null}   relative bg-gray-100`}>
 
             <div className={`${styles.openButton} bg-gradient-to-r from-green-700 to-green-500`} onClick={() => {
                 setOpen(!open)
@@ -28,13 +28,13 @@ export default function SurveyDomainList({setActiveDomain, activeDomain, answere
                     <p className={"uppercase"}>Life areas</p>
 
                 </div>
-                {list.map((item, i) => {
+                <div className={"divide-y"}>{list.map((item, i) => {
                     return (
                         <SurveyDomainListItem key={i} item={item} setActiveDomain={setActiveDomain}
                                               activeDomain={activeDomain} answered={answered} domains={domains}
                                               setOpen={setOpen}/>
                     )
-                })}
+                })}</div>
             </div>
         </div>
     )

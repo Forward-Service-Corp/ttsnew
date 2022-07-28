@@ -4,6 +4,7 @@ import SurveyDomainList from "../components/surveyDomainsList";
 import NewLifeAreaSurveyForm from "../components/newLifeAreaSurveyForm";
 import {useState} from "react";
 import {useRouter} from "next/router";
+import NewLifeAreaSurveyQuestions from "../components/newLifeAreaSurveyQuestions";
 
 
 export default function NewLifeAreaSurvey({pageDataJson}) {
@@ -13,6 +14,11 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
     const [activeDomain, setActiveDomain] = useState("food")
     const [answered, setAnswered] = useState({})
     const [domains, setDomains] = useState([])
+    const [surprise, setSurprise] = useState("")
+    const [concern, setConcern] = useState("")
+    const [family, setFamily] = useState("")
+    const [health, setHealth] = useState("")
+    const [income, setIncome] = useState("")
 
     async function saveSurvey() {
         await fetch("/api/post-life-area-survey", {
@@ -45,7 +51,8 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                 racismBigotry: [answered.racismBigotry.selection, answered.racismBigotry.statement],
                 internetAccess: [answered.internetAccess.selection, answered.internetAccess.statement],
                 housing: [answered.housing.selection, answered.housing.statement],
-                userId: router.query.clientId === undefined ? user.email : router.query.clientId
+                userId: router.query.clientId === undefined ? user.email : router.query.clientId,
+                surprise, concern, family, health, income
             })
         })
     }
@@ -81,15 +88,23 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                             You may need to scroll down to see all 21 life areas.
                             You must select an answer for each life area.
                             If one does not apply to you, then select &quot;This does not apply to me.&quot;
-                            If the life area is something you want to work on, use the &quot;Set as priority&quot; toggle button.
+                            If the life area is something you want to work on, use the &quot;Set as
+                            priority&quot; toggle button.
                             Life areas that you mark as a priority will have a red flag in the life areas list.
                         </p>
                         <p>MOST IMPORTANT TO YOU -- your priorities.</p>
                     </div>
                     <NewLifeAreaSurveyForm activeDomain={activeDomain} setAnswered={setAnswered} answered={answered}
                                            domains={domains} setDomains={setDomains}/>
+
                 </div>
             </div>
+
+            <NewLifeAreaSurveyQuestions surprise={surprise} setSurprise={setSurprise} concern={concern}
+                                        setConcern={setConcern} family={family}
+                                        setFamily={setFamily} health={health} setHealth={setHealth} income={income}
+                                        setIncome={setIncome}/>
+
             <div className={"flex justify-end"}>
                 <button disabled={domains.length === 0 || Object.keys(answered).length !== 21}
                         className={`text-white text-sm rounded py-2 px-4 mt-5 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400`}

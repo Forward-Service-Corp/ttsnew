@@ -29,7 +29,12 @@ export default async (req, res) => {
         internetAccess: req.body.internetAccess,
         housing: req.body.housing,
         userId: req.body.userId,
-        datestamp: new Date()
+        datestamp: new Date(),
+        surprise: req.body.surprise,
+        concern: req.body.concern,
+        family: req.body.family,
+        health: req.body.health,
+        income: req.body.income
     }
 
     const {db} = await connectToDatabase()
