@@ -104,13 +104,13 @@ export default function SurveyId({pageDataJson}) {
                             }
 
                         </div>
-                        <div className={"text-sm"}>
+                        <div className={"text-sm divide-y"}>
                             <h2 className={"uppercase text-gray-600 my-4"}>Additional Questions</h2>
                             {
                                 questions.map((question, questionIndex) => {
                                     return (
-                                        <div key={questionIndex} className={`${survey[question.value] === "" || survey[question.value] === undefined ? "hidden" : "visible"}`}>
-                                            <p>{question.question}</p>
+                                        <div key={questionIndex} className={`pb-4 ${survey[question.value] === "" || survey[question.value] === undefined ? "hidden" : "visible"}`}>
+                                            <p><strong>{question.question}</strong></p>
                                             <p>{survey[question.value]}</p>
                                         </div>
                                     )
