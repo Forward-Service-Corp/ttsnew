@@ -1,12 +1,59 @@
 import Layout from "../../components/layout";
 import {getSession} from "next-auth/react";
+import {useState} from "react";
 
-export default function CarePlan({pageDataJson, referralDataJson}) {
+export default function ReferralId({pageDataJson, referralDataJson}) {
 
-    const {user} = pageDataJson
+    const {user, referrals} = pageDataJson
+    const [userReferrals, setUserReferrals] = useState(referrals)
+
+    async function saveReferral() {
+        await fetch("/api/save-referral", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                surveyId: null,
+                userId: user.email,
+                dream: null,
+                domain: referralDataJson.service,
+                name: referralDataJson.name,
+                email: referralDataJson.contactEmail,
+                phone: referralDataJson.contactPhone,
+                hours: referralDataJson.hours,
+                requirements: referralDataJson.requirements,
+                url: referralDataJson.url,
+                contact: referralDataJson.contactName,
+                needs: referralDataJson.needs
+            })
+        })
+    }
+
+    async function getReferrals () {
+        const fetchReferrals = await fetch("/api/get-referrals?userId=" + user.email)
+            .then(res => res.json())
+            .catch(err => console.warn(err.json()))
+        setUserReferrals(fetchReferrals)
+    }
 
     return (
         <Layout title={referralDataJson.name} session={user}>
+            <div className={"flex justify-between items-center"}>
+                <div className={"text-xs text-red-600"}>
+                    {userReferrals.filter(referral => referral.name === referralDataJson.name).length > 0 ? "This referral is currently in your CARE Plan." : null}
+                </div>
+                <div>
+                    <button
+                        disabled={userReferrals.filter(referral => referral.name === referralDataJson.name).length > 0}
+                        onClick={() => {
+                            saveReferral().then(getReferrals)
+                        }}
+                        className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>
+                        Add to my CARE Plan
+                    </button>
+                </div>
+            </div>
             <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}>
                 {/*column 1*/}
                 <div>
@@ -16,7 +63,7 @@ export default function CarePlan({pageDataJson, referralDataJson}) {
                     </div>
                     <div>
                         <p className={"text-xs text-gray-500"}>Email</p>
-                        <div>{referralDataJson.contactEmail || <span className={"text-gray-500"}>No email listed</span>}</div>
+                        <div>{<a href={`mailto:${referralDataJson.contactEmail}`} className={"underline text-orange-500"}>{referralDataJson.contactEmail}</a> || <span className={"text-gray-500"}>No email listed</span>}</div>
                     </div>
                     <div>
                         <p className={"text-xs text-gray-500"}>Phone</p>
@@ -26,11 +73,15 @@ export default function CarePlan({pageDataJson, referralDataJson}) {
                         <p className={"text-xs text-gray-500"}>Contact</p>
                         <div>{referralDataJson.contactName || <span className={"text-gray-500"}>No contact name listed</span>}</div>
                     </div>
+                    <div>
+                        <p className={"text-xs text-gray-500"}>Hours</p>
+                        <div>{referralDataJson.hours || <span className={"text-gray-500"}>No contact name listed</span>}</div>
+                    </div>
                 </div>
                 {/*column 2*/}
                 <div>
                     <div>
-                        <p className={"text-xs text-gray-500"}>City</p>
+                        <p className={"text-xs text-gray-500"}>Address</p>
                         <div>{referralDataJson.street || <span className={"text-gray-500"}>No address listed</span>}</div>
                     </div>
                     <div>
