@@ -39,7 +39,7 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                 transportation: [answered.transportation.selection, answered.transportation.statement],
                 disabilities: [answered.disabilities.selection, answered.disabilities.statement],
                 lifeSkills: [answered.lifeSkills.selection, answered.lifeSkills.statement],
-                work: [answered.work.selection, answered.work.statement],
+                employment: [answered.employment.selection, answered.employment.statement],
                 legal: [answered.legal.selection, answered.legal.statement],
                 childcare: [answered.childcare.selection, answered.childcare.statement],
                 adultEducation: [answered.adultEducation.selection, answered.adultEducation.statement],

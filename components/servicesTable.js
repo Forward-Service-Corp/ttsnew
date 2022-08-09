@@ -1,4 +1,4 @@
-import {labelMap} from "../lib/serviceLabelsMap";
+import {colorMap, labelMap} from "../lib/serviceLabelsMap";
 
 export default function ServicesTable({services}) {
 
@@ -50,7 +50,11 @@ export default function ServicesTable({services}) {
                                         <td className="max-w-[200px] py-1 px-1 text-sm font-medium text-gray-900 sm:pl-6 truncate">
                                             {service.name}
                                         </td>
-                                        <td className=" px-1 py-1 text-sm text-gray-500 hidden md:table-cell">{labelMap[service.service]}</td>
+                                        <td className={`px-1 py-1 text-sm text-gray-500 hidden md:table-cell`}>
+                                            <span className={`py-1 px-3 text-xs rounded-full w-auto text-white`} style={{backgroundColor: colorMap[service.service]}}>
+                                                {labelMap[service.service]}
+                                            </span>
+                                        </td>
                                         <td className=" px-1 text-sm text-gray-500 hidden md:table-cell">{service.county}</td>
                                         <td className="relative py-3 md:py-1 px-1 text-right text-sm font-medium sm:pr-6">
                                             <a href={"/referral/" + service._id}

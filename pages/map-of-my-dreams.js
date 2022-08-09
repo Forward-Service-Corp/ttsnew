@@ -19,8 +19,17 @@ export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) 
             <Head>
                 <title>TTS / Map of My Dreams</title>
             </Head>
+            <div className={"p-3 bg-gray-100 rounded"}>
+                <h2 className={"uppercase text-gray-500"}>Instructions</h2>
+                <p className={"text-sm"}>Please select a referral from the dropdown menu. Once you have selected a referral, you must click or
+                    tap <button
+                        className={`px-6 py-2 text-xs rounded text-white bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400`}>
+                        + Save</button> to
+                    save your choice and move on.
+                </p>
+            </div>
             <div
-                className={`p-3 text-sm text-white bg-red-600 rounded flex justify-start items-center ${userReferrals.length >0 ? "hidden" : "visible"}`}>
+                className={`p-3 text-sm text-white bg-red-600 rounded flex justify-start items-center ${userReferrals.length > 0 ? "hidden" : "visible"}`}>
                 <span className={"mr-2"}><WarningCircle size={32} weight="thin" color={"white"}/></span>
                 <span className={""}>Please select a referral for at least one priority.</span>
             </div>

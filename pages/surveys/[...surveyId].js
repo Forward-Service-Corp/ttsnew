@@ -31,7 +31,7 @@ export default function SurveyId({pageDataJson}) {
         "safety",
         "substances",
         "transportation",
-        "work"
+        "employment"
     ]
 
     const questions = [

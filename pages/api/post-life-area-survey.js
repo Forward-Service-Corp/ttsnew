@@ -16,7 +16,7 @@ export default async (req, res) => {
         transportation: req.body.transportation,
         disabilities: req.body.disabilities,
         lifeSkills: req.body.lifeSkills,
-        work: req.body.work,
+        employment: req.body.employment,
         legal: req.body.legal,
         childcare: req.body.childcare,
         adultEducation: req.body.adultEducation,
