@@ -1,9 +1,11 @@
 import {useState} from "react";
+import {useRouter} from "next/router";
 
 function DreamForm({setSavedDreams, user, setIsLoading}) {
     const [dream, setDream] = useState("")
     const [dreamNeed, setDreamNeed] = useState("")
     const [dreamHelp, setDreamHelp] = useState("")
+    const router = useRouter()
 
     async function saveDream() {
         await fetch("/api/post-dream", {
@@ -67,15 +69,16 @@ function DreamForm({setSavedDreams, user, setIsLoading}) {
                         setIsLoading(true)
                         saveDream()
                             .then(() => {
-                                getDreams().then(res => console.log(res)).catch(err => console.warn(err))
+                                // getDreams().then(res => console.log(res)).catch(err => console.warn(err))
                             })
                             .then(() => {
-                                setIsLoading(false)
+                                // setIsLoading(false)
                             })
                             .catch(err => console.warn(err))
                         setDream("")
                         setDreamNeed("")
                         setDreamHelp("")
+                        router.reload()
                     }}>Save dream
                 </button>
             </div>

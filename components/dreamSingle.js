@@ -26,6 +26,7 @@ function DreamSingle({dream, deleteDream, isClientDream, clientId}) {
         })
     }
 
+
     const router = useRouter()
     return (
         <div className={"mb-4 flex flex-col shadow rounded overflow-hidden justify-between bg-white"}>
