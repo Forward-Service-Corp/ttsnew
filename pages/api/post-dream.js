@@ -7,6 +7,7 @@ export default async(req, res) => {
         dreamNeed: req.body.dreamNeed,
         dreamHelp: req.body.dreamHelp,
         userId: req.body.userId,
+        status: req.body.status,
         timestamp: new Date()
     }
 

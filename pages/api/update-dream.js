@@ -12,7 +12,8 @@ export default async(req, res) => {
                 $set: {
                     dream: req.body.dream,
                     dreamNeed: req.body.dreamNeed,
-                    dreamHelp: req.body.dreamHelp
+                    dreamHelp: req.body.dreamHelp,
+                    status: req.body.dreamStatus
                 }
             }
         )

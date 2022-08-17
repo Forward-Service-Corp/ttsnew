@@ -17,16 +17,17 @@ function DreamForm({setSavedDreams, user, setIsLoading}) {
                 dream,
                 dreamNeed,
                 dreamHelp,
-                userId: user.email
+                userId: user.email,
+                status: "active"
             })
         })
     }
 
-    async function getDreams() {
-        const newDreams = await fetch("/api/get-dreams?userId=" + user.email)
-            .then(res => res.json())
-        await setSavedDreams(newDreams)
-    }
+    // async function getDreams() {
+    //     const newDreams = await fetch("/api/get-dreams?userId=" + user.email)
+    //         .then(res => res.json())
+    //     await setSavedDreams(newDreams)
+    // }
 
     return (
         <div className={" rounded shadow-xl overflow-hidden mt-10 md:mt-0"}>

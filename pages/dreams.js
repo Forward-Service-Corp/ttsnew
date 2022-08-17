@@ -11,6 +11,7 @@ export default function Dreams({pageDataJson}) {
     const {user, dreams} = pageDataJson
     const [savedDreams, setSavedDreams] = useState(dreams)
     const [isLoading, setIsLoading] = useState(false)
+    const [currentTab, setCurrentTab] = useState("active")
 
     return (
         <Layout title={"Dreams"} session={user} loadingState={isLoading}>
@@ -23,11 +24,45 @@ export default function Dreams({pageDataJson}) {
                     <DreamForm setSavedDreams={setSavedDreams} user={user} setIsLoading={setIsLoading}/>
                 </div>
                 <div className={"bg-gray-100 p-3 my-10 rounded"}>
-                    <h2 className={"text-gray-600 uppercase"}><span className={"text-orange-500"}>Hint: </span>Completing a Life Area Survey</h2>
-                    <p className={"text-sm"}>Completing a Life Area Survey is easy! Simply choose a dream you would like to survey and click the &quot;Life Area Survey&quot; button to continue to a new survey page.</p>
+                    <h2 className={"text-gray-600 uppercase"}><span className={"text-orange-500"}>Hint: </span>Completing
+                        a Life Area Survey</h2>
+                    <p className={"text-sm"}>Completing a Life Area Survey is easy! Simply choose a dream you would like
+                        to survey and click the &quot;Life Area Survey&quot; button to continue to a new survey
+                        page.</p>
                 </div>
-                <SavedDreams savedDreams={savedDreams} setLoadingState={setIsLoading} saveDreams={setSavedDreams}
-                             user={user}/>
+                <div className={"bg-gray-100 p-2 rounded mb-3"}>
+                    My <select className={"text-xs border-gray-300 rounded"}
+                               onChange={(e)=>{
+                        setCurrentTab(e.target.value)
+                    }}>
+                        <option value="active">Active</option>
+                        <option value="complete">Complete</option>
+                        <option value="archived">Archived</option>
+                    </select> Dreams
+                </div>
+                <div className={`${currentTab === "active" ? "visible" : "hidden"}`}>
+                    <SavedDreams savedDreams={savedDreams} setLoadingState={setIsLoading}
+                                 saveDreams={setSavedDreams}
+                                 title={"Active Dreams"}
+                                 status={"active"}
+                                 user={user}/>
+                </div>
+                <div className={`${currentTab === "complete" ? "visible" : "hidden"}`}>
+                    <SavedDreams savedDreams={savedDreams} setLoadingState={setIsLoading}
+                                 saveDreams={setSavedDreams}
+                                 title={"Completed Dreams"}
+                                 status={"complete"}
+                                 user={user}/>
+                </div>
+                <div className={`${currentTab === "archived" ? "visible" : "hidden"}`}>
+                    <SavedDreams savedDreams={savedDreams} setLoadingState={setIsLoading}
+                                 saveDreams={setSavedDreams}
+                                 title={"Archived Dreams"}
+                                 status={"archived"}
+                                 user={user}/>
+                </div>
+
+
             </div>
         </Layout>
     )

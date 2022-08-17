@@ -3,13 +3,14 @@ import {useRouter} from "next/router";
 import {Brain} from "phosphor-react";
 import moment from "moment";
 
-function DreamSingle({dream, deleteDream, isClientDream, clientId}) {
+function DreamSingle({dream, deleteDream, isClientDream, clientId, getDreams}) {
 
     const [editMode, setEditMode] = useState(false)
     const [updateSuccess, setUpdateSuccess] = useState(false)
     const [newDream, setNewDream] = useState(dream.dream)
     const [need, setNeed] = useState(dream.dreamNeed)
     const [help, setHelp] = useState(dream.dreamHelp)
+    const [status, setStatus] = useState(dream.status)
 
     async function updateDream(id) {
         await fetch("/api/update-dream", {
@@ -21,7 +22,8 @@ function DreamSingle({dream, deleteDream, isClientDream, clientId}) {
                 dreamId: id,
                 dream: newDream,
                 dreamNeed: need,
-                dreamHelp: help
+                dreamHelp: help,
+                dreamStatus: status
             })
         })
     }
@@ -52,6 +54,17 @@ function DreamSingle({dream, deleteDream, isClientDream, clientId}) {
                         className={`absolute right-2 top-2 text-green-600 ${updateSuccess ? "visible" : "hidden"}`}>Update
                         successful
                     </div>
+                </div>
+                <div>
+                    <select className={`text-xs w-full border-none ${editMode ? "visible" : "hidden"}`}
+                            defaultValue={status}
+                            onChange={(e) => {
+                                setStatus(e.target.value)
+                            }}>
+                        <option value="active">Active</option>
+                        <option value="complete">Complete</option>
+                        <option value="archived">Archived</option>
+                    </select>
                 </div>
                 <div>
                     <div className={"px-5 py-5"}>
@@ -85,6 +98,7 @@ function DreamSingle({dream, deleteDream, isClientDream, clientId}) {
                          if (editMode) {
                              updateDream(dream._id).then(() => {
                                  setUpdateSuccess(true)
+                                 getDreams()
                                  setTimeout(() => {
                                      setUpdateSuccess(false)
                                  }, 3000)

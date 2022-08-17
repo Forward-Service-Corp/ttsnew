@@ -1,6 +1,6 @@
 import DreamSingle from "./dreamSingle";
 
-function SavedDreams({savedDreams, setLoadingState, saveDreams, user}) {
+function SavedDreams({savedDreams, setLoadingState, saveDreams, user, title, status}) {
 
     async function getDreams() {
         const newDreams = await fetch("/api/get-dreams?userId=" + user.email)
@@ -18,16 +18,17 @@ function SavedDreams({savedDreams, setLoadingState, saveDreams, user}) {
 
     return (
         <div>
-            <div>{savedDreams && savedDreams.length ?
-                <h2 className={" mb-5 uppercase"}>My Dreams</h2> : null}</div>
+            <div>{savedDreams?.length ?
+                <h2 className={" mb-5 uppercase"}>{title}</h2> : null}</div>
 
             <div className={"grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"}>
-                {savedDreams?.sort((a, b) => b.timestamp.localeCompare(a.timestamp)).map((dream, i) => (
-                        <DreamSingle key={i} dream={dream} deleteDream={deleteDream}/>
-                    ))}
+                {savedDreams?.filter(item => item.status === status).sort((a, b) => b.timestamp.localeCompare(a.timestamp)).map((dream, i) => (
+                    <DreamSingle key={i} dream={dream} deleteDream={deleteDream} getDreams={getDreams}/>
+                ))}
             </div>
         </div>
-    );
+    )
+
 }
 
 export default SavedDreams;
