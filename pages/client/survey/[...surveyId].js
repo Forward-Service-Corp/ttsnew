@@ -7,7 +7,7 @@ import {ArrowLeft, Printer} from "phosphor-react";
 export default function CarePlan({pageDataJson, surveyJson}) {
 
     const router = useRouter()
-    const {user, surveys} = pageDataJson
+    const {user} = pageDataJson
     const {surveyId} = router.query
 
     return (
@@ -163,10 +163,10 @@ export default function CarePlan({pageDataJson, surveyJson}) {
                                 <p>{survey.transportation[1]}</p>
                             </div>
 
-                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("work") > -1 ? "border border-4 border-black" : null}`}>
-                                <p><strong>{labelMap["work"]}</strong></p>
-                                <p>Score: {survey.work[0]}</p>
-                                <p>{survey.work[1]}</p>
+                            <div className={`p-2 m-1 rounded ${survey.priority.indexOf("employment") > -1 ? "border border-4 border-black" : null}`}>
+                                <p><strong>{labelMap["employment"]}</strong></p>
+                                <p>Score: {survey.employment[0]}</p>
+                                <p>{survey.employment[1]}</p>
                             </div>
                         </div>
 
