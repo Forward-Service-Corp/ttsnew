@@ -51,11 +51,11 @@ export default function ServicesTable({services}) {
                                             {service.name}
                                         </td>
                                         <td className={`px-1 py-1 text-sm text-gray-500 hidden md:table-cell`}>
-                                            <span className={`py-1 px-3 text-xs rounded-full w-auto text-white`} style={{backgroundColor: colorMap[service.service]}}>
+                                            <span className={`py-1 px-3 text-xs rounded-full w-auto`} >
                                                 {labelMap[service.service]}
                                             </span>
                                         </td>
-                                        <td className=" px-1 text-sm text-gray-500 hidden md:table-cell">{service.county}</td>
+                                        <td className=" px-1 text-xs text-gray-500 hidden md:table-cell">{service.county}</td>
                                         <td className="relative py-3 md:py-1 px-1 text-right text-sm font-medium sm:pr-6">
                                             <a href={"/referral/" + service._id}
                                                className="text-orange-600 hover:text-orange-900">
