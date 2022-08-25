@@ -17,7 +17,7 @@ function NewEmailAssignment({user}) {
     }
 
     return (
-        <div>
+        <div className={"bg-gray-100 p-6 mb-5 rounded"}>
             <h2 className={"uppercase text-gray-500"}>New email assignment</h2>
             <div className={"grid grid-cols-1 md:grid-cols-2 gap-8"}>
                 <div className={"flex flex-col"}>

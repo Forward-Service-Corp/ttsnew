@@ -4,6 +4,7 @@ import {useRouter} from "next/router";
 import Head from "next/head";
 import {useEffect, useState} from "react";
 import NewEmailAssignment from "../../components/newEmailAssignment";
+import CoachAssignments from "../../components/coachAssignments";
 
 export default function User({viewingUser, pageDataJson, coachesJson}) {
 
@@ -11,7 +12,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
     const {user} = pageDataJson
     const [role, setRole] = useState(viewingUser.level)
     const [roleChanged, setRoleChanged] = useState(false)
-    const [newCoaches, setNewCoaches] = useState(viewingUser.coach || [])
+
     const [dataChanged, setDataChanged] = useState(false)
 
     async function saveRole() {
@@ -23,23 +24,6 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
         router.reload()
     }
 
-    async function saveCoaches() {
-        await fetch("/api/save-coaches", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                userId: viewingUser._id,
-                coaches: newCoaches
-            })
-        })
-            .then(res => {
-                console.log(res)
-            })
-            .catch(err => console.warn(err))
-        router.reload()
-    }
 
     useEffect(() => {
         document.getElementById("roleSelect").value = role
@@ -106,46 +90,9 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
                     </button>
                 </div>
             </div>
-            <div className={"bg-gray-100 p-6 mb-5 rounded"}>
-                <h2 className={"uppercase text-gray-500 mb-3"}>Coach Assignments</h2>
-                <div className={"grid grid-cols-5 gap-4"}>
-                    {coachesJson && coachesJson.sort((a, b) => b.name - a.name).map(coach => {
-                    return (
-                        <div key={coach.email} className={"p-1"}>
-                            <input className={"peer hidden"}
-                                   defaultChecked={newCoaches?.indexOf(coach.email) > -1}
-                                   onChange={(e) => {
-                                       if (newCoaches?.indexOf(e.target.value) === -1) {
-                                           setNewCoaches(prevState => [...prevState, e.target.value])
-                                       } else {
-                                           setNewCoaches(prevState => prevState.filter(coach => coach !== e.target.value))
-                                       }
-                                       setDataChanged(true)
-                                   }}
-                                   value={coach.email}
-                                   type={"checkbox"}
-                                   id={coach.email}
-                                   name={coach.name}/>
-                            <label className={"p-2 w-full block text-center border-[1px] rounded text-black truncate peer-checked:bg-orange-600 peer-checked:text-white"}
-                                   htmlFor={coach.email}>{coach.name || coach.email}</label>
-                        </div>
-                    )
-                })}
-                </div>
-                <div>
-                    <div className={"flex justify-start mt-4 pt-4 border-t-[1px] border-gray-400"}>
-                        <button disabled={!dataChanged}
-                                onClick={saveCoaches}
-                                className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Save
-                            coach updates
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <CoachAssignments coachesJson={coachesJson} viewingUser={viewingUser}/>
+            <NewEmailAssignment user={viewingUser.email}/>
 
-            <div className={"bg-gray-100 p-6 mb-5 rounded"}>
-                <NewEmailAssignment user={viewingUser.email}/>
-            </div>
         </Layout>
     )
 }
