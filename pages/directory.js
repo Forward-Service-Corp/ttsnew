@@ -17,7 +17,6 @@ export default function Directory({pageDataJson}) {
     const domains = Object.keys(labelMap)
 
     async function search() {
-        console.log("searching...")
         const fetchSearch = await fetch("/api/search-directory", {
             method: "POST",
             headers: {
@@ -84,10 +83,10 @@ export default function Directory({pageDataJson}) {
                 </form>
             </div>
 
-            <div className={`text-center p-4 ${searched?"visible":"hidden"}`}>
+            <div className={`text-center p-4 ${searched ? "visible" : "hidden"}`}>
                 {loadedServices.length === 0 ? "There were no results" : loadedServices.length + " results"}
             </div>
-            <div className={`text-center p-4 ${!searched?"visible":"hidden"}`}>
+            <div className={`text-center p-4 ${!searched ? "visible" : "hidden"}`}>
                 Please enter your search criteria.
             </div>
             {loadedServices.length > 0 ? <ServicesTable services={loadedServices}/> : null}

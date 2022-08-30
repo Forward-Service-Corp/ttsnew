@@ -1,6 +1,7 @@
 import Layout from "../../components/layout";
 import {getSession} from "next-auth/react";
 import {useState} from "react";
+import Head from "next/head";
 
 export default function ReferralId({pageDataJson, referralDataJson}) {
 
@@ -39,6 +40,9 @@ export default function ReferralId({pageDataJson, referralDataJson}) {
 
     return (
         <Layout title={referralDataJson.name} session={user}>
+            <Head>
+                <title>{referralDataJson.name}</title>
+            </Head>
             <div className={"flex justify-between items-center"}>
                 <div className={"text-xs text-red-600"}>
                     {userReferrals.filter(referral => referral.name === referralDataJson.name).length > 0 ? "This referral is currently in your CARE Plan." : null}
