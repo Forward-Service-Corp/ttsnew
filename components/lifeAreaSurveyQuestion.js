@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {Switch} from '@headlessui/react'
 
 function classNames(...classes) {
@@ -6,8 +6,11 @@ function classNames(...classes) {
 }
 
 function LifeAreaSurveyQuestion({question, value, setter}) {
+    const [enabled, setEnabled] = useState(value !== "")
 
-    const [enabled, setEnabled] = useState(false)
+    useEffect(() => {
+        setEnabled(value !== "")
+    }, [value])
 
     return (
         <div className={"py-5"}>
@@ -19,7 +22,7 @@ function LifeAreaSurveyQuestion({question, value, setter}) {
                         checked={enabled}
                         onChange={() => {
                             setEnabled(!enabled)
-                            if(enabled){
+                            if (enabled) {
                                 setter("")
                             }
                         }}
@@ -47,7 +50,9 @@ function LifeAreaSurveyQuestion({question, value, setter}) {
             </div>
             <div className={`${enabled ? "visible" : "hidden"} pt-2`}>
                 <div>Which ones?</div>
-                <textarea value={value} onChange={(e) => {setter(e.target.value)}} className={"w-full border-gray-300"}/>
+                <textarea value={value} onChange={(e) => {
+                    setter(e.target.value)
+                }} className={"w-full border-gray-300"}/>
             </div>
         </div>
     );

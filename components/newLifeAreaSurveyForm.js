@@ -43,12 +43,16 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
                                            data-statement={lasList[activeDomain].statements[index]}
                                            name={activeDomain}/>
                                     <label
-                                        className={"block p-2 hover:bg-gray-300 peer-checked:bg-green-300 mb-2 border text-sm"}
-                                        htmlFor={activeDomain + "-" + index}>{lasList[activeDomain].statements[index]}</label>
+                                        className={"block hover:bg-gray-300 peer-checked:bg-green-300 mb-2 border text-sm flex items-center justify-between rounded overflow-hidden"}
+                                        htmlFor={activeDomain + "-" + index}>
+                                        <div className={"pl-2"}>{lasList[activeDomain].statements[index]}</div>
+                                        <div className={"flex justify-center items-center bg-orange-600 text-white w-[50px]"}>
+                                            <div className={"text-2xl"}>{index}</div>
+                                        </div>
+                                    </label>
+
                                 </div>
-                                <div className={"flex justify-center items-center mb-2 bg-orange-600 text-white w-[50px]"}>
-                                    <div className={"text-2xl"}>{index}</div>
-                                </div>
+
                             </div>
                         )
                     })}

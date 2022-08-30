@@ -50,7 +50,7 @@ function LasHistory({surveys, isClientView}) {
                                          })
                                      }}>Map this survey
                                 </div>*/}
-                                <div className={"p-3 flex-1 cursor-pointer bg-gradient-to-t from-green-600 to-green-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
+                                <div className={"p-3 flex-1 cursor-pointer bg-green-600 hover:bg-green-500"}
                                      onClick={() => {
                                          if(isClientView){
                                              router.push("/client/survey/" + survey._id).then()

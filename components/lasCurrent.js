@@ -38,7 +38,7 @@ function LasCurrent({surveys, user, isClientSurvey, clientId}) {
                             </div>
                             <div className={"bg-gray-400 flex text-center text-white text-xs"}>
                                 <div
-                                    className={"p-3 flex-1 cursor-pointer bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
+                                    className={"p-3 flex-1 cursor-pointer bg-orange-600 hover:bg-orange-500"}
                                     onClick={() => {
                                         if (isClientSurvey) {
                                             router.push({
@@ -68,7 +68,7 @@ function LasCurrent({surveys, user, isClientSurvey, clientId}) {
                                     }}>Map your priorities
                                 </div>
                                 <div
-                                    className={"p-3 flex-1 cursor-pointer bg-gradient-to-t from-green-600 to-green-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
+                                    className={"p-3 flex-1 cursor-pointer bg-green-600 hover:bg-green-500"}
                                     onClick={() => {
                                         if (isClientSurvey) {
                                             router.push("/client/survey/" + survey._id).then()
@@ -78,17 +78,15 @@ function LasCurrent({surveys, user, isClientSurvey, clientId}) {
 
                                     }}>Review
                                 </div>
-                                {/*<div className={"bg-red-600 p-3 flex-1 cursor-pointer hover:bg-red-500"} onClick={() => {*/}
-                                {/*    if (confirm("Are you sure you want to delete this survey? This action is permanent.")) {*/}
-                                {/*        deleteSurvey(survey._id)*/}
-                                {/*            .then(() => {*/}
-                                {/*                getSurveys()*/}
-                                {/*                    .catch(err => console.warn(err))*/}
-                                {/*            })*/}
-                                {/*            .catch(err => console.warn(err))*/}
-                                {/*    }*/}
-                                {/*}}>Delete*/}
-                                {/*</div>*/}
+                                {
+                                    (new Date() - new Date(survey.datestamp)) / (1000 * 60 * 60) < 12 ?
+                                        <div className={"bg-gray-600 p-3 flex-1 cursor-pointer hover:bg-gray-500"}
+                                             onClick={() => {
+                                                 router.push("/new-life-area-survey?dreamName=" + survey.dream + "&dreamId=" + survey.dreamId + "&surveyId=" + survey._id).then()
+                                             }}>Edit
+                                        </div> : null
+                                }
+
                             </div>
                         </div>
                     )

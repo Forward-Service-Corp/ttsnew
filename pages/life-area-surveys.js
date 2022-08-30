@@ -26,6 +26,7 @@ export default function LifeAreaSurveys({pageDataJson, incomingDream}) {
             </Head>
             <div className={"w-full border-b-[1px] pb-2 mb-5"}>
                 <h2 className={"uppercase text-orange-600 "}>Active Life Area Survey</h2>
+                <div className={"text-xs"}>Note: You may edit your life area survey for up to 12 hours after it is initially completed.</div>
             </div>
             <LasCurrent user={user} surveys={surveysList} setSurveys={setSurveysList}
                         dreamId={currentDreamId} dream={currentDream}/>

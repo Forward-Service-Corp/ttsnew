@@ -2,7 +2,7 @@ import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
 import SurveyDomainList from "../components/surveyDomainsList";
 import NewLifeAreaSurveyForm from "../components/newLifeAreaSurveyForm";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import NewLifeAreaSurveyQuestions from "../components/newLifeAreaSurveyQuestions";
 
@@ -19,6 +19,47 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
     const [family, setFamily] = useState("")
     const [health, setHealth] = useState("")
     const [income, setIncome] = useState("")
+
+    async function getSurvey() {
+        const survey = await fetch("/api/get-survey?surveyId=" + router.query.surveyId)
+            .then(res => res.json())
+            .catch(err => console.warn(err))
+        await setDomains(survey.priority)
+        await setAnswered({
+            adultEducation: {selection: survey.adultEducation[0], statement: survey.adultEducation[1]},
+            budgeting: {selection: survey.budgeting[0], statement: survey.budgeting[1]},
+            childcare: {selection: survey.childcare[0], statement: survey.childcare[1]},
+            childrensEducation: {selection: survey.childrensEducation[0], statement: survey.childrensEducation[1]},
+            communityInvolvement: {selection: survey.communityInvolvement[0], statement: survey.communityInvolvement[1]},
+            disabilities: {selection: survey.disabilities[0], statement: survey.disabilities[1]},
+            employment: {selection: survey.employment[0], statement: survey.employment[1]},
+            familyFriendsSupport: {selection: survey.familyFriendsSupport[0], statement: survey.familyFriendsSupport[1]},
+            food: {selection: survey.food[0], statement: survey.food[1]},
+            healthInsurance: {selection: survey.healthInsurance[0], statement: survey.healthInsurance[1]},
+            housing: {selection: survey.housing[0], statement: survey.housing[1]},
+            internetAccess: {selection: survey.internetAccess[0], statement: survey.internetAccess[1]},
+            legal: {selection: survey.legal[0], statement: survey.legal[1]},
+            lifeSkills: {selection: survey.lifeSkills[0], statement: survey.lifeSkills[1]},
+            mentalHealth: {selection: survey.mentalHealth[0], statement: survey.mentalHealth[1]},
+            money: {selection: survey.money[0], statement: survey.money[1]},
+            parentingSkills: {selection: survey.parentingSkills[0], statement: survey.parentingSkills[1]},
+            racismBigotry: {selection: survey.racismBigotry[0], statement: survey.racismBigotry[1]},
+            safety: {selection: survey.safety[0], statement: survey.safety[1]},
+            substances: {selection: survey.substances[0], statement: survey.substances[1]},
+            transportation: {selection: survey.transportation[0], statement: survey.transportation[1]}
+        })
+        setSurprise(survey.surprise)
+        setConcern(survey.concern)
+        setFamily(survey.family)
+        setHealth(survey.health)
+        setIncome(survey.income)
+    }
+
+    useEffect(() => {
+        if(router.query.surveyId !== undefined){
+            getSurvey().then()
+        }
+    },[])
 
     async function saveSurvey() {
         await fetch("/api/post-life-area-survey", {
@@ -55,6 +96,80 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                 surprise, concern, family, health, income
             })
         })
+    }
+
+    async function updateSurvey() {
+        await fetch("/api/update-life-area-survey", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                surveyId: router.query.surveyId,
+                dreamId: router.query.dreamId,
+                dream: router.query.dreamName,
+                priority: domains,
+                food: [answered.food.selection, answered.food.statement],
+                money: [answered.money.selection, answered.money.statement],
+                substances: [answered.substances.selection, answered.substances.statement],
+                mentalHealth: [answered.mentalHealth.selection, answered.mentalHealth.statement],
+                safety: [answered.safety.selection, answered.safety.statement],
+                healthInsurance: [answered.healthInsurance.selection, answered.healthInsurance.statement],
+                transportation: [answered.transportation.selection, answered.transportation.statement],
+                disabilities: [answered.disabilities.selection, answered.disabilities.statement],
+                lifeSkills: [answered.lifeSkills.selection, answered.lifeSkills.statement],
+                employment: [answered.employment.selection, answered.employment.statement],
+                legal: [answered.legal.selection, answered.legal.statement],
+                childcare: [answered.childcare.selection, answered.childcare.statement],
+                adultEducation: [answered.adultEducation.selection, answered.adultEducation.statement],
+                parentingSkills: [answered.parentingSkills.selection, answered.parentingSkills.statement],
+                childrensEducation: [answered.childrensEducation.selection, answered.childrensEducation.statement],
+                communityInvolvement: [answered.communityInvolvement.selection, answered.communityInvolvement.statement],
+                familyFriendsSupport: [answered.familyFriendsSupport.selection, answered.familyFriendsSupport.statement],
+                budgeting: [answered.budgeting.selection, answered.budgeting.statement],
+                racismBigotry: [answered.racismBigotry.selection, answered.racismBigotry.statement],
+                internetAccess: [answered.internetAccess.selection, answered.internetAccess.statement],
+                housing: [answered.housing.selection, answered.housing.statement],
+                userId: router.query.clientId === undefined ? user.email : router.query.clientId,
+                surprise, concern, family, health, income
+            })
+        })
+    }
+
+    const saveSurveyButton = () => {
+        return (
+            <button disabled={domains.length === 0 || Object.keys(answered).length !== 21}
+                    className={`text-white text-sm rounded py-2 px-4 mt-5 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400`}
+                    onClick={async () => {
+                        await saveSurvey().then()
+                        if (router.query.clientId === undefined) {
+                            router.push("/life-area-surveys").then()
+                        } else {
+                            router.back()
+                        }
+
+                    }}>Save this
+                survey
+            </button>
+        )
+    }
+
+    const updateSurveyButton = () => {
+        return (
+            <button disabled={domains.length === 0 || Object.keys(answered).length !== 21}
+                    className={`text-white text-sm rounded py-2 px-4 mt-5 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400`}
+                    onClick={async () => {
+                        await updateSurvey().then()
+                        if (router.query.clientId === undefined) {
+                            router.push("/life-area-surveys").then()
+                        } else {
+                            router.back()
+                        }
+
+                    }}>Update this
+                survey
+            </button>
+        )
     }
 
     return (
@@ -106,19 +221,8 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                                         setIncome={setIncome}/>
 
             <div className={"flex justify-end"}>
-                <button disabled={domains.length === 0 || Object.keys(answered).length !== 21}
-                        className={`text-white text-sm rounded py-2 px-4 mt-5 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400`}
-                        onClick={async () => {
-                            await saveSurvey().then()
-                            if (router.query.clientId === undefined) {
-                                router.push("/life-area-surveys").then()
-                            } else {
-                                router.back()
-                            }
+                {router.query.surveyId !== undefined ? updateSurveyButton() : saveSurveyButton()}
 
-                        }}>Save this
-                    survey
-                </button>
             </div>
         </Layout>
     )
