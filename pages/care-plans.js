@@ -25,7 +25,21 @@ export default function CarePlans({pageDataJson}) {
             <Head>
                 <title>TTS / Care Plans</title>
             </Head>
+            <div className={"text-sm p-4 mb-4 bg-gray-100 rounded text-center"}>
+                <p><strong>Vision Without Backbone is Merely Hallucination! </strong></p>
+                <p>Working together with your coach, create your CARE (Coordinating All Resources Effectively) Plan.
+                    List the details of each step.</p>
+
+                <p>Your CARE Plan is designed to make sure you have everything you need to make the most of every
+                    stop along the way.</p>
+
+                <p>For each priority LIFE AREA list the details and your notes for each step. If you&apos;re not sure,
+                    ask for help.</p>
+
+                <p><strong>PLAN YOUR WORK AND WORK YOUR CARE PLAN</strong></p>
+            </div>
             <div className={"bg-gray-100 p-3 mb-2 rounded text-xs"}>
+
                 <div className={"text-lg uppercase text-gray-500 mb-4"}>Instructions</div>
                 <div className={"grid grid-cols-1 md:grid-cols-3 gap-4"}>
                     <div className={"p-2 bg-white rounded shadow text-center relative"}>

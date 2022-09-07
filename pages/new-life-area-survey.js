@@ -30,10 +30,16 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
             budgeting: {selection: survey.budgeting[0], statement: survey.budgeting[1]},
             childcare: {selection: survey.childcare[0], statement: survey.childcare[1]},
             childrensEducation: {selection: survey.childrensEducation[0], statement: survey.childrensEducation[1]},
-            communityInvolvement: {selection: survey.communityInvolvement[0], statement: survey.communityInvolvement[1]},
+            communityInvolvement: {
+                selection: survey.communityInvolvement[0],
+                statement: survey.communityInvolvement[1]
+            },
             disabilities: {selection: survey.disabilities[0], statement: survey.disabilities[1]},
             employment: {selection: survey.employment[0], statement: survey.employment[1]},
-            familyFriendsSupport: {selection: survey.familyFriendsSupport[0], statement: survey.familyFriendsSupport[1]},
+            familyFriendsSupport: {
+                selection: survey.familyFriendsSupport[0],
+                statement: survey.familyFriendsSupport[1]
+            },
             food: {selection: survey.food[0], statement: survey.food[1]},
             healthInsurance: {selection: survey.healthInsurance[0], statement: survey.healthInsurance[1]},
             housing: {selection: survey.housing[0], statement: survey.housing[1]},
@@ -56,10 +62,10 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
     }
 
     useEffect(() => {
-        if(router.query.surveyId !== undefined){
+        if (router.query.surveyId !== undefined) {
             getSurvey().then()
         }
-    },[])
+    }, [])
 
     async function saveSurvey() {
         await fetch("/api/post-life-area-survey", {
@@ -175,11 +181,21 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
     return (
         <Layout title={"Life Area Survey"} session={user}>
             <div className={"text-xl text-center p-3 truncate"}>Dream: {router.query.dreamName}</div>
+            <div className={"p-4 bg-gray-100 rounded text-sm mb-4 text-center"}>
+                <p><strong>&quot;Do What You Can - With What You Have - Where You Are.&quot; </strong>
+                    - Theodore Roosevelt</p>
+
+                <p>Ok, you know what you want, let&apos;s figure out how to get there.</p>
+
+                <p>Just like a mechanic repairing a car, making your dreams come true requires the right tools. With the
+                    right tools and supports you are positioned for success.</p>
+
+                <p>Let&apos;s understand the challenges in your life and make the plan to deal with them.</p>
+            </div>
             <div
                 className={"bg-gray-600 text-center p-2 text-white mb-3 rounded flex justify-around font-light text-sm grid grid-cols-1 md:grid-cols-2 "}>
                 <div>Priorities: <strong>{domains.length}</strong></div>
                 <div>Answered: <strong>{Object.keys(answered).length}/21</strong></div>
-
             </div>
             <div
                 className={`bg-red-600 p-2 rounded text-center text-white text-xs mb-2 ${Object.keys(answered).length === 21 ? "hidden" : null}`}>
