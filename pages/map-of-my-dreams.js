@@ -19,7 +19,7 @@ export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) 
             <Head>
                 <title>TTS / Map of My Dreams</title>
             </Head>
-            <div className={"p-3 bg-gray-100 rounded"}>
+            <div className={"p-4 mb-4 bg-gray-100 rounded"}>
                 <h2 className={"uppercase text-gray-500"}>Instructions</h2>
                 <p className={"text-sm"}>Please select a referral from the dropdown menu. Once you have selected a referral, you must click or
                     tap <button
@@ -29,16 +29,17 @@ export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) 
                 </p>
             </div>
             <div
-                className={`p-3 text-sm text-white bg-red-600 rounded flex justify-start items-center ${userReferrals.length > 0 ? "hidden" : "visible"}`}>
+                className={`p-4 text-sm text-white bg-red-600 rounded flex justify-start items-center ${userReferrals.length > 0 ? "hidden" : "visible"}`}>
                 <span className={"mr-2"}><WarningCircle size={32} weight="thin" color={"white"}/></span>
                 <span className={""}>Please select a referral for at least one priority.</span>
             </div>
             <div className={""}>
+
                 <div className={`${router.query.clientId ? "visible" : "hidden"} text-red-600`}>
                     MAPPING FOR CLIENT {router.query.clientId}
                 </div>
-                <div className={"flex py-4 w-full"}>
 
+                <div className={"flex py-4 w-full"}>
                     <div className={"flex-1"}>
                         <p className={"text-sm text-gray-600"}>Dream:</p>
                         <p className={"uppercase"}>{surveyJson.dream}</p>

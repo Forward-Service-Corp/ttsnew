@@ -6,17 +6,15 @@ function CurrentReferral({currentReferral}) {
             <div className={"flex-1 mr-10 shadow rounded overflow-hidden"}>
                 <div className={"bg-gray-700 text-white p-3"}>Selected referral details:</div>
                 <div className={"flex flex-col align-middle items-center justify-around mt-3"}>
-                    <div>
-                        <HandPalm size={200} weight="thin" color={"orange"}/>
-                    </div>
-                    <div className={"p-8 text-sm"}>Please make a selection from one of the drop down menus to see details.</div>
+
+                    <div className={"p-4 text-sm"}>Please make a selection from one of the drop down menus to see details.</div>
                 </div>
             </div>
         )
     }
     return (
         <div className={"flex-1 mr-10 shadow rounded overflow-hidden"}>
-            <div className={"bg-gray-700 text-white p-3"}>Selected referral details:</div>
+            <div className={"bg-gray-700 text-white p-3 text-sm"}>Selected referral details:</div>
 
             <div className={"p-8"}>
                 {currentReferral.name !== undefined ? (
