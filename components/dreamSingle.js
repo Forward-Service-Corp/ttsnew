@@ -7,9 +7,9 @@ function DreamSingle({dream, deleteDream, isClientDream, clientId, getDreams}) {
 
     const [editMode, setEditMode] = useState(false)
     const [updateSuccess, setUpdateSuccess] = useState(false)
-    const [newDream, setNewDream] = useState(dream.dream)
-    const [need, setNeed] = useState(dream.dreamNeed)
-    const [help, setHelp] = useState(dream.dreamHelp)
+    const [newDream, setNewDream] = useState(dream.dream.toString())
+    const [need, setNeed] = useState(dream.dreamNeed.toString())
+    const [help, setHelp] = useState(dream.dreamHelp.toString())
     const [status, setStatus] = useState(dream.status)
 
     async function updateDream(id) {
@@ -46,7 +46,7 @@ function DreamSingle({dream, deleteDream, isClientDream, clientId, getDreams}) {
                         }}/>
                 </div>
                 <div
-                    className={"bg-gray-200 px-2 py-2 text-xs relative"}>
+                    className={"bg-gray-100 px-2 py-2 text-xs relative"}>
                     {moment(dream.timestamp).format("MMMM Do YYYY @ h:mm a")}
                     <div className={`absolute right-2 top-2 text-red-600 ${editMode ? "visible" : "hidden"}`}>Editing
                     </div>
@@ -55,6 +55,7 @@ function DreamSingle({dream, deleteDream, isClientDream, clientId, getDreams}) {
                         successful
                     </div>
                 </div>
+                <div className={`p-2 text-xs border-b`}>Status: {status}</div>
                 <div>
                     <select className={`text-xs w-full border-none ${editMode ? "visible" : "hidden"}`}
                             defaultValue={status}
@@ -67,7 +68,7 @@ function DreamSingle({dream, deleteDream, isClientDream, clientId, getDreams}) {
                     </select>
                 </div>
                 <div>
-                    <div className={"px-5 py-5"}>
+                    <div className={"px-5 py-2"}>
                         <p className={"text-xs text-gray-500 "}>What I need:</p>
                         <p className={`text-sm mt-0 ${editMode ? "hidden" : "visible"}`}>{need}</p>
                         <input type={"text"}

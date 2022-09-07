@@ -14,11 +14,11 @@ function LasHistory({surveys, isClientView}) {
                     return (
                         <div
                             className={"rounded shadow mr-5 mb-5 text-sm overflow-hidden relative flex flex-col justify-between"}
-                            key={survey.dream}>
+                            key={survey._id}>
                             <div>
                                 <div className={"bg-gray-700 p-3 truncate font-light text-white flex justify-start"}>
                                     <div><ListNumbers size={22}/></div>
-                                    <div className={"ml-2"}>{survey.dream}</div>
+                                    <div className={"ml-2"}>{i} {survey.dream}</div>
                                 </div>
                                 <div
                                     className={"bg-gray-100 p-2 text-xs"}>{moment(survey.datestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}</div>
@@ -60,17 +60,6 @@ function LasHistory({surveys, isClientView}) {
 
                                      }}>Review
                                 </div>
-                                {/*<div className={"bg-red-600 p-3 flex-1 cursor-pointer hover:bg-red-500"} onClick={() => {
-                                    if (confirm("Are you sure you want to delete this survey? This action is permanent.")) {
-                                        deleteSurvey(survey._id)
-                                            .then(() => {
-                                                getSurveys()
-                                                    .catch(err => console.warn(err))
-                                            })
-                                            .catch(err => console.warn(err))
-                                    }
-                                }}>Delete
-                                </div>*/}
                             </div>
                         </div>
                     )
