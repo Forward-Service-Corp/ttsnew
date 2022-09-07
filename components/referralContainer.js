@@ -7,15 +7,17 @@ import {labelMap} from "../lib/serviceLabelsMap";
 import {useRouter} from "next/router";
 
 
-function ReferralContainer({item, user, notes, setUserReferrals}) {
+function ReferralContainer({item, user, notes, setUserReferrals, modifier, loggedInUser}) {
 
     const router = useRouter()
     const [open, setOpen] = useState(false)
     const [task, setTask] = useState("")
     const [allTasks, setAllTasks] = useState([])
     const [allNotes, setAllNotes] = useState(notes)
+    const [saving, setSaving] = useState(true)
 
     async function saveTask() {
+        setSaving(true)
         await fetch("/api/save-task", {
             method: "POST",
             headers: {
@@ -26,19 +28,21 @@ function ReferralContainer({item, user, notes, setUserReferrals}) {
                 userId: user.email,
                 task: task,
                 surveyId: item.surveyId,
-                timestamp: new Date()
+                timestamp: new Date(),
+                modifiedBy: modifier
             })
         })
     }
 
-    async function setTaskStatus(taskId, setTo) {
-        await fetch("/api/update-task-status?taskId=" + taskId + "&setTo=" + setTo)
-    }
+    // async function setTaskStatus(taskId, setTo) {
+    //     await fetch("/api/update-task-status?taskId=" + taskId + "&setTo=" + setTo)
+    // }
 
     async function getTasks() {
         const fetchedTasks = await fetch("/api/get-tasks?userId=" + user.email + "&referralId=" + item._id)
             .then(res => res.json())
         await setAllTasks(fetchedTasks)
+        await setSaving(false)
     }
 
     async function deleteReferral(referralId) {
@@ -70,7 +74,7 @@ function ReferralContainer({item, user, notes, setUserReferrals}) {
     return (
         <div className={"my-3"} key={item._id}>
             <div
-                className={"flex justify-start items-center text-sm bg-gradient-to-r from-orange-600 to-orange-400 font-light text-white relative p-3"}>
+                className={"flex justify-start items-center text-sm bg-orange-500 font-light text-white relative p-3"}>
                 <div className={"w-[160px] ml-4 whitespace-nowrap mr-3 truncate"}>{labelMap[item.domain]}</div>
                 <div className={"truncate max-w-[200px]"}>{item.name}</div>
                 <div
@@ -149,12 +153,29 @@ function ReferralContainer({item, user, notes, setUserReferrals}) {
                             }} disabled={task === ""}>Save task
                         </button>
                     </div>
-
+                    <div className={`${saving ? "visible" : "hidden"} p-2 rounded bg-green-100 text-xs mb-4`}>Saving...</div>
                     <div className={"uppercase text-orange-600 text-sm mb-1"}>Tasks</div>
                     {allTasks && allTasks.filter(item => eval(item.completed) === false).map((task, i) => {
                         return (
                             <div className={"border-l-[1px]"} key={i}>
                                 <TaskTodo item={item} task={task} user={user} setAllTasks={setAllTasks}
+                                          setSaving={setSaving}
+                                          allNotes={allNotes}
+                                          loggedInUser={loggedInUser}
+                                          setAllNotes={setAllNotes}/>
+
+                            </div>
+                        )
+                    })}
+
+                    {allTasks && allTasks.filter(item => eval(item.completed) === true).length > 0 ?
+                        <div className={"uppercase text-orange-600 text-sm mt-4"}>Completed</div> : null}
+
+                    {allTasks && allTasks.filter(item => eval(item.completed) === true).map((task, i) => {
+                        return (
+                            <div className={"border-l-[1px]"} key={i}>
+                                <TaskTodo item={item} task={task} user={user} setAllTasks={setAllTasks}
+                                          setSaving={setSaving}
                                           setAllNotes={setAllNotes}/>
                                 {allNotes && allNotes.filter(note => note.taskId === task._id.toString())
                                     .sort((a, b) => b.timestamp.localeCompare(a.timestamp))
@@ -167,21 +188,7 @@ function ReferralContainer({item, user, notes, setUserReferrals}) {
                         )
                     })}
 
-                    {allTasks && allTasks.filter(item => eval(item.completed) === true).length > 0 ?
-                        <div className={"uppercase text-orange-600 text-sm mt-4"}>Completed</div> : null}
 
-                    {allTasks && allTasks.filter(item => eval(item.completed) === true).map((task) => {
-                        return (
-                            <div key={task._id}>
-                                <input type={"checkbox"} className={"mr-2 rounded"} checked={true} onChange={() => {
-                                    setTaskStatus(task._id, false).then(() => {
-                                        getTasks().then()
-                                    })
-                                }}/>
-                                <span className={"text-xs line-through"}>{task.task}</span>
-                            </div>
-                        )
-                    })}
                 </div>
 
 

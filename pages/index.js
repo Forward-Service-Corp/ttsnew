@@ -92,13 +92,15 @@ export default function Home({pageDataJson}) {
             <div className={"flex justify-between py-8"}>
                 <div>
                     <button disabled={currentTab === 1} onClick={prevPage}
-                            className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Previous
+                            className={"py-2 px-6 text-white text-sm rounded bg-orange-500 disabled:bg-gray-300"}>Previous
                         page
                     </button>
                 </div>
                 <div>
                     <button onClick={nextPage}
-                            className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>{currentTab === 3 ? "Continue to Dreams" : "Next page"}</button>
+                            className={"py-2 px-6 text-white text-sm rounded bg-orange-500 disabled:bg-gray-300"}>
+                        {currentTab === 3 ? "Continue to Dreams" : "Next page"}
+                    </button>
                 </div>
             </div>
             <div className={currentTab === 1 ? "visible" : "hidden"}>

@@ -63,6 +63,8 @@ export default function CarePlans({pageDataJson}) {
             }).map(item => {
                 return (
                     <ReferralContainer key={item._id} item={item} user={user} notes={notes}
+                                       modifier={user.email}
+                                       loggedInUser={user}
                                        setUserReferrals={setUserReferrals}/>
                 )
             })}
@@ -73,6 +75,8 @@ export default function CarePlans({pageDataJson}) {
             }).map(item => {
                 return (
                     <ReferralContainer key={item._id} item={item} user={user} notes={notes}
+                                       modifier={user.email}
+                                       loggedInUser={user}
                                        setUserReferrals={setUserReferrals}/>
                 )
             })}

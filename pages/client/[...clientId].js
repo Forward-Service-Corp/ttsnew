@@ -55,7 +55,6 @@ export default function User({viewingUserData, pageDataJson}) {
     }
 
     async function getUserReferrals() {
-        console.log("getUserReferrals")
         // const id = clientId === undefined ? user.email : clientId
         const referrals = await fetch("/api/get-referrals?userId=" + viewingUser.email)
             .then(res => res.json())
@@ -150,7 +149,7 @@ export default function User({viewingUserData, pageDataJson}) {
 
                 <div className={"flex justify-between mt-6 mb-6"}>
                     <div className={"uppercase text-gray-500 flex items-center"}>Life Area Survey History<span
-                        className={"rounded-full text-xs bg-orange-600 text-white p-1 w-[24px] inline-block text-center ml-2"}>{surveys.length - 1}</span>
+                        className={"rounded-full text-xs bg-orange-600 text-white p-1 w-[24px] inline-block text-center ml-2"}>{surveys.length}</span>
                     </div>
                     <div onClick={() => {
                         setLasSectionOpen(!lasSectionOpen)
@@ -161,13 +160,15 @@ export default function User({viewingUserData, pageDataJson}) {
                 </div>
 
             </div>
-            <div className={"mt-5 p-6 bg-gray-100 rounded"}>
+            <div className={"mt-5 p-6 border rounded"}>
                 <h2 className={"uppercase text-gray-500 mb-4"}>Manage Care Plans</h2>
                 {userReferrals?.filter(item => !item.hasOwnProperty("archived") || item.archived === "false").sort((a,b) => {
                     return b.domain.localeCompare(a.domain)
                 }).map(item => {
                     return (
                         <ReferralContainer key={item._id} item={item} user={viewingUser} notes={viewingUserData.notes}
+                                           loggedInUser={user}
+                                           modifier={user.email}
                                            setUserReferrals={setUserReferrals}/>
                     )
                 })}
@@ -178,6 +179,8 @@ export default function User({viewingUserData, pageDataJson}) {
                 }).map(item => {
                     return (
                         <ReferralContainer key={item._id} item={item} user={viewingUser} notes={viewingUserData.notes}
+                                           loggedInUser={user}
+                                           modifier={user.email}
                                            setUserReferrals={setUserReferrals}/>
                     )
                 })}

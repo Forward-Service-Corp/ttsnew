@@ -8,7 +8,8 @@ export default async (req, res) => {
         task: req.body.task,
         timestamp: req.body.timestamp,
         surveyId: req.body.surveyId,
-        completed: false
+        completed: false,
+        modifiedBy: req.body.modifiedBy
     }
 
     const {db} = await connectToDatabase()

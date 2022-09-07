@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import {FilePlus, Trash} from "phosphor-react";
 import moment from "moment";
+import NoteItem from "./noteItem";
 
-function TaskTodo({task, setAllTasks, user, item, setAllNotes}) {
+function TaskTodo({task, setAllTasks, user, item, setAllNotes, loggedInUser, setSaving, allNotes}) {
 
     const [note, setNote] = useState("")
     const [noteOpen, setNoteOpen] = useState(false)
@@ -12,6 +13,7 @@ function TaskTodo({task, setAllTasks, user, item, setAllNotes}) {
     }
 
     async function deleteTask(taskId) {
+        setSaving(true)
         await fetch("/api/delete-task?taskId=" + taskId)
     }
 
@@ -19,15 +21,18 @@ function TaskTodo({task, setAllTasks, user, item, setAllNotes}) {
         const fetchedTasks = await fetch("/api/get-tasks?userId=" + user.email + "&referralId=" + item._id)
             .then(res => res.json())
         await setAllTasks(fetchedTasks)
+        await setSaving(false)
     }
 
     async function getNotes() {
         const fetchedNotes = await fetch("/api/get-notes?userId=" + user.email)
             .then(res => res.json())
         await setAllNotes(fetchedNotes)
+        await setSaving(false)
     }
 
     async function saveNote() {
+        setSaving(true)
         await fetch("/api/save-note", {
             method: "POST",
             headers: {
@@ -39,24 +44,38 @@ function TaskTodo({task, setAllTasks, user, item, setAllNotes}) {
                 userId: user.email,
                 note: note,
                 surveyId: item.surveyId,
-                timestamp: new Date()
+                timestamp: new Date(),
+                modifiedBy: loggedInUser.email
             })
         })
         setNote("")
     }
 
+    function evaluateEmail (modifiedEmail) {
+        return modifiedEmail === loggedInUser?.email ? "Me" : modifiedEmail
+    }
+
     return (
         <div className={"mt-3"}>
-            <div className={"flex justify-between align-middle p-2 bg-gray-200"} key={task._id}>
+            <div className={`flex justify-between align-middle p-2 ${task.completed === "true" ? "bg-green-100" : "bg-gray-100"}`} key={task._id}>
                 <div className={"flex"}>
-                    <input type={"checkbox"} className={"mr-2 rounded"} onChange={() => {
-                        setTaskStatus(task._id, true)
-                            .then(() => {
-                                getTasks().then()
-                            })
-                    }}/>
-                    <div className={"text-xs "}><span
-                        className={"text-gray-500"}>{moment(task.timestamp).format("MMMM Do YYYY")}</span> - {task.task}</div>
+                    <input type={"checkbox"}
+                           checked={task.completed === "true"}
+                           className={"mr-2 rounded"}
+                           onChange={() => {
+                               setSaving(true)
+                               setTaskStatus(task._id, task.completed !== "true")
+                                   .then(() => {
+                                       getTasks().then()
+                                   })
+                           }}/>
+                    <div className={"text-xs "}>
+                        <div>{task.task}</div>
+                        <div className={"text-gray-400 text-[11px]"}>
+                            {moment(task.timestamp).format("MMMM Do YYYY - hh:mm a")}
+                        </div>
+                        <div className={"text-gray-400 text-[11px]"}>Added by: {task.modifiedBy === undefined ? "unknown" : evaluateEmail(task.modifiedBy)}</div>
+                    </div>
                 </div>
                 <div className={"flex"}>
                     <div className={"cursor-pointer mr-3 ml-4"}
@@ -92,6 +111,13 @@ function TaskTodo({task, setAllTasks, user, item, setAllNotes}) {
                     </button>
                 </div>
             </div>
+            {allNotes && allNotes.filter(note => note.taskId === task._id.toString())
+                .sort((a, b) => b.timestamp.localeCompare(a.timestamp))
+                .map(noteItem => {
+                    return (
+                        <NoteItem key={noteItem._id} noteItem={noteItem} loggedInUser={loggedInUser}/>
+                    )
+                })}
         </div>
     );
 }

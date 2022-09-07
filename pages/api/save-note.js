@@ -9,6 +9,7 @@ export default async (req, res) => {
         note: req.body.note,
         timestamp: req.body.timestamp,
         surveyId: req.body.surveyId,
+        modifiedBy: req.body.modifiedBy
     }
 
     const {db} = await connectToDatabase()
