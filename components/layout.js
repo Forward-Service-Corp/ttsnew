@@ -32,7 +32,8 @@ export default function Layout({children, title, session, loadingState}) {
                 <div className={"uppercase text-white self-center rounded-full p-5 bg-orange-600 shadow"}>loading...
                 </div>
             </div>
-            {router.pathname !== "/profile" && router.pathname !== "/" && router.pathname !== "/directory" ? <ProfileDetailsWarningModal session={session}/> : null}
+            {router.pathname !== "/profile" && router.pathname !== "/" && router.pathname !== "/directory" ?
+                <ProfileDetailsWarningModal session={session}/> : null}
 
             <div className="min-h-full ">
                 <div className="bg-gradient-to-r from-orange-600 to-orange-400 pb-32 print:hidden">
@@ -58,7 +59,8 @@ export default function Layout({children, title, session, loadingState}) {
                                                     />
                                                 </div>
                                                 <div className="flex-shrink-0 ml-3 visible md:hidden">
-                                                    <a onClick={() => signOut()} className={"ml-16 px-3 py-2 text-white rounded border"}>Logout</a>
+                                                    <a onClick={() => signOut()}
+                                                       className={"ml-16 px-3 py-2 text-white rounded border"}>Logout</a>
                                                 </div>
                                                 <div className="hidden md:block">
                                                     <div className="ml-10 flex items-baseline space-x-4">
@@ -275,7 +277,8 @@ export default function Layout({children, title, session, loadingState}) {
 
                 <main className="-mt-32 print:mt-0">
                     <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
-                        <div className="bg-white rounded-lg shadow px-5 py-6 sm:px-6 print:px-0 print:py-0 print:shadow-none">
+                        <div
+                            className="bg-white rounded-lg shadow px-5 py-6 sm:px-6 print:px-0 print:py-0 print:shadow-none">
                             {children}
                         </div>
                     </div>
@@ -284,7 +287,14 @@ export default function Layout({children, title, session, loadingState}) {
             <div className={"p-4 bg-gray-600 grid grid-cols-1 md:grid-cols-3 text-white text-sm  font-light"}>
                 <div className={"text-center"}>Map of My Dreams Web Application</div>
                 <div className={"text-center"}>Forward Service Corporation &copy; 2022</div>
-                <div className={"text-center"}><a href={"#"} target={"_blank"} rel={"noreferrer"} className={"text-orange-300 underline"}>Feedback: Let us know how we&apos;re doing!</a></div>
+                <div className={"text-center"}>
+                    <a href={"https://fsc-support.zendesk.com/hc/en-us/requests/new?ticket_form_id=9189050108308"}
+                       target={"_blank"}
+                       rel={"noreferrer"}
+                       className={"text-orange-300 underline"}>
+                        Feedback: Let us know how we&apos;re doing!
+                    </a>
+                </div>
             </div>
         </>
     )
