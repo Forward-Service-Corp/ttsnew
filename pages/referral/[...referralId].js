@@ -97,11 +97,11 @@ export default function ReferralId({pageDataJson, referralDataJson}) {
                         <div>{referralDataJson.county || <span className={"text-gray-500"}>No county listed</span>}</div>
                     </div>
                     <div>
-                        <p className={"text-xs text-gray-500"}>Zip</p>
+                        <p className={"text-xs text-gray-500"}>State</p>
                         <div>{referralDataJson.state || <span className={"text-gray-500"}>No zip code listed</span>}</div>
                     </div>
                     <div>
-                        <p className={"text-xs text-gray-500"}>State</p>
+                        <p className={"text-xs text-gray-500"}>Zip</p>
                         <div>{referralDataJson.zip || <span className={"text-gray-500"}>No state listed</span>}</div>
                     </div>
                 </div>
