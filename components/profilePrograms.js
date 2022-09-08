@@ -26,7 +26,7 @@ function ProfilePrograms({user}) {
             <div className={"flex flex-col"}>
                 <div className={""}>
                     <h2 className={"uppercase text-gray-600 font-light mb-3"}>Available Programs</h2>
-                    <select className={"h-[240px] w-full"} multiple onChange={(e) => {
+                    <select className={"h-[260px] w-full"} multiple onChange={(e) => {
                         setPrograms(prevState => {
                             if (programs.indexOf(e.target.value) === -1) {
                                 return [...prevState, e.target.value]
@@ -36,13 +36,14 @@ function ProfilePrograms({user}) {
                         })
                         setProgramsUpdated(true)
                     }}>
-                        <option>FoodShare, Employment, and Training (FSET)</option>
+                        <option>Emergency Assistance</option>
+                        <option>FoodShare Employment and Training</option>
+                        <option>Job Access Loans (JAL)</option>
                         <option>Jobs for America&apos;s Graduates (JAG)</option>
+                        <option>Refugee Services</option>
                         <option>Transportation Alliance for New Solutions (TrANS)</option>
-                        <option>Road to Livelihood</option>
-                        <option>Upward Bound Math Science (UBMS)</option>
                         <option>Upward Bound (UB)</option>
-                        <option>Wheels to Work</option>
+                        <option>Upward Bound Math Science (UBMS)</option>
                         <option>WIOA Adult and Dislocated Worker</option>
                         <option>WIOA Youth</option>
                         <option>Wisconsin Employment Transportation Assistance Program (WETAP)</option>
