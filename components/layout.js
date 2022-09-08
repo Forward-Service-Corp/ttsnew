@@ -34,7 +34,7 @@ export default function Layout({children, title, session, loadingState}) {
             </div>
             {router.pathname !== "/profile" && router.pathname !== "/" && router.pathname !== "/directory" ? <ProfileDetailsWarningModal session={session}/> : null}
 
-            <div className="min-h-full">
+            <div className="min-h-full ">
                 <div className="bg-gradient-to-r from-orange-600 to-orange-400 pb-32 print:hidden">
                     <Disclosure as="nav" className="bg-gradient-to-r from-orange-600 to-orange-400">
                         {({open}) => (
@@ -280,6 +280,11 @@ export default function Layout({children, title, session, loadingState}) {
                         </div>
                     </div>
                 </main>
+            </div>
+            <div className={"p-4 bg-gray-600 grid grid-cols-1 md:grid-cols-3 text-white text-sm  font-light"}>
+                <div className={"text-center"}>Map of My Dreams Web Application</div>
+                <div className={"text-center"}>Forward Service Corporation &copy; 2022</div>
+                <div className={"text-center"}><a href={"#"} target={"_blank"} rel={"noreferrer"} className={"text-orange-300 underline"}>Feedback: Let us know how we&apos;re doing!</a></div>
             </div>
         </>
     )
