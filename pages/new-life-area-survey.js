@@ -76,6 +76,8 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
             body: JSON.stringify({
                 dreamId: router.query.dreamId,
                 dream: router.query.dreamName,
+                county: user.county,
+                coach: user.coach,
                 priority: domains,
                 food: [answered.food.selection, answered.food.statement],
                 money: [answered.money.selection, answered.money.statement],
