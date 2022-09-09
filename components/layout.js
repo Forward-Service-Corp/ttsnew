@@ -31,13 +31,10 @@ export default function Layout({children, title, session, loadingState}) {
     useEffect(() => {
         const location = window.location.host
         if(location.indexOf("localhost") > -1){
-            console.log("local")
             setEnvironment("dev")
         }else if(location.indexOf("dev-") > -1){
-            console.log("testing")
             setEnvironment("testing")
         }
-        console.log(location)
     }, [])
 
     return (
