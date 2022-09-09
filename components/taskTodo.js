@@ -72,7 +72,7 @@ function TaskTodo({task, setAllTasks, user, item, setAllNotes, loggedInUser, set
                     <div className={"text-xs "}>
                         <div>{task.task}</div>
                         <div className={"text-gray-400 text-[11px]"}>
-                            {moment(task.timestamp).format("MMMM Do YYYY - hh:mm a")}
+                            {moment(task.timestamp).calendar()}
                         </div>
                         <div className={"text-gray-400 text-[11px]"}>Added by: {task.modifiedBy === undefined ? "unknown" : evaluateEmail(task.modifiedBy)}</div>
                     </div>

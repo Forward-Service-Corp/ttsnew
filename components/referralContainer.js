@@ -158,6 +158,7 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
                     {allTasks && allTasks.filter(item => eval(item.completed) === false).map((task, i) => {
                         return (
                             <div className={"border-l-[1px]"} key={i}>
+
                                 <TaskTodo item={item} task={task} user={user} setAllTasks={setAllTasks}
                                           setSaving={setSaving}
                                           allNotes={allNotes}
@@ -174,18 +175,14 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
                     {allTasks && allTasks.filter(item => eval(item.completed) === true).map((task, i) => {
                         return (
                             <div className={"border-l-[1px]"} key={i}>
+
                                 <TaskTodo item={item} task={task} user={user} setAllTasks={setAllTasks}
                                           setSaving={setSaving}
                                           allNotes={allNotes}
                                           loggedInUser={loggedInUser}
                                           setAllNotes={setAllNotes}/>
-                                {allNotes && allNotes.filter(note => note.taskId === task._id.toString())
-                                    .sort((a, b) => b.timestamp.localeCompare(a.timestamp))
-                                    .map(noteItem => {
-                                        return (
-                                            <NoteItem key={noteItem._id} noteItem={noteItem}/>
-                                        )
-                                    })}
+
+
                             </div>
                         )
                     })}
