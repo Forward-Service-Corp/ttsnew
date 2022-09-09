@@ -176,6 +176,8 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
                             <div className={"border-l-[1px]"} key={i}>
                                 <TaskTodo item={item} task={task} user={user} setAllTasks={setAllTasks}
                                           setSaving={setSaving}
+                                          allNotes={allNotes}
+                                          loggedInUser={loggedInUser}
                                           setAllNotes={setAllNotes}/>
                                 {allNotes && allNotes.filter(note => note.taskId === task._id.toString())
                                     .sort((a, b) => b.timestamp.localeCompare(a.timestamp))
