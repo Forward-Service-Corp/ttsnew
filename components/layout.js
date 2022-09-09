@@ -1,4 +1,4 @@
-import {Fragment} from 'react'
+import {Fragment, useEffect, useState} from 'react'
 import {signOut} from "next-auth/react"
 import {Disclosure, Menu, Transition} from '@headlessui/react'
 import {MenuIcon, XIcon} from '@heroicons/react/outline'
@@ -25,8 +25,26 @@ function classNames(...classes) {
 
 export default function Layout({children, title, session, loadingState}) {
     const router = useRouter()
+
+    const [environment, setEnvironment] = useState("production")
+
+    useEffect(() => {
+        const location = window.location.host
+        if(location.indexOf("localhost") > -1){
+            console.log("local")
+            setEnvironment("dev")
+        }else if(location.indexOf("dev-") > -1){
+            console.log("testing")
+            setEnvironment("testing")
+        }
+        console.log(location)
+    }, [])
+
     return (
         <>
+            <div className={`${environment === "dev" || environment === "testing" ? "visible" : "hidden"} p-2 text-center bg-indigo-600 text-white font-light`}>
+                You are currently in the {environment} environment.
+            </div>
             <div
                 className={`fixed w-full h-full bg-gray-600 bg-opacity-50 flex align-middle justify-center ${loadingState ? "visible" : "hidden"}`}>
                 <div className={"uppercase text-white self-center rounded-full p-5 bg-orange-600 shadow"}>loading...
