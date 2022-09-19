@@ -96,7 +96,11 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
                 </div>
                 {item.hasOwnProperty("archived") && item.archived === "true" ?
                     <div className={"flex items-center cursor-pointer"} onClick={() => {
-                        setReferralStatus(item._id, false).then(getReferrals)
+                        if (item.isCustom) {
+                            setCustomReferralStatus(item._id, false).then(getReferrals)
+                        } else {
+                            setReferralStatus(item._id, false).then(getReferrals)
+                        }
                     }}>
                         <div><CheckCircle size={20} weight={"thin"} color={"blue"}/></div>
                         <div className={"text-blue-600 text-xs cursor-pointer"}>Make active again</div>

@@ -183,6 +183,11 @@ export default function Layout({children, title, session, loadingState}) {
                                                                         )}
                                                                     </Menu.Item>
                                                                 ))}
+                                                                {session?.level === "admin" ?
+                                                                    <Menu.Item>
+                                                                        <a href={"/reports"}
+                                                                            className={'block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100'}
+                                                                        >Reports</a></Menu.Item> : null}
                                                                 <Menu.Item>
                                                                     {({active}) => (
                                                                         <a
@@ -201,6 +206,7 @@ export default function Layout({children, title, session, loadingState}) {
                                                                         </a>
                                                                     )}
                                                                 </Menu.Item>
+
                                                             </Menu.Items>
                                                         </Transition>
                                                     </Menu>
