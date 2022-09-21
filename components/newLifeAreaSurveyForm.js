@@ -4,7 +4,7 @@ import Toggle from "./toggle";
 
 function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, setDomains}) {
 
-    const answerArr = [0,1,2,3,4,5]
+    const answerArr = [1,2,3,4,5,0]
 
     return (
         <div className={"p-0 md:p-4"}>
@@ -33,7 +33,6 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
                         }
                     }))
                 }}>
-
                     {answerArr.map(index => {
                         return (
                             <div key={index} className={"flex justify-center align-middle"}>
@@ -43,11 +42,11 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
                                            data-statement={lasList[activeDomain].statements[index]}
                                            name={activeDomain}/>
                                     <label
-                                        className={"block hover:bg-gray-300 peer-checked:bg-green-300 mb-2 border text-sm flex items-center justify-between rounded overflow-hidden"}
+                                        className={"block hover:bg-gray-300 peer-checked:bg-green-300 mb-2 border text-xs flex items-center justify-between rounded overflow-hidden h-[80px]"}
                                         htmlFor={activeDomain + "-" + index}>
-                                        <div className={"pl-2"}>{lasList[activeDomain].statements[index]}</div>
-                                        <div className={"flex justify-center items-center bg-orange-600 text-white w-[50px]"}>
-                                            <div className={"text-2xl"}>{index}</div>
+                                        <div className={"p-2"}>{lasList[activeDomain].statements[index]}</div>
+                                        <div className={"flex justify-center items-center bg-orange-600 text-white min-w-[50px] h-full"}>
+                                            <div className={"text-sm"}>{index}</div>
                                         </div>
                                     </label>
 
