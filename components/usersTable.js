@@ -13,11 +13,17 @@ export default function UsersTable({users}) {
                         A list of all the users in your account including their name, title, email and role.
                     </p>
                 </div>
-                <div className={""}>
-                    <input type="text" value={searchTerm} placeholder={"Search users..."} onChange={(e) => {
+                <div className={"rounded border border-gray-300"}>
+                    <input type="text"
+                           className={"text-xs border-gray-300 border-0 rounded focus:ring-0 "}
+                           value={searchTerm}
+                           placeholder={"Search users..."}
+                           onChange={(e) => {
                         setSearchTerm(e.target.value)
                     }}/>
-                    <select onChange={(e) => {
+                    <select
+                        className={"text-xs border-gray-300 border-0 rounded focus:ring-0"}
+                        onChange={(e) => {
                         setUserType(e.target.value)
                     }}>
                         <option value={""}>All</option>
@@ -35,19 +41,19 @@ export default function UsersTable({users}) {
                                 <thead className="bg-gray-50">
                                 <tr>
                                     <th scope="col"
-                                        className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                                        className="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-gray-900 sm:pl-6">
                                         Name
                                     </th>
                                     <th scope="col"
-                                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                        className="px-3 py-3.5 text-left text-xs font-semibold text-gray-900">
                                         Phone
                                     </th>
                                     <th scope="col"
-                                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                        className="px-3 py-3.5 text-left text-xs font-semibold text-gray-900">
                                         Email
                                     </th>
                                     <th scope="col"
-                                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                        className="px-3 py-3.5 text-left text-xs font-semibold text-gray-900">
                                         Level
                                     </th>
                                     <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
@@ -60,13 +66,13 @@ export default function UsersTable({users}) {
                                     .filter(person => person.level?.includes(userType.toString()))
                                     .map((person) => (
                                     <tr key={person.email}>
-                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6">
                                             {person.name}
                                         </td>
-                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.phone}</td>
-                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.email}</td>
-                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.level}</td>
-                                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                        <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">{person.phone}</td>
+                                        <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">{person.email}</td>
+                                        <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">{person.level}</td>
+                                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-xs font-medium sm:pr-6">
                                             <Link href={"/user/" + person._id}>
                                                 <a className="text-orange-600 hover:text-orange-900">
                                                     View/Edit<span className="sr-only">, {person.name}</span>
