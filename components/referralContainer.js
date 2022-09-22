@@ -74,7 +74,7 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
     return (
         <div className={"my-3"} key={item._id}>
             <div
-                className={"flex justify-start items-center text-sm bg-orange-500 font-light text-white relative p-3"}>
+                className={`flex justify-start items-center text-sm font-light text-white relative p-3 ${item.archived !== "true" ? "bg-orange-500" : "bg-gray-400"}`}>
                 <div className={"w-[160px] ml-4 whitespace-nowrap mr-3 truncate"}>{labelMap[item.domain]}</div>
                 <div className={"truncate max-w-[200px]"}>{item.name}</div>
                 <div
@@ -148,7 +148,7 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
                     }}/>
                     <div className={"flex justify-end"}>
                         <button
-                            className={"mt-2 mb-4 text-white px-4 py-1 rounded text-xs bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
+                            className={"mt-2 mb-4 text-white px-4 py-2 rounded text-xs bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400"}
                             onClick={() => {
                                 saveTask().then(() => {
                                     getTasks().then()

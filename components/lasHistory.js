@@ -18,7 +18,7 @@ function LasHistory({surveys, isClientView}) {
                             <div>
                                 <div className={"bg-gray-700 p-3 truncate font-light text-white flex justify-start"}>
                                     <div><ListNumbers size={22}/></div>
-                                    <div className={"ml-2"}>{i} {survey.dream}</div>
+                                    <div className={"ml-2"}>{survey.dream}</div>
                                 </div>
                                 <div
                                     className={"bg-gray-100 p-2 text-xs"}>{moment(survey.datestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}</div>
@@ -36,20 +36,6 @@ function LasHistory({surveys, isClientView}) {
                                 </div>
                             </div>
                             <div className={"flex text-center text-white text-xs"}>
-                                {/*<div className={"bg-indigo-600 p-3 flex-1 cursor-pointer hover:bg-indigo-500"}
-                                     onClick={() => {
-                                         router.push({
-                                             pathname: "/map-of-my-dreams",
-                                             query: {
-                                                 dreamId: survey.dreamId,
-                                                 dream: survey.dream,
-                                                 surveyId: survey._id,
-                                                 county: user.county,
-                                                 domain: survey.priority
-                                             }
-                                         })
-                                     }}>Map this survey
-                                </div>*/}
                                 <div className={"p-3 flex-1 cursor-pointer bg-green-600 hover:bg-green-500"}
                                      onClick={() => {
                                          if(isClientView){

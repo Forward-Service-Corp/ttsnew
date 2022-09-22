@@ -2,31 +2,49 @@ import React from 'react';
 import {labelMap} from "../lib/serviceLabelsMap";
 
 function CarePlanDomain({item}) {
+
+    const websiteJSX = (url) => {
+        return (
+            <div className={"mb-3"}>
+                <p className={"text-xs uppercase text-gray-500"}>Website: </p>
+                <p>
+                    <a className={"text-blue-600 underline"} target={"_blank"} rel={"noreferrer"} href={url}>
+                        Click to visit site
+                    </a>
+                </p>
+            </div>
+        )
+    }
+
     return (
         <div className={"w-full md:w-1/2 text-sm p-5 inline bg-gray-100 bg-opacity-50 "}>
-            {item.name !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Name: </p>
-                <p>{item.name}</p></div>) : null}
+            {item.name ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Name: </p>
+                {item.name}</div>) : null}
 
-            {item.domain !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Domain: </p>
-                <p>{labelMap[item.domain]}</p></div>) : null}
+            {item.domain ? (
+                <div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Domain: </p>
+                    {labelMap[item.domain]}</div>) : null}
 
-            {item.phone !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Phone: </p>
-                <p>{item.phone}</p></div>) : null}
+            {item.phone ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Phone: </p>
+                {item.phone}</div>) : null}
 
-            {item.email !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Email: </p>
-                <p><a className={"text-blue-600 underline"} href={`mailto:${item.email}`}>{item.email}</a></p></div>) : null}
+            {item.email ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Email: </p>
+                <a className={"text-blue-600 underline"} href={`mailto:${item.email}`}>{item.email}</a>
+            </div>) : null}
 
-            {item.contact !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Contact person: </p>
-                <p>{item.contact}</p></div>) : null}
+            {item.contact ? (
+                <div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Contact person: </p>
+                    {item.contact}</div>) : null}
 
-            {item.url !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Website: </p>
-                <p><a className={"text-blue-600 underline"} target={"_blank"} rel={"noreferrer"} href={item.url}>Click to visit site</a></p></div>) : null}
+            {item.url ? websiteJSX(item.url) : null}
 
-            {item.requirements !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Requirements: </p>
-                <p>{item.requirements}</p></div>) : null}
+            {item.requirements ? (
+                <div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Requirements: </p>
+                    {item.requirements}</div>) : null}
 
-            {item.needs !== null ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Need to bring: </p>
-                <p>{item.needs}</p></div>) : null}
+            {item.needs ? (
+                <div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Need to bring: </p>
+                    {item.needs}</div>) : null}
         </div>
     );
 }

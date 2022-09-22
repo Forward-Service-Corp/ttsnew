@@ -18,7 +18,7 @@ export default function CarePlans({pageDataJson}) {
 
     useEffect(() => {
         getUserReferrals().then()
-    }, [])
+    }, [userReferrals])
 
     return (
         <Layout title={"CARE Plans"} session={user}>
@@ -56,7 +56,7 @@ export default function CarePlans({pageDataJson}) {
                         to save a task
                         <div className={"text-center mb-3"}>
                             <span className={"text-orange-500 text-sm uppercase"}>Add a new task + </span>
-                            <button className={"text-white px-4 py-1 text-xs rounded mt-2 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Save task</button>
+                            <button className={"text-white px-4 py-2 text-xs rounded mt-2 bg-orange-500"}>Save task</button>
                         </div>
 
                     </div>

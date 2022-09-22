@@ -97,7 +97,7 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
 
             <div className={"flex text-xs text-center"}>
 
-                <div className={"bg-gradient-to-t from-gray-600 to-gray-400 text-white p-2 flex-1 cursor-pointer"}
+                <div className={"bg-gray-500 hover:bg-gray-600 text-white p-2 flex-1 cursor-pointer"}
                      onClick={() => {
                          setEditMode(!editMode)
                          if (editMode) {
@@ -112,7 +112,7 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
                      }}>{editMode ? "Save" : "Edit"}
                 </div>
 
-                <div className={"bg-gradient-to-t from-red-700 to-red-500 text-white p-2 flex-1 cursor-pointer"}
+                <div className={"bg-red-500 hover:bg-red-600 text-white p-2 flex-1 cursor-pointer"}
                      onClick={() => {
                          if (confirm("Are you sure you want to delete this dream?")) {
                              deleteDream(dream._id).then()
@@ -120,7 +120,7 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
                      }}>Delete
                 </div>
 
-                <div className={"bg-gradient-to-t from-orange-600 to-orange-400 text-white p-2 flex-1 cursor-pointer"}
+                <div className={"bg-orange-500 hover:bg-orange-600 text-white p-2 flex-1 cursor-pointer"}
                      onClick={() => {
                          if (isClientDream) {
                              router.push("/new-life-area-survey?dreamName=" + dream.dream + "&dreamId=" + dream._id + "&clientId=" + clientId).then()
