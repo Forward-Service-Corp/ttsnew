@@ -3,7 +3,7 @@ import {useRouter} from "next/router";
 import {Brain} from "phosphor-react";
 import moment from "moment";
 
-function DreamSingle({dream, deleteDream, isClientDream, clientId, getDreams}) {
+function DreamSingle({dream, isClientDream, clientId, getDreams}) {
 
     const [editMode, setEditMode] = useState(false)
     const [updateSuccess, setUpdateSuccess] = useState(false)
@@ -28,6 +28,10 @@ function DreamSingle({dream, deleteDream, isClientDream, clientId, getDreams}) {
         })
     }
 
+    async function deleteDream(dreamId) {
+        await fetch("/api/delete-dream?dreamId=" + dreamId)
+        await getDreams().then()
+    }
 
     const router = useRouter()
     return (

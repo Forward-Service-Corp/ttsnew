@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {CaretDoubleDown, CaretDoubleUp} from "phosphor-react";
 import DreamSingle from "./dreamSingle";
 
-function ClientDreams({dreams, viewingUser}) {
+function ClientDreams({viewingUser}) {
 
-    const [savedDreams, setSavedDreams] = useState(dreams)
+    const [dreams, setDreams] = useState([])
     const [newDreamOpen, setNewDreamOpen] = useState(false)
     const [dream, setDream] = useState("")
     const [dreamNeed, setDreamNeed] = useState("")
@@ -36,14 +36,19 @@ function ClientDreams({dreams, viewingUser}) {
     async function getDreams() {
         const newDreams = await fetch("/api/get-dreams?userId=" + viewingUser.email)
             .then(res => res.json())
-        setSavedDreams(newDreams)
+        setDreams(newDreams)
     }
+
+    useEffect(() => {
+        getDreams().then()
+    }, [dreams])
+
 
     return (
         <div className={`mt-5 p-6 border rounded ${dreamSectionOpen ? "h-auto" : "h-[80px] overflow-hidden"}`}>
             <div className={"flex justify-between"}>
                 <div className={"uppercase text-gray-500 flex items-center"}>Client Dreams<span
-                    className={"rounded-full text-xs bg-orange-600 text-white p-1 w-[24px] inline-block text-center ml-2"}>{savedDreams.length}</span>
+                    className={"rounded-full text-xs bg-orange-600 text-white p-1 w-[24px] inline-block text-center ml-2"}>{dreams.length}</span>
                 </div>
                 <div onClick={() => {
                     setDreamSectionOpen(!dreamSectionOpen)
@@ -88,11 +93,12 @@ function ClientDreams({dreams, viewingUser}) {
                     }}>Save dream
                 </button>
             </div>
-            <div className={"grid grid-cols-3 gap-4 mt-6"}>{savedDreams?.map((dream, i) => {
-                return <DreamSingle key={i} dream={dream} deleteDream={deleteDream} isClientDream={true}
-                                    getDreams={getDreams}
-                                    clientId={viewingUser.email}/>
-            })}
+            <div className={"grid grid-cols-3 gap-4 mt-6"}>
+                {dreams?.map(dream => (
+                    <DreamSingle key={dream._id} dream={dream} deleteDream={deleteDream} isClientDream={true}
+                                 getDreams={getDreams}
+                                 clientId={viewingUser.email}/>
+                ))}
             </div>
         </div>
     );

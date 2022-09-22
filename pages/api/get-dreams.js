@@ -4,7 +4,11 @@ import {connectToDatabase} from "../../lib/dbConnect";
 export default async (req, res) => {
 
     const {db} = await connectToDatabase()
-    const cursor = await db.collection("dreams").find({userId: req.query.userId})
+    const cursor = await db.collection("dreams")
+        .find({
+            userId: req.query.userId,
+            status: req.query.status === undefined ? {$exists: true} : req.query.status
+        })
     const records = await cursor.toArray()
     await cursor.close()
 

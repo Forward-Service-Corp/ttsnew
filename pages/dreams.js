@@ -41,25 +41,13 @@ export default function Dreams({pageDataJson}) {
                     </select> Dreams
                 </div>
                 <div className={`${currentTab === "active" ? "visible" : "hidden"}`}>
-                    <SavedDreams savedDreams={savedDreams} setLoadingState={setIsLoading}
-                                 saveDreams={setSavedDreams}
-                                 title={"Active Dreams"}
-                                 status={"active"}
-                                 user={user}/>
+                    <SavedDreams status={"active"} user={user}/>
                 </div>
                 <div className={`${currentTab === "complete" ? "visible" : "hidden"}`}>
-                    <SavedDreams savedDreams={savedDreams} setLoadingState={setIsLoading}
-                                 saveDreams={setSavedDreams}
-                                 title={"Completed Dreams"}
-                                 status={"complete"}
-                                 user={user}/>
+                    <SavedDreams status={"complete"} user={user}/>
                 </div>
                 <div className={`${currentTab === "archived" ? "visible" : "hidden"}`}>
-                    <SavedDreams savedDreams={savedDreams} setLoadingState={setIsLoading}
-                                 saveDreams={setSavedDreams}
-                                 title={"Archived Dreams"}
-                                 status={"archived"}
-                                 user={user}/>
+                    <SavedDreams status={"archived"} user={user}/>
                 </div>
 
 
