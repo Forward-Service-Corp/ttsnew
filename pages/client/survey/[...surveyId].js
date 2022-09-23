@@ -63,13 +63,13 @@ export default function SurveyId({pageDataJson, surveyJson}) {
                         <div className={"flex justify-between"}>
                             <button
                                 onClick={() => router.back()}
-                                className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400 flex items-center"}>
+                                className={"py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 flex items-center"}>
                                 <span className={"inline-block mr-2"}><ArrowLeft size={22} /></span><span className={"inline-block"}>Back</span>
 
                             </button>
                             <button
                                 onClick={() => window.print()}
-                                className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400 flex items-center max-w-[180px]"}>
+                                className={"py-2 px-6 text-white text- text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 flex items-center max-w-[180px]"}>
                                 <span className={"inline-block mr-2"}><Printer size={22} /></span><span className={"inline-block"}>Print</span>
                             </button>
                         </div>

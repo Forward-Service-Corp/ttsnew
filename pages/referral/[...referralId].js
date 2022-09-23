@@ -53,7 +53,7 @@ export default function ReferralId({pageDataJson, referralDataJson}) {
                         onClick={() => {
                             saveReferral().then(getReferrals)
                         }}
-                        className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>
+                        className={"py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400"}>
                         Add to my CARE Plan
                     </button>
                 </div>
