@@ -108,7 +108,7 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
                      }}>Complete life area survey
                 </div>
 
-                <div className={"bg-gray-500 hover:bg-gray-600 text-white p-2 flex-1 cursor-pointer max-w-[40px] flex justify-center"}
+                <div className={`${editMode ? "bg-green-500 hover:bg-green-600" : "bg-gray-500 hover:bg-gray-600"} text-white p-2 flex-1 cursor-pointer max-w-[40px] flex justify-center`}
                      onClick={() => {
                          setEditMode(!editMode)
                          if (editMode) {
