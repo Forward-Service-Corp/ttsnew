@@ -70,13 +70,14 @@ export default function Directory({pageDataJson}) {
                     </div>
                     <div className={"flex items-center"}>
                         <button type={"submit"}
-                                className={"py-[6px] px-6 mr-2 text-white text-sm rounded bg-orange-500 hover:bg-orange-600"}
+                                className={"py-[6px] px-6 mr-2 text-white  text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400"}
                                 onClick={() => {
                                     setSearched(true)
                                 }}>Search
                         </button>
                         <button type={"reset"}
-                                className={"py-[6px] px-6 text-white text-sm rounded bg-orange-500 hover:bg-orange-600"}
+                                className={"py-[6px] px-6 text-white  text-xs bg-red-500 hover:bg-red-600 disabled:bg-gray-400"}
+                                disabled={keyword === "" && domain === "" && county === ""}
                                 onClick={() => {
                                     setKeyword("")
                                     setDomain("")
