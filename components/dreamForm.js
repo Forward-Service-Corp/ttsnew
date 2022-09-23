@@ -23,18 +23,12 @@ function DreamForm({setSavedDreams, user, setIsLoading}) {
         })
     }
 
-    // async function getDreams() {
-    //     const newDreams = await fetch("/api/get-dreams?userId=" + user.email)
-    //         .then(res => res.json())
-    //     await setSavedDreams(newDreams)
-    // }
-
     return (
-        <div className={" rounded shadow-xl overflow-hidden mt-10 md:mt-0"}>
-            <h2 className={"font-light uppercase px-4 py-2 bg-orange-600 text-white"}>Define a new dream</h2>
+        <div className={" shadow-xl overflow-hidden mt-10 md:mt-0"}>
+            <h2 className={"font-light uppercase px-4 py-2 bg-gray-700 text-white"}>Define a new dream</h2>
 
             <div className={"p-4"}>
-                <p className={" text-sm text-orange-600"}>Your dream</p>
+                <p className={"text-sm text-orange-600"}>Your dream</p>
                 <input
                     className={"w-full border-r-0 border-t-0 border-l-0 border-black border-b-[1px] placeholder:text-xs pl-1"}
                     type={"text"}
@@ -64,18 +58,11 @@ function DreamForm({setSavedDreams, user, setIsLoading}) {
                     }} value={dreamHelp}/>
 
                 <button
-                    className={"p-2 mt-4 text-white rounded text-xs bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}
+                    className={"p-2 mt-4 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300"}
                     disabled={dream === ""}
-                    onClick={() => {
+                    onClick={async () => {
                         setIsLoading(true)
-                        saveDream()
-                            .then(() => {
-                                // getDreams().then(res => console.log(res)).catch(err => console.warn(err))
-                            })
-                            .then(() => {
-                                // setIsLoading(false)
-                            })
-                            .catch(err => console.warn(err))
+                        await saveDream().then()
                         setDream("")
                         setDreamNeed("")
                         setDreamHelp("")

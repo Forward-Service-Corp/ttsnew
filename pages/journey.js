@@ -11,10 +11,10 @@ function Journey({pageDataJson}) {
 
     return (
         <Layout title={"The Journey"} session={user}>
-            <div className={"flex justify-between"}>
+            <div className={"flex justify-between mb-4"}>
                 <div>
                     <button disabled={currentTab === 1}
-                            className={`py-2 px-6 mr-2 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 ${currentTab === 1 ? "hidden" : "visible"}`}
+                            className={`py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 ${currentTab === 1 ? "hidden" : "visible"}`}
                             onClick={() => {
                                 setCurrentTab(1)
                             }}>Previous
@@ -22,7 +22,7 @@ function Journey({pageDataJson}) {
                 </div>
                 <div>
                     <button disabled={currentTab === 2}
-                            className={`py-2 px-6 mr-2 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 ${currentTab === 2 ? "hidden" : "visible"}`}
+                            className={`py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 ${currentTab === 2 ? "hidden" : "visible"}`}
                             onClick={() => {
                                 setCurrentTab(2)
                             }}>Next

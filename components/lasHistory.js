@@ -1,7 +1,8 @@
 import {useRouter} from "next/router";
 import {labelMap} from "../lib/serviceLabelsMap";
 import moment from "moment";
-import {ListNumbers} from "phosphor-react";
+import {Link, ListNumbers} from "phosphor-react";
+import React from "react";
 
 function LasHistory({surveys, isClientView}) {
 
@@ -13,7 +14,7 @@ function LasHistory({surveys, isClientView}) {
                 if (i > 0) {
                     return (
                         <div
-                            className={"rounded shadow mr-5 mb-5 text-sm overflow-hidden relative flex flex-col justify-between"}
+                            className={"shadow mr-5 mb-5 text-sm overflow-hidden relative flex flex-col justify-between"}
                             key={survey._id}>
                             <div>
                                 <div className={"bg-gray-700 p-3 truncate font-light text-white flex justify-start"}>
@@ -35,16 +36,18 @@ function LasHistory({surveys, isClientView}) {
                                     </div>
                                 </div>
                             </div>
-                            <div className={"flex text-center text-white text-xs"}>
-                                <div className={"p-3 flex-1 cursor-pointer bg-green-600 hover:bg-green-500"}
-                                     onClick={() => {
-                                         if(isClientView){
-                                             router.push("/client/survey/" + survey._id).then()
-                                         }else{
-                                             router.push("/surveys/" + survey._id).then()
-                                         }
-
-                                     }}>Review
+                            <div className={"flex text-center text-white text-xs justify-end"}>
+                                <div
+                                    title={"Review this life area survey"}
+                                    className={"p-2 flex-1 cursor-pointer bg-green-500 hover:bg-green-600  max-w-[40px] flex justify-center"}
+                                    onClick={() => {
+                                        if (isClientView) {
+                                            router.push("/client/survey/" + survey._id).then()
+                                        } else {
+                                            router.push("/surveys/" + survey._id).then()
+                                        }
+                                    }}>
+                                    <div><Link size={15}/></div>
                                 </div>
                             </div>
                         </div>

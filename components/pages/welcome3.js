@@ -1,7 +1,7 @@
 function Welcome1() {
     return (
         <div className={"font-light"}>
-            <div className={"p-5 bg-gradient-to-r from-orange-700 to-orange-500 my-5 rounded justify-between align-middle text-white w-[320px] m-auto text-sm"}>
+            <div className={"p-5 bg-gray-700 justify-between align-middle text-white w-[320px] m-auto text-sm"}>
                 <p className={"font-bold text-4xl font-serif"}>If</p>
                 <p className={"font-bold"}>If you think you are defeated, you are.</p>
                 <p className={"font-bold"}>If you think you dare not, you don&apos;t.</p>

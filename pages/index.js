@@ -7,7 +7,7 @@ import {useState} from "react"
 import Welcome1 from "../components/pages/welcome1"
 import Welcome2 from "../components/pages/welcome2"
 import Welcome3 from "../components/pages/welcome3"
-import {Brain, Bookmarks, CheckSquare, ListNumbers} from "phosphor-react";
+import DashboardMetric from "../components/dashboardMetric";
 
 export default function Home({pageDataJson}) {
 
@@ -33,72 +33,24 @@ export default function Home({pageDataJson}) {
             <Head>
                 <title>TTS / Dashboard</title>
             </Head>
-            <div>
-                <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-4">
-                    <div className="rounded overflow-hidden text-center shadow flex flex-col justify-between">
-                        <div className={"flex align-middle items-center justify-center text-white bg-gray-700 p-2"}>
-                            <Brain size={22}/>
-                            <dt className=" font-light uppercase ml-2">Dreams</dt>
-                        </div>
-                        <dd className="my-4 text-3xl font-semibold ">{dreams.length}</dd>
-                        <div className={"flex align-middle items-center justify-center text-white bg-gray-200 p-2"}>
-                            <Link href={"/dreams"}>
-                                <a className={"text-black text-xs"}>+ add a dream</a>
-                            </Link>
-                        </div>
-                    </div>
-
-                    <div className="rounded overflow-hidden text-center shadow flex flex-col justify-between">
-                        <div className={"flex align-middle items-center justify-center text-white bg-gray-700 p-2"}>
-                            <ListNumbers size={22}/>
-                            <dt className=" font-light uppercase ml-2">Life Area Surveys</dt>
-                        </div>
-                        <dd className="my-4 text-3xl font-semibold ">{surveys.length}</dd>
-                        <div className={"flex align-middle items-center justify-center text-white bg-gray-200 p-2"}>
-                            <Link href={"/dreams"}>
-                                <a className={"text-black text-xs"}>complete a survey</a>
-                            </Link>
-                        </div>
-                    </div>
-
-                    <div className="rounded overflow-hidden text-center shadow flex flex-col justify-between">
-                        <div className={"flex align-middle items-center justify-center text-white bg-gray-700 p-2"}>
-                            <Bookmarks size={22}/>
-                            <dt className=" font-light uppercase ml-2">Referrals</dt>
-                        </div>
-                        <dd className="my-4 text-3xl font-semibold ">{referrals.length}</dd>
-                        <div className={"flex align-middle items-center justify-center text-white bg-gray-200 p-2"}>
-                            <Link href={"/care-plans"}>
-                                <a className={"text-black text-xs"}>see referrals</a>
-                            </Link>
-                        </div>
-                    </div>
-
-                    <div className="rounded overflow-hidden text-center shadow flex flex-col justify-between">
-                        <div className={"flex align-middle items-center justify-center text-white bg-gray-700 p-2"}>
-                            <CheckSquare size={22}/>
-                            <dt className=" font-light uppercase ml-2">Tasks</dt>
-                        </div>
-                        <dd className="my-4 text-3xl font-semibold ">{completedTasks} of {tasks.length}</dd>
-                        <div className={"flex align-middle items-center justify-center text-white bg-gray-200 p-2"}>
-                            <Link href={"/care-plans"}>
-                                <a className={"text-black text-xs"}>+ add a task</a>
-                            </Link>
-                        </div>
-                    </div>
-
+            <div className={"p-4 bg-gray-100"}>
+                <dl className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-4">
+                    <DashboardMetric title={"Active dreams"} metric={dreams.filter(dream => dream.status === "active").length} link={"/dreams"} linkLabel={"View dreams"} icon={"Brain"}/>
+                    <DashboardMetric title={"Life Area Surveys"} metric={surveys.length} link={"/life-area-surveys"} linkLabel={"View life area surveys"} icon={"ListNumbers"}/>
+                    <DashboardMetric title={"Referrals"} metric={referrals.length} link={"/life-area-surveys"} linkLabel={"View all referrals"} icon={"Bookmarks"}/>
+                    <DashboardMetric title={"To-Do's"} metric={tasks.length} link={"/care-plans"} linkLabel={"View all to-do's"} icon={"CheckSquare"}/>
                 </dl>
             </div>
             <div className={"flex justify-between py-8"}>
                 <div>
                     <button disabled={currentTab === 1} onClick={prevPage}
-                            className={"py-2 px-6 text-white text-sm rounded bg-orange-500 disabled:bg-gray-300"}>Previous
+                            className={"py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300"}>Previous
                         page
                     </button>
                 </div>
                 <div>
                     <button onClick={nextPage}
-                            className={"py-2 px-6 text-white text-sm rounded bg-orange-500 disabled:bg-gray-300"}>
+                            className={"py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300"}>
                         {currentTab === 3 ? "Continue to Dreams" : "Next page"}
                     </button>
                 </div>

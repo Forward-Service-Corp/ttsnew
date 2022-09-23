@@ -23,22 +23,22 @@ export default function Dreams({pageDataJson}) {
                     <DreamIntro/>
                     <DreamForm setSavedDreams={setSavedDreams} user={user} setIsLoading={setIsLoading}/>
                 </div>
-                <div className={"bg-gray-100 p-3 my-10 rounded"}>
-                    <h2 className={"text-gray-600 uppercase"}><span className={"text-orange-500"}>Hint: </span>Completing
+                <div className={"bg-gray-100 p-3 my-6 "}>
+                    <h2 className={"uppercase"}><span className={"text-orange-500"}>Hint: </span>Completing
                         a Life Area Survey</h2>
                     <p className={"text-sm"}>Completing a Life Area Survey is easy! Simply choose a dream you would like
                         to survey and click the &quot;Life Area Survey&quot; button to continue to a new survey
                         page.</p>
                 </div>
-                <div className={"bg-gray-100 p-2 rounded mb-3"}>
+                <div className={"bg-gray-100 p-3 mb-3"}>
                     My <select className={"text-xs border-gray-300 rounded"}
-                               onChange={(e)=>{
-                        setCurrentTab(e.target.value)
-                    }}>
-                        <option value="active">Active</option>
-                        <option value="complete">Complete</option>
-                        <option value="archived">Archived</option>
-                    </select> Dreams
+                               onChange={(e) => {
+                                   setCurrentTab(e.target.value)
+                               }}>
+                    <option value="active">Active</option>
+                    <option value="complete">Complete</option>
+                    <option value="archived">Archived</option>
+                </select> Dreams
                 </div>
                 <div className={`${currentTab === "active" ? "visible" : "hidden"}`}>
                     <SavedDreams status={"active"} user={user}/>
@@ -49,8 +49,6 @@ export default function Dreams({pageDataJson}) {
                 <div className={`${currentTab === "archived" ? "visible" : "hidden"}`}>
                     <SavedDreams status={"archived"} user={user}/>
                 </div>
-
-
             </div>
         </Layout>
     )

@@ -2,7 +2,7 @@ import React from 'react';
 
 function Journey2(props) {
     return (
-        <div className={"text-sm"}>
+        <div  className={"text-sm p-4 bg-gray-100"}>
             <h1 className={"text-center my-4 text-xl"}>THE JOURNEY</h1>
             <p>As you reach each destination on your journey remember to go back to your Map. Check off each destination
                 you reach.. Enjoy and share the feeling of accomplishment and gratitude, especially with those that

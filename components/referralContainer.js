@@ -86,7 +86,7 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
                         <CaretDoubleDown size={20} weight="thin"/>}</div>
                 </div>
             </div>
-            <div className={`flex justify-between items-center bg-gray-200 p-2 ${open ? "visible" : "hidden"}`}>
+            <div className={`flex justify-between items-center bg-gray-100 p-2 ${open ? "visible" : "hidden"}`}>
                 <div className={"flex items-center text-xs cursor-pointer"} onClick={() => {
                     router.push("/surveys/" + item.surveyId).then()
                 }}>
@@ -148,7 +148,7 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
                     }}/>
                     <div className={"flex justify-end"}>
                         <button
-                            className={"mt-2 mb-4 text-white px-4 py-2 rounded text-xs bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400"}
+                            className={"mt-2 mb-4 text-white px-4 py-2 text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400"}
                             onClick={() => {
                                 saveTask().then(() => {
                                     getTasks().then()

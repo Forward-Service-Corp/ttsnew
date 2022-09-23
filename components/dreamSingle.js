@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useRouter} from "next/router";
-import {Brain} from "phosphor-react";
+import {Brain, Trash, NotePencil, FloppyDisk} from "phosphor-react";
 import moment from "moment";
 
 function DreamSingle({dream, isClientDream, clientId, getDreams}) {
@@ -35,7 +35,7 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
 
     const router = useRouter()
     return (
-        <div className={"mb-4 flex flex-col shadow rounded overflow-hidden justify-between bg-white"}>
+        <div className={"mb-4 flex flex-col shadow justify-between bg-white"}>
             <div>
                 <div className={"bg-gray-700 p-2 text-white text-sm font-light flex items-center"}>
                     <div><Brain size={26} weight="thin"/></div>
@@ -59,7 +59,7 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
                         successful
                     </div>
                 </div>
-                <div className={`p-2 text-xs border-b`}>Status: {status}</div>
+                <div className={`p-2 text-xs border-b ${editMode === true ? "hidden" : "visible"}`}>Status: {status}</div>
                 <div>
                     <select className={`text-xs w-full border-none ${editMode ? "visible" : "hidden"}`}
                             defaultValue={status}
@@ -97,7 +97,18 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
 
             <div className={"flex text-xs text-center"}>
 
-                <div className={"bg-gray-500 hover:bg-gray-600 text-white p-2 flex-1 cursor-pointer"}
+                <div className={"bg-blue-500 hover:bg-blue-600 text-white p-2 flex-1 cursor-pointer"}
+                     onClick={() => {
+                         if (isClientDream) {
+                             router.push("/new-life-area-survey?dreamName=" + dream.dream + "&dreamId=" + dream._id + "&clientId=" + clientId).then()
+                         } else {
+                             router.push("/new-life-area-survey?dreamName=" + dream.dream + "&dreamId=" + dream._id).then()
+                         }
+
+                     }}>Complete life area survey
+                </div>
+
+                <div className={"bg-gray-500 hover:bg-gray-600 text-white p-2 flex-1 cursor-pointer max-w-[40px] flex justify-center"}
                      onClick={() => {
                          setEditMode(!editMode)
                          if (editMode) {
@@ -109,26 +120,16 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
                                  }, 3000)
                              })
                          }
-                     }}>{editMode ? "Save" : "Edit"}
+                     }}>{editMode ? <div><FloppyDisk size={15}/></div> : <div><NotePencil size={15}/></div>}
                 </div>
 
-                <div className={"bg-red-500 hover:bg-red-600 text-white p-2 flex-1 cursor-pointer"}
+                <div className={"bg-red-500 hover:bg-red-600 text-white p-2 flex-1 cursor-pointer max-w-[40px] flex justify-center"}
+                     alt={"Delete this dream"}
                      onClick={() => {
                          if (confirm("Are you sure you want to delete this dream?")) {
                              deleteDream(dream._id).then()
                          }
-                     }}>Delete
-                </div>
-
-                <div className={"bg-orange-500 hover:bg-orange-600 text-white p-2 flex-1 cursor-pointer"}
-                     onClick={() => {
-                         if (isClientDream) {
-                             router.push("/new-life-area-survey?dreamName=" + dream.dream + "&dreamId=" + dream._id + "&clientId=" + clientId).then()
-                         } else {
-                             router.push("/new-life-area-survey?dreamName=" + dream.dream + "&dreamId=" + dream._id).then()
-                         }
-
-                     }}>Life Area Survey
+                     }}><div><Trash size={15}/></div>
                 </div>
 
             </div>

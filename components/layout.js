@@ -35,11 +35,11 @@ export default function Layout({children, title, session, loadingState}) {
         }else if(location.indexOf("dev-") > -1){
             setEnvironment("testing")
         }
-    }, [])
+    }, [environment])
 
     return (
         <>
-            <div className={`${environment === "dev" || environment === "testing" ? "visible" : "hidden"} p-2 text-center bg-indigo-600 text-white font-light`}>
+            <div className={`${environment === "dev" || environment === "testing" ? "visible" : "hidden"} p-4 text-center text-xs bg-pink-600 text-white font-light`}>
                 You are currently in the {environment} environment.
             </div>
             <div
@@ -51,8 +51,8 @@ export default function Layout({children, title, session, loadingState}) {
                 <ProfileDetailsWarningModal session={session}/> : null}
 
             <div className="min-h-full ">
-                <div className="bg-gradient-to-r from-orange-600 to-orange-400 pb-32 print:hidden">
-                    <Disclosure as="nav" className="bg-gradient-to-r from-orange-600 to-orange-400">
+                <div className="bg-orange-500 pb-32 print:hidden">
+                    <Disclosure as="nav" className="bg-orange-500">
                         {({open}) => (
                             <>
                                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -291,7 +291,7 @@ export default function Layout({children, title, session, loadingState}) {
                     </Disclosure>
                     <header className="py-10">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <h1 className="text-3xl font-light text-white font-serif">{title}</h1>
+                            <h1 className="text-xl font-light text-white">{title}</h1>
                         </div>
                     </header>
                 </div>
@@ -299,7 +299,7 @@ export default function Layout({children, title, session, loadingState}) {
                 <main className="-mt-32 print:mt-0">
                     <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
                         <div
-                            className="bg-white rounded-lg shadow px-5 py-6 sm:px-6 print:px-0 print:py-0 print:shadow-none">
+                            className="bg-white shadow px-5 py-6 sm:px-6 print:px-0 print:py-0 print:shadow-none">
                             {children}
                         </div>
                     </div>
