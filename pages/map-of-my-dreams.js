@@ -23,7 +23,7 @@ export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) 
                 <h2 className={"uppercase text-gray-500"}>Instructions</h2>
                 <p className={"text-sm"}>Please select a referral from the dropdown menu. Once you have selected a referral, you must click or
                     tap <button
-                        className={`px-6 py-2 text-xs rounded text-white bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400`}>
+                        className={"py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300"}>
                         + Save</button> to
                     save your choice and move on.
                 </p>
@@ -66,7 +66,7 @@ export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) 
                 <div className={"flex justify-end"}>
                     <button
                         disabled={userReferrals.length === 0}
-                        className={`px-6 py-2 text-xs rounded text-white bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400`}
+                        className={"py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300"}
                         onClick={() => {
                             if (router.query.clientId) {
                                 router.back()

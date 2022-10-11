@@ -51,7 +51,7 @@ function ReferralSelectsButton({
     return (
         <button
             disabled={Object.keys(currentReferral).length === 0 || currentReferral.domain !== domain}
-            className={`${visible ? "visible" : "hidden"} text-white px-4 py-2 text-xs rounded mt-3 mb-4 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400`}
+            className={`${visible ? "visible" : "hidden"}  my-3 py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300`}
             onClick={() => {
 
                 if (checkUserReferrals().length === 0) {
