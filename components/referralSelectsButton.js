@@ -31,6 +31,8 @@ function ReferralSelectsButton({
                 requirements: currentReferral.requirements,
                 url: currentReferral.url,
                 contact: currentReferral.contact,
+                contactPhone: currentReferral.contactPhone,
+                contactEmail: currentReferral.contactEmail,
                 needs: currentReferral.needs
             })
         })

@@ -14,6 +14,8 @@ export default async(req, res) => {
         requirements: req.body.requirements,
         url: req.body.url,
         contact: req.body.contact,
+        contactPhone: req.body.contactPhone,
+        contactEmail: req.body.contactEmail,
         needs: req.body.needs
     }
 

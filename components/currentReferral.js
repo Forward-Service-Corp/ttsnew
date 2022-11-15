@@ -59,6 +59,20 @@ function CurrentReferral({currentReferral}) {
                     </div>
                 ) : null}
 
+                {currentReferral.contactPhone !== undefined ? (
+                    <div>
+                        <p className={"text-xs text-gray-500 mt-3"}>Contact person phone</p>
+                        <p className={"text-sm"}>{currentReferral.contactPhone}</p>
+                    </div>
+                ) : null}
+
+                {currentReferral.contactEmail !== undefined ? (
+                    <div>
+                        <p className={"text-xs text-gray-500 mt-3"}>Contact person email</p>
+                        <p className={"text-sm"}>{currentReferral.contactEmail}</p>
+                    </div>
+                ) : null}
+
                 {currentReferral.requirements !== undefined ? (
                     <div>
                         <p className={"text-xs text-gray-500 mt-3"}>Requirements</p>

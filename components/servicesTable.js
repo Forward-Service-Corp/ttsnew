@@ -21,10 +21,14 @@ export default function ServicesTable({services}) {
                                     </th>
                                     <th scope="col"
                                         className="px-1 py-1 text-left text-sm font-semibold text-gray-900 hidden md:table-cell">
+                                        Phone
+                                    </th>
+                                    <th scope="col"
+                                        className="px-1 py-1 text-left text-sm font-semibold text-gray-900 hidden md:table-cell">
                                         County
                                     </th>
                                     <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                        <span className="sr-only">Edit</span>
+                                        <span className="sr-only">View</span>
                                     </th>
                                 </tr>
                                 </thead>
@@ -35,9 +39,10 @@ export default function ServicesTable({services}) {
                                             {service.name}
                                         </td>
                                         <td className={`px-1 py-1 text-sm text-gray-500 hidden md:table-cell`}>
-                                            <span className={`py-1 px-3 text-xs rounded-full w-auto`}>
-                                                {labelMap[service.service]}
-                                            </span>
+                                            {labelMap[service.service]}
+                                        </td>
+                                        <td className={`px-1 py-1 text-sm text-gray-500 hidden md:table-cell`}>
+                                            {service.phone || ""}
                                         </td>
                                         <td className=" px-1 text-xs text-gray-500 hidden md:table-cell">{service.county}</td>
                                         <td className="relative py-3 md:py-1 px-1 text-right text-sm font-medium sm:pr-6">
