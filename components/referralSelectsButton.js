@@ -25,12 +25,11 @@ function ReferralSelectsButton({
                 dream: router.query.dream,
                 domain: currentReferral.domain,
                 name: currentReferral.name,
-                email: currentReferral.email,
                 phone: currentReferral.phone,
                 hours: currentReferral.hours,
                 requirements: currentReferral.requirements,
                 url: currentReferral.url,
-                contact: currentReferral.contact,
+                contact: currentReferral.contactName,
                 contactPhone: currentReferral.contactPhone,
                 contactEmail: currentReferral.contactEmail,
                 needs: currentReferral.needs

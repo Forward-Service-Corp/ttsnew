@@ -52,10 +52,10 @@ function CurrentReferral({currentReferral}) {
                     </div>
                 ) : null}
 
-                {currentReferral.contact !== undefined ? (
+                {currentReferral.contactName !== undefined ? (
                     <div>
                         <p className={"text-xs text-gray-500 mt-3"}>Contact person</p>
-                        <p className={"text-sm"}>{currentReferral.contact}</p>
+                        <p className={"text-sm"}>{currentReferral.contactName}</p>
                     </div>
                 ) : null}
 

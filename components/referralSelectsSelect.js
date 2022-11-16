@@ -5,7 +5,7 @@ import ReferralSelectsButton from "./referralSelectsButton";
 function ReferralSelectsSelect({domain, setCurrentReferral, referrals, clientId, currentReferral, user, router, userReferrals, setUserReferrals}) {
 
     const filteredReferrals = referrals.filter(referral => referral.service === domain)
-
+console.log(filteredReferrals)
     return (
         <>
             <select id={domain}
@@ -17,12 +17,13 @@ function ReferralSelectsSelect({domain, setCurrentReferral, referrals, clientId,
                            setCurrentReferral({
                                domain: domain,
                                name: e.target[e.target.selectedIndex].dataset.name,
-                               email: e.target[e.target.selectedIndex].dataset.email,
                                phone: e.target[e.target.selectedIndex].dataset.phone,
                                hours: e.target[e.target.selectedIndex].dataset.hours,
                                requirements: e.target[e.target.selectedIndex].dataset.requirements,
                                url: e.target[e.target.selectedIndex].dataset.url,
-                               contact: e.target[e.target.selectedIndex].dataset.contact,
+                               contactName: e.target[e.target.selectedIndex].dataset.contactname,
+                               contactPhone: e.target[e.target.selectedIndex].dataset.contactphone,
+                               contactEmail: e.target[e.target.selectedIndex].dataset.contactemail,
                                needs: e.target[e.target.selectedIndex].dataset.needs
                            })
                        }
@@ -36,11 +37,12 @@ function ReferralSelectsSelect({domain, setCurrentReferral, referrals, clientId,
                     <option key={i} value={referral._id}
                             data-name={referral.name}
                             data-hours={referral.hours}
-                            data-phone={referral.contactPhone}
-                            data-email={referral.contactEmail}
+                            data-phone={referral.phone}
                             data-requirements={referral.requirements}
                             data-url={referral.url}
-                            data-contact={referral.contactName}
+                            data-contactname={referral.contactName}
+                            data-contactphone={referral.contactPhone}
+                            data-contactemail={referral.contactEmail}
                             data-needs={referral.needs}
                     >
                         {referral.name}

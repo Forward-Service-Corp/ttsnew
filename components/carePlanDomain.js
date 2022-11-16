@@ -36,6 +36,14 @@ function CarePlanDomain({item}) {
                 <div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Contact person: </p>
                     {item.contact}</div>) : null}
 
+            {item.contactPhone ? (
+                <div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Contact person phone: </p>
+                    {item.contactPhone}</div>) : null}
+
+            {item.contactEmail ? (
+                <div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Contact person email: </p>
+                    {item.contactEmail}</div>) : null}
+
             {item.url ? websiteJSX(item.url) : null}
 
             {item.requirements ? (
