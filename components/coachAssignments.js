@@ -7,6 +7,7 @@ function CoachAssignments({coachesJson, viewingUser}) {
     const [dataChanged, setDataChanged] = useState(false)
     const [newCoaches, setNewCoaches] = useState(viewingUser.coach || [])
     const [savingUpdates, setSavingUpdates]  = useState(false)
+    const [searchTerm, setSearchTerm] = useState("")
 
     async function saveCoaches() {
         await fetch("/api/save-coaches", {
@@ -29,9 +30,17 @@ function CoachAssignments({coachesJson, viewingUser}) {
 
     return (
         <div className={"bg-gray-100 p-6 mb-5 rounded"}>
-            <h2 className={"uppercase text-gray-500 mb-3"}>Coach Assignments</h2>
+            <div className={"flex justify-between items-center p-3"}>
+                <div>
+                    <h2 className={"uppercase text-gray-500"}>Coach Assignments</h2>
+                </div>
+                <div className={`flex items-center`}>
+                    <input type="text" className={`border-gray-300`} value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
+                    <button className={`px-6 py-3 ml-3 text-xs bg-pink-600 text-white`} onClick={() => {setSearchTerm("")}}>Clear</button>
+                </div>
+            </div>
             <div className={"grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-2"}>
-                {coachesJson && coachesJson.sort((a, b) => b.name - a.name).map(coach => {
+                {coachesJson && coachesJson.filter(coach => coach.email.includes(searchTerm)).sort((a, b) => b.name - a.name).map(coach => {
                     return (
                         <div key={coach.email} className={"p-1"}>
                             <input className={"peer hidden"}
