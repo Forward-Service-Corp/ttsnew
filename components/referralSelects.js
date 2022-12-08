@@ -32,9 +32,9 @@ function ReferralSelects({
     return (<div className={"flex-1"}>
             {domains.map((domain, i) => {
                 return (<div key={i} className={" my-4 border-b-2 pb-4"}>
-                        <div className={"text-sm mb-2"}><span
-                            className={"text-gray-500"}>Life Area:</span> <p
-                            className={"text-orange-600 text-lg"}>{labelMap[domain]}</p>
+                        <div className={"text-sm mb-2"}>
+                            <span className={"text-gray-500"}>Life Area:</span>
+                            <p className={"text-orange-600 text-lg"}>{labelMap[domain]}</p>
                         </div>
 
                         <div className={"flex"}>

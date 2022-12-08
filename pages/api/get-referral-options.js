@@ -4,11 +4,12 @@ import {connectToDatabase} from "../../lib/dbConnect";
 export default async (req, res) => {
 
     let county, domain
-    if(req.query.county.indexOf(",") > -1){
-        county = req.query.county.split(",")
-    }else{
-        county = req.query.county.split(" ")
-    }
+    // if(req.query.county.indexOf(",") > -1){
+    //     county = req.query.county.split(",")
+    // }else{
+    //     county = req.query.county.split(" ")
+    // }
+    county = req.query.county.split(",")
 
     if(req.query.domain.indexOf(",") > -1){
         domain = req.query.domain.split(",")

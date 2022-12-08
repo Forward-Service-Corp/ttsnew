@@ -5,7 +5,7 @@ import ReferralSelectsButton from "./referralSelectsButton";
 function ReferralSelectsSelect({domain, setCurrentReferral, referrals, clientId, currentReferral, user, router, userReferrals, setUserReferrals}) {
 
     const filteredReferrals = referrals.filter(referral => referral.service === domain)
-console.log(filteredReferrals)
+    console.log(filteredReferrals)
     return (
         <>
             <select id={domain}

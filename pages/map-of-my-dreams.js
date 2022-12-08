@@ -34,7 +34,6 @@ export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) 
                 <span className={""}>Please select a referral for at least one priority.</span>
             </div>
             <div className={""}>
-
                 <div className={`${router.query.clientId ? "visible" : "hidden"} text-red-600`}>
                     MAPPING FOR CLIENT {router.query.clientId}
                 </div>
@@ -102,6 +101,8 @@ export async function getServerSideProps(context) {
 
     const getPageData = await fetch(pageDataUrl)
     const pageDataJson = await getPageData.json()
+
+    console.log(context.query.county)
 
     //referral options
     const referralOptionsUrl = baseUrl + "/api/get-referral-options?county=" + context.query.county + "&domain=" + context.query.domain

@@ -4,6 +4,7 @@ import {useState} from "react";
 import ProfilePrograms from "../components/profilePrograms";
 import ProfilePersonalDetails from "../components/profilePersonalDetails";
 import OrganizationInformation from "../components/organizationInformation";
+import Head from "next/head";
 
 export default function Profile({user}) {
 
@@ -15,6 +16,9 @@ export default function Profile({user}) {
 
     return (
         <Layout title={"Profile"} session={user}>
+            <Head>
+                <title>{user.name}</title>
+            </Head>
             <div className={"mb-5 border-b-2 border-b-gray-300 flex flex-col md:flex-row lg:flex-row "}>
 
                 <div

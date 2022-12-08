@@ -36,18 +36,19 @@ function ProfilePrograms({user}) {
                         })
                         setProgramsUpdated(true)
                     }}>
-                        <option>Emergency Assistance</option>
-                        <option>FoodShare Employment and Training</option>
-                        <option>Job Access Loans (JAL)</option>
-                        <option>Jobs for America&apos;s Graduates (JAG)</option>
-                        <option>Refugee Services</option>
-                        <option>Transportation Alliance for New Solutions (TrANS)</option>
-                        <option>Upward Bound (UB)</option>
-                        <option>Upward Bound Math Science (UBMS)</option>
-                        <option>WIOA Adult and Dislocated Worker</option>
-                        <option>WIOA Youth</option>
-                        <option>Wisconsin Employment Transportation Assistance Program (WETAP)</option>
-                        <option>Wisconsin Works (W-2)</option>
+                        <option value={`Emergency Assistance`}>Emergency Assistance</option>
+                        <option value={`Family Stabilization Program`}>Family Stabilization Program</option>
+                        <option value={`FoodShare Employment and Training`}>FoodShare Employment and Training</option>
+                        <option value={`Job Access Loans (JAL)`}>Job Access Loans (JAL)</option>
+                        <option value={`Jobs for America&apos;s Graduates (JAG)`}>Jobs for America&apos;s Graduates (JAG)</option>
+                        <option value={`Refugee Services`}>Refugee Services</option>
+                        <option value={`Transportation Alliance for New Solutions (TrANS)`}>Transportation Alliance for New Solutions (TrANS)</option>
+                        <option value={`Upward Bound (UB)`}>Upward Bound (UB)</option>
+                        <option value={`Upward Bound Math Science (UBMS)`}>Upward Bound Math Science (UBMS)</option>
+                        <option value={`WIOA Adult and Dislocated Worker`}>WIOA Adult and Dislocated Worker</option>
+                        <option value={`WIOA Youth`}>WIOA Youth</option>
+                        <option value={`Wisconsin Employment Transportation Assistance Program (WETAP)`}>Wisconsin Employment Transportation Assistance Program (WETAP)</option>
+                        <option value={`Wisconsin Works (W-2)`}>Wisconsin Works (W-2)</option>
                     </select>
                 </div>
                 <div className={""}>
