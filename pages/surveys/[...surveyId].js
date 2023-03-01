@@ -3,12 +3,28 @@ import {getSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {labelMap} from "../../lib/serviceLabelsMap";
 import {ArrowLeft, Printer} from "phosphor-react";
+import {useEffect, useState} from "react";
+import moment from "moment";
 
 export default function SurveyId({pageDataJson}) {
 
     const router = useRouter()
     const {user, surveys} = pageDataJson
     const {surveyId} = router.query
+    const [userFullName, setUserFullName] = useState("")
+
+    const getUserFullName = async () => {
+        const currentSurveyUserId = surveys.filter(survey => survey._id.toString() === surveyId.toString())[0].userId
+        console.log(currentSurveyUserId)
+        const data = await fetch(`/api/pages/getSurveyName?userId=${currentSurveyUserId}`)
+            .then(res => res.json())
+        console.log(data.surveyUser.name)
+        await setUserFullName(data.surveyUser.name)
+    }
+
+    useEffect(()=> {
+        getUserFullName().then()
+    },[])
 
     const domains = [
         "adultEducation",
@@ -73,10 +89,12 @@ export default function SurveyId({pageDataJson}) {
                                 <span className={"inline-block mr-2"}><Printer size={22} /></span><span className={"inline-block"}>Print</span>
                             </button>
                         </div>
-                        <div className={"flex justify-between p-2"}>
+                        <div className={"flex justify-between p-2 text-sm mb-4"}>
                             <div>
-                                <p>Client ID: {survey.userId}</p>
+                                <p>Client name: {userFullName}</p>
+                                <p>Client email: {survey.userId}</p>
                                 <p>Associated dream: {survey.dream}</p>
+                                <p>Date taken: {moment(survey.datestamp).calendar() }</p>
                             </div>
                             <div className={"flex flex-col text-right align-baseline"}>
 
