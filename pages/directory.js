@@ -37,13 +37,13 @@ export default function Directory({pageDataJson}) {
             <Head>
                 <title>TTS / CARE Network</title>
             </Head>
-            <div className={user.level === "admin" ? "visible mb-3 flex justify-end" : "hidden"}>
-                <button className={"py-[6px] px-6 mr-2 text-white  text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400"} onClick={()=> {
-                    router.push("/add-new-referral")
-                }}>
-                    Add new referral to CARE Network
-                </button>
-            </div>
+            {/*<div className={user.level === "admin" ? "visible mb-3 flex justify-end" : "hidden"}>*/}
+            {/*    <button className={"py-[6px] px-6 mr-2 text-white  text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400"} onClick={()=> {*/}
+            {/*        router.push("/add-new-referral")*/}
+            {/*    }}>*/}
+            {/*        Add new referral to CARE Network*/}
+            {/*    </button>*/}
+            {/*</div>*/}
             <div className={" p-3 bg-gray-100 rounded shadow"}>
                 <form className={"grid grid-cols-1 md:grid-cols-4 gap-4 items-end"} onSubmit={(e) => {
                     e.preventDefault()

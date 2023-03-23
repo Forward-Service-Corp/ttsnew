@@ -27,30 +27,24 @@ export default function ServicesTable({services}) {
                                         className="px-1 py-1 text-left text-sm font-semibold text-gray-900 hidden md:table-cell">
                                         County
                                     </th>
-                                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                        <span className="sr-only">View</span>
-                                    </th>
+
                                 </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200 bg-white">
                                 {services.map((service, i) => (
                                     <tr key={i}>
-                                        <td className="max-w-[200px] py-1 px-1 text-sm font-medium text-gray-900 sm:pl-6 truncate">
-                                            {service.name}
+                                        <td className="py-1 px-1 text-sm font-medium text-gray-900 sm:pl-6 truncate max-w-[240px] sm:max-w-full">
+                                            <a href={`/referral/${service._id}`} target={`_blank`} rel={`noreferrer`} className="text-orange-600 hover:text-orange-900 underline">
+                                                {service.name}
+                                            </a>
                                         </td>
                                         <td className={`px-1 py-1 text-sm text-gray-500 hidden md:table-cell`}>
                                             {labelMap[service.service]}
                                         </td>
                                         <td className={`px-1 py-1 text-sm text-gray-500 hidden md:table-cell`}>
-                                            {service.phone || ""}
+                                            {service.phone ? service.phone : service.contactPhone || ""}
                                         </td>
                                         <td className=" px-1 text-xs text-gray-500 hidden md:table-cell">{service.county}</td>
-                                        <td className="relative py-3 md:py-1 px-1 text-right text-sm font-medium sm:pr-6">
-                                            <a target={"_blank"} rel={"noreferrer"} href={"/referral/" + service._id}
-                                               className="text-orange-600 hover:text-orange-900">
-                                                View<span className="sr-only">, {service.name}</span>
-                                            </a>
-                                        </td>
                                     </tr>
                                 ))}
                                 </tbody>
