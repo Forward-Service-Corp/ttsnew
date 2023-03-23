@@ -36,6 +36,7 @@ function ProfilePrograms({user}) {
                         })
                         setProgramsUpdated(true)
                     }}>
+                        <option value={`College Bound Math Science (CBMS)`}>College Bound Math Science (CBMS)</option>
                         <option value={`Emergency Assistance`}>Emergency Assistance</option>
                         <option value={`Family Stabilization Program`}>Family Stabilization Program</option>
                         <option value={`FoodShare Employment and Training`}>FoodShare Employment and Training</option>
