@@ -17,6 +17,7 @@ function CoachAssignments({coachesJson, viewingUser}) {
             },
             body: JSON.stringify({
                 userId: viewingUser._id,
+                email: viewingUser.email,
                 coaches: newCoaches
             })
         })

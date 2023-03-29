@@ -10,10 +10,31 @@ export default async (req, res) => {
             { _id: ObjectId(req.body.userId) },
             {
                 $set: {
+                    coach: req.body.coaches,
+                    coachUpdate: new Date()
+                }
+            }
+        )
+    const coachUpdate = await db
+        .collection("lifeAreaSurveys")
+        .updateMany(
+            { userId: req.body.email },
+            {
+                $set: {
                     coach: req.body.coaches
                 }
             }
         )
-    res.json(record)
+    const reportingUpdate = await db
+        .collection("lasReporting")
+        .updateMany(
+            { userId: req.body.email },
+            {
+                $set: {
+                    coach: req.body.coaches
+                }
+            }
+        )
+    res.json(record, coachUpdate, reportingUpdate)
 
 }

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {useState} from "react";
+import moment from "moment";
 
 export default function UsersTable({users}) {
     const [searchTerm, setSearchTerm] = useState("")
@@ -56,6 +57,15 @@ export default function UsersTable({users}) {
                                         className="px-3 py-3.5 text-left text-xs font-semibold text-gray-900">
                                         Level
                                     </th>
+                                    <th scope="col"
+                                        className="px-3 py-3.5 text-left text-xs font-semibold text-gray-900">
+                                        Coaches
+                                    </th>
+                                    <th scope="col"
+                                        className="px-3 py-3.5 text-left text-xs font-semibold text-gray-900">
+                                        Latest Coach Update
+                                    </th>
+
                                     <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                         <span className="sr-only">View</span>
                                     </th>
@@ -72,6 +82,10 @@ export default function UsersTable({users}) {
                                         <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">{person.phone}</td>
                                         <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">{person.email}</td>
                                         <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">{person.level}</td>
+                                        <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">{person.coach ? person.coach.toString().split(',').length : ''}</td>
+                                        <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">
+                                            {person.coachUpdate ? moment(person.coachUpdate).calendar() : <span className={`text-red-600`}>Missing</span>}
+                                        </td>
                                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-xs font-medium sm:pr-6">
                                             <Link href={"/user/" + person._id}>
                                                 <a className="text-orange-600 hover:text-orange-900">
