@@ -82,7 +82,9 @@ export default function UsersTable({users}) {
                                         <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">{person.phone}</td>
                                         <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">{person.email}</td>
                                         <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">{person.level}</td>
-                                        <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">{person.coach ? person.coach.toString().split(',').length : ''}</td>
+                                        <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">
+                                            {person.coach?.toString().split('').length > 0 ? person.coach.toString().split(',').length : ''}
+                                        </td>
                                         <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">
                                             {person.coachUpdate ? moment(person.coachUpdate).calendar() : <span className={`text-red-600`}>Missing</span>}
                                         </td>
