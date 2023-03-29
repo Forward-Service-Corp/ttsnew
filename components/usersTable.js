@@ -4,7 +4,7 @@ import moment from "moment";
 
 export default function UsersTable({users}) {
     const [searchTerm, setSearchTerm] = useState("")
-    const [userType, setUserType] = useState("")
+    const [userType, setUserType] = useState("client")
     return (
         <div className="px-4 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-center">
@@ -24,6 +24,7 @@ export default function UsersTable({users}) {
                     }}/>
                     <select
                         className={"text-xs border-gray-300 border-0 rounded focus:ring-0"}
+                        defaultValue={`client`}
                         onChange={(e) => {
                         setUserType(e.target.value)
                     }}>
