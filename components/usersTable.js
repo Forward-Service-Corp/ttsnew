@@ -5,6 +5,16 @@ import moment from "moment";
 export default function UsersTable({users}) {
     const [searchTerm, setSearchTerm] = useState("")
     const [userType, setUserType] = useState("client")
+    const evaluateDate = (date) => {
+        const now = moment()
+        const days = now.diff(date, "days")
+        console.log(days, now)
+        if(days > 5){
+            return <span className={`text-green-600`}>{moment(date).calendar()}</span>
+        }else{
+            return <span className={`text-gray-500`}>{moment(date).calendar()}</span>
+        }
+    }
     return (
         <div className="px-4 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-center">
@@ -87,7 +97,7 @@ export default function UsersTable({users}) {
                                             {person.coach?.toString().split('').length > 0 ? person.coach.toString().split(',').length : ''}
                                         </td>
                                         <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">
-                                            {person.coachUpdate ? moment(person.coachUpdate).calendar() : <span className={`text-red-600`}>Missing</span>}
+                                            {person.coachUpdate ? evaluateDate(person.coachUpdate) : <span className={`text-red-600`}>Missing</span>}
                                         </td>
                                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-xs font-medium sm:pr-6">
                                             <Link href={"/user/" + person._id}>
