@@ -14,7 +14,7 @@ function DreamIntro() {
             <div>
                 <p className={"font-bold "}>Ask yourself the question: <span className={"text-orange-600"}>What is my dream?</span>
                 </p>
-                <p className={""}><strong>Dreams can start with the basics, like</strong></p>
+                <p className={""}><strong>Your Dreams can start with the basics, like</strong></p>
                 <p className={"text-sm"}>The need for food or a safe place to live. Dreams can be about a
                     profession, &quot;I want to be a doctor&quot;,
                     about relationships, what we wish for our children, about starting over or just getting started.</p>
