@@ -2,7 +2,7 @@ function DreamIntro() {
     return (
         <div className={" bg-gray-100 p-4"}>
             <div>
-                <h1 className={"text-2xl text-orange-600 uppercase font-light"}>Your Dreams Today</h1>
+                <h1 className={"text-2xl text-orange-600 uppercase font-light"}>My Dreams Today</h1>
                 <p className={"text-sm"}>This is your Map of your Dreams. As you take the time to think about your
                     dreams and hopes let your heart
                     speak to you. <strong>Believe in what could be</strong>.</p>
