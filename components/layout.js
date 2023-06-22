@@ -23,10 +23,11 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Layout({children, title, session, loadingState}) {
+export default function Layout({children, title, session, loadingState, version}) {
     const router = useRouter()
 
     const [environment, setEnvironment] = useState("production")
+
 
     useEffect(() => {
         const location = window.location.host
@@ -51,7 +52,7 @@ export default function Layout({children, title, session, loadingState}) {
                 <ProfileDetailsWarningModal session={session}/> : null}
 
             <div className="min-h-full ">
-                <div className="bg-orange-500 pb-32 print:hidden">
+                <div className={`${version === null || !session.isYouth || session.isYouth === false || version === false ? "bg-orange-500" : "bg-blue-900"} pb-32 print:hidden`}>
                     <Disclosure as="nav" className="bg-orange-500">
                         {({open}) => (
                             <>

@@ -5,17 +5,16 @@ import ProfilePrograms from "../components/profilePrograms";
 import ProfilePersonalDetails from "../components/profilePersonalDetails";
 import OrganizationInformation from "../components/organizationInformation";
 import Head from "next/head";
+import WorkbookToggle from "../components/workbookToggle";
 
 export default function Profile({user}) {
 
-    const [coach, setCoach] = useState("")
-    const [contactName, setContactName] = useState("")
-    const [contactNumber, setContactNumber] = useState("")
-
     const [currentTab, setCurrentTab] = useState("tab1")
+    const [version, setVersion] = useState(null)
+
 
     return (
-        <Layout title={"Profile"} session={user}>
+        <Layout title={"Profile"} session={user} version={version}>
             <Head>
                 <title>{user.name}</title>
             </Head>
@@ -39,6 +38,12 @@ export default function Profile({user}) {
                         setCurrentTab("tab3")
                     }}>Coaches
                 </div>
+                <div
+                    className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab4" ? "border-b-2 border-b-orange-500" : ""}`}
+                    onClick={() => {
+                        setCurrentTab("tab4")
+                    }}>Workbook Version
+                </div>
             </div>
 
             <div className={`${currentTab === "tab1" ? "visible" : "hidden"}`}>
@@ -47,9 +52,20 @@ export default function Profile({user}) {
             <div className={`${currentTab === "tab2" ? "visible" : "hidden"}`}>
                 <ProfilePrograms user={user}/>
             </div>
-
             <div className={`${currentTab === "tab3" ? "visible" : "hidden"}`}>
                 <OrganizationInformation user={user}/>
+            </div>
+            <div className={`${currentTab === "tab4" ? "visible" : "hidden"}`}>
+                <div className={`p-4`}>
+                    <div className={``}>
+                        This program has a youth version setting. If you would like to use that version,
+                        simply toggle the switch below. You may switch back at any time. If you are unsure
+                        which version to use, please reach out to your coach.
+                    </div>
+                    <div className={`mt-8`}>
+                        <WorkbookToggle user={user} setVersion={setVersion}/>
+                    </div>
+                </div>
             </div>
         </Layout>
     )

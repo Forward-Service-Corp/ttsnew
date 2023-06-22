@@ -4,10 +4,9 @@ import Link from "next/link"
 import {useRouter} from "next/router";
 import Head from "next/head"
 import {useState} from "react"
-import Welcome1 from "../components/pages/welcome1"
-import Welcome2 from "../components/pages/welcome2"
-import Welcome3 from "../components/pages/welcome3"
 import DashboardMetric from "../components/dashboardMetric";
+import WelcomeGroupAdult from "../components/pages/welcomeGroupAdult";
+import WelcomeGroupYouth from "../components/pages/welcomeGroupYouth";
 
 export default function Home({pageDataJson}) {
 
@@ -55,15 +54,8 @@ export default function Home({pageDataJson}) {
                     </button>
                 </div>
             </div>
-            <div className={currentTab === 1 ? "visible" : "hidden"}>
-                <Welcome1/>
-            </div>
-            <div className={currentTab === 2 ? "visible" : "hidden"}>
-                <Welcome2/>
-            </div>
-            <div className={currentTab === 3 ? "visible" : "hidden"}>
-                <Welcome3/>
-            </div>
+            { !user.isYouth || user.isYouth === false  ? <WelcomeGroupAdult currentTab={currentTab}/> : <WelcomeGroupYouth currentTab={currentTab}/>}
+
         </Layout>
     )
 }
