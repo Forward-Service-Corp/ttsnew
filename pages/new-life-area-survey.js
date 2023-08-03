@@ -24,36 +24,64 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
         const survey = await fetch("/api/get-survey?surveyId=" + router.query.surveyId)
             .then(res => res.json())
             .catch(err => console.warn(err))
+        const isYouth = survey.isYouthSurvey
         await setDomains(survey.priority)
-        await setAnswered({
-            adultEducation: {selection: survey.adultEducation[0], statement: survey.adultEducation[1]},
-            budgeting: {selection: survey.budgeting[0], statement: survey.budgeting[1]},
-            childcare: {selection: survey.childcare[0], statement: survey.childcare[1]},
-            childrensEducation: {selection: survey.childrensEducation[0], statement: survey.childrensEducation[1]},
-            communityInvolvement: {
-                selection: survey.communityInvolvement[0],
-                statement: survey.communityInvolvement[1]
-            },
-            disabilities: {selection: survey.disabilities[0], statement: survey.disabilities[1]},
-            employment: {selection: survey.employment[0], statement: survey.employment[1]},
-            familyFriendsSupport: {
-                selection: survey.familyFriendsSupport[0],
-                statement: survey.familyFriendsSupport[1]
-            },
-            food: {selection: survey.food[0], statement: survey.food[1]},
-            healthInsurance: {selection: survey.healthInsurance[0], statement: survey.healthInsurance[1]},
-            housing: {selection: survey.housing[0], statement: survey.housing[1]},
-            internetAccess: {selection: survey.internetAccess[0], statement: survey.internetAccess[1]},
-            legal: {selection: survey.legal[0], statement: survey.legal[1]},
-            lifeSkills: {selection: survey.lifeSkills[0], statement: survey.lifeSkills[1]},
-            mentalHealth: {selection: survey.mentalHealth[0], statement: survey.mentalHealth[1]},
-            money: {selection: survey.money[0], statement: survey.money[1]},
-            parentingSkills: {selection: survey.parentingSkills[0], statement: survey.parentingSkills[1]},
-            racismBigotry: {selection: survey.racismBigotry[0], statement: survey.racismBigotry[1]},
-            safety: {selection: survey.safety[0], statement: survey.safety[1]},
-            substances: {selection: survey.substances[0], statement: survey.substances[1]},
-            transportation: {selection: survey.transportation[0], statement: survey.transportation[1]}
-        })
+        if(isYouth){
+            await setAnswered({
+                myFamily: {selection: survey.myFamily[0], statement: survey.myFamily[1]},
+                school: {selection: survey.school[0], statement: survey.school[1]},
+                familyCare: {selection: survey.familyCare[0], statement: survey.familyCare[1]},
+                childrensEducation: {selection: survey.childrensEducation[0], statement: survey.childrensEducation[1]},
+                money: {selection: survey.money[0],statement: survey.money[1]},
+                disabilities: {selection: survey.disabilities[0], statement: survey.disabilities[1]},
+                work: {selection: survey.work[0], statement: survey.work[1]},
+                friends: {selection: survey.friends[0],statement: survey.friends[1]},
+                food: {selection: survey.food[0], statement: survey.food[1]},
+                healthCare: {selection: survey.healthCare[0], statement: survey.healthCare[1]},
+                housing: {selection: survey.housing[0], statement: survey.housing[1]},
+                internetAccess: {selection: survey.internetAccess[0], statement: survey.internetAccess[1]},
+                legal: {selection: survey.legal[0], statement: survey.legal[1]},
+                lifeSkills: {selection: survey.lifeSkills[0], statement: survey.lifeSkills[1]},
+                mentalHealth: {selection: survey.mentalHealth[0], statement: survey.mentalHealth[1]},
+                manageMoney: {selection: survey.manageMoney[0], statement: survey.manageMoney[1]},
+                parenting: {selection: survey.parenting[0], statement: survey.parenting[1]},
+                education: {selection: survey.education[0], statement: survey.education[1]},
+                safety: {selection: survey.safety[0], statement: survey.safety[1]},
+                substances: {selection: survey.substances[0], statement: survey.substances[1]},
+                transportation: {selection: survey.transportation[0], statement: survey.transportation[1]}
+            })
+        }else{
+            await setAnswered({
+                adultEducation: {selection: survey.adultEducation[0], statement: survey.adultEducation[1]},
+                budgeting: {selection: survey.budgeting[0], statement: survey.budgeting[1]},
+                childcare: {selection: survey.childcare[0], statement: survey.childcare[1]},
+                childrensEducation: {selection: survey.childrensEducation[0], statement: survey.childrensEducation[1]},
+                communityInvolvement: {
+                    selection: survey.communityInvolvement[0],
+                    statement: survey.communityInvolvement[1]
+                },
+                disabilities: {selection: survey.disabilities[0], statement: survey.disabilities[1]},
+                employment: {selection: survey.employment[0], statement: survey.employment[1]},
+                familyFriendsSupport: {
+                    selection: survey.familyFriendsSupport[0],
+                    statement: survey.familyFriendsSupport[1]
+                },
+                food: {selection: survey.food[0], statement: survey.food[1]},
+                healthInsurance: {selection: survey.healthInsurance[0], statement: survey.healthInsurance[1]},
+                housing: {selection: survey.housing[0], statement: survey.housing[1]},
+                internetAccess: {selection: survey.internetAccess[0], statement: survey.internetAccess[1]},
+                legal: {selection: survey.legal[0], statement: survey.legal[1]},
+                lifeSkills: {selection: survey.lifeSkills[0], statement: survey.lifeSkills[1]},
+                mentalHealth: {selection: survey.mentalHealth[0], statement: survey.mentalHealth[1]},
+                money: {selection: survey.money[0], statement: survey.money[1]},
+                parentingSkills: {selection: survey.parentingSkills[0], statement: survey.parentingSkills[1]},
+                racismBigotry: {selection: survey.racismBigotry[0], statement: survey.racismBigotry[1]},
+                safety: {selection: survey.safety[0], statement: survey.safety[1]},
+                substances: {selection: survey.substances[0], statement: survey.substances[1]},
+                transportation: {selection: survey.transportation[0], statement: survey.transportation[1]}
+            })
+        }
+
         setSurprise(survey.surprise)
         setConcern(survey.concern)
         setFamily(survey.family)
@@ -106,6 +134,46 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
         })
     }
 
+    async function saveYouthSurvey() {
+        console.log("ran function")
+        await fetch("/api/post-youth-life-area-survey", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                dreamId: router.query.dreamId,
+                dream: router.query.dreamName,
+                county: user.county,
+                coach: user.coach,
+                priority: domains,
+                food: [answered.food.selection, answered.food.statement],
+                housing: [answered.housing.selection, answered.housing.statement],
+                safety: [answered.safety.selection, answered.safety.statement],
+                friends: [answered.friends.selection, answered.friends.statement],
+                myFamily: [answered.myFamily.selection, answered.myFamily.statement],
+                school: [answered.school.selection, answered.school.statement],
+                work: [answered.work.selection, answered.work.statement],
+                money: [answered.money.selection, answered.money.statement],
+                transportation: [answered.transportation.selection, answered.transportation.statement],
+                familyCare: [answered.familyCare.selection, answered.familyCare.statement],
+                mentalHealth: [answered.mentalHealth.selection, answered.mentalHealth.statement],
+                substances: [answered.substances.selection, answered.substances.statement],
+                disabilities: [answered.disabilities.selection, answered.disabilities.statement],
+                lifeSkills: [answered.lifeSkills.selection, answered.lifeSkills.statement],
+                healthCare: [answered.healthCare.selection, answered.healthCare.statement],
+                manageMoney: [answered.manageMoney.selection, answered.manageMoney.statement],
+                legal: [answered.legal.selection, answered.legal.statement],
+                internetAccess: [answered.internetAccess.selection, answered.internetAccess.statement],
+                education: [answered.education.selection, answered.education.statement],
+                parenting: [answered.parenting.selection, answered.parenting.statement],
+                childrensEducation: [answered.childrensEducation.selection, answered.childrensEducation.statement],
+                userId: router.query.clientId === undefined ? user.email : router.query.clientId,
+                surprise, concern, family, health, income
+            })
+        })
+    }
+
     async function updateSurvey() {
         await fetch("/api/update-life-area-survey", {
             method: "POST",
@@ -149,13 +217,21 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
             <button disabled={domains.length === 0 || Object.keys(answered).length !== 21}
                     className={`text-white text-sm rounded py-2 px-4 mt-5 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400`}
                     onClick={async () => {
-                        await saveSurvey().then()
-                        if (router.query.clientId === undefined) {
-                            router.push("/life-area-surveys").then()
-                        } else {
-                            router.back()
+                        if(!user.isYouth || user.isYouth === false){
+                            await saveSurvey().then()
+                            if (router.query.clientId === undefined) {
+                                router.push("/life-area-surveys").then()
+                            } else {
+                                router.back()
+                            }
+                        }else{
+                            await saveYouthSurvey().then()
+                            if (router.query.clientId === undefined) {
+                                router.push("/life-area-surveys").then()
+                            } else {
+                                router.back()
+                            }
                         }
-
                     }}>Save this
                 survey
             </button>
@@ -210,7 +286,7 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
             <div className={"flex"}>
                 <div className={"flex-initial"}>
                     <SurveyDomainList setActiveDomain={setActiveDomain} activeDomain={activeDomain}
-                                      answered={answered} domains={domains}/>
+                                      answered={answered} domains={domains} user={user}/>
                 </div>
                 <div className={"flex-grow"}>
                     <div className={"p-4 bg-gray-100 m-0 md:m-4 my-2 md:my-0"}>
@@ -228,7 +304,7 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                         <p>MOST IMPORTANT TO YOU -- your priorities.</p>
                     </div>
                     <NewLifeAreaSurveyForm activeDomain={activeDomain} setAnswered={setAnswered} answered={answered}
-                                           domains={domains} setDomains={setDomains}/>
+                                           domains={domains} setDomains={setDomains} user={user}/>
 
                 </div>
             </div>

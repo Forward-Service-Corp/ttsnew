@@ -12,6 +12,7 @@ export default function SurveyId({pageDataJson}) {
     const {user, surveys} = pageDataJson
     const {surveyId} = router.query
     const [userFullName, setUserFullName] = useState("")
+    const [isYouth, setIsYouth] = useState(false)
 
     const getUserFullName = async () => {
         const currentSurveyUserId = surveys.filter(survey => survey._id.toString() === surveyId.toString())[0].userId
@@ -22,8 +23,16 @@ export default function SurveyId({pageDataJson}) {
         await setUserFullName(data.surveyUser.name)
     }
 
+    const getIsYouth = async () => {
+        
+    }
+
     useEffect(()=> {
         getUserFullName().then()
+    },[])
+
+    useEffect(()=>{
+
     },[])
 
     const domains = [
@@ -48,6 +57,30 @@ export default function SurveyId({pageDataJson}) {
         "substances",
         "transportation",
         "employment"
+    ]
+
+    const youthDomains = [
+        "food",
+        "housing",
+        "safety",
+        "friends",
+        "myFamily",
+        "school",
+        "work",
+        "money",
+        "transportation",
+        "familyCare",
+        "mentalHealth",
+        "substances",
+        "disabilities",
+        "lifeSkills",
+        "healthCare",
+        "manageMoney",
+        "legal",
+        "internetAccess",
+        "education",
+        "parenting",
+        "childrensEducation"
     ]
 
     const questions = [

@@ -1,14 +1,17 @@
 import {lasList} from "../lib/lasList";
+import {lasYouthList} from "../lib/lasYouthList"
 import {CaretDoubleRight, CaretDoubleLeft} from "phosphor-react";
 import SurveyDomainListItem from "./surveyDomainListItem";
 import styles from "../styles/SurveyDomainList.module.scss"
 import {useState} from "react";
 
-export default function SurveyDomainList({setActiveDomain, activeDomain, answered, domains}) {
+export default function SurveyDomainList({setActiveDomain, activeDomain, answered, domains, user}) {
+
+    const useSurvey = !user.isYouth || user.isYouth === false  ? lasList : lasYouthList
 
     const [open, setOpen] = useState(false)
     const [tapped, setTapped] = useState(false)
-    const list = Object.keys(lasList)
+    const list = Object.keys(useSurvey)
 
     return (
         <div

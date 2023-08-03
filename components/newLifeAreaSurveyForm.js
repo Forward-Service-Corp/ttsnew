@@ -1,10 +1,13 @@
 import {lasList} from "../lib/lasList";
+import {lasYouthList} from "../lib/lasYouthList"
 import {labelMap} from "../lib/serviceLabelsMap";
 import Toggle from "./toggle";
 
-function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, setDomains}) {
+function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, setDomains, user}) {
 
     const answerArr = [1,2,3,4,5,0]
+
+    const useSurvey = !user.isYouth || user.isYouth === false  ? lasList : lasYouthList
 
     return (
         <div className={"p-0 md:p-4"}>
@@ -39,12 +42,12 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
                                 <div className={"flex-1 self-center"}>
                                     <input checked={answered[activeDomain] && answered[activeDomain].selection === index} value={index}
                                            className={"hidden peer"} type={"radio"} id={activeDomain + "-" + index}
-                                           data-statement={lasList[activeDomain].statements[index]}
+                                           data-statement={useSurvey[activeDomain].statements[index]}
                                            name={activeDomain}/>
                                     <label
                                         className={"block hover:bg-gray-100 peer-checked:bg-green-300 mb-2 border text-xs flex items-center justify-between rounded overflow-hidden h-[80px]"}
                                         htmlFor={activeDomain + "-" + index}>
-                                        <div className={"p-2"}>{lasList[activeDomain].statements[index]}</div>
+                                        <div className={"p-2"}>{useSurvey[activeDomain].statements[index]}</div>
                                         <div className={"flex justify-center items-center bg-orange-600 text-white min-w-[50px] h-full"}>
                                             <div className={"text-sm"}>{index}</div>
                                         </div>
