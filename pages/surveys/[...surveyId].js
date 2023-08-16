@@ -11,8 +11,9 @@ export default function SurveyId({pageDataJson}) {
     const router = useRouter()
     const {user, surveys} = pageDataJson
     const {surveyId} = router.query
+    const {isYouthSurvey} = router.query
     const [userFullName, setUserFullName] = useState("")
-    const [isYouth, setIsYouth] = useState(false)
+    const [isYouth, setIsYouth] = useState('youthDomains')
 
     const getUserFullName = async () => {
         const currentSurveyUserId = surveys.filter(survey => survey._id.toString() === surveyId.toString())[0].userId
@@ -23,17 +24,42 @@ export default function SurveyId({pageDataJson}) {
         await setUserFullName(data.surveyUser.name)
     }
 
-    const getIsYouth = async () => {
-        
+    const getIsYouth = (survey) => {
+        if(isYouthSurvey === 'true'){
+            return youthDomains.map((domain, domainIndex) => {
+                return (
+                    <div key={domainIndex} className={`p-1 ${survey.priority.indexOf(domain) > -1 ? "border border-1 border-black" : null}`}>
+                        <div className={"flex items-center justify-between"}>
+                            <div className={"truncate font-bold"}>{labelMap[domain]}</div>
+                            <div className={""}>{survey[domain][0]}</div>
+                        </div>
+                        <p>{survey[domain][1]}</p>
+                    </div>
+                )
+            })
+        }else{
+            return  domains.map((domain, domainIndex) => {
+                return (
+                    <div key={domainIndex} className={`p-1 ${survey.priority.indexOf(domain) > -1 ? "border border-1 border-black" : null}`}>
+                        <div className={"flex items-center justify-between"}>
+                            <div className={"truncate font-bold"}>{labelMap[domain]}</div>
+                            <div className={""}>{survey[domain][0]}</div>
+                        </div>
+                        <p>{survey[domain][1]}</p>
+                    </div>
+                )
+            })
+        }
+
     }
 
     useEffect(()=> {
         getUserFullName().then()
     },[])
 
-    useEffect(()=>{
-
-    },[])
+    // useEffect(()=>{
+    //     getIsYouth().then()
+    // },[])
 
     const domains = [
         "adultEducation",
@@ -141,17 +167,18 @@ export default function SurveyId({pageDataJson}) {
 
                         <div className={"grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 text-xs gap-6 print:grid-cols-4 print:break-after-page"}>
                             {
-                                domains.map((domain, domainIndex) => {
-                                    return (
-                                        <div key={domainIndex} className={`p-1 ${survey.priority.indexOf(domain) > -1 ? "border border-1 border-black" : null}`}>
-                                            <div className={"flex items-center justify-between"}>
-                                                <div className={"truncate font-bold"}>{labelMap[domain]}</div>
-                                                <div className={""}>{survey[domain][0]}</div>
-                                            </div>
-                                            <p>{survey[domain][1]}</p>
-                                        </div>
-                                    )
-                                })
+                                getIsYouth(survey)
+                                // [isYouth].map((domain, domainIndex) => {
+                                //     return (
+                                //         <div key={domainIndex} className={`p-1 ${survey.priority.indexOf(domain) > -1 ? "border border-1 border-black" : null}`}>
+                                //             <div className={"flex items-center justify-between"}>
+                                //                 <div className={"truncate font-bold"}>{labelMap[domain]}</div>
+                                //                 <div className={""}>{survey[domain][0]}</div>
+                                //             </div>
+                                //             <p>{survey[domain][1]}</p>
+                                //         </div>
+                                //     )
+                                // })
                             }
 
                         </div>

@@ -5,6 +5,7 @@ import Head from "next/head";
 import {useEffect, useState} from "react";
 import NewEmailAssignment from "../../components/newEmailAssignment";
 import CoachAssignments from "../../components/coachAssignments";
+import WorkbookToggle from "../../components/workbookToggle";
 
 export default function User({viewingUser, pageDataJson, coachesJson}) {
 
@@ -12,6 +13,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
     const {user} = pageDataJson
     const [role, setRole] = useState(viewingUser.level)
     const [roleChanged, setRoleChanged] = useState(false)
+    const [version, setVersion] = useState(null)
 
     const [dataChanged, setDataChanged] = useState(false)
 
@@ -34,6 +36,10 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
             <Head>
                 <title>TTS / User / {viewingUser.name || viewingUser.email}</title>
             </Head>
+
+            <div className={`mt-8 mb-8`}>
+                <WorkbookToggle user={viewingUser} setVersion={setVersion}/>
+            </div>
             <div className={"bg-gray-100 p-6 mb-5 rounded"}>
                 <h2 className={"uppercase text-gray-500 mb-3"}>Personal Details</h2>
                 <div className={"flex"}>

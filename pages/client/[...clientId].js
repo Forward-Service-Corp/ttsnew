@@ -1,17 +1,13 @@
 import Layout from "../../components/layout";
 import {getSession} from "next-auth/react";
 import Head from "next/head";
-import {useEffect, useState} from "react";
-import {CaretDoubleDown, CaretDoubleUp} from "phosphor-react";
 import {useRouter} from "next/router";
 import ClientDetails from "../../components/clientDetails";
-import DreamSingle from "../../components/dreamSingle";
-import LasCurrent from "../../components/lasCurrent";
-import LasHistory from "../../components/lasHistory";
-import ReferralContainer from "../../components/referralContainer";
 import ClientDreams from "../../components/clientDreams";
 import ClientSurveys from "../../components/clientSurveys";
 import ClientCarePlans from "../../components/clientCarePlans";
+import WorkbookToggle from "../../components/workbookToggle";
+import {useState} from "react";
 
 export default function User({viewingUserData, pageDataJson}) {
 
@@ -20,13 +16,19 @@ export default function User({viewingUserData, pageDataJson}) {
     const {dreams} = viewingUserData
 
     const viewingUser = viewingUserData.user
+    const [version, setVersion] = useState(null)
+
 
     return (
-        <Layout title={viewingUser.name || viewingUser.email} session={user}>
+        <Layout title={viewingUser.name || viewingUser.email} session={user} version={version}>
 
             <Head>
                 <title>TTS / User / {viewingUser.name || viewingUser.email}</title>
             </Head>
+
+            <div className={`mt-8`}>
+                <WorkbookToggle user={viewingUser} setVersion={setVersion}/>
+            </div>
 
             <ClientDetails viewingUser={viewingUser}/>
 

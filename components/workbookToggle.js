@@ -25,6 +25,7 @@ export default function WorkbookToggle({user, setVersion}) {
     }, [checked])
 
     return (
+        <div className={``}>
         <Switch
             checked={checked}
             onChange={() => {
@@ -49,5 +50,7 @@ export default function WorkbookToggle({user, setVersion}) {
                 )}
             />
         </Switch>
+            <span className={`pl-4`}>{checked ? 'Youth Workbook Active' : 'Adult Workbook Active'}</span>
+        </div>
     )
 }

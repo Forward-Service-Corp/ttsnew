@@ -85,9 +85,9 @@ function LasCurrent({surveys, user, isClientSurvey, clientId}) {
                                     className={"p-2 flex-1 cursor-pointer bg-green-500 hover:bg-green-600 max-w-[40px] flex justify-center items-center"}
                                     onClick={() => {
                                         if (isClientSurvey) {
-                                            router.push("/client/survey/" + survey._id).then()
+                                            router.push("/client/survey/" + survey._id + "?isYouthSurvey=" + survey.isYouthSurvey).then()
                                         } else {
-                                            router.push("/surveys/" + survey._id).then()
+                                            router.push("/surveys/" + survey._id + "?isYouthSurvey=" + survey.isYouthSurvey).then()
                                         }
 
                                     }}>
