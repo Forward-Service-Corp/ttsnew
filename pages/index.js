@@ -37,7 +37,7 @@ export default function Home({pageDataJson}) {
                     <DashboardMetric title={"Active dreams"} metric={dreams.filter(dream => dream.status === "active").length} link={"/dreams"} linkLabel={"View dreams"} icon={"Brain"}/>
                     <DashboardMetric title={"Life Area Surveys"} metric={surveys.length} link={"/life-area-surveys"} linkLabel={"View life area surveys"} icon={"ListNumbers"}/>
                     <DashboardMetric title={"Referrals"} metric={referrals.length} link={"/life-area-surveys"} linkLabel={"View all referrals"} icon={"Bookmarks"}/>
-                    <DashboardMetric title={"To-Do's"} metric={tasks.length} link={"/care-plans"} linkLabel={"View all to-do's"} icon={"CheckSquare"}/>
+                    <DashboardMetric title={"To-Do's"} metric={tasks.filter(task => task.completed !== "true").length} link={"/care-plans"} linkLabel={"View all to-do's"} icon={"CheckSquare"}/>
                 </dl>
             </div>
             <div className={"flex justify-between py-8"}>
