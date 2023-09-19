@@ -1,24 +1,40 @@
+
 function DreamIntro() {
     return (
         <div className={" bg-gray-100 p-4"}>
             <div>
                 <h1 className={"text-2xl text-orange-600 uppercase font-light"}>My Dreams Today</h1>
                 <p className={"text-sm"}>This is your Map of your Dreams. As you take the time to think about your
-                    dreams and hopes let your heart
-                    speak to you. <strong>Believe in what could be</strong>.</p>
+                    dreams and hopes let your heart speak to you. </p>
 
-                <p className={"text-sm"}>Let your heart tell you what it wants. Don&apos;t let the barriers, challenges,
-                    or fears interfere with
-                    knowing what your dreams are. Don&apos;t let negative messages interfere.</p></div>
+                <p><strong>Believe in what could be</strong>. Dreams can be about:</p>
+                <ul className={'ml-8 list-disc'}>
+                    <li>Buying a car</li>
+                    <li>Going to college</li>
+                    <li>Relationships you hope to have</li>
+                    <li>Finding a job</li>
+                </ul>
 
-            <div>
-                <p className={"font-bold "}>Ask yourself the question: <span className={"text-orange-600"}>What is my dream?</span>
-                </p>
-                <p className={""}><strong>Your Dreams can start with the basics, like</strong></p>
-                <p className={"text-sm"}>The need for food or a safe place to live. Dreams can be about a
-                    profession, &quot;I want to be a doctor&quot;,
-                    about relationships, what we wish for our children, about starting over or just getting started.</p>
+                <p>For every dream ask:</p>
+                <ul className={'ml-8 list-disc'}>
+                    <li>&quot;What do I need to do?&quot;</li>
+                    <li>&quot;Who can help me?&quot;</li>
+                </ul>
+
+                <p>For example, if you want to buy a car, you&apos;ll probably need to:</p>
+                <ul className={'ml-8 list-disc'}>
+                    <li>Get a driver&apos;s license</li>
+                    <li>Make a budget, include car insurance</li>
+                    <li>Find someone to help find the best car for you</li>
+                    <li>Get a part time job/save money</li>
+                </ul>
+
+                <p>You have choices!</p>
+
+                <p><strong>&quot;You&apos;re braver than you believe, stronger than you seem, and smarter than you think.&quot;</strong> A.A.Milne, English author of Winnie the Pooh</p>
             </div>
+
+
         </div>
     );
 }

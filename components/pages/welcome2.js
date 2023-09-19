@@ -28,6 +28,10 @@ function Welcome2() {
                     what challenges you may face, and who you might ask for help. With your Map you know where you are
                     going, you know what you need, you get the help you need, and help others on their journey.
                 </p>
+                <p className={"text-sm"}>
+                    Don&apos;t confuse fate and destiny.
+                </p>
+                <p className={"font-bold"}>Fate is what happens to you. Destiny is what you do about it.</p>
             </div>
 
             <div className={"p-5 bg-gray-700 text-white my-5 flex flex-wrap justify-between align-middle "}>

@@ -260,15 +260,14 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
         <Layout title={"Life Area Survey"} session={user}>
             <div className={"text-xl text-center p-3 truncate"}>Dream: {router.query.dreamName}</div>
             <div className={"p-4 bg-gray-100 rounded text-sm mb-4 text-center"}>
-                <p><strong>&quot;Do What You Can - With What You Have - Where You Are.&quot; </strong>
-                    - Theodore Roosevelt</p>
-
-                <p>Ok, you know what you want, let&apos;s figure out how to get there.</p>
-
-                <p>Just like a mechanic repairing a car, making your dreams come true requires the right tools. With the
-                    right tools and supports you are positioned for success.</p>
-
-                <p>Let&apos;s understand the challenges in your life and make the plan to deal with them.</p>
+                <p>Where am I today?</p>
+                <p><strong>&quot;What I treasure most in life, is being abler to dream. During my most difficult
+                    moments and complex situations, I have been able to dream of a more beautiful life.&quot;</strong>
+                 -- Rigoberta Mensh&ugrave;, Guatemalan human rights activist and Nobel Peace prize winner</p>
+                <p>What does your life look like now? Knowing where you are is key to finding your path. How are
+                    things going? What areas in your life are challenging? Where are you feeling confident?
+                    Where could you use help?</p>
+                <p>Using the Life Area Survey, you can see how things are going and the areas you want to work on now.</p>
             </div>
             <div
                 className={"bg-gray-600 text-center p-2 text-white mb-3 rounded flex justify-around font-light text-sm grid grid-cols-1 md:grid-cols-2 "}>

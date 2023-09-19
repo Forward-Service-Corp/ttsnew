@@ -20,6 +20,21 @@ export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) 
                 <title>TTS / Map of My Dreams</title>
             </Head>
             <div className={"p-4 mb-4 bg-gray-100 rounded"}>
+                <p><strong>4 Keys to Your Success</strong></p>
+                <p>Science tells us there are 4 steps to success.</p>
+                <ol className={''}>
+                    <li><strong>1. CARE: </strong>Coordinating All Resources Effectively. Learn to identify and make the
+                        most of community services available to you.</li>
+                    <li><strong>2. Understand Money. </strong>Learn about predatory scams, lending, and the pitfalls of credit.</li>
+                    <li><strong>3. Find a mentor, </strong>someone you can relate to that is achieving similar goals.
+                        Ask for support and advice.</li>
+                    <li><strong>4. Volunteer: </strong>The research is clear, volunteers are healthier, happier, earn more
+                        money, and do better in school. Volunteerism is also a path to your career.</li>
+                </ol>
+                <p>You now know your dreams, goals, and challenges. You&apos;ve picked your priorities. Now let&apos;s make your Map of Your Dreams.</p>
+                <p>On your Map, use the key steps to fuel your success (CARE, Understanding Money, Asking for Help, and Helping Others.)</p>
+            </div>
+            <div className={"p-4 mb-4 bg-gray-100 rounded"}>
                 <h2 className={"uppercase text-gray-500"}>Instructions</h2>
                 <p className={"text-sm"}>Please select a referral from the dropdown menu. Once you have selected a referral, you must click or
                     tap <button

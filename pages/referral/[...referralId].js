@@ -127,6 +127,7 @@ export default function ReferralId({pageDataJson, referralDataJson}) {
                     {textInfoJSX(referralDataJson.contactName, "contact person")}
                     {textInfoJSX(referralDataJson.contactPhone, "contact person phone")}
                     {textEmailJSX(referralDataJson.contactEmail, "contact person email")}
+                    {textInfoJSX(referralDataJson.lastModified, "last modified")}
                 </div>
             </div>
         </Layout>

@@ -3,6 +3,10 @@ import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
 import Journey1 from "../components/pages/journey1";
 import Journey2 from "../components/pages/journey2";
+import JourneyYouth1 from "../components/pages/journeyYouth1";
+import JourneyYouth2 from "../components/pages/journeyYouth2";
+
+
 
 function Journey({pageDataJson}) {
 
@@ -30,10 +34,10 @@ function Journey({pageDataJson}) {
                 </div>
             </div>
             <div className={currentTab === 1 ? "visible" : "hidden"}>
-                <Journey1/>
+                { !user.isYouth || user.isYouth === false  ? <Journey1/> : <JourneyYouth1/>}
             </div>
             <div className={currentTab === 2 ? "visible" : "hidden"}>
-                <Journey2/>
+                { !user.isYouth || user.isYouth === false  ? <Journey2/> : <JourneyYouth2/>}
             </div>
         </Layout>
     );

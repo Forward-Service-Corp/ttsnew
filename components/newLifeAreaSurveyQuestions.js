@@ -10,33 +10,27 @@ function NewLifeAreaSurveyQuestions({
                                         family,
                                         setFamily,
                                         health,
-                                        setHealth,
-                                        income,
-                                        setIncome
+                                        setHealth
                                     }) {
 
     const questions = [
         {
             value: surprise,
             setter: setSurprise,
-            question: "Did any answers surprise you?"
+            question: "Did any answers surprise you? Which ones?"
         },
         {
             value: concern,
             setter: setConcern,
-            question: "Did any areas concern you?"
+            question: "Did any areas worry you? Which ones?"
         }, {
             value: family,
             setter: setFamily,
-            question: "Are any of these areas affecting your family?"
+            question: "Do any Life Areas affect your goals? Which ones?"
         }, {
             value: health,
             setter: setHealth,
-            question: "Are any of these areas affecting your health?"
-        }, {
-            value: income,
-            setter: setIncome,
-            question: "Are any of these areas affecting your income?"
+            question: "Do any of these areas affect your relationships? Which ones?"
         }
 
     ]

@@ -19,7 +19,7 @@ function Welcome1() {
                 <p className={"font-bold"}> To the stronger or faster person.</p>
                 <p className={"font-bold"}>But sooner or later the person who wins</p>
                 <p className={"font-bold"}>Is the one who thinks they can.</p>
-                <p>- Anonymous</p>
+                <p>- Walter D. Wintle</p>
             </div>
         </div>
     );

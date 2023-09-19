@@ -6,6 +6,8 @@ import ProfilePersonalDetails from "../components/profilePersonalDetails";
 import OrganizationInformation from "../components/organizationInformation";
 import Head from "next/head";
 import WorkbookToggle from "../components/workbookToggle";
+import WelcomeGroupAdult from "../components/pages/welcomeGroupAdult";
+import WelcomeGroupYouth from "../components/pages/welcomeGroupYouth";
 
 export default function Profile({user}) {
 
@@ -58,9 +60,10 @@ export default function Profile({user}) {
             <div className={`${currentTab === "tab4" ? "visible" : "hidden"}`}>
                 <div className={`p-4`}>
                     <div className={``}>
-                        This program has a youth version setting. If you would like to use that version,
+
+                        This application has {version === true ? "an adult" : "a youth"} workbook. If you would like to use that workbook,
                         simply toggle the switch below. You may switch back at any time. If you are unsure
-                        which version to use, please reach out to your coach.
+                        which workbook to use, please reach out to your coach.
                     </div>
                     <div className={`mt-8`}>
                         <WorkbookToggle user={user} setVersion={setVersion}/>

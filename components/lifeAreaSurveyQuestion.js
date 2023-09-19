@@ -49,7 +49,6 @@ function LifeAreaSurveyQuestion({question, value, setter}) {
                 </div>
             </div>
             <div className={`${enabled ? "visible" : "hidden"} pt-2`}>
-                <div>Which ones?</div>
                 <textarea value={value} onChange={(e) => {
                     setter(e.target.value)
                 }} className={"w-full border-gray-300"}/>
