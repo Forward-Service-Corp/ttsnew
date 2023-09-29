@@ -14,6 +14,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
     const [role, setRole] = useState(viewingUser.level)
     const [roleChanged, setRoleChanged] = useState(false)
     const [version, setVersion] = useState(null)
+    const [clients, setClients] = useState(null)
 
     const [dataChanged, setDataChanged] = useState(false)
 
@@ -26,9 +27,29 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
         router.reload()
     }
 
+    async function getClients(coachId) {
+       const fetchClients = await fetch("/api/get-clients?coachId=" + coachId)
+            .then(res => res.json())
+            .catch(err => console.warn(err.json()))
+        setClients(fetchClients)
+        console.log(clients)
+    }
+
+    async function terminateCoach(coachId){
+        const findCoach = await fetch("/api/terminate-coach?coachId=" + coachId)
+            .then(res => res.json())
+            .catch(err => console.warn(err))
+
+    }
 
     useEffect(() => {
         document.getElementById("roleSelect").value = role
+    }, [])
+
+    useEffect(() => {
+        if(viewingUser.level === "coach"){
+            getClients(viewingUser.email).then()
+        }
     }, [])
 
     return (
@@ -79,15 +100,32 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
             </div>
             <div className={"bg-gray-100 p-6 mb-5 rounded"}>
                 <h2 className={"uppercase text-gray-500"}>Role</h2>
-                <select id={"roleSelect"} onChange={(e) => {
-                    setRole(e.target.value)
-                    setRoleChanged(true)
-                }}>
-                    <option value={""}>Select a new role...</option>
-                    <option value={"client"}>client</option>
-                    <option value={"coach"}>coach</option>
-                    <option value={"admin"}>admin</option>
-                </select>
+                <div className={`flex`}>
+                    <div className={`w-1/3`}>
+                        <select id={"roleSelect"} onChange={(e) => {
+                            setRole(e.target.value)
+                            setRoleChanged(true)
+                        }}>
+                            <option value={""}>Select a new role...</option>
+                            <option value={"client"}>client</option>
+                            <option value={"coach"}>coach</option>
+                            <option value={"admin"}>admin</option>
+                        </select>
+                    </div>
+                    <div className={`w-1/3`}>
+                        {clients && clients.map((client, i) => (
+                            <li key={i}>{client.email}</li>
+                        ))}
+                    </div>
+                    <div className={`w-1/3`}>
+                        <button className={`${viewingUser.level === 'coach' ? '' : 'hidden' } py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400`}
+                        onClick={() => {
+                            terminateCoach(viewingUser.email).then()
+                        }}>Terminate Coach</button>
+                    </div>
+                </div>
+
+
                 <div className={"flex justify-start mt-4 pt-4 border-t-[1px] border-gray-400"}>
                     <button disabled={!roleChanged}
                             onClick={saveRole}
