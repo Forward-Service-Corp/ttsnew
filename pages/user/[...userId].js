@@ -18,13 +18,18 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
 
     const [dataChanged, setDataChanged] = useState(false)
 
-    async function saveRole() {
-        await fetch("/api/save-role?userId=" + viewingUser._id + "&role=" + role)
-            .then(res => {
-                console.log(res)
-            })
+    async function saveRole(newRole) {
+        const savedNewRole = await fetch("/api/save-role?userId=" + viewingUser._id + "&role=" + newRole)
+            .then(res => res.json())
             .catch(err => console.warn(err))
-        router.reload()
+
+        console.log(savedNewRole)
+    }
+
+    async function updateRoleInformation(role){
+        await setRole(role)
+        // await setRoleChanged(true)
+        await saveRole(role)
     }
 
     async function getClients(coachId) {
@@ -32,7 +37,13 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
             .then(res => res.json())
             .catch(err => console.warn(err.json()))
         setClients(fetchClients)
-        console.log(clients)
+    }
+
+    async function terminationPattern(){
+        await setRole("client")
+        await saveRole("client")
+        await terminateCoach(viewingUser.email)
+        await router.reload()
     }
 
     async function terminateCoach(coachId){
@@ -44,7 +55,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
 
     useEffect(() => {
         document.getElementById("roleSelect").value = role
-    }, [])
+    }, [role])
 
     useEffect(() => {
         if(viewingUser.level === "coach"){
@@ -95,16 +106,17 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
                                 <li key={i}>{program}</li>
                             ))}
                         </ul>
+                        <p className={"text-gray-500 text-xs mt-4"}>User Type</p>
+                        <p>{role}</p>
                     </div>
                 </div>
             </div>
             <div className={"bg-gray-100 p-6 mb-5 rounded"}>
-                <h2 className={"uppercase text-gray-500"}>Role</h2>
                 <div className={`flex`}>
                     <div className={`w-1/3`}>
+                        <h2 className={"uppercase text-gray-500 mb-4"}>Role</h2>
                         <select id={"roleSelect"} onChange={(e) => {
-                            setRole(e.target.value)
-                            setRoleChanged(true)
+                            updateRoleInformation(e.target.value).then()
                         }}>
                             <option value={""}>Select a new role...</option>
                             <option value={"client"}>client</option>
@@ -113,26 +125,29 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
                         </select>
                     </div>
                     <div className={`w-1/3`}>
-                        {clients && clients.map((client, i) => (
+                        <h2 className={`${role === 'coach' ? '' : 'hidden' } uppercase text-gray-500 mb-4`}>Clients</h2>
+                        {role === 'coach' && clients && clients.map((client, i) => (
                             <li key={i}>{client.email}</li>
                         ))}
                     </div>
-                    <div className={`w-1/3`}>
-                        <button className={`${viewingUser.level === 'coach' ? '' : 'hidden' } py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400`}
+                    <div className={`w-1/3 flex items-center`}>
+                        <button className={`${role === 'coach' ? '' : 'hidden' } py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400`}
                         onClick={() => {
-                            terminateCoach(viewingUser.email).then()
+                            if(confirm("Are you sure? This action cannot be undone.") === true){
+                                terminationPattern().then()
+                        }
                         }}>Terminate Coach</button>
                     </div>
                 </div>
 
 
-                <div className={"flex justify-start mt-4 pt-4 border-t-[1px] border-gray-400"}>
-                    <button disabled={!roleChanged}
-                            onClick={saveRole}
-                            className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Save
-                        role updates
-                    </button>
-                </div>
+                {/*<div className={"flex justify-start mt-4 pt-4 border-t-[1px] border-gray-400"}>*/}
+                {/*    <button disabled={!roleChanged}*/}
+                {/*            onClick={saveRole}*/}
+                {/*            className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Save*/}
+                {/*        role updates*/}
+                {/*    </button>*/}
+                {/*</div>*/}
             </div>
             <CoachAssignments coachesJson={coachesJson} viewingUser={viewingUser}/>
             <NewEmailAssignment user={viewingUser.email}/>

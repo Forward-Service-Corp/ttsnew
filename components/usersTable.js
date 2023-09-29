@@ -8,7 +8,6 @@ export default function UsersTable({users}) {
     const evaluateDate = (date) => {
         const now = moment()
         const days = now.diff(date, "days")
-        console.log(days, now)
         if(days > 5){
             return <span className={`text-green-600`}>{moment(date).calendar()}</span>
         }else{

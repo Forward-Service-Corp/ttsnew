@@ -14,6 +14,8 @@ export default async (req, res) => {
                 }
             }
         )
-    res.json(record)
-
+    const result = await db
+        .collection("users")
+        .findOne({ _id: ObjectId(req.query.userId)})
+    res.json(result)
 }
