@@ -261,7 +261,7 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
             <div className={"text-xl text-center p-3 truncate"}>Dream: {router.query.dreamName}</div>
             <div className={"p-4 bg-gray-100 rounded text-sm mb-4 text-center"}>
                 <p>Where am I today?</p>
-                <p><strong>&quot;What I treasure most in life, is being abler to dream. During my most difficult
+                <p><strong>&quot;What I treasure most in life, is being able to dream. During my most difficult
                     moments and complex situations, I have been able to dream of a more beautiful life.&quot;</strong>
                  -- Rigoberta Mensh&ugrave;, Guatemalan human rights activist and Nobel Peace prize winner</p>
                 <p>What does your life look like now? Knowing where you are is key to finding your path. How are

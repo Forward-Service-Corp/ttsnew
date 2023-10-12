@@ -82,7 +82,7 @@ function ProfilePersonalDetails({user}) {
                         })}
 
                     </div>
-                    <p className={"text-indigo-600 text-sm mb-5"}>Click below to add a county</p>
+                    <p className={"text-indigo-600 text-sm mb-5"}>Select all counties you may want to access resources in.</p>
                     <select className={"w-full lg:min-h-[400px]"} multiple={true} onChange={(e) => {
                         setCounties(prevState => {
                             if (counties.indexOf(e.target.value) === -1) {

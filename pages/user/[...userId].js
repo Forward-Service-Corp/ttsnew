@@ -40,8 +40,8 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
     }
 
     async function terminationPattern(){
-        await setRole("client")
-        await saveRole("client")
+        await setRole("terminated coach")
+        await saveRole("terminated coach")
         await terminateCoach(viewingUser.email)
         await router.reload()
     }
@@ -122,6 +122,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
                             <option value={"client"}>client</option>
                             <option value={"coach"}>coach</option>
                             <option value={"admin"}>admin</option>
+                            <option value={"terminated coach"}>terminated coach</option>
                         </select>
                     </div>
                     <div className={`w-1/3`}>

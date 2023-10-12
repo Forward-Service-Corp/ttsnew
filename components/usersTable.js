@@ -41,6 +41,7 @@ export default function UsersTable({users}) {
                         <option value={"client"}>Client</option>
                         <option value={"coach"}>Coach</option>
                         <option value={"admin"}>Admin</option>
+                        <option value={"terminated coach"}>Terminated Coach</option>
                     </select>
                 </div>
             </div>
