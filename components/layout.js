@@ -33,7 +33,7 @@ export default function Layout({children, title, session, loadingState, version}
         const location = window.location.host
         if(location.indexOf("localhost") > -1){
             setEnvironment("dev")
-        }else if(location.indexOf("dev-") > -1){
+        }else if(location.indexOf("test-") > -1){
             setEnvironment("testing")
         }
     }, [environment])
