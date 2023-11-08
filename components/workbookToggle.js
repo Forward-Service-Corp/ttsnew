@@ -10,7 +10,6 @@ export default function WorkbookToggle({user, setVersion}) {
     const [checked, setChecked] = useState(user.isYouth)
     function handleToggle(){
         setChecked((current) => !current)
-        setVersion(checked)
     }
 
     async function updateWorkbookExperience (){
