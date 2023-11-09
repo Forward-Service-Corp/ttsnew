@@ -55,7 +55,15 @@ export default function Home({pageDataJson}) {
                 </div>
             </div>
             { !user.isYouth || user.isYouth === false  ? <WelcomeGroupAdult currentTab={currentTab}/> : <WelcomeGroupYouth currentTab={currentTab}/>}
-
+            <div className={`p-4 text-xs border-t-[1px] border-gray-400 mt-8`}>
+                <p className={`text-lg uppercase`}>Disclaimer</p>
+                <p className={`pb-4`}>
+                    You are logged into an application owned by Forward Service Corporation. The information
+                    collected by this application is protected and will not be sold or shared with any third
+                    parties. We will use the data collected to improve our services and understand how people are
+                    utilizing our programs. By accessing this site, you consent to FSC using your data in this way.
+                </p>
+            </div>
         </Layout>
     )
 }
