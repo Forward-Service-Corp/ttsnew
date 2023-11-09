@@ -63,7 +63,7 @@ export default function Profile({user}) {
 
                         This application has {version === true ? "an adult" : "a youth"} workbook. If you would like to use that workbook,
                         simply toggle the switch below. You may switch back at any time. If you are unsure
-                        which workbook to use, please reach out to your coach.
+                        which workbook to use, please reach out to your coach. Thank you.
                     </div>
                     <div className={`mt-8`}>
                         <WorkbookToggle user={user} setVersion={setVersion}/>
