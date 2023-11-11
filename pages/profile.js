@@ -1,19 +1,16 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import ProfilePrograms from "../components/profilePrograms";
 import ProfilePersonalDetails from "../components/profilePersonalDetails";
 import OrganizationInformation from "../components/organizationInformation";
 import Head from "next/head";
 import WorkbookToggle from "../components/workbookToggle";
-import WelcomeGroupAdult from "../components/pages/welcomeGroupAdult";
-import WelcomeGroupYouth from "../components/pages/welcomeGroupYouth";
 
 export default function Profile({user}) {
 
     const [currentTab, setCurrentTab] = useState("tab1")
-    const [version, setVersion] = useState(null)
-
+    const [version, setVersion] = useState(user.isYouth)
 
     return (
         <Layout title={"Profile"} session={user} version={version}>
@@ -66,7 +63,7 @@ export default function Profile({user}) {
                         which workbook to use, please reach out to your coach. Thank you.
                     </div>
                     <div className={`mt-8`}>
-                        <WorkbookToggle user={user} setVersion={setVersion}/>
+                        <WorkbookToggle user={user} version={version} setVersion={setVersion}/>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import {MenuIcon, XIcon} from '@heroicons/react/outline'
 import {useRouter} from "next/router";
 import {UserCircleGear, UserCircle} from "phosphor-react";
 import ProfileDetailsWarningModal from "./profileDetailsWarningModal";
+import styles from "../styles/Layout.module.scss"
 
 const navigation = [
     {name: 'Dashboard', href: '/', current: true},
@@ -28,7 +29,6 @@ export default function Layout({children, title, session, loadingState, version}
 
     const [environment, setEnvironment] = useState("production")
 
-
     useEffect(() => {
         const location = window.location.host
         if(location.indexOf("localhost") > -1){
@@ -37,6 +37,7 @@ export default function Layout({children, title, session, loadingState, version}
             setEnvironment("testing")
         }
     }, [environment])
+
 
     return (
         <>
@@ -52,7 +53,7 @@ export default function Layout({children, title, session, loadingState, version}
                 <ProfileDetailsWarningModal session={session}/> : null}
 
             <div className="min-h-full ">
-                <div className={`${version === null || !session.isYouth || session.isYouth === false || version === false ? "bg-orange-500" : "bg-blue-900"} pb-32 print:hidden`}>
+                <div className={`${session.isYouth || version ? styles.youthVersion : styles.adultVersion} pb-32 print:hidden`}>
                     <Disclosure as="nav" className="bg-orange-500">
                         {({open}) => (
                             <>

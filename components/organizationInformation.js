@@ -18,13 +18,15 @@ function OrganizationInformation({user}) {
     }
 
     useEffect(() => {
-        getCoaches().then()
+        if(user.coach.length > 0){
+            getCoaches().then()
+        }
     }, [])
 
     return (
         <div>
             <h2 className={"uppercase text-gray-600 font-light mb-3"}>Organization Information</h2>
-            {user.coach === undefined ? <span className={"mb-6 block"}>You have no coaches</span> : <span className={"mb-6 block"}>Your Coaches:</span>}
+            {user.coach === undefined || user.coach.length === 0 ? <span className={"mb-6 block"}>You have no coaches</span> : <span className={"mb-6 block"}>Your Coaches:</span>}
             <div className={"grid grid-cols-3 gap-4"}>
                 {coaches && coaches.map(coach => {
                     return (

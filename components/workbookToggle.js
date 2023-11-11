@@ -14,9 +14,7 @@ export default function WorkbookToggle({user, setVersion}) {
 
     async function updateWorkbookExperience (){
         await fetch(`/api/update-workbook-experience?userId=${user._id}&setTo=${checked}`)
-        setVersion(()=>{
-            return checked
-        })
+        await setVersion(checked)
     }
 
     useEffect(()=> {
