@@ -1,7 +1,7 @@
 function Welcome2() {
     return (
         <div className={"font-light"}>
-            <div className={" bg-gray-100 p-4"}>
+            <div className={" bg-gray-100 p-4 dark:p-0 dark:bg-opacity-0 dark:text-white"}>
                 <h1 className={"text-3xl text-orange-600"}>Vision Without Backbone Is Merely
                 Hallucination</h1>
                 <p className={"font-bold"}>Wishes don&apos;t make your dreams come true. Dreams come true because we

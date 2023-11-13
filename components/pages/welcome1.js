@@ -3,9 +3,9 @@ import Image from "next/image";
 function Welcome1() {
     return (
         <div className={"font-light"}>
-            <div className={" bg-gray-100 p-4"}>
-                <h1 className={"text-3xl text-orange-600"}>Welcome to Transition To Success and Map of My Dreams</h1>
-                <h2 className={"my-5 font-bold text-orange-600"}> Your Journey Begins Here</h2>
+            <div className={" bg-gray-100 p-4 dark:p-0 dark:bg-opacity-0 dark:text-white"}>
+                <h1 className={"text-3xl text-orange-600 dark:text-orange-400"}>Welcome to Transition To Success and Map of My Dreams</h1>
+                <h2 className={"my-5 font-bold text-orange-600 dark:text-orange-400"}> Your Journey Begins Here</h2>
                 <p className={"text-sm"}>
                     Welcome to Transition To Success&reg; (TTS). This TTS Workbook and Guide is designed specifically
                     for YOU. Together with your Transition To Success (TTS) Coach, you will map your journey to your
@@ -18,7 +18,7 @@ function Welcome1() {
                     dreams.
                 </p>
 
-                <h2 className={"my-5 font-bold text-orange-600"}>How do I make my dreams come true?</h2>
+                <h2 className={"my-5 font-bold text-orange-600 dark:text-orange-400"}>How do I make my dreams come true?</h2>
                 <p className={"text-sm"}>
                     Just ask anyone, &quot;What&apos;s your dream?&quot;. You will find there are as many dreams as
                     there are people. Having dreams is the easy part. Making your dreams come true is the tough part and
@@ -38,7 +38,7 @@ function Welcome1() {
                 </p>
             </div>
 
-            <div className={"p-5 bg-gray-700 my-5 flex flex-wrap justify-between align-middle text-white"}>
+            <div className={"p-5 bg-gray-700 my-5 flex flex-wrap justify-between align-middle text-white dark:rounded-[7px] dark:bg-opacity-50"}>
                 <div className={"flex-none"}>
                     <Image src={"/img/birdsroad.png"} width={250} height={200} alt={"image for quotes"}/>
                 </div>
@@ -54,7 +54,7 @@ function Welcome1() {
                     </ul>
                 </div>
             </div>
-            <div className={" bg-gray-100 p-4"}>
+            <div className={" bg-gray-100 p-4 dark:p-0 dark:bg-opacity-0 dark:text-white"}>
                 <p className={"text-sm"}>
                 From now on giving up is not an option. To be the best you, you must embrace the missteps, learn
                 from your mistakes, and re-route. Keep moving, and YOU will get to your destination.

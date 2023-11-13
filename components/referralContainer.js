@@ -79,6 +79,9 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
                 <div className={"truncate max-w-[200px]"}>{item.name}</div>
                 <div
                     className={"absolute right-0 min-w-[100px] flex items-center justify-between h-full pl-3  bg-gray-700"}>
+                    <div className={`border-2 h-full w-[50px] mr-5`}>
+
+                    </div>
                     <div>Tasks: {allTasks.filter(task => task.referralId === item._id && eval(task.completed) === false).length}</div>
                     <div className={"p-3 cursor-pointer text-xs"} onClick={() => {
                         setOpen(!open)

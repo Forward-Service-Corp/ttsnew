@@ -5,6 +5,7 @@ import Journey1 from "../components/pages/journey1";
 import Journey2 from "../components/pages/journey2";
 import JourneyYouth1 from "../components/pages/journeyYouth1";
 import JourneyYouth2 from "../components/pages/journeyYouth2";
+import Head from "next/head";
 
 
 
@@ -15,6 +16,9 @@ function Journey({pageDataJson}) {
 
     return (
         <Layout title={"The Journey"} session={user}>
+            <Head>
+                <title>TTS / The Journey</title>
+            </Head>
             <div className={"flex justify-between mb-4"}>
                 <div>
                     <button disabled={currentTab === 1}

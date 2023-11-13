@@ -5,6 +5,7 @@ import NewLifeAreaSurveyForm from "../components/newLifeAreaSurveyForm";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import NewLifeAreaSurveyQuestions from "../components/newLifeAreaSurveyQuestions";
+import Head from "next/head";
 
 
 export default function NewLifeAreaSurvey({pageDataJson}) {
@@ -258,6 +259,9 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
 
     return (
         <Layout title={"Life Area Survey"} session={user}>
+            <Head>
+                <title>TTS / Life Area Survey</title>
+            </Head>
             <div className={"text-xl text-center p-3 truncate"}>Dream: {router.query.dreamName}</div>
             <div className={"p-4 bg-gray-100 rounded text-sm mb-4 text-center"}>
                 <p>Where am I today?</p>

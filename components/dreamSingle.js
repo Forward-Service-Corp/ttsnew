@@ -35,7 +35,7 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
 
     const router = useRouter()
     return (
-        <div className={"mb-4 flex flex-col shadow justify-between bg-white"}>
+        <div className={"mb-4 flex flex-col shadow-xl justify-between bg-white dark:bg-black dark:text-white dark:rounded-xl dark:overflow-hidden dark:bg-opacity-70"}>
             <div>
                 <div className={"bg-gray-700 p-2 text-white text-sm font-light flex items-center"}>
                     <div><Brain size={26} weight="thin"/></div>
@@ -50,7 +50,7 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
                         }}/>
                 </div>
                 <div
-                    className={"bg-gray-100 px-2 py-2 text-xs relative"}>
+                    className={"bg-gray-100 px-2 py-2 text-xs relative dark:bg-black dark:bg-opacity-80"}>
                     {moment(dream.timestamp).format("MMMM Do YYYY @ h:mm a")}
                     <div className={`absolute right-2 top-2 text-red-600 ${editMode ? "visible" : "hidden"}`}>Editing
                     </div>
@@ -59,7 +59,7 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
                         successful
                     </div>
                 </div>
-                <div className={`p-2 text-xs border-b ${editMode === true ? "hidden" : "visible"}`}>Status: {status}</div>
+                <div className={`p-2 text-xs border-b ${editMode === true ? "hidden" : "visible"} dark:border-gray-800`}>Status: {status}</div>
                 <div>
                     <select className={`text-xs w-full border-none ${editMode ? "visible" : "hidden"}`}
                             defaultValue={status}
@@ -97,7 +97,7 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
 
             <div className={"flex text-xs text-center"}>
 
-                <div className={"bg-blue-500 hover:bg-blue-600 text-white p-2 flex-1 cursor-pointer"}
+                <div className={"bg-blue-500 hover:bg-blue-600 text-white p-2 flex-1 cursor-pointer dark:bg-indigo-800"}
                      onClick={() => {
                          if (isClientDream) {
                              router.push("/new-life-area-survey?dreamName=" + dream.dream + "&dreamId=" + dream._id + "&clientId=" + clientId).then()

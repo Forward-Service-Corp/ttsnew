@@ -12,5 +12,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'),
+    require('autoprefixer'),
   ],
+  darkMode: 'class',
 }

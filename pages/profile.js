@@ -11,34 +11,36 @@ export default function Profile({user}) {
 
     const [currentTab, setCurrentTab] = useState("tab1")
     const [version, setVersion] = useState(user.isYouth)
+    const [simpleModal, setSimpleModal] = useState(false)
 
     return (
-        <Layout title={"Profile"} session={user} version={version}>
+        <Layout title={"Profile"} session={user} version={version} simpleModalTitle={`Workbook Version Update`}
+        simpleModalMessage={`You are now using the ${version ? "youth" : "adult"} version of the workbook.`} simpleModalLabel={`I understand.`} simpleModal={simpleModal}>
             <Head>
-                <title>{user.name}</title>
+                <title>TTS / My Profile</title>
             </Head>
-            <div className={"mb-5 border-b-2 border-b-gray-300 flex flex-col md:flex-row lg:flex-row "}>
+            <div className={"mb-5 border-b-[1px] border-b-gray-300 flex dark:border-b-gray-700 dark:text-white dark:font-light flex-col md:flex-row lg:flex-row "}>
 
                 <div
-                    className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab1" ? "border-b-2 border-b-orange-500" : ""}`}
+                    className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab1" ? "border-b-2 border-b-orange-500 dark:border-b-blue-900" : ""}`}
                     onClick={() => {
                         setCurrentTab("tab1")
                     }}>Personal Details
                 </div>
                 <div
-                    className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab2" ? "border-b-2 border-b-orange-500" : ""}`}
+                    className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab2" ? "border-b-2 border-b-orange-500 dark:border-b-blue-900" : ""}`}
                     onClick={() => {
                         setCurrentTab("tab2")
                     }}>Programs
                 </div>
                 <div
-                    className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab3" ? "border-b-2 border-b-orange-500" : ""}`}
+                    className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab3" ? "border-b-2 border-b-orange-500 dark:border-b-blue-900" : ""}`}
                     onClick={() => {
                         setCurrentTab("tab3")
                     }}>Coaches
                 </div>
                 <div
-                    className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab4" ? "border-b-2 border-b-orange-500" : ""}`}
+                    className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab4" ? "border-b-2 border-b-orange-500 dark:border-b-blue-900" : ""}`}
                     onClick={() => {
                         setCurrentTab("tab4")
                     }}>Workbook Version
@@ -56,14 +58,14 @@ export default function Profile({user}) {
             </div>
             <div className={`${currentTab === "tab4" ? "visible" : "hidden"}`}>
                 <div className={`p-4`}>
-                    <div className={``}>
+                    <div className={`dark:text-white`}>
 
                         This application has {version === true ? "an adult" : "a youth"} workbook. If you would like to use that workbook,
                         simply toggle the switch below. You may switch back at any time. If you are unsure
                         which workbook to use, please reach out to your coach. Thank you.
                     </div>
                     <div className={`mt-8`}>
-                        <WorkbookToggle user={user} version={version} setVersion={setVersion}/>
+                        <WorkbookToggle user={user} version={version} setVersion={setVersion} setSimpleModal={setSimpleModal}/>
                     </div>
                 </div>
             </div>

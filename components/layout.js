@@ -6,6 +6,8 @@ import {useRouter} from "next/router";
 import {UserCircleGear, UserCircle} from "phosphor-react";
 import ProfileDetailsWarningModal from "./profileDetailsWarningModal";
 import styles from "../styles/Layout.module.scss"
+import SimpleModal from "./simpleModal";
+import DarkModeToggle from "./darkModeToggle";
 
 const navigation = [
     {name: 'Dashboard', href: '/', current: true},
@@ -24,10 +26,18 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Layout({children, title, session, loadingState, version}) {
+export default function Layout({children, title, session, loadingState, version, simpleModalTitle, simpleModalMessage, simpleModalLabel, simpleModal}) {
     const router = useRouter()
 
     const [environment, setEnvironment] = useState("production")
+    const [darkMode, setDarkMode] = useState(null)
+
+    useEffect(() => {
+        const value = localStorage.theme
+        let currentTheme = value !== undefined && value === 'dark' ? 'darkTheme' : 'lightTheme'
+
+        setDarkMode(currentTheme)
+    }, []);
 
     useEffect(() => {
         const location = window.location.host
@@ -38,12 +48,13 @@ export default function Layout({children, title, session, loadingState, version}
         }
     }, [environment])
 
-
     return (
         <>
-            <div className={`${environment === "dev" || environment === "testing" ? "visible" : "hidden"} p-4 text-center text-xs bg-pink-600 text-white font-light`}>
-                You are currently in the {environment} environment.
+            <div className={`${environment === "dev" || environment === "testing" ? "visible" : "hidden"} p-4 text-center text-xs bg-pink-600 dark:bg-purple-900 text-white font-light`}>
+                You are currently in the <strong className={`uppercase font-black`}>{environment}</strong> environment.
             </div>
+            {simpleModal ? <SimpleModal title={simpleModalTitle} message={simpleModalMessage} label={simpleModalLabel}
+                          version={version}/> : null}
             <div
                 className={`fixed w-full h-full bg-gray-600 bg-opacity-50 flex align-middle justify-center ${loadingState ? "visible" : "hidden"}`}>
                 <div className={"uppercase text-white self-center rounded-full p-5 bg-orange-600 shadow"}>loading...
@@ -52,13 +63,13 @@ export default function Layout({children, title, session, loadingState, version}
             {router.pathname !== "/profile" && router.pathname !== "/" && router.pathname !== "/directory" ?
                 <ProfileDetailsWarningModal session={session}/> : null}
 
-            <div className="min-h-full ">
+            <div id={`layoutBannerContainer`} className={`min-h-full ${darkMode === 'darkTheme' ? styles.darkTheme : styles.lightTheme}`}>
                 <div className={`${session.isYouth || version ? styles.youthVersion : styles.adultVersion} pb-32 print:hidden`}>
-                    <Disclosure as="nav" className="bg-orange-500">
+                    <Disclosure as="nav" className="bg-[#db5839] shadow-lg dark:bg-black dark:shadow-2xl">
                         {({open}) => (
                             <>
                                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                                    <div className="border-b border-orange-400">
+                                    <div className="">
                                         <div className="flex items-center justify-between h-16 px-4 sm:px-0">
                                             <div className="flex items-center">
                                                 <div className="flex-shrink-0">
@@ -87,8 +98,8 @@ export default function Layout({children, title, session, loadingState, version}
                                                                 href={item.href}
                                                                 className={classNames(
                                                                     router.pathname === item.href
-                                                                        ? 'bg-orange-700 text-white'
-                                                                        : 'text-white hover:bg-orange-400 hover:text-white',
+                                                                        ? 'bg-orange-700 text-white dark:bg-gray-800'
+                                                                        : 'text-white hover:bg-orange-400 hover:text-white dark:hover:bg-gray-600',
                                                                     'px-3 py-2 rounded-md text-sm font-medium'
                                                                 )}
                                                                 aria-current={item.current ? 'page' : undefined}
@@ -102,8 +113,8 @@ export default function Layout({children, title, session, loadingState, version}
                                                                 onClick={() => signOut()}
                                                                 className={classNames(
                                                                     router.pathname === "/clients"
-                                                                        ? 'bg-orange-700 text-white'
-                                                                        : 'text-white hover:bg-orange-400 hover:text-white',
+                                                                        ? 'bg-orange-700 text-white dark:bg-gray-800'
+                                                                        : 'text-white hover:bg-orange-400 hover:text-white dark:hover:bg-gray-600',
                                                                     'px-3 py-2 rounded-md text-sm font-medium cursor-pointer'
                                                                 )}
                                                                 aria-current={router.pathname === "/clients" ? 'page' : undefined}
@@ -116,8 +127,8 @@ export default function Layout({children, title, session, loadingState, version}
                                                                 href={"/clients"}
                                                                 className={classNames(
                                                                     router.pathname === "/clients"
-                                                                        ? 'bg-orange-700 text-white'
-                                                                        : 'text-white hover:bg-orange-400 hover:text-white',
+                                                                        ? 'bg-orange-700 text-white dark:bg-gray-800'
+                                                                        : 'text-white hover:bg-orange-400 hover:text-white dark:hover:bg-gray-600',
                                                                     'px-3 py-2 rounded-md text-sm font-medium'
                                                                 )}
                                                                 aria-current={router.pathname === "/clients" ? 'page' : undefined}
@@ -131,8 +142,8 @@ export default function Layout({children, title, session, loadingState, version}
                                                                 href={"/users"}
                                                                 className={classNames(
                                                                     router.pathname === "/users"
-                                                                        ? 'bg-orange-700 text-white'
-                                                                        : 'text-white hover:bg-orange-400 hover:text-white',
+                                                                        ? 'bg-orange-700 text-white dark:bg-gray-800'
+                                                                        : 'text-white hover:bg-orange-400 hover:text-white dark:hover:bg-gray-600',
                                                                     'px-3 py-2 rounded-md text-sm font-medium'
                                                                 )}
                                                                 aria-current={router.pathname === "/users" ? 'page' : undefined}
@@ -169,15 +180,15 @@ export default function Layout({children, title, session, loadingState, version}
                                                             leaveTo="transform opacity-0 scale-95"
                                                         >
                                                             <Menu.Items
-                                                                className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                                                className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-gray-900 ring-1 ring-black dark:ring-purple-900 ring-opacity-5 dark:ring-opacity-40 dark:shadow-2xl focus:outline-none">
                                                                 {userNavigation.map((item) => (
                                                                     <Menu.Item key={item.name}>
                                                                         {({active}) => (
                                                                             <a
                                                                                 href={item.href}
                                                                                 className={classNames(
-                                                                                    active ? 'bg-gray-100' : '',
-                                                                                    'block px-4 py-2 text-sm text-black'
+                                                                                    active ? 'bg-gray-100 dark:hover:bg-gray-800' : '',
+                                                                                    'block px-4 py-2 text-sm text-black dark:text-white'
                                                                                 )}
                                                                             >
                                                                                 {item.name}
@@ -188,8 +199,14 @@ export default function Layout({children, title, session, loadingState, version}
                                                                 {session?.level === "admin" ?
                                                                     <Menu.Item>
                                                                         <a href={"/reports"}
-                                                                            className={'block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100'}
+                                                                            className={'block px-4 py-2 text-sm text-black dark:text-white cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800'}
                                                                         >Reports</a></Menu.Item> : null}
+                                                                <Menu.Item>
+                                                                    <div className={`ml-4 mt-[3px]`}>
+                                                                        <DarkModeToggle setDarkMode={setDarkMode} session={session}/>
+                                                                    </div>
+
+                                                                </Menu.Item>
                                                                 <Menu.Item>
                                                                     {({active}) => (
                                                                         <a
@@ -200,8 +217,8 @@ export default function Layout({children, title, session, loadingState, version}
                                                                                     })
                                                                             }}
                                                                             className={classNames(
-                                                                                active ? 'bg-gray-100' : '',
-                                                                                'block px-4 py-2 text-sm text-gray-700 cursor-pointer'
+                                                                                active ? 'bg-gray-100 dark:hover:bg-gray-800' : '',
+                                                                                'block px-4 py-2 text-sm text-black dark:text-white cursor-pointer'
                                                                             )}
                                                                         >
                                                                             Sign Out
@@ -293,7 +310,8 @@ export default function Layout({children, title, session, loadingState, version}
                     </Disclosure>
                     <header className="py-10">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <h1 className="text-xl font-light text-white">{title}</h1>
+                            <h1 className="text-xl font-black text-white dark:text-gray-400">{title}</h1>
+                            <p className={`mt-0 text-white`}>{session.isYouth || version ? "Youth Workbook" : "Adult Workbook"}</p>
                         </div>
                     </header>
                 </div>
@@ -301,15 +319,15 @@ export default function Layout({children, title, session, loadingState, version}
                 <main className="-mt-32 print:mt-0">
                     <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
                         <div
-                            className="bg-white shadow px-5 py-6 sm:px-6 print:px-0 print:py-0 print:shadow-none">
+                            className="bg-white dark:bg-gray-900 shadow px-5 py-6 sm:px-6 print:px-0 print:py-0 print:shadow-none">
                             {children}
                         </div>
                     </div>
                 </main>
             </div>
-            <div className={"p-4 bg-gray-600 grid grid-cols-1 md:grid-cols-4 text-white text-sm  font-light"}>
+            <div className={"p-4 bg-gray-600 dark:bg-gray-900 grid grid-cols-1 md:grid-cols-4 text-white text-sm  font-light"}>
                 <div className={"text-center"}>Map of My Dreams Web Application</div>
-                <div className={"text-center"}>Forward Service Corporation &copy; 2022</div>
+                <div className={"text-center"}>Forward Service Corporation &copy; 2024</div>
                 <div className={"text-center"}>
                     <a href={"/disclaimer"}
                        target={"_self"}

@@ -1,12 +1,16 @@
 import React from 'react';
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
+import Head from "next/head";
 
 function Disclaimer({pageDataJson}) {
     const {user} = pageDataJson
 
     return (
         <Layout title={"Data Usage Disclaimer"} session={user}>
+            <Head>
+                <title>TTS / Data Disclaimer</title>
+            </Head>
             <div className={`p-4 mt-8`}>
                 <p className={`text-xl uppercase`}>Disclaimer</p>
                 <p className={`pb-4`}>

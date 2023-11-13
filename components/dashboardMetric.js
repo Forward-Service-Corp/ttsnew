@@ -21,13 +21,13 @@ function DashboardMetric({title, link, linkLabel, metric, icon}) {
     }
 
     return (
-        <div className="bg-white overflow-hidden text-center shadow flex flex-col justify-between">
+        <div className="bg-white dark:bg-black overflow-hidden text-center shadow flex flex-col justify-between dark:rounded-[7px] dark:text-white">
             <div className={"flex align-middle items-center justify-center text-white bg-gray-700 p-2"}>
                 {useIcon(icon)}
                 <dt className=" font-light ml-2">{title}</dt>
             </div>
             <dd className="my-4 text-4xl font-light ">{metric}</dd>
-            <div className={"flex align-middle items-center justify-center text-white bg-blue-500 p-2 hover:bg-blue-600"}>
+            <div className={"flex align-middle items-center justify-center text-white bg-blue-500 dark:bg-blue-900 p-2 hover:bg-blue-600"}>
                 <Link href={link}>
                     <a className={"text-white text-xs"}>{linkLabel}</a>
                 </Link>

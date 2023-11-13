@@ -3,6 +3,7 @@ import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
 import {WICountiesList} from "../lib/WI_Counties";
 import {labelMap} from "../lib/serviceLabelsMap";
+import Head from "next/head";
 
 export default function AddNewReferral({pageDataJson}) {
 
@@ -46,6 +47,9 @@ export default function AddNewReferral({pageDataJson}) {
 
     return (
         <Layout title={"Add New Referral to CARE Network"} session={user}>
+            <Head>
+                <title>TTS / Add New Referral</title>
+            </Head>
             <div className={"text-xl uppercase text-gray-600 mb-6"}>
                 New referral details
             </div>

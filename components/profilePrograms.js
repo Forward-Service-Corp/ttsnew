@@ -25,8 +25,8 @@ function ProfilePrograms({user}) {
         <>
             <div className={"flex flex-col"}>
                 <div className={""}>
-                    <h2 className={"uppercase text-gray-600 font-light mb-3"}>Available Programs</h2>
-                    <select className={"h-[260px] w-full"} multiple onChange={(e) => {
+                    <h2 className={"uppercase text-gray-600 font-light mb-3 dark:text-white"}>Available Programs</h2>
+                    <select className={"h-[260px] w-full dark:bg-black dark:text-white dark:border-0"} multiple onChange={(e) => {
                         setPrograms(prevState => {
                             if (programs.indexOf(e.target.value) === -1) {
                                 return [...prevState, e.target.value]
@@ -53,16 +53,16 @@ function ProfilePrograms({user}) {
                     </select>
                 </div>
                 <div className={""}>
-                    <h2 className={"uppercase text-gray-600 font-light mb-3"}>Your Selected Programs</h2>
+                    <h2 className={"uppercase text-gray-600 font-light mb-3 mt-6 dark:text-white"}>Your Selected Programs</h2>
                     <div>
                         {programs.map(program => (
-                            <div className={"cursor-pointer rounded border py-1 px-2 min-h-8 mr-2 mb-2 flex justify-between align-middle text-sm"} key={program}
+                            <div className={"cursor-pointer rounded border dark:border-[1px] dark:border-gray-800 py-1 px-2 min-h-8 mr-2 mb-2 flex justify-between align-middle text-sm dark:bg-[#111111] dark:text-white w-auto"} key={program}
                                  onClick={() => {
                                      setPrograms(prevState => prevState.filter(item => item !== program))
                                      setProgramsUpdated(true)
                                  }}>
                                 <div className={"inline-block"}>{program}</div>
-                                <div className={"inline-block"}><XCircle size={20} weight="thin" color={"red"}/></div>
+                                <div className={"inline-block"}><XCircle size={20} weight="thin" color={"orange"}/></div>
                             </div>
                         ))}
                     </div>

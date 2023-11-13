@@ -32,7 +32,7 @@ export default function Home({pageDataJson}) {
             <Head>
                 <title>TTS / Dashboard</title>
             </Head>
-            <div className={"p-4 bg-gray-100"}>
+            <div className={"p-4 dark:p-0 bg-gray-100 dark:bg-opacity-0"}>
                 <dl className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-4">
                     <DashboardMetric title={"Active dreams"} metric={dreams.filter(dream => dream.status === "active").length} link={"/dreams"} linkLabel={"View dreams"} icon={"Brain"}/>
                     <DashboardMetric title={"Life Area Surveys"} metric={surveys.length} link={"/life-area-surveys"} linkLabel={"View life area surveys"} icon={"ListNumbers"}/>
@@ -43,19 +43,19 @@ export default function Home({pageDataJson}) {
             <div className={"flex justify-between py-8"}>
                 <div>
                     <button disabled={currentTab === 1} onClick={prevPage}
-                            className={"py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300"}>Previous
+                            className={"py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-600 dark:rounded-[7px]"}>Previous
                         page
                     </button>
                 </div>
                 <div>
                     <button onClick={nextPage}
-                            className={"py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300"}>
+                            className={"py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-600 dark:rounded-[7px]"}>
                         {currentTab === 3 ? "Continue to Dreams" : "Next page"}
                     </button>
                 </div>
             </div>
             { !user.isYouth || user.isYouth === false  ? <WelcomeGroupAdult currentTab={currentTab}/> : <WelcomeGroupYouth currentTab={currentTab}/>}
-            <div className={`p-4 text-xs border-t-[1px] border-gray-400 mt-8`}>
+            <div className={`p-4 text-xs border-t-[1px] border-gray-400 mt-8 dark:border-blue-900 dark:text-white`}>
                 <p className={`text-lg uppercase`}>Disclaimer</p>
                 <p className={`pb-4`}>
                     You are logged into an application owned by Forward Service Corporation. The information
