@@ -5,9 +5,10 @@ import TaskTodo from "./taskTodo";
 import NoteItem from "./noteItem";
 import {labelMap} from "../lib/serviceLabelsMap";
 import {useRouter} from "next/router";
+import Emoji from "./emoji";
 
 
-function ReferralContainer({item, user, notes, setUserReferrals, modifier, loggedInUser}) {
+function ReferralContainer({item, user, notes, setUserReferrals, modifier, loggedInUser, i}) {
 
     const router = useRouter()
     const [open, setOpen] = useState(false)
@@ -15,6 +16,14 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
     const [allTasks, setAllTasks] = useState([])
     const [allNotes, setAllNotes] = useState(notes)
     const [saving, setSaving] = useState(true)
+    const [priority, setPriority] = useState('none')
+    const colorMap = {
+        '3': 'bg-red-500',
+        '2': 'bg-orange-400 text-black',
+        '1': 'bg-yellow-300 text-black',
+        '0': 'bg-blue-500',
+        undefined: 'bg-blue-400'
+    }
 
     async function saveTask() {
         setSaving(true)
@@ -67,6 +76,10 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
         await setUserReferrals(fetchedReferrals)
     }
 
+    async function savePriority(referralId, priority) {
+        await fetch("/api/set-referral-priority?referralId=" + referralId + "&priority=" + priority)
+    }
+
     useEffect(() => {
         getTasks().then()
     }, [])
@@ -74,15 +87,24 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
     return (
         <div className={"my-3"} key={item._id}>
             <div
-                className={`flex justify-start items-center text-sm font-light text-white relative p-3 ${item.archived !== "true" ? "bg-orange-500" : "bg-gray-400"}`}>
-                <div className={"w-[160px] ml-4 whitespace-nowrap mr-3 truncate"}>{labelMap[item.domain]}</div>
+                className={`flex justify-start items-center text-sm font-light text-white relative p-3 ${item.archived !== "true" ? colorMap[item.priority] : "bg-gray-600"}`}>
+                <div className={"w-[160px] ml-4 whitespace-nowrap mr-3 truncate font-bold"}>{labelMap[item.domain]}</div>
                 <div className={"truncate max-w-[200px]"}>{item.name}</div>
                 <div
-                    className={"absolute right-0 min-w-[100px] flex items-center justify-between h-full pl-3  bg-gray-700"}>
-                    <div className={`border-2 h-full w-[50px] mr-5`}>
-
+                    className={"absolute right-[0px] min-w-[130px] flex items-center justify-between h-full  bg-gray-700"}>
+                    <div className={`h-full w-[50px] mr-5 flex`}>
+                        <div className={`align-middle self-center`}>
+                            <select name="priority-select" id={item._id + i} className={`bg-gray-700 border-0 w-[80px] focus:border-0 focus:border-transparent focus:ring-transparent outline-none focus:outline-none`} onChange={(e) => {
+                                savePriority(item._id, e.target.value).then(getReferrals)
+                            }} value={item.priority}>
+                                <option value="0"></option>
+                                <option value="1">✨</option>
+                                <option value="2">⭐</option>
+                                <option value="3">🔥</option>
+                            </select>
+                        </div>
                     </div>
-                    <div>Tasks: {allTasks.filter(task => task.referralId === item._id && eval(task.completed) === false).length}</div>
+                    <div className={`ml-8 text-white`}>Tasks: {allTasks.filter(task => task.referralId === item._id && eval(task.completed) === false).length}</div>
                     <div className={"p-3 cursor-pointer text-xs"} onClick={() => {
                         setOpen(!open)
                     }}>{open ? <CaretDoubleUp size={20} weight="thin"/> :
@@ -145,7 +167,7 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
                 <CarePlanDomain item={item}/>
                 <div className={"w-full p-5 inline"}>
                     <h2 className={"uppercase text-orange-600 mb-2"}>Add a new task</h2>
-                    <input type={"text"} className={"w-full border-0 border-b-[1px] p-1 text-sm font-light"}
+                    <input type={"text"} className={"w-full border-0 border-b-[1px] p-1 text-sm font-light"} id={item._id}
                            value={task} placeholder={"Enter new todo item..."} onChange={(e) => {
                         setTask(e.target.value)
                     }}/>
@@ -170,7 +192,7 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
                                           setSaving={setSaving}
                                           allNotes={allNotes}
                                           loggedInUser={loggedInUser}
-                                          setAllNotes={setAllNotes}/>
+                                          setAllNotes={setAllNotes} i={i}/>
 
                             </div>
                         )

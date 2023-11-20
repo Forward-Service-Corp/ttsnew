@@ -41,8 +41,8 @@ export default function ReferralId({pageDataJson, referralDataJson}) {
     const textInfoJSX = (data, label) => {
         return (
             <div>
-                <p className={"text-xs text-gray-500 capitalize"}>{label}:</p>
-                <div>{data || <span className={"text-gray-500"}>{`No ${label} listed`}</span>}</div>
+                <p className={"text-xs text-gray-500 capitalize dark:text-gray-300"}>{label}:</p>
+                <div className={`dark:text-white`}>{data || <span className={"text-gray-500 dark:text-white"}>{`No ${label} listed`}</span>}</div>
             </div>
         )
     }
@@ -51,17 +51,17 @@ export default function ReferralId({pageDataJson, referralDataJson}) {
         if(data){
             return (
                 <div>
-                    <p className={"text-xs text-gray-500 capitalize"}>{label}:</p>
+                    <p className={"text-xs text-gray-500 capitalize dark:text-gray-300"}>{label}:</p>
                     <div>{<a href={`mailto:${data}`} className={"underline text-orange-500"}>
-                        {data}</a> || <span className={"text-gray-500"}>No {label} listed</span>
+                        {data}</a> || <span className={"text-gray-500 dark:text-white"}>No {label} listed</span>
                     }</div>
                 </div>
             )
         }else{
             return (
                 <div>
-                    <p className={"text-xs text-gray-500 capitalize"}>{label}</p>
-                    <div><span className={"text-gray-500"}>No {label} listed</span></div>
+                    <p className={"text-xs text-gray-500 capitalize dark:text-gray-300"}>{label}</p>
+                    <div><span className={"text-gray-500 dark:text-white"}>No {label} listed</span></div>
                 </div>
             )
         }
@@ -71,15 +71,15 @@ export default function ReferralId({pageDataJson, referralDataJson}) {
         if(data){
             return (
                 <div>
-                    <p className={"text-xs text-gray-500"}>Website</p>
+                    <p className={"text-xs text-gray-500 dark:text-gray-300"}>Website</p>
                     <div className={"truncate"}>{<a target={"_blank"} rel={"noreferrer"} className={"text-orange-500 underline"} href={data}>Visit website</a>}</div>
                 </div>
             )
         }else{
             return (
                 <div>
-                    <p className={"text-xs text-gray-500"}>Website</p>
-                    <div className={"truncate"}>{<span className={"text-gray-500"}>No {label} listed</span>}</div>
+                    <p className={"text-xs text-gray-500 dark:text-gray-300"}>Website</p>
+                    <div className={"truncate"}>{<span className={"text-gray-500 dark:text-white"}>No {label} listed</span>}</div>
                 </div>
             )
         }
@@ -91,7 +91,7 @@ export default function ReferralId({pageDataJson, referralDataJson}) {
                 <title>{referralDataJson.name}</title>
             </Head>
             <div className={"flex justify-between items-center"}>
-                <div className={"text-xs text-red-600"}>
+                <div className={"text-xs text-red-600 dark:accent-red-500"}>
                     {userReferrals.filter(referral => referral.name === referralDataJson.name).length > 0 ? "This referral is currently in your CARE Plan." : null}
                 </div>
                 <div>
@@ -100,7 +100,7 @@ export default function ReferralId({pageDataJson, referralDataJson}) {
                         onClick={() => {
                             saveReferral().then(getReferrals)
                         }}
-                        className={"py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400"}>
+                        className={"py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 dark:rounded-lg"}>
                         Add to my CARE Plan
                     </button>
                 </div>

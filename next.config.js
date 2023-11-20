@@ -1,8 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false };
+
+    return config;
+  },
   images: {
-    domains: ['lh3.googleusercontent.com']
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: 'lh3.googleusercontent.com'
+      }
+    ]
   }
 }
 

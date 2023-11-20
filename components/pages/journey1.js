@@ -2,7 +2,7 @@ import React from 'react';
 
 function Journey1(props) {
     return (
-        <div className={"text-sm p-4 bg-gray-100"}>
+        <div className={"text-sm p-4 bg-gray-100 dark:bg-opacity-0 dark:p-0 dark:text-white"}>
             <h1 className={"mt-3 text-center text-xl font-bold"}>The Road Is Closed – Dealing with Road Blocks and Detours</h1>
             <p>When traveling, the unexpected should be expected – don’t be discouraged. This is life, be prepared
                 and

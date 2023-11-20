@@ -3,7 +3,7 @@ import {FilePlus, Trash} from "phosphor-react";
 import moment from "moment";
 import NoteItem from "./noteItem";
 
-function TaskTodo({task, setAllTasks, user, item, setAllNotes, loggedInUser, setSaving, allNotes}) {
+function TaskTodo({task, setAllTasks, user, item, setAllNotes, loggedInUser, setSaving, allNotes, i}) {
 
     const [note, setNote] = useState("")
     const [noteOpen, setNoteOpen] = useState(false)
@@ -59,7 +59,7 @@ function TaskTodo({task, setAllTasks, user, item, setAllNotes, loggedInUser, set
         <div className={"mt-3"}>
             <div className={`flex justify-between align-middle p-2 ${task.completed === "true" ? "bg-green-100" : "bg-gray-100"}`} key={task._id}>
                 <div className={"flex"}>
-                    <input type={"checkbox"}
+                    <input type={"checkbox"} id={task._id}
                            checked={task.completed === "true"}
                            className={"mr-2 rounded"}
                            onChange={() => {
@@ -96,8 +96,8 @@ function TaskTodo({task, setAllTasks, user, item, setAllNotes, loggedInUser, set
                 </div>
             </div>
             <div className={`mb-3 ${noteOpen ? "visible" : "hidden"}`}>
-                <input type={"text"} value={note} placeholder={"Enter  note here..."}
-                       className={"p-1 text-sm border-0 border-b-[1px] text-sm font-light w-full"}
+                <input type={"text"} value={note} placeholder={"Enter  note here..."} id={task._id + i}
+                       className={"p-1 border-0 border-b-[1px] text-sm font-light w-full"}
                        onChange={(e) => {
                            setNote(e.target.value)
                        }}/>

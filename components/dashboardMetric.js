@@ -29,7 +29,7 @@ function DashboardMetric({title, link, linkLabel, metric, icon}) {
             <dd className="my-4 text-4xl font-light ">{metric}</dd>
             <div className={"flex align-middle items-center justify-center text-white bg-blue-500 dark:bg-blue-900 p-2 hover:bg-blue-600"}>
                 <Link href={link}>
-                    <a className={"text-white text-xs"}>{linkLabel}</a>
+                    <span className={"text-white text-xs"}>{linkLabel}</span>
                 </Link>
             </div>
         </div>

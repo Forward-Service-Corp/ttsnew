@@ -12,7 +12,6 @@ export default function DarkModeToggle({setDarkMode, session}) {
     async function handleToggle(){
         await fetch(`/api/save-appearance-preference?appearance=${enabled === true ? "dark" : "light"}&userId=${session._id}`)
             .then(res => res.json())
-            .then(res => console.log(res))
             .catch(err => console.warn(err))
         await setEnabled((prev) => !prev)
         document.documentElement.classList.toggle('dark')

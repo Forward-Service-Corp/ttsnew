@@ -26,7 +26,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Layout({children, title, session, loadingState, version, simpleModalTitle, simpleModalMessage, simpleModalLabel, simpleModal}) {
+export default function Layout({children, title, session, loadingState, version, simpleModalTitle, simpleModalMessage, simpleModalLabel, simpleModal, modalState, setDestinationEmail, setModalState}) {
     const router = useRouter()
 
     const [environment, setEnvironment] = useState("production")
@@ -48,6 +48,7 @@ export default function Layout({children, title, session, loadingState, version,
         }
     }, [environment])
 
+
     return (
         <>
             <div className={`${environment === "dev" || environment === "testing" ? "visible" : "hidden"} p-4 text-center text-xs bg-pink-600 dark:bg-purple-900 text-white font-light`}>
@@ -60,8 +61,8 @@ export default function Layout({children, title, session, loadingState, version,
                 <div className={"uppercase text-white self-center rounded-full p-5 bg-orange-600 shadow"}>loading...
                 </div>
             </div>
-            {router.pathname !== "/profile" && router.pathname !== "/" && router.pathname !== "/directory" ?
-                <ProfileDetailsWarningModal session={session}/> : null}
+            {/*{router.pathname !== "/profile" && router.pathname !== "/" && router.pathname !== "/directory" ?*/}
+            {/*    <ProfileDetailsWarningModal session={session}/> : null}*/}
 
             <div id={`layoutBannerContainer`} className={`min-h-full ${darkMode === 'darkTheme' ? styles.darkTheme : styles.lightTheme}`}>
                 <div className={`${session.isYouth || version ? styles.youthVersion : styles.adultVersion} pb-32 print:hidden`}>
@@ -100,7 +101,7 @@ export default function Layout({children, title, session, loadingState, version,
                                                                     router.pathname === item.href
                                                                         ? 'bg-orange-700 text-white dark:bg-gray-800'
                                                                         : 'text-white hover:bg-orange-400 hover:text-white dark:hover:bg-gray-600',
-                                                                    'px-3 py-2 rounded-md text-sm font-medium'
+                                                                    'px-3 py-2 rounded-md text-sm font-medium dark:font-extralight'
                                                                 )}
                                                                 aria-current={item.current ? 'page' : undefined}
                                                             >
@@ -115,7 +116,7 @@ export default function Layout({children, title, session, loadingState, version,
                                                                     router.pathname === "/clients"
                                                                         ? 'bg-orange-700 text-white dark:bg-gray-800'
                                                                         : 'text-white hover:bg-orange-400 hover:text-white dark:hover:bg-gray-600',
-                                                                    'px-3 py-2 rounded-md text-sm font-medium cursor-pointer'
+                                                                    'px-3 py-2 rounded-md text-sm font-medium cursor-pointer dark:font-extralight'
                                                                 )}
                                                                 aria-current={router.pathname === "/clients" ? 'page' : undefined}
                                                             >
@@ -129,7 +130,7 @@ export default function Layout({children, title, session, loadingState, version,
                                                                     router.pathname === "/clients"
                                                                         ? 'bg-orange-700 text-white dark:bg-gray-800'
                                                                         : 'text-white hover:bg-orange-400 hover:text-white dark:hover:bg-gray-600',
-                                                                    'px-3 py-2 rounded-md text-sm font-medium'
+                                                                    'px-3 py-2 rounded-md text-sm font-medium dark:font-extralight'
                                                                 )}
                                                                 aria-current={router.pathname === "/clients" ? 'page' : undefined}
                                                             >
@@ -144,7 +145,7 @@ export default function Layout({children, title, session, loadingState, version,
                                                                     router.pathname === "/users"
                                                                         ? 'bg-orange-700 text-white dark:bg-gray-800'
                                                                         : 'text-white hover:bg-orange-400 hover:text-white dark:hover:bg-gray-600',
-                                                                    'px-3 py-2 rounded-md text-sm font-medium'
+                                                                    'px-3 py-2 rounded-md text-sm font-medium dark:font-extralight'
                                                                 )}
                                                                 aria-current={router.pathname === "/users" ? 'page' : undefined}
                                                             >
@@ -188,7 +189,7 @@ export default function Layout({children, title, session, loadingState, version,
                                                                                 href={item.href}
                                                                                 className={classNames(
                                                                                     active ? 'bg-gray-100 dark:hover:bg-gray-800' : '',
-                                                                                    'block px-4 py-2 text-sm text-black dark:text-white'
+                                                                                    'block px-4 py-2 text-sm text-black dark:text-white dark:font-extralight'
                                                                                 )}
                                                                             >
                                                                                 {item.name}
@@ -199,10 +200,11 @@ export default function Layout({children, title, session, loadingState, version,
                                                                 {session?.level === "admin" ?
                                                                     <Menu.Item>
                                                                         <a href={"/reports"}
-                                                                            className={'block px-4 py-2 text-sm text-black dark:text-white cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800'}
+                                                                            className={'block px-4 py-2 text-sm text-black dark:text-white cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 dark:font-extralight'}
                                                                         >Reports</a></Menu.Item> : null}
                                                                 <Menu.Item>
-                                                                    <div className={`ml-4 mt-[3px]`}>
+                                                                    <div className={`ml-4 mt-[3px] flex items-center`}>
+                                                                        <div className={`mr-3 text-black dark:text-white dark:font-extralight text-sm`}>Dark Mode</div>
                                                                         <DarkModeToggle setDarkMode={setDarkMode} session={session}/>
                                                                     </div>
 
@@ -218,7 +220,7 @@ export default function Layout({children, title, session, loadingState, version,
                                                                             }}
                                                                             className={classNames(
                                                                                 active ? 'bg-gray-100 dark:hover:bg-gray-800' : '',
-                                                                                'block px-4 py-2 text-sm text-black dark:text-white cursor-pointer'
+                                                                                'block px-4 py-2 text-sm text-black dark:text-white cursor-pointer dark:font-extralight'
                                                                             )}
                                                                         >
                                                                             Sign Out

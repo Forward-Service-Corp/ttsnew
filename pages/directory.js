@@ -44,47 +44,47 @@ export default function Directory({pageDataJson}) {
             {/*        Add new referral to CARE Network*/}
             {/*    </button>*/}
             {/*</div>*/}
-            <div className={" p-3 bg-gray-100 rounded shadow"}>
+            <div className={"w-full max-w-[95%] m-auto p-3 bg-gray-100 rounded shadow dark:bg-transparent"}>
                 <form className={"grid grid-cols-1 md:grid-cols-4 gap-4 items-end"} onSubmit={(e) => {
                     e.preventDefault()
                     search().then()
                 }}>
                     <div className={""}>
-                        <p className={"text-xs text-gray-500"}>Search by keyword</p>
-                        <input className={"w-full rounded border-gray-300 text-xs"} id={"searchField"} type={"text"}
+                        <p className={"text-xs text-gray-500 dark:text-white dark:pb-3"}>Search by keyword</p>
+                        <input className={"w-full rounded border-gray-300 text-xs dark:bg-black dark:text-white dark:border-0 dark:placeholder:text-gray-500"} placeholder={`Enter a keyword...`} id={"searchField"} type={"text"}
                                value={keyword} onChange={(e) => {
                             setKeyword(e.target.value)
                         }}/>
                     </div>
                     <div className={""}>
-                        <p className={"text-xs text-gray-500"}>Search by domain</p>
-                        <select id={"domainSelect"} className={"w-full rounded border-gray-300 text-xs"}
+                        <p className={"text-xs text-gray-500 dark:text-white dark:pb-3"}>Search by domain</p>
+                        <select id={"domainSelect"} className={"w-full rounded border-gray-300 text-xs dark:bg-black dark:text-white dark:border-0 dark:placeholder:text-gray-500 focus:border-0 focus:border-transparent focus:ring-transparent outline-none focus:outline-none"}
                                 onChange={(e) => {
                                     setDomain(e.target.value)
                                 }}>
-                            <option value={""}></option>
+                            <option className={`dark:placeholder:text-gray-500`} value={""}>Select a domain...</option>
                             {domains.map(domain => <option key={domain} value={domain}>{labelMap[domain]}</option>)}
                         </select>
                     </div>
                     <div className={""}>
-                        <p className={"text-xs text-gray-500"}>Search by county</p>
-                        <select className={"w-full rounded border-gray-300 text-xs"} id={"countySelect"}
+                        <p className={"text-xs text-gray-500 dark:text-white dark:pb-3"}>Search by county</p>
+                        <select defaultValue={"none"} className={"w-full rounded border-gray-300 text-xs dark:bg-black dark:text-white dark:border-0 dark:placeholder:text-gray-500 focus:border-0 focus:border-transparent focus:ring-transparent outline-none focus:outline-none dark:default:text-gray-500"} id={"countySelect"}
                                 onChange={(e) => {
                                     setCounty(e.target.value)
                                 }}>
-                            <option value={""}></option>
+                            <option value={"none"}>Select a county...</option>
                             {WICountiesList.map(county => <option value={county} key={county}>{county}</option>)}
                         </select>
                     </div>
                     <div className={"flex items-center"}>
                         <button type={"submit"}
-                                className={"py-[6px] px-6 mr-2 text-white  text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400"}
+                                className={"py-[8px] px-6 mr-2 text-white  text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 dark:rounded-lg"}
                                 onClick={() => {
                                     setSearched(true)
                                 }}>Search
                         </button>
                         <button type={"reset"}
-                                className={"py-[6px] px-6 text-white  text-xs bg-red-500 hover:bg-red-600 disabled:bg-gray-400"}
+                                className={"py-[8px] px-6 text-white  text-xs bg-red-500 hover:bg-red-600 disabled:bg-gray-400 rounded-lg"}
                                 disabled={keyword === "" && domain === "" && county === ""}
                                 onClick={() => {
                                     setKeyword("")
@@ -97,13 +97,13 @@ export default function Directory({pageDataJson}) {
                     </div>
                 </form>
             </div>
-            <div className={`rounded bg-green-100 p-2 text-xs text-center mt-4 ${searching ? "visible" : "hidden"}`}>
+            <div className={`rounded bg-green-100 p-2 text-xs text-center mt-4 max-w-[95%] m-auto ${searching ? "visible" : "hidden"} dark:bg-purple-800 dark:text-white dark:font-extralight`}>
                 Searching...
             </div>
-            <div className={`text-center p-4 ${searched ? "visible" : "hidden"}`}>
-                {loadedServices.length === 0 ? "There were no results" : loadedServices.length + " results"}
+            <div className={`text-center p-4 ${searched ? "visible" : "hidden"} dark:text-white dark:font-extralight`}>
+                {loadedServices.length === 0 ? "There were no results" : "There were " + loadedServices.length + " results found."}
             </div>
-            <div className={`text-center p-4 ${!searched ? "visible" : "hidden"}`}>
+            <div className={`text-center p-4 ${!searched ? "visible" : "hidden"} dark:text-white font-thin`}>
                 Please enter your search criteria.
             </div>
             {loadedServices.length > 0 ? <ServicesTable services={loadedServices}/> : null}
