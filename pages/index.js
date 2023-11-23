@@ -11,7 +11,7 @@ export default function Home({pageDataJson}) {
 
     const router = useRouter()
     const {user, dreams, surveys, referrals, tasks} = pageDataJson
-    const completedTasks = tasks.filter(task => eval(task.completed) === true).length
+    tasks.filter(task => eval(task.completed) === true).length;
     const [currentTab, setCurrentTab] = useState(1)
 
     function prevPage() {

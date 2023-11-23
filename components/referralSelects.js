@@ -28,7 +28,7 @@ function ReferralSelects({
 
     useEffect(() => {
         getUserReferrals().then()
-    }, [])
+    }, [getUserReferrals])
 
     return (<div className={"flex-1"}>
             {domains.map((domain, i) => {

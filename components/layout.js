@@ -8,6 +8,7 @@ import ProfileDetailsWarningModal from "./profileDetailsWarningModal";
 import styles from "../styles/Layout.module.scss"
 import SimpleModal from "./simpleModal";
 import DarkModeToggle from "./darkModeToggle";
+import Image from "next/image";
 
 const navigation = [
     {name: 'Dashboard', href: '/', current: true},
@@ -72,19 +73,15 @@ export default function Layout({children, title, session, loadingState, version,
                                     <div className="">
                                         <div className="flex items-center justify-between h-16 px-4 sm:px-0">
                                             <div className="flex items-center">
-                                                <div className="flex-shrink-0">
-                                                    <img
-                                                        className="w-[90px]"
+                                                <div className="w-[80px] h-[50px] relative">
+                                                    <Image sizes="(max-width:70px) 3vw, (max-width: 70px) 10vw, 5vw" fill
                                                         src="/img/TTS_Logo2_vertical.png"
-                                                        alt="Workflow"
-                                                    />
+                                                        alt="Workflow"/>
                                                 </div>
-                                                <div className="flex-shrink-0 ml-3">
-                                                    <img
-                                                        className="w-[50px]"
+                                                <div className="w-[60px] h-[50px] relative ml-3">
+                                                    <Image sizes="(max-width:70px) 3vw, (max-width: 70px) 10vw, 5vw" fill
                                                         src="/img/fsc-logo.png"
-                                                        alt="Workflow"
-                                                    />
+                                                        alt="Workflow"/>
                                                 </div>
                                                 <div className="flex-shrink-0 ml-3 visible md:hidden">
                                                     <a onClick={() => signOut()}
@@ -161,13 +158,14 @@ export default function Layout({children, title, session, loadingState, version,
                                                     <Menu as="div" className="ml-3 relative">
                                                         <div>
                                                             <Menu.Button
-                                                                className="max-w-xs bg-orange-600 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                                                                className="w-[45px] h-[45px] relativemax-w-xs bg-orange-600 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                                                                 <span className="sr-only">Open user menu</span>
-                                                                {session?.image ? <img className="h-8 w-8 rounded-full"
-                                                                                       src={session.image} alt=""/> :
+                                                                {session?.image ? <Image className="rounded-full"
+                                                                                         sizes="(max-width:45px) 3vw, (max-width: 45px) 10vw, 5vw" fill
+                                                                                       src={session.image} alt="User avatar"/> :
                                                                     <UserCircleGear size={32} weight="thin"
                                                                                     color={"white"}/>}
-
+`
                                                             </Menu.Button>
                                                         </div>
                                                         <Transition
@@ -267,10 +265,10 @@ export default function Layout({children, title, session, loadingState, version,
                                     </div>
                                     <div className="pt-4 pb-3 border-t border-gray-700">
                                         <div className="flex items-center px-5">
-                                            <div className="flex-shrink-0">
+                                            <div className="flex-shrink-0 w-[45px] h-[45px] relative">
                                                 {session?.image ?
-                                                    <img className="h-10 w-10 rounded-full" src={session.image}
-                                                         alt=""/> :
+                                                    <Image className="rounded-full" src={session.image} sizes="(max-width:45px) 3vw, (max-width: 45px) 10vw, 5vw" fill
+                                                         alt="Mobile avatar"/> :
                                                     <UserCircle size={32} weight="thin" color={"white"}/>}
 
                                             </div>

@@ -1,7 +1,6 @@
 import Layout from "../../components/layout";
 import {getSession} from "next-auth/react";
 import Head from "next/head";
-import {useRouter} from "next/router";
 import ClientDetails from "../../components/clientDetails";
 import ClientDreams from "../../components/clientDreams";
 import ClientSurveys from "../../components/clientSurveys";
@@ -10,8 +9,6 @@ import WorkbookToggle from "../../components/workbookToggle";
 import {useState} from "react";
 
 export default function User({viewingUserData, pageDataJson}) {
-
-    const router = useRouter()
     const {user} = pageDataJson
     const {dreams} = viewingUserData
 

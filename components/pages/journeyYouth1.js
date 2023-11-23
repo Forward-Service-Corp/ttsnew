@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from "next/image";
 
-function JourneyYouth1(props) {
+function JourneyYouth1() {
     return (
         <div className={"text-sm p-4 dark:text-white"}>
             <h1 className={"mt-3 text-center text-2xl font-bold"}>So You&apos;ve Hit A Roadblock: What Now?</h1>

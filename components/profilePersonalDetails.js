@@ -1,9 +1,9 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useRouter} from "next/router";
 import {WICountiesList} from "../lib/WI_Counties";
 import {XCircle} from "phosphor-react";
 
-function ProfilePersonalDetails({user, darkMode}) {
+function ProfilePersonalDetails({user}) {
     const router = useRouter()
     const [name, setName] = useState(user.name ? user.name : undefined)
     const [street, setStreet] = useState(user.street ? user.street : undefined)

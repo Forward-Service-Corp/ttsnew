@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from "next/image";
 
-function JourneyYouth2(props) {
+function JourneyYouth2() {
     return (
         <div  className={"text-sm p-4 dark:text-white"}>
             <h1 className={"text-center my-4 text-xl"}>This Is <span className={"underline"}>Your</span> Journey</h1>

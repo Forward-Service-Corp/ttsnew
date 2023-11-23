@@ -1,9 +1,9 @@
 import Link from "next/link";
 import {useState} from "react";
 import moment from "moment";
-import {ArrowCircleRight, EnvelopeSimple} from "phosphor-react";
+import {ArrowCircleRight} from "phosphor-react";
 
-export default function UsersTable({users, setModalState}) {
+export default function UsersTable({users}) {
     const [searchTerm, setSearchTerm] = useState("")
     const [userType, setUserType] = useState("client")
     const evaluateDate = (date) => {

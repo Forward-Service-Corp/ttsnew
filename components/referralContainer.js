@@ -16,7 +16,6 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
     const [allTasks, setAllTasks] = useState([])
     const [allNotes, setAllNotes] = useState(notes)
     const [saving, setSaving] = useState(true)
-    const [priority, setPriority] = useState('none')
     const colorMap = {
         '3': 'bg-red-500',
         '2': 'bg-orange-400 text-black',
@@ -82,7 +81,7 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
 
     useEffect(() => {
         getTasks().then()
-    }, [])
+    }, [getTasks])
 
     return (
         <div className={"my-3  dark:bg-black dark:text-white dark:overflow-hidden dark:bg-opacity-70 dark:rounded-lg dark:shadow-xl"} key={item._id}>

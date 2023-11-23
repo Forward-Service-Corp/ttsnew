@@ -12,19 +12,14 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
     const router = useRouter()
     const {user} = pageDataJson
     const [role, setRole] = useState(viewingUser.level)
-    const [roleChanged, setRoleChanged] = useState(false)
     const [version, setVersion] = useState(viewingUser.isYouth)
     const [clients, setClients] = useState(null)
     const [simpleModal, setSimpleModal] = useState(false)
 
-    const [dataChanged, setDataChanged] = useState(false)
-
     async function saveRole(newRole) {
-        const savedNewRole = await fetch("/api/save-role?userId=" + viewingUser._id + "&role=" + newRole)
+        await fetch("/api/save-role?userId=" + viewingUser._id + "&role=" + newRole)
             .then(res => res.json())
             .catch(err => console.warn(err))
-
-        console.log(savedNewRole)
     }
 
     async function updateRoleInformation(role){
@@ -48,7 +43,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
     }
 
     async function terminateCoach(coachId){
-        const findCoach = await fetch("/api/terminate-coach?coachId=" + coachId)
+        await fetch("/api/terminate-coach?coachId=" + coachId)
             .then(res => res.json())
             .catch(err => console.warn(err))
 
@@ -62,7 +57,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
         if(viewingUser.level === "coach"){
             getClients(viewingUser.email).then()
         }
-    }, [])
+    }, [viewingUser.email, viewingUser.level])
 
     return (
         <Layout title={viewingUser.name || viewingUser.email} session={user} version={version} simpleModalTitle={`Workbook Version Update`}

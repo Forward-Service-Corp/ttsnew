@@ -1,4 +1,4 @@
-import {colorMap, labelMap} from "../lib/serviceLabelsMap";
+import { labelMap} from "../lib/serviceLabelsMap";
 import {ArrowCircleRight} from "phosphor-react";
 
 export default function ServicesTable({services}) {
