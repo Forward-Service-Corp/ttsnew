@@ -1,15 +1,15 @@
 .lightTheme .youthVersion {
-  background: url("/img/youth_light_bg.png");
+  background: url(/img/youth_light_bg.png);
 }
 .lightTheme .adultVersion {
-  background: url("/img/adult_light_bg.png");
+  background: url(/img/adult_light_bg.png);
 }
 
 .darkTheme .youthVersion {
-  background: url("/img/youth_dark_bg.png");
+  background: url(/img/youth_dark_bg.png);
 }
 .darkTheme .adultVersion {
-  background: url("/img/adult_dark_bg.png");
+  background: url(/img/adult_dark_bg.png);
 }
 
 /*# sourceMappingURL=Layout.module.css.map */
