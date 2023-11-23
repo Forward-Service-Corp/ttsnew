@@ -17,7 +17,7 @@ function ClientCarePlans({user, viewingUser, viewingUserData}) {
     }, [userReferrals])
 
     return (
-        <div className={"mt-5 p-6 border rounded"}>
+        <div className={"mt-5 p-6 border rounded dark:border-none dark:bg-black dark:bg-opacity-70 dark:text-white dark:rounded-lg dark:shadow-xl"}>
             <h2 className={"uppercase text-gray-500 mb-4"}>Manage Care Plans</h2>
             {userReferrals?.filter(item => !item.hasOwnProperty("archived") || item.archived === "false").sort((a, b) => {
                 return b.domain.localeCompare(a.domain)

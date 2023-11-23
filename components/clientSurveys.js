@@ -9,7 +9,7 @@ function ClientSurveys({viewingUser, viewingUserData}) {
     const [surveys, setSurveys] = useState(viewingUserData.surveys)
 
     return (
-        <div className={"mt-5 p-6 border rounded"}>
+        <div className={"mt-5 p-6 border rounded dark:border-none dark:bg-black dark:bg-opacity-70 dark:text-white dark:rounded-lg dark:shadow-xl"}>
             <h2 className={"uppercase text-gray-500 mb-6"}>Current Life Area Survey</h2>
             <LasCurrent user={viewingUser} surveys={surveys} isClientSurvey={true} clientId={viewingUser.email}/>
 

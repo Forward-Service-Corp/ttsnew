@@ -24,7 +24,7 @@ function DreamForm({setSavedDreams, user, setSimpleModal}) {
     }
 
     return (
-        <div className={" shadow-xl overflow-hidden mt-10 md:mt-0 dark:bg-gray-800"}>
+        <div className={" shadow-xl overflow-hidden mt-10 md:mt-0 dark:bg-gray-800 dark:rounded-lg dark:overflow-hidden"}>
             <h2 className={"font-light uppercase px-4 py-2 bg-gray-700 text-white"}>Define a new dream</h2>
 
             <div className={"p-4"}>

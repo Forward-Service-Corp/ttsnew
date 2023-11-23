@@ -14,7 +14,7 @@ function LasHistory({surveys, isClientView}) {
                 if (i > 0) {
                     return (
                         <div
-                            className={"shadow mr-5 mb-5 text-sm overflow-hidden relative flex flex-col justify-between"}
+                            className={"shadow mr-5 mb-5 text-sm overflow-hidden relative flex flex-col justify-between dark:bg-black dark:text-white dark:rounded-xl dark:overflow-hidden dark:bg-opacity-70"}
                             key={survey._id}>
                             <div>
                                 <div className={"bg-gray-700 p-3 truncate font-light text-white flex justify-start"}>
@@ -22,12 +22,12 @@ function LasHistory({surveys, isClientView}) {
                                     <div className={"ml-2"}>{survey.dream}</div>
                                 </div>
                                 <div
-                                    className={"bg-gray-100 p-2 text-xs"}>{moment(survey.datestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}</div>
+                                    className={"bg-gray-100 p-2 text-xs dark:bg-black dark:bg-opacity-80"}>{moment(survey.datestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}</div>
                             </div>
                             <div className={"flex flex-wrap"}>
                                 <div className={"flex-grow p-3"}>
                                     <div className={"my-2"}>
-                                        <p className={"text-xs text-gray-600"}>Priority domains:</p>
+                                        <p className={"text-xs text-gray-600 dark:text-gray-400"}>Priority domains:</p>
                                         <ul className={"list-disc pl-5"}>
                                             {survey.priority.map((item, i) => {
                                                 return <li key={i}>{labelMap[item]}</li>

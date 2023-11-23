@@ -11,9 +11,9 @@ function Disclaimer({pageDataJson}) {
             <Head>
                 <title>TTS / Data Disclaimer</title>
             </Head>
-            <div className={`p-4 mt-8`}>
+            <div className={`p-4 my-8 dark:text-white`}>
                 <p className={`text-xl uppercase`}>Disclaimer</p>
-                <p className={`pb-4`}>
+                <p className={`pb-4 dark:font-extralight`}>
                     You are logged into an application owned by Forward Service Corporation. The information
                     collected by this application is protected and will not be sold or shared with any third
                     parties. We will use the data collected to improve our services and understand how people are

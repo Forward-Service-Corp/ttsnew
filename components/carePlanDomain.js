@@ -17,7 +17,7 @@ function CarePlanDomain({item}) {
     }
 
     return (
-        <div className={"w-full md:w-1/2 text-sm p-5 inline bg-gray-100 bg-opacity-50 "}>
+        <div className={"w-full md:w-1/2 text-sm p-5 inline bg-gray-100 bg-opacity-50 dark:bg-opacity-0"}>
             {item.name ? (<div className={"mb-3"}><p className={"text-xs uppercase text-gray-500"}>Name: </p>
                 {item.name}</div>) : null}
 

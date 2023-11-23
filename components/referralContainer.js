@@ -22,7 +22,7 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
         '2': 'bg-orange-400 text-black',
         '1': 'bg-yellow-300 text-black',
         '0': 'bg-blue-500',
-        undefined: 'bg-blue-400'
+        undefined: 'bg-blue-500'
     }
 
     async function saveTask() {
@@ -85,9 +85,9 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
     }, [])
 
     return (
-        <div className={"my-3"} key={item._id}>
+        <div className={"my-3  dark:bg-black dark:text-white dark:overflow-hidden dark:bg-opacity-70 dark:rounded-lg dark:shadow-xl"} key={item._id}>
             <div
-                className={`flex justify-start items-center text-sm font-light text-white relative p-3 ${item.archived !== "true" ? colorMap[item.priority] : "bg-gray-600"}`}>
+                className={`flex justify-start items-center text-sm font-light relative p-3 ${item.archived !== "true" ? colorMap[item.priority] : "bg-gray-600 text-white"}`}>
                 <div className={"w-[160px] ml-4 whitespace-nowrap mr-3 truncate font-bold"}>{labelMap[item.domain]}</div>
                 <div className={"truncate max-w-[200px]"}>{item.name}</div>
                 <div
@@ -111,12 +111,12 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
                         <CaretDoubleDown size={20} weight="thin"/>}</div>
                 </div>
             </div>
-            <div className={`flex justify-between items-center bg-gray-100 p-2 ${open ? "visible" : "hidden"}`}>
+            <div className={`flex justify-between items-center bg-gray-100 p-2 ${open ? "visible" : "hidden"} dark:bg-black dark:bg-opacity-80`}>
                 <div className={"flex items-center text-xs cursor-pointer"} onClick={() => {
                     router.push("/surveys/" + item.surveyId).then()
                 }}>
                     <Files size={20} weight="thin" color={"blue"}/>
-                    <span className={"text-blue-600"}>View associated Life Area Survey</span>
+                    <span className={"text-blue-600 dark:text-orange-400"}>View associated Life Area Survey</span>
 
                 </div>
                 {item.hasOwnProperty("archived") && item.archived === "true" ?
@@ -128,7 +128,7 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
                         }
                     }}>
                         <div><CheckCircle size={20} weight={"thin"} color={"blue"}/></div>
-                        <div className={"text-blue-600 text-xs cursor-pointer"}>Make active again</div>
+                        <div className={"text-blue-600 text-xs cursor-pointer dark:text-orange-400"}>Make active again</div>
                     </div>
                     :
                     <div className={"flex items-center cursor-pointer"} onClick={() => {
@@ -140,7 +140,7 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
 
                     }}>
                         <div><CheckCircle size={20} weight={"thin"} color={"blue"}/></div>
-                        <div className={"text-blue-600 text-xs cursor-pointer"}>Mark referral complete</div>
+                        <div className={"text-blue-600 text-xs cursor-pointer dark:text-orange-400"}>Mark referral complete</div>
                     </div>
                 }
 

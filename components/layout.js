@@ -61,8 +61,8 @@ export default function Layout({children, title, session, loadingState, version,
                 <div className={"uppercase text-white self-center rounded-full p-5 bg-orange-600 shadow"}>loading...
                 </div>
             </div>
-            {/*{router.pathname !== "/profile" && router.pathname !== "/" && router.pathname !== "/directory" ?*/}
-            {/*    <ProfileDetailsWarningModal session={session}/> : null}*/}
+            {router.pathname !== "/profile" && router.pathname !== "/" && router.pathname !== "/directory" ?
+                <ProfileDetailsWarningModal session={session}/> : null}
 
             <div id={`layoutBannerContainer`} className={`min-h-full ${darkMode === 'darkTheme' ? styles.darkTheme : styles.lightTheme}`}>
                 <div className={`${session.isYouth || version ? styles.youthVersion : styles.adultVersion} pb-32 print:hidden`}>
@@ -294,6 +294,13 @@ export default function Layout({children, title, session, loadingState, version,
                                                 </Disclosure.Button>
                                             ))}
                                             <Disclosure.Button
+                                                className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700 dark:hover:bg-opacity-0">
+                                                <div className={` mt-[3px] flex items-center`}>
+                                                <div className={`mr-3 text-white `}>Dark Mode</div>
+                                                <DarkModeToggle setDarkMode={setDarkMode} session={session}/>
+                                                </div>
+                                            </Disclosure.Button>
+                                            <Disclosure.Button
                                                 className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
                                                 onClick={() => {
                                                     signOut()
@@ -304,6 +311,7 @@ export default function Layout({children, title, session, loadingState, version,
                                             >
                                                 Sign Out
                                             </Disclosure.Button>
+
                                         </div>
                                     </div>
                                 </Disclosure.Panel>
@@ -321,7 +329,7 @@ export default function Layout({children, title, session, loadingState, version,
                 <main className="-mt-32 print:mt-0">
                     <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
                         <div
-                            className="bg-white dark:bg-gray-900 shadow px-5 py-6 sm:px-6 print:px-0 print:py-0 print:shadow-none">
+                            className="bg-white dark:bg-gray-900 shadow px-5 py-6 sm:px-6 print:px-0 print:py-0 print:shadow-none dark:rounded-lg dark:shadow-xl">
                             {children}
                         </div>
                     </div>

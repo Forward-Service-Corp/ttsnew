@@ -262,8 +262,8 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
             <Head>
                 <title>TTS / Life Area Survey</title>
             </Head>
-            <div className={"text-xl text-center p-3 truncate"}>Dream: {router.query.dreamName}</div>
-            <div className={"p-4 bg-gray-100 rounded text-sm mb-4 text-center"}>
+            <div className={"text-xl text-center p-3 truncate dark:text-white"}>Dream: {router.query.dreamName}</div>
+            <div className={"p-4 bg-gray-100 rounded text-sm mb-4 text-center dark:rounded-lg dark:shadow-xl dark:text-white dark:bg-black dark:bg-opacity-70"}>
                 <p>Where am I today?</p>
                 <p><strong>&quot;What I treasure most in life, is being able to dream. During my most difficult
                     moments and complex situations, I have been able to dream of a more beautiful life.&quot;</strong>
@@ -274,16 +274,16 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                 <p>Using the Life Area Survey, you can see how things are going and the areas you want to work on now.</p>
             </div>
             <div
-                className={"bg-gray-600 text-center p-2 text-white mb-3 rounded flex justify-around font-light text-sm grid grid-cols-1 md:grid-cols-2 "}>
+                className={"bg-gray-600 text-center p-2 text-white mb-3 rounded flex justify-around font-light text-sm grid-cols-1 md:grid-cols-2 dark:bg-black"}>
                 <div>Priorities: <strong>{domains.length}</strong></div>
                 <div>Answered: <strong>{Object.keys(answered).length}/21</strong></div>
             </div>
             <div
-                className={`bg-red-600 p-2 rounded text-center text-white text-xs mb-2 ${Object.keys(answered).length === 21 ? "hidden" : null}`}>
+                className={`bg-red-600 p-2 rounded text-center text-white text-xs mb-2 ${Object.keys(answered).length === 21 ? "hidden" : null} dark:bg-indigo-800`}>
                 You&apos;ve completed {Object.keys(answered).length} of 21 life areas. Keep going!
             </div>
             <div
-                className={`bg-red-600 p-2 rounded text-center text-white text-xs mb-6 ${domains.length > 0 ? "hidden" : null}`}>
+                className={`bg-red-600 p-2 rounded text-center text-white text-xs mb-6 ${domains.length > 0 ? "hidden" : null} dark:bg-indigo-800`}>
                 Please select at least one life area as a priority by using the toggle.
             </div>
             <div className={"flex"}>

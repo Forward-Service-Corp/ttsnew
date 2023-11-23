@@ -97,7 +97,8 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
 
             <div className={"flex text-xs text-center"}>
 
-                <div className={"bg-blue-500 hover:bg-blue-600 text-white p-2 flex-1 cursor-pointer dark:bg-indigo-800"}
+                <div className={"bg-blue-500 hover:bg-blue-600 text-white p-2 flex-1 cursor-pointer dark:bg-indigo-800 dark:hover:bg-indigo-600"}
+
                      onClick={() => {
                          if (isClientDream) {
                              router.push("/new-life-area-survey?dreamName=" + dream.dream + "&dreamId=" + dream._id + "&clientId=" + clientId).then()

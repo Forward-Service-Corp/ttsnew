@@ -78,9 +78,9 @@ export default function UsersTable({users, setModalState}) {
                                         className="px-3 py-3.5 text-left text-xs font-semibold text-gray-900 dark:text-white">
                                         Latest Coach Update
                                     </th>
-                                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6 dark:text-white">
-                                        <span className="sr-only">Email this user to another person</span>
-                                    </th>
+                                    {/*<th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6 dark:text-white">*/}
+                                    {/*    <span className="sr-only">Email this user to another person</span>*/}
+                                    {/*</th>*/}
                                     <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6 dark:text-white">
                                         <span className="sr-only">View</span>
                                     </th>
@@ -108,11 +108,11 @@ export default function UsersTable({users, setModalState}) {
                                         <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500 dark:text-white">
                                             {person.coachUpdate ? evaluateDate(person.coachUpdate) : <span className={`text-red-600 dark:text-yellow-400`}>Missing</span>}
                                         </td>
-                                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-xs font-medium sm:pr-6">
-                                            <a onClick={() => setModalState(true)} className="text-orange-600 hover:text-orange-900 dark:text-blue-600 dark:hover:text-blue-400" about={`Send this profile to a teammate.`} title={`Send this profile to a teammate.`} >
-                                                    <EnvelopeSimple size={26}/><span className="sr-only">, {person.name}</span>
-                                                </a>
-                                        </td>
+                                        {/*<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-xs font-medium sm:pr-6">*/}
+                                        {/*    <a onClick={() => setModalState(true)} className="text-orange-600 hover:text-orange-900 dark:text-blue-600 dark:hover:text-blue-400" about={`Send this profile to a teammate.`} title={`Send this profile to a teammate.`} >*/}
+                                        {/*            <EnvelopeSimple size={26}/><span className="sr-only">, {person.name}</span>*/}
+                                        {/*        </a>*/}
+                                        {/*</td>*/}
                                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-xs font-medium sm:pr-6">
                                             <Link href={"/user/" + person._id}>
                                                 <a className="text-orange-600 hover:text-orange-900 dark:text-blue-600 dark:hover:text-blue-400" about={`View user profile.`} title={`View user profile.`} >

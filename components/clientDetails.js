@@ -33,9 +33,9 @@ function ClientDetails({viewingUser}) {
     }
 
     return (
-        <div className={`mt-5 p-6 border rounded`}>
+        <div className={`mt-5 p-6 border rounded dark:border-none dark:bg-black dark:bg-opacity-70 dark:text-white dark:rounded-lg dark:shadow-xl`}>
             <div className={"flex justify-between"}>
-                <div><h2 className={"uppercase text-gray-500 mb-3"}>Personal Details</h2></div>
+                <div><h2 className={"uppercase text-gray-500 mb-3 dark:text-gray-400"}>Personal Details</h2></div>
                 {editMode ?
                     <div className={"text-sm text-red-500 underline cursor-pointer"} onClick={() => {
                         setEditMode(!editMode)
@@ -53,7 +53,7 @@ function ClientDetails({viewingUser}) {
                 <div className={"flex-1"}>
 
                     <div>
-                        <p className={"text-gray-500 text-xs"}>Name</p>
+                        <p className={"text-gray-500 text-xs dark:text-gray-400"}>Name</p>
                         <div className={`${editMode ? "hidden" : "visible"}`}>{name ||
                             <span className={"text-red-600 text-sm"}>Please add name to profile.</span>}</div>
                         <div className={`${editMode ? "visible" : "hidden"}`}>
@@ -68,7 +68,7 @@ function ClientDetails({viewingUser}) {
                     </div>
 
                     <div>
-                        <p className={"text-gray-500 text-xs"}>Email</p>
+                        <p className={"text-gray-500 text-xs dark:text-gray-400"}>Email</p>
                         <div className={`${editMode ? "hidden" : "visible"}`}>{email ||
                             <span className={"text-red-600 text-sm"}>Please add email to profile.</span>}</div>
                         <div className={`${editMode ? "visible" : "hidden"}`}>
@@ -83,7 +83,7 @@ function ClientDetails({viewingUser}) {
                         </div>
                     </div>
                     <div>
-                        <p className={"text-gray-500 text-xs"}>Phone</p>
+                        <p className={"text-gray-500 text-xs dark:text-gray-400"}>Phone</p>
                         <div className={`${editMode ? "hidden" : "visible"}`}>{phone || <span
                             className={"text-red-600 text-sm"}>Please add phone number to profile.</span>}</div>
                         <div className={`${editMode ? "visible" : "hidden"}`}>
@@ -98,7 +98,7 @@ function ClientDetails({viewingUser}) {
                         </div>
                     </div>
 
-                    <p className={"text-gray-500 text-xs mt-4"}>Counties</p>
+                    <p className={"text-gray-500 text-xs mt-4 dark:text-gray-400"}>Counties</p>
                     <div className={`${editMode ? "hidden" : "visible"}`}>
                         <ul className={"text-sm"}>
                             {counties && counties.map(county => (
@@ -140,7 +140,7 @@ function ClientDetails({viewingUser}) {
                         </select>
                     </div>
                     <div>
-                        <p className={"text-gray-500 text-xs mt-4"}>Coaches</p>
+                        <p className={"text-gray-500 text-xs mt-4 dark:text-gray-400"}>Coaches</p>
                         {viewingUser.coach.map((coach, i) => {
                             return (<li key={i}><a className={"underline text-orange-500"}
                                                    href={`mailto:${coach}`}>{coach}</a></li>)
@@ -151,7 +151,7 @@ function ClientDetails({viewingUser}) {
 
                 <div className={"flex-1"}>
                     <div>
-                        <p className={"text-gray-500 text-xs"}>Address</p>
+                        <p className={"text-gray-500 text-xs dark:text-gray-400"}>Address</p>
                         <div className={`${editMode ? "hidden" : "visible"}`}>{street ||
                             <span className={"text-red-600 text-sm"}>Please add address to profile.</span>}</div>
                         <div className={`${editMode ? "visible" : "hidden"}`}>
@@ -167,7 +167,7 @@ function ClientDetails({viewingUser}) {
                     </div>
 
                     <div>
-                        <p className={"text-gray-500 text-xs"}>City</p>
+                        <p className={"text-gray-500 text-xs dark:text-gray-400"}>City</p>
                         <div className={`${editMode ? "hidden" : "visible"}`}>{city ||
                             <span className={"text-red-600 text-sm"}>Please add city to profile.</span>}</div>
                         <div className={`${editMode ? "visible" : "hidden"}`}>
@@ -183,7 +183,7 @@ function ClientDetails({viewingUser}) {
                     </div>
 
                     <div>
-                        <p className={"text-gray-500 text-xs"}>State</p>
+                        <p className={"text-gray-500 text-xs dark:text-gray-400"}>State</p>
                         <div className={`${editMode ? "hidden" : "visible"}`}>{state ||
                             <span className={"text-red-600 text-sm"}>Please add state to profile.</span>}</div>
                         <div className={`${editMode ? "visible" : "hidden"}`}>
@@ -200,7 +200,7 @@ function ClientDetails({viewingUser}) {
                     </div>
 
                     <div>
-                        <p className={"text-gray-500 text-xs"}>Zip Code</p>
+                        <p className={"text-gray-500 text-xs dark:text-gray-400"}>Zip Code</p>
                         <div className={`${editMode ? "hidden" : "visible"}`}>{zip ||
                             <span className={"text-red-600 text-sm"}>Please add zip code to profile.</span>}</div>
                         <div className={`${editMode ? "visible" : "hidden"}`}>
@@ -216,7 +216,7 @@ function ClientDetails({viewingUser}) {
                         </div>
                     </div>
 
-                    <p className={"text-gray-500 text-xs mt-4"}>Programs</p>
+                    <p className={"text-gray-500 text-xs mt-4 dark:text-gray-400"}>Programs</p>
                     <ul>
                         {viewingUser.programs && viewingUser.programs.map((program, i) => (
                             <li key={i}>{program}</li>
