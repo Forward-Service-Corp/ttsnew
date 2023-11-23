@@ -31,6 +31,7 @@ function DreamForm({setSavedDreams, user, setSimpleModal}) {
                 <p className={"text-sm text-orange-600 dark:text-orange-400 dark:text-lg dark:font-light"}>Your dream</p>
                 <input
                     className={"w-full border-r-0 border-t-0 border-l-0 border-black border-b-[1px] placeholder:text-xs pl-1 dark:bg-black dark:text-white"}
+                    id={`dream`}
                     type={"text"}
                     placeholder={"Type your dream here..."}
                     onChange={(e) => {
@@ -42,6 +43,7 @@ function DreamForm({setSavedDreams, user, setSimpleModal}) {
                 <input
                     className={"w-full border-r-0 border-t-0 border-l-0 border-black border-b-[1px] placeholder:text-xs pl-1 dark:bg-black dark:text-white"}
                     type={"text"}
+                    id={`dreamNeed`}
                     placeholder={"Type what you need here..."}
                     onChange={(e) => {
                         setDreamNeed(e.target.value)
@@ -52,6 +54,7 @@ function DreamForm({setSavedDreams, user, setSimpleModal}) {
                 <input
                     className={"w-full border-r-0 border-t-0 border-l-0 border-black border-b-[1px] placeholder:text-xs pl-1 dark:bg-black dark:text-white"}
                     type={"text"}
+                    id={`dreamHelp`}
                     placeholder={"Type whose help you need here..."}
                     onChange={(e) => {
                         setDreamHelp(e.target.value)

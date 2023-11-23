@@ -33,6 +33,7 @@ export default function Dreams({pageDataJson}) {
                 </div>
                 <div className={"bg-gray-100 p-3 mb-3 dark:bg-opacity-0 dark:text-white"}>
                     My <select className={"text-xs border-gray-300 rounded dark:bg-black dark:border-0 "}
+                               id={"currentTab"}
                                onChange={(e) => {
                                    setCurrentTab(e.target.value)
                                }}>

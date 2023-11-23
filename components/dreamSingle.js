@@ -3,7 +3,7 @@ import {useRouter} from "next/router";
 import {Brain, Trash, NotePencil, FloppyDisk} from "phosphor-react";
 import moment from "moment";
 
-function DreamSingle({dream, isClientDream, clientId, getDreams}) {
+function DreamSingle({dream, isClientDream, clientId, getDreams, key}) {
 
     const [editMode, setEditMode] = useState(false)
     const [updateSuccess, setUpdateSuccess] = useState(false)
@@ -41,7 +41,7 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
                     <div><Brain size={26} weight="thin"/></div>
                     <div className={`ml-2 truncate ${editMode ? "hidden" : "visible"}`}>{newDream}</div>
                     <input
-                        type={"text"} id={"new-dream"}
+                        type={"text"} id={"new-dream"+dream._id}
                         className={`${editMode ? "visible" : "hidden"} p-0 ml-2 bg-gray-700 border-0 w-full border-b-[1px] text-sm font-light`}
                         placeholder={newDream}
                         value={newDream}
@@ -62,7 +62,7 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
                 <div className={`p-2 text-xs border-b ${editMode === true ? "hidden" : "visible"} dark:border-gray-800`}>Status: {status}</div>
                 <div>
                     <select className={`text-xs w-full border-none ${editMode ? "visible" : "hidden"}`}
-                            defaultValue={status} id={"statusSelect"}
+                            defaultValue={status} id={"statusSelect"+dream._id}
                             onChange={(e) => {
                                 setStatus(e.target.value)
                             }}>
@@ -75,7 +75,7 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
                     <div className={"px-5 py-2"}>
                         <p className={"text-xs text-gray-500 "}>What I need:</p>
                         <p className={`text-sm mt-0 ${editMode ? "hidden" : "visible"}`}>{need}</p>
-                        <input type={"text"} id={"new-dreamNeed"}
+                        <input type={"text"} id={"new-dreamNeed"+dream._id}
                                className={`${editMode ? "visible" : "hidden"} p-0  border-0 w-full border-b-[1px] text-sm font-light`}
                                placeholder={need} value={need}
                                onChange={(e) => {
@@ -85,7 +85,7 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
                     <div className={"px-5 pb-5"}>
                         <p className={"text-xs text-gray-500  "}>Who I need to help me is: </p>
                         <p className={`text-sm mt-0  ${editMode ? "hidden" : "visible"}`}>{help}</p>
-                        <input type={"text"} id={"new-dreamHelp"}
+                        <input type={"text"} id={"new-dreamHelp"+dream._id}
                                className={`${editMode ? "visible" : "hidden"} p-0  border-0 w-full border-b-[1px] text-sm font-light`}
                                placeholder={help} value={help}
                                onChange={(e) => {
