@@ -16,18 +16,20 @@ export default function User({viewingUserData, pageDataJson}) {
     const {dreams} = viewingUserData
 
     const viewingUser = viewingUserData.user
-    const [version, setVersion] = useState(null)
+    const [version, setVersion] = useState(viewingUser.isYouth)
+    const [simpleModal, setSimpleModal] = useState(false)
 
 
     return (
-        <Layout title={viewingUser.name || viewingUser.email} session={user} version={version}>
+        <Layout title={viewingUser.name || viewingUser.email} session={user} version={version} simpleModalTitle={`Workbook Version Update`}
+                simpleModalMessage={`You have now updated this user to the ${version ? "youth" : "adult"} version of the workbook.`} simpleModalLabel={`I understand.`} simpleModal={simpleModal}>
 
             <Head>
                 <title>TTS / User / {viewingUser.name || viewingUser.email}</title>
             </Head>
 
             <div className={`mt-8`}>
-                <WorkbookToggle user={viewingUser} setVersion={setVersion}/>
+                <WorkbookToggle user={viewingUser} version={version} setVersion={setVersion} setSimpleModal={setSimpleModal}/>
             </div>
 
             <ClientDetails viewingUser={viewingUser}/>

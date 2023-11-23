@@ -1,5 +1,4 @@
 import moment from "moment";
-import log from "tailwindcss/lib/util/log";
 
 function NoteItem({noteItem, loggedInUser}) {
 

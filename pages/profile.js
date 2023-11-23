@@ -1,6 +1,6 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import ProfilePrograms from "../components/profilePrograms";
 import ProfilePersonalDetails from "../components/profilePersonalDetails";
 import OrganizationInformation from "../components/organizationInformation";

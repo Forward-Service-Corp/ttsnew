@@ -26,7 +26,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Layout({children, title, session, loadingState, version, simpleModalTitle, simpleModalMessage, simpleModalLabel, simpleModal, modalState, setDestinationEmail, setModalState}) {
+export default function Layout({children, title, session, loadingState, version, simpleModalTitle, simpleModalMessage, simpleModalLabel, simpleModal}) {
     const router = useRouter()
 
     const [environment, setEnvironment] = useState("production")
@@ -35,7 +35,6 @@ export default function Layout({children, title, session, loadingState, version,
     useEffect(() => {
         const value = localStorage.theme
         let currentTheme = value !== undefined && value === 'dark' ? 'darkTheme' : 'lightTheme'
-
         setDarkMode(currentTheme)
     }, []);
 
@@ -257,7 +256,7 @@ export default function Layout({children, title, session, loadingState, version,
                                                 as="a"
                                                 href={item.href}
                                                 className={classNames(
-                                                    router.pathname === item.href ? 'bg-orange-700 text-white' : 'text-white hover:bg-gray-700 hover:text-white',
+                                                    router.pathname === item.href ? 'bg-orange-700 text-white dark:bg-purple-800' : 'text-white hover:bg-gray-700 hover:text-white',
                                                     'block px-3 py-2 rounded-md text-base font-medium'
                                                 )}
                                                 aria-current={item.current ? 'page' : undefined}
@@ -293,13 +292,13 @@ export default function Layout({children, title, session, loadingState, version,
                                                     {item.name}
                                                 </Disclosure.Button>
                                             ))}
-                                            <Disclosure.Button
-                                                className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700 dark:hover:bg-opacity-0">
-                                                <div className={` mt-[3px] flex items-center`}>
+                                            {/*<Disclosure.Button*/}
+                                            {/*    className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700 dark:hover:bg-opacity-0">*/}
+                                                <div className={`ml-3 mt-[3px] flex items-center`}>
                                                 <div className={`mr-3 text-white `}>Dark Mode</div>
                                                 <DarkModeToggle setDarkMode={setDarkMode} session={session}/>
                                                 </div>
-                                            </Disclosure.Button>
+                                            {/*</Disclosure.Button>*/}
                                             <Disclosure.Button
                                                 className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
                                                 onClick={() => {

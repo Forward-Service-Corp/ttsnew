@@ -5,15 +5,15 @@ import {XCircle} from "phosphor-react";
 
 function ProfilePersonalDetails({user, darkMode}) {
     const router = useRouter()
-    const [name, setName] = useState(user.name)
-    const [street, setStreet] = useState(user.street ? user.street : "")
-    const [city, setCity] = useState(user.city ? user.city : "")
-    const [state, setState] = useState(user.state ? user.state : "")
-    const [zip, setZip] = useState(user.zip ? user.zip : "")
-    const [counties, setCounties] = useState(user.county ? user.county : [])
+    const [name, setName] = useState(user.name ? user.name : undefined)
+    const [street, setStreet] = useState(user.street ? user.street : undefined)
+    const [city, setCity] = useState(user.city ? user.city : undefined)
+    const [state, setState] = useState(user.state ? user.state : undefined)
+    const [zip, setZip] = useState(user.zip ? user.zip : undefined)
+    const [counties, setCounties] = useState(user.county ? user.county : undefined)
 
     const [email, setEmail] = useState(user.email)
-    const [phone, setPhone] = useState(user.phone)
+    const [phone, setPhone] = useState(user.phone ? user.phone : undefined)
 
     const [dataChanged, setDataChanged] = useState(false)
     const [changeConfirm, setChangeConfirm] = useState(false)
@@ -41,7 +41,7 @@ function ProfilePersonalDetails({user, darkMode}) {
         router.reload()
     }
 
-    const inputJSX = (label, value, setValue, disabled) => {
+    const inputJSX = (label, value, setValue, disabled, autocomplete) => {
         return (
             <div className={"py-2"}>
                 <p className={"text-sm text-gray-500 w-full dark:text-white"}>{label}</p>
@@ -51,6 +51,7 @@ function ProfilePersonalDetails({user, darkMode}) {
                        type="text"
                        value={value}
                        disabled={disabled}
+                       autoComplete={autocomplete}
                        onChange={(e) => {
                            setValue(e.target.value)
                            setDataChanged(true)
@@ -65,13 +66,13 @@ function ProfilePersonalDetails({user, darkMode}) {
             <div className={`bg-green-400 p-3 text-white rounded ${changeConfirm ? "visible" : "hidden"}`}>Details successfully saved.</div>
             <div className={"flex flex-col lg:flex-row"}>
                 <div className={"lg:flex-1 lg:mr-10"}>
-                    {inputJSX("Name", name, setName)}
-                    {inputJSX("Street", street, setStreet)}
-                    {inputJSX("City", city, setCity)}
-                    {inputJSX("State", state, setState)}
-                    {inputJSX("Zip", zip, setZip)}
-                    {inputJSX("Email", email, setEmail, true)}
-                    {inputJSX("Phone", phone, setPhone)}
+                    {inputJSX("Name", name, setName, false, "true")}
+                    {inputJSX("Street", street, setStreet, false, "false")}
+                    {inputJSX("City", city, setCity, false, "false")}
+                    {inputJSX("State", state, setState, false, "false")}
+                    {inputJSX("Zip", zip, setZip, false, "false")}
+                    {inputJSX("Email", email, setEmail, true, "true")}
+                    {inputJSX("Phone", phone, setPhone, false, "true")}
                 </div>
 
                 <div className={"lg:flex-1"}>

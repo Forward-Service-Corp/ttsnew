@@ -13,8 +13,9 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
     const {user} = pageDataJson
     const [role, setRole] = useState(viewingUser.level)
     const [roleChanged, setRoleChanged] = useState(false)
-    const [version, setVersion] = useState(null)
+    const [version, setVersion] = useState(viewingUser.isYouth)
     const [clients, setClients] = useState(null)
+    const [simpleModal, setSimpleModal] = useState(false)
 
     const [dataChanged, setDataChanged] = useState(false)
 
@@ -64,13 +65,14 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
     }, [])
 
     return (
-        <Layout title={viewingUser.name || viewingUser.email} session={user}>
+        <Layout title={viewingUser.name || viewingUser.email} session={user} version={version} simpleModalTitle={`Workbook Version Update`}
+                simpleModalMessage={`You have now updated this user to the ${version ? "youth" : "adult"} version of the workbook.`} simpleModalLabel={`I understand.`} simpleModal={simpleModal}>
             <Head>
                 <title>TTS / User / {viewingUser.name || viewingUser.email}</title>
             </Head>
 
             <div className={`mt-8 mb-8`}>
-                <WorkbookToggle user={viewingUser} setVersion={setVersion}/>
+                <WorkbookToggle user={viewingUser} version={version} setVersion={setVersion} setSimpleModal={setSimpleModal}/>
             </div>
             <div className={"bg-gray-100 p-6 mb-5 rounded"}>
                 <h2 className={"uppercase text-gray-500 mb-3"}>Personal Details</h2>

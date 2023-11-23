@@ -2,7 +2,7 @@ import Image from "next/image";
 
 function WelcomeYouth1() {
     return (
-        <div className={"font-light"}>
+        <div className={"font-light dark:text-white"}>
             <div className={"p-4"}>
                 <h1 className={"text-3xl text-orange-600 pb-4"}>Welcome to Transition To Success&reg; Youth Map of My Dreams&reg;</h1>
                 <div className={'flex'}>
@@ -16,8 +16,8 @@ function WelcomeYouth1() {
                             Use this <strong>Map of My Dreams&reg; Workbook to plan the future you want. Your Transition to Success&reg; coach can help.</strong>
                         </p>
                     </div>
-                    <div className={'w-1/2'}>
-                        <img src={'/img/pirate-map.jpg'} alt={'Image of a treasure map'}/>
+                    <div className={'w-1/2 relative inline h-[300px]'}>
+                        <Image src={'/img/pirate-map.jpg'} alt={'Image of a treasure map'} sizes="(max-width: 300px) 20vw, (max-width: 300px) 20vw, 18vw" fill/>
                     </div>
                 </div>
                 <h2 className={"my-5 font-bold text-orange-600"}> Make your dreams come true.</h2>

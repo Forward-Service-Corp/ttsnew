@@ -39,8 +39,8 @@ function Welcome1() {
             </div>
 
             <div className={"p-5 bg-gray-700 my-5 flex flex-wrap justify-between align-middle text-white dark:rounded-[7px] dark:bg-opacity-50"}>
-                <div className={"flex-none"}>
-                    <Image src={"/img/birdsroad.png"} width={250} height={200} alt={"image for quotes"}/>
+                <div className={"relative block flex-none w-1/3"}>
+                    <Image src={"/img/birdsroad.png"} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt={"image for quotes"} fill/>
                 </div>
                 <div className={"flex-grow ml-10"}>
                     <p className={"font-bold  font-serif"}>&quot;If at first you don&apos;t succeed try and try

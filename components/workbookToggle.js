@@ -8,9 +8,9 @@ function classNames(...classes) {
 export default function WorkbookToggle({user, setVersion, setSimpleModal}) {
 
     const [checked, setChecked] = useState(user.isYouth)
-    function handleToggle(){
-        setChecked((current) => !current)
-        setSimpleModal(true)
+    async function handleToggle(){
+       await setChecked((current) => !current)
+       await setSimpleModal(true)
     }
 
     async function updateWorkbookExperience (){
@@ -28,7 +28,7 @@ export default function WorkbookToggle({user, setVersion, setSimpleModal}) {
         <Switch
             checked={checked}
             onChange={() => {
-                handleToggle()
+                handleToggle().then()
             }}
             className="flex-shrink-0 group relative rounded-full inline-flex items-center justify-center h-5 w-10 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-orange-300"
         >

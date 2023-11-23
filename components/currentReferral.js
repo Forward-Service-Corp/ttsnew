@@ -1,9 +1,8 @@
-import {HandPalm} from "phosphor-react";
 
 function CurrentReferral({currentReferral}) {
     if(Object.keys(currentReferral).length === 0){
         return (
-            <div className={"flex-1 mr-10 shadow rounded overflow-hidden"}>
+            <div className={"flex-1 mr-10 shadow rounded overflow-hidden dark:bg-black dark:text-white dark:rounded-xl dark:overflow-hidden dark:bg-opacity-70"}>
                 <div className={"bg-gray-700 text-white p-3 text-xs"}>Selected referral details:</div>
                 <div className={"flex flex-col align-middle items-center justify-around mt-3"}>
 
@@ -13,8 +12,8 @@ function CurrentReferral({currentReferral}) {
         )
     }
     return (
-        <div className={"flex-1 mr-10 shadow rounded overflow-hidden"}>
-            <div className={"bg-gray-700 text-white p-3 text-sm"}>Selected referral details:</div>
+        <div className={"flex-1 mr-10 shadow rounded overflow-hidden dark:bg-black dark:text-white dark:rounded-xl dark:overflow-hidden dark:bg-opacity-70"}>
+            <div className={"bg-gray-700 text-white p-3 text-sm dark:font-extralight"}>Selected referral details:</div>
 
             <div className={"p-8"}>
                 {currentReferral.name !== undefined ? (

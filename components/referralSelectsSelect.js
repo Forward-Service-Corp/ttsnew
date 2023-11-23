@@ -2,14 +2,14 @@ import React from 'react';
 import {labelMap} from "../lib/serviceLabelsMap";
 import ReferralSelectsButton from "./referralSelectsButton";
 
-function ReferralSelectsSelect({domain, setCurrentReferral, referrals, clientId, currentReferral, user, router, userReferrals, setUserReferrals}) {
+function ReferralSelectsSelect({domain, setCurrentReferral, referrals, clientId, currentReferral, user, router, userReferrals, setUserReferrals, setSaving, saving}) {
 
     const filteredReferrals = referrals.filter(referral => referral.service === domain)
-    console.log(filteredReferrals)
+
     return (
         <>
             <select id={domain}
-                   className={`w-full text-sm rounded ${filteredReferrals.length > 0 ? "visible" : "hidden"}`}
+                   className={`w-full text-sm rounded ${filteredReferrals.length > 0 && saving !== domain ? "visible" : "hidden"} dark:border-none dark:bg-black dark:bg-opacity-70 dark:text-white dark:rounded-lg dark:shadow-xl dark:font-extralight`}
                    onChange={(e) => {
                        if (e.target.value === "") {
                            setCurrentReferral({})
@@ -50,16 +50,20 @@ function ReferralSelectsSelect({domain, setCurrentReferral, referrals, clientId,
                 )
             })}
         </select>
-            <ReferralSelectsButton
-                visible={filteredReferrals.length > 0}
-                setCurrentReferral={setCurrentReferral}
-                domain={domain}
-                clientId={clientId}
-                currentReferral={currentReferral}
-                user={user}
-                userReferrals={userReferrals}
-                setUserReferrals={setUserReferrals}
-                router={router}/>
+            <div className={"w-full text-right"}>
+                <ReferralSelectsButton
+                    visible={filteredReferrals.length > 0}
+                    setCurrentReferral={setCurrentReferral}
+                    domain={domain}
+                    clientId={clientId}
+                    currentReferral={currentReferral}
+                    user={user}
+                    userReferrals={userReferrals}
+                    setUserReferrals={setUserReferrals}
+                    router={router}
+                setSaving={setSaving}/>
+            </div>
+
             <span className={`${filteredReferrals.length > 0 ? "hidden" : "visible"}`}>There are no referrals available for your county and life area combination.</span>
         </>
     );

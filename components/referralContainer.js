@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import CarePlanDomain from "./carePlanDomain";
 import {CaretDoubleDown, CaretDoubleUp, Trash, CheckCircle, Files} from "phosphor-react";
 import TaskTodo from "./taskTodo";
-import NoteItem from "./noteItem";
+
 import {labelMap} from "../lib/serviceLabelsMap";
 import {useRouter} from "next/router";
-import Emoji from "./emoji";
+
 
 
 function ReferralContainer({item, user, notes, setUserReferrals, modifier, loggedInUser, i}) {

@@ -1,8 +1,9 @@
 import React from 'react';
+import Image from "next/image";
 
 function JourneyYouth2(props) {
     return (
-        <div  className={"text-sm p-4"}>
+        <div  className={"text-sm p-4 dark:text-white"}>
             <h1 className={"text-center my-4 text-xl"}>This Is <span className={"underline"}>Your</span> Journey</h1>
             <h2 className={"mt-6 text-center text-lg font-bold"}>&quot;You don’t have to see the whole staircase—
                 just take the first step.&quot;</h2>
@@ -15,9 +16,9 @@ function JourneyYouth2(props) {
                 <li>New dreams?</li>
                 <li>Share your story to inspire others.</li>
             </ul>
-            <p className={"mt-4"}>May your journey always continue...</p>
-            <div className={"p-10"}>
-                <img src="./img/ben-franklin.jpg" alt="Energy and persistence conquer all things."/>
+            <p className={"my-4"}>May your journey always continue...</p>
+            <div className={"p-10 relative w-[100%] h-[650px] block"}>
+                <Image src="/img/ben-franklin.jpg" alt="Energy and persistence conquer all things." sizes="(max-width: 300px) 20vw, (max-width: 300px) 20vw, 18vw" fill/>
             </div>
         </div>
     );

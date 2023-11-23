@@ -36,7 +36,7 @@ function CoachAssignments({coachesJson, viewingUser}) {
                     <h2 className={"uppercase text-gray-500"}>Coach Assignments</h2>
                 </div>
                 <div className={`flex items-center`}>
-                    <input type="text" className={`border-gray-300 text-xs`} value={searchTerm} placeholder={"Filter coaches..."} onChange={e => setSearchTerm(e.target.value)}/>
+                    <input id={"filter-coaches"} type="text" className={`border-gray-300 text-xs`} value={searchTerm} placeholder={"Filter coaches..."} onChange={e => setSearchTerm(e.target.value)}/>
                     <button className={`px-6 py-2 ml-3 text-xs bg-pink-600 text-white`} onClick={() => {setSearchTerm("")}}>Clear</button>
                 </div>
             </div>

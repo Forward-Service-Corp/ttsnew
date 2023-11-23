@@ -35,8 +35,8 @@ export default function ServicesTable({services}) {
                                 </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200 bg-white dark:bg-black dark:bg-opacity-10 dark:divide-opacity-[3%]">
-                                {services.map((service, i) => (
-                                    <tr key={i} className={`dark:hover:bg-indigo-800 dark:hover:bg-opacity-10`}>
+                                {services.map((service) => (
+                                    <tr key={service._id} className={`dark:hover:bg-indigo-800 dark:hover:bg-opacity-10`}>
                                         <td className="py-1 px-1 text-sm font-medium text-gray-900 sm:pl-6 truncate sm:max-w-full">
                                             <a href={`/referral/${service._id}`} target={`_blank`} rel={`noreferrer`} className="text-orange-600 hover:text-orange-900 underline dark:text-white">
                                                 {service.name}

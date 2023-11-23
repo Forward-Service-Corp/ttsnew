@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 function NewEmailAssignment({user}) {
 
     const [previousEmail, setPreviousEmail] = useState("")
-    const [newEmail, setNewEmail] = useState(user)
+    const [newEmail, setNewEmail] = useState(user || "")
     const [lookupResults, setLookupResults] = useState({})
 
     async function lookupUser() {
@@ -26,7 +26,7 @@ function NewEmailAssignment({user}) {
                         <p className={"text-xs mb-4"}>Enter the last known email address for the user.</p>
                     </div>
                     <div className={"flex justify-between"}>
-                        <input placeholder={"emailaddress@domain.com"} className={"flex-1 mr-4"} type={"text"}
+                        <input id={"previous-email"} placeholder={"emailaddress@domain.com"} className={"flex-1 mr-4"} type={"text"}
                                value={previousEmail} onChange={(e) => {
                             setPreviousEmail(e.target.value)
                         }}/>
@@ -55,7 +55,7 @@ function NewEmailAssignment({user}) {
                     <div className={"flex flex-col"}>
                         <h3 className={"uppercase text-sm mt-4"}>Email to assign</h3>
                         <p className={"text-xs mb-4"}>This is the new email you wish to assign.</p>
-                        <input disabled={false} className={"flex-1 mr-4"} type={"text"} value={newEmail} onChange={(e) => {
+                        <input id={"new-email"} disabled={false} className={"flex-1 mr-4"} type={"text"} value={newEmail} onChange={(e) => {
                             setNewEmail(e.target.value)
                         }}/>
                     </div>

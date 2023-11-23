@@ -1,6 +1,4 @@
 import {Trash} from "phosphor-react";
-
-
 function UserReferralItem({referral, getUserReferrals}) {
 
     async function deleteReferral(id) {
@@ -11,7 +9,7 @@ function UserReferralItem({referral, getUserReferrals}) {
         await fetch("/api/delete-custom-referral?referralId=" + id)
     }
 
-    return (<div className={"flex items-center justify-between bg-gray-100 px-2 py-1 hover:bg-gray-200"}>
+    return (<div className={"flex items-center mt-2 justify-between bg-gray-100 px-4 py-2 hover:bg-gray-200 dark:rounded-xl dark:shadow-lg dark:bg-black dark:bg-opacity-30 dark:text-white text-sm dark:font-extralight"}>
             <div className={"flex-1 text-sm"}>{referral.name}</div>
             <div onClick={() => {
                 if (confirm(`Are you sure you want to delete ${referral.name}? This action is permanent.`)) {

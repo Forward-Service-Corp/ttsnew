@@ -28,7 +28,7 @@ export default function SurveyId({pageDataJson}) {
         if(isYouthSurvey === 'true'){
             return youthDomains.map((domain, domainIndex) => {
                 return (
-                    <div key={domainIndex} className={`p-1 ${survey.priority.indexOf(domain) > -1 ? "border border-1 border-black" : null}`}>
+                    <div key={domainIndex} className={`p-1  dark:text-white ${survey.priority.indexOf(domain) > -1 ? "border border-1 border-black dark:border-purple-800" : null}`}>
                         <div className={"flex items-center justify-between"}>
                             <div className={"truncate font-bold"}>{labelMap[domain]}</div>
                             <div className={""}>{survey[domain][0]}</div>
@@ -40,7 +40,7 @@ export default function SurveyId({pageDataJson}) {
         }else{
             return  domains.map((domain, domainIndex) => {
                 return (
-                    <div key={domainIndex} className={`p-1 ${survey.priority.indexOf(domain) > -1 ? "border border-1 border-black" : null}`}>
+                    <div key={domainIndex} className={`p-1  dark:text-white ${survey.priority.indexOf(domain) > -1 ? "border border-1 border-black dark:border-purple-800" : null}`}>
                         <div className={"flex items-center justify-between"}>
                             <div className={"truncate font-bold"}>{labelMap[domain]}</div>
                             <div className={""}>{survey[domain][0]}</div>
@@ -134,32 +134,32 @@ export default function SurveyId({pageDataJson}) {
         <Layout title={"Review Life Area Survey"} session={user}>
             {surveys.filter(survey => survey._id.toString() === surveyId.toString()).map(survey => {
                 return (
-                    <div key={survey._id} className={""}>
+                    <div key={survey._id} className={"dark:text-white"}>
                         <div className={"flex justify-between print:hidden"}>
                             <button
                                 onClick={() => router.back()}
-                                className={"py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 flex items-center"}>
+                                className={"flex items-center my-3 py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 dark:disabled:bg-gray-800 rounded-lg shadow-xl dark:font-extralight dark:text-white dark:hover:bg-indigo-600"}>
                                 <span className={"inline-block mr-2"}><ArrowLeft size={22} /></span><span className={"inline-block"}>Back</span>
 
                             </button>
                             <button
                                 onClick={() => window.print()}
-                                className={"py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 flex items-center max-w-[180px]"}>
+                                className={"flex items-center my-3 py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 dark:disabled:bg-gray-800 rounded-lg shadow-xl dark:font-extralight dark:text-white dark:hover:bg-indigo-600"}>
                                 <span className={"inline-block mr-2"}><Printer size={22} /></span><span className={"inline-block"}>Print</span>
                             </button>
                         </div>
                         <div className={"flex justify-between p-2 text-sm mb-4"}>
                             <div>
-                                <p>Client name: {userFullName}</p>
-                                <p>Client email: {survey.userId}</p>
-                                <p>Associated dream: {survey.dream}</p>
-                                <p>Date taken: {moment(survey.datestamp).calendar() }</p>
+                                <p className={"font-bold"}>Client name: <span className={"font-extralight"}>{userFullName}</span></p>
+                                <p>Client email: <span className={"font-extralight"}>{survey.userId}</span></p>
+                                <p>Associated dream: <span className={"font-extralight"}>{survey.dream}</span></p>
+                                <p>Date taken: <span className={"font-extralight"}>{moment(survey.datestamp).calendar() }</span></p>
                             </div>
                             <div className={"flex flex-col text-right align-baseline"}>
 
                                 <p>Priority life areas: {survey.priority.map(p => {
                                     return (
-                                        <span className={"border p-1 ml-1 rounded"} key={p}>{p}</span>
+                                        <span className={"border p-1 ml-1 dark:rounded dark:border-purple-800 dark:font-extralight"} key={p}>{p}</span>
                                     )
                                 })}</p>
                             </div>
@@ -182,8 +182,8 @@ export default function SurveyId({pageDataJson}) {
                             }
 
                         </div>
-                        <div className={"text-sm divide-y"}>
-                            <h2 className={"uppercase text-gray-600 my-4"}>Additional Questions</h2>
+                        <div className={"text-sm divide-y dark:text-white"}>
+                            <h2 className={"uppercase text-gray-600 my-4 dark:text-gray-300"}>Additional Questions</h2>
                             {
                                 questions.map((question, questionIndex) => {
                                     return (

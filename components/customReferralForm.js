@@ -2,15 +2,10 @@ import React, {useState} from 'react';
 
 function CustomReferralForm({
                                 domain,
-                                setCurrentReferral,
-                                referrals,
                                 clientId,
-                                currentReferral,
                                 user,
                                 router,
-                                userReferrals,
-                                setUserReferrals,
-                                getUserReferrals
+                                getUserReferrals, i
                             }) {
 
     const [referralOpen, setReferralOpen] = useState(false)
@@ -49,10 +44,10 @@ function CustomReferralForm({
 
     return (
         <div>
-            <div className={`my-4 p-3 bg-gray-100 text-xs divide-y ${referralOpen ? "visible" : "hidden"}`}>
+            <div className={`my-4 p-3 bg-gray-100 text-xs divide-y divide-gray-100 ${referralOpen ? "visible" : "hidden"} dark:divide-gray-800  dark:rounded-xl dark:bg-black dark:bg-opacity-30 dark:text-white dark:font-extralight dark:shadow-xl`}>
                 <div className={"flex justify-between items-center py-3"}>
                     <div>
-                        <h2 className={"uppercase text-gray-600"}>Add custom referral to {domain}</h2>
+                        <h2 className={"uppercase text-gray-600 dark:text-white"}>Add custom referral to {domain}</h2>
                     </div>
                     <div>
                         <button onClick={() => {
@@ -71,64 +66,64 @@ function CustomReferralForm({
                 </div>
 
                 <div className={"py-2"}>
-                    <div className={"py-1 text-gray-600"}>Name</div>
-                    <input className={"text-xs w-full"} placeholder={"Name..."} type="text" value={referralName}
+                    <div className={"py-1 text-gray-600 dark:text-gray-300 dark:mb-2"}>Name</div>
+                    <input className={" w-full text-xs  dark:bg-black dark:text-white dark:font-light dark:border-gray-700 dark:focus:bg-black dark:autofill:bg-black dark:rounded-md"} placeholder={"Name..."} type="text" value={referralName} id={"referralName"+i}
                            onChange={(e) => {
                                setReferralName(e.target.value)
                            }}/>
                 </div>
 
                 <div className={"py-2"}>
-                    <div className={"py-1 text-gray-600"}>Phone</div>
-                    <input className={"text-xs w-full"} placeholder={"Phone..."} type="text" value={referralPhone}
+                    <div className={"py-1 text-gray-600 dark:text-gray-300 dark:mb-2"}>Phone</div>
+                    <input className={"w-full text-xs  dark:bg-black dark:text-white dark:font-light dark:border-gray-700 dark:focus:bg-black dark:autofill:bg-black dark:rounded-md"} placeholder={"Phone..."} type="text" value={referralPhone} id={"referralPhone"+i}
                            onChange={(e) => {
                                setReferralPhone(e.target.value)
                            }}/>
                 </div>
 
                 <div className={"py-2"}>
-                    <div className={"py-1 text-gray-600"}>Email</div>
-                    <input className={"text-xs w-full"} placeholder={"Email..."} type="text" value={referralEmail}
+                    <div className={"py-1 text-gray-600 dark:text-gray-300 dark:mb-2"}>Email</div>
+                    <input className={"w-full text-xs dark:bg-black dark:text-white dark:font-light dark:border-gray-700 dark:focus:bg-black dark:autofill:bg-black dark:rounded-md"} placeholder={"Email..."} type="text" value={referralEmail} id={"referralEmail"+i}
                            onChange={(e) => {
                                setReferralEmail(e.target.value)
                            }}/>
                 </div>
 
                 <div className={"py-2"}>
-                    <div className={"py-1 text-gray-600"}>Contact person</div>
-                    <input className={"text-xs w-full"} placeholder={"Contact person..."} type="text"
+                    <div className={"py-1 text-gray-600 dark:text-gray-300 dark:mb-2"}>Contact person</div>
+                    <input className={"text-xs w-full dark:bg-black dark:text-white dark:font-light dark:border-gray-700 dark:focus:bg-black dark:autofill:bg-black dark:rounded-md"} placeholder={"Contact person..."} type="text" id={"referralContact"+i}
                            value={referralContact} onChange={(e) => {
                         setReferralContact(e.target.value)
                     }}/>
                 </div>
 
                 <div className={"py-2"}>
-                    <div className={"py-1 text-gray-600"}>Hours</div>
-                    <input className={"text-xs w-full"} placeholder={"Hours..."} type="text" value={referralHours}
+                    <div className={"py-1 text-gray-600 dark:text-gray-300 dark:mb-2"}>Hours</div>
+                    <input className={"text-xs w-full  dark:bg-black dark:text-white dark:font-light dark:border-gray-700 dark:focus:bg-black dark:autofill:bg-black dark:rounded-md"} placeholder={"Hours..."} type="text" value={referralHours} id={"referralHours"+i}
                            onChange={(e) => {
                                setReferralHours(e.target.value)
                            }}/>
                 </div>
 
                 <div className={"py-2"}>
-                    <div className={"py-1 text-gray-600"}>Requirements</div>
-                    <input className={"text-xs w-full"} placeholder={"Requirements..."} type="text"
+                    <div className={"py-1 text-gray-600 dark:text-gray-300 dark:mb-2"}>Requirements</div>
+                    <input className={"text-xs w-full dark:bg-black dark:text-white dark:font-light dark:border-gray-700 dark:focus:bg-black dark:autofill:bg-black dark:rounded-md"} placeholder={"Requirements..."} type="text" id={"referralRequirements"+i}
                            value={referralRequirements} onChange={(e) => {
                         setReferralRequirements(e.target.value)
                     }}/>
                 </div>
 
                 <div className={"py-2"}>
-                    <div className={"py-1 text-gray-600"}>Website</div>
-                    <input className={"text-xs w-full"} placeholder={"Website..."} type="text" value={referralWebsite}
+                    <div className={"py-1 text-gray-600 dark:text-gray-300 dark:mb-2"}>Website</div>
+                    <input className={"text-xs w-full dark:bg-black dark:text-white dark:font-light dark:border-gray-700 dark:focus:bg-black dark:autofill:bg-black dark:rounded-md"} placeholder={"Website..."} type="text" value={referralWebsite} id={"referralWebsite"+i}
                            onChange={(e) => {
                                setReferralWebsite(e.target.value)
                            }}/>
                 </div>
 
                 <div className={"py-2"}>
-                    <div className={"py-1 text-gray-600"}>Need to bring</div>
-                    <input className={"text-xs w-full"} placeholder={"Need to bring..."} type="text"
+                    <div className={"py-1 text-gray-600 dark:text-gray-300 dark:mb-2"}>Need to bring</div>
+                    <input className={"text-xs w-full  dark:bg-black dark:text-white dark:font-light dark:border-gray-700 dark:focus:bg-black dark:autofill:bg-black dark:rounded-md"} placeholder={"Need to bring..."} type="text" id={"referralNeeds"+i}
                            value={referralNeeds} onChange={(e) => {
                         setReferralNeeds(e.target.value)
                     }}/>
@@ -150,7 +145,7 @@ function CustomReferralForm({
                             setReferralWebsite("")
                             setReferralNeeds("")
                         }}
-                        className={"px-6 py-2 text-xs rounded text-white bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>
+                        className={" my-3 py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 dark:disabled:bg-gray-800 rounded-lg shadow-xl dark:font-extralight dark:text-white dark:hover:bg-indigo-600"}>
                         + Save custom referral
                     </button>
                 </div>

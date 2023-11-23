@@ -57,7 +57,7 @@ function ClientDetails({viewingUser}) {
                         <div className={`${editMode ? "hidden" : "visible"}`}>{name ||
                             <span className={"text-red-600 text-sm"}>Please add name to profile.</span>}</div>
                         <div className={`${editMode ? "visible" : "hidden"}`}>
-                            <input type={"text"}
+                            <input type={"text"} id={"name"} autoComplete={"true"}
                                    className={"min-w-[300px] text-sm"}
                                    placeholder={name || "Enter name here..."}
                                    onChange={(e) => {
@@ -72,7 +72,7 @@ function ClientDetails({viewingUser}) {
                         <div className={`${editMode ? "hidden" : "visible"}`}>{email ||
                             <span className={"text-red-600 text-sm"}>Please add email to profile.</span>}</div>
                         <div className={`${editMode ? "visible" : "hidden"}`}>
-                            <input disabled={true} type={"text"}
+                            <input disabled={true} type={"text"} id={"email"} autoComplete={"true"}
                                    className={"min-w-[300px] text-sm"}
                                    placeholder={email || "Enter email here..."}
                                    onChange={(e) => {
@@ -87,7 +87,7 @@ function ClientDetails({viewingUser}) {
                         <div className={`${editMode ? "hidden" : "visible"}`}>{phone || <span
                             className={"text-red-600 text-sm"}>Please add phone number to profile.</span>}</div>
                         <div className={`${editMode ? "visible" : "hidden"}`}>
-                            <input type={"text"}
+                            <input type={"text"} id={"phone"} autoComplete={"true"}
                                    className={"min-w-[300px] text-sm"}
                                    placeholder={phone || "Enter phone number here..."}
                                    onChange={(e) => {
@@ -124,7 +124,7 @@ function ClientDetails({viewingUser}) {
                                 )
                             })}
                         </div>
-                        <select multiple className={"min-w-[300px] min-h-[300px] text-sm"} onChange={(e) => {
+                        <select multiple className={"min-w-[300px] min-h-[300px] text-sm"} id={"counties"} onChange={(e) => {
                             setCounties(prevState => {
                                 if (counties.indexOf(e.target.value) === -1) {
                                     setDataChanged(true)
@@ -155,7 +155,7 @@ function ClientDetails({viewingUser}) {
                         <div className={`${editMode ? "hidden" : "visible"}`}>{street ||
                             <span className={"text-red-600 text-sm"}>Please add address to profile.</span>}</div>
                         <div className={`${editMode ? "visible" : "hidden"}`}>
-                            <input type={"text"}
+                            <input type={"text"} id={"address"} autoComplete={"true"}
                                    className={"min-w-[300px] text-sm"}
                                    placeholder={street || "Enter street address here..."}
                                    onChange={(e) => {
@@ -171,7 +171,7 @@ function ClientDetails({viewingUser}) {
                         <div className={`${editMode ? "hidden" : "visible"}`}>{city ||
                             <span className={"text-red-600 text-sm"}>Please add city to profile.</span>}</div>
                         <div className={`${editMode ? "visible" : "hidden"}`}>
-                            <input type={"text"}
+                            <input type={"text"} id={"city"}
                                    className={"min-w-[300px] text-sm"}
                                    placeholder={city || "Enter city here..."}
                                    onChange={(e) => {
@@ -187,7 +187,7 @@ function ClientDetails({viewingUser}) {
                         <div className={`${editMode ? "hidden" : "visible"}`}>{state ||
                             <span className={"text-red-600 text-sm"}>Please add state to profile.</span>}</div>
                         <div className={`${editMode ? "visible" : "hidden"}`}>
-                            <input type={"text"}
+                            <input type={"text"} id={"state"}
                                    className={"min-w-[300px] text-sm"}
                                    value={state}
                                    placeholder={state || "Enter state here..."}
@@ -204,7 +204,7 @@ function ClientDetails({viewingUser}) {
                         <div className={`${editMode ? "hidden" : "visible"}`}>{zip ||
                             <span className={"text-red-600 text-sm"}>Please add zip code to profile.</span>}</div>
                         <div className={`${editMode ? "visible" : "hidden"}`}>
-                            <input type={"text"}
+                            <input type={"text"} id={"zip"}
                                    className={"min-w-[300px] text-sm"}
                                    value={zip}
                                    placeholder={zip || "Enter zip code here..."}

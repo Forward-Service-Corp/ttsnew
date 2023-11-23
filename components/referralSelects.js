@@ -13,12 +13,13 @@ function ReferralSelects({
                              referrals,
                              userReferrals,
                              setUserReferrals,
-                             clientId
+                             clientId,
+                             saving,
+                             setSaving
                          }) {
 
 
     async function getUserReferrals() {
-        console.log("getUserReferrals")
         const id = clientId === undefined ? user.email : clientId
         const referrals = await fetch("/api/get-referrals?userId=" + id)
             .then(res => res.json())
@@ -31,15 +32,17 @@ function ReferralSelects({
 
     return (<div className={"flex-1"}>
             {domains.map((domain, i) => {
-                return (<div key={i} className={" my-4 border-b-2 pb-4"}>
+                return (<div key={i} className={" my-4 border-b-[1px] dark:border-b-gray-800 pb-4"}>
                         <div className={"text-sm mb-2"}>
-                            <span className={"text-gray-500"}>Life Area:</span>
                             <p className={"text-orange-600 text-lg"}>{labelMap[domain]}</p>
                         </div>
 
                         <div className={"flex"}>
                             <div className={"w-full"}>
+                                <div className={`bg-green-500 px-3 py-2 text-sm rounded ${saving === domain ? 'visible' : 'hidden'} dark:bg-purple-800 text-white`}>Saving your referral. One moment please.</div>
                                 <ReferralSelectsSelect
+                                    saving={saving}
+                                    setSaving={setSaving}
                                     referrals={referrals}
                                     setCurrentReferral={setCurrentReferral}
                                     domain={domain}
@@ -63,6 +66,7 @@ function ReferralSelects({
                                             domain={domain}
                                             currentReferral={currentReferral}
                                             user={user}
+                                            i={i}
                                             setCurrentReferral={setCurrentReferral}
                                             userReferrals={userReferrals}
                                             clientId={clientId}

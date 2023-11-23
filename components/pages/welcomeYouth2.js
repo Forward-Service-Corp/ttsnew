@@ -1,6 +1,8 @@
+import Image from "next/image";
+
 function WelcomeYouth2() {
     return (
-        <div className={"font-light"}>
+        <div className={"font-light dark:text-white"}>
             <div className={"p-4"}>
                 <div className={'text-center'}>
                     <h1 className={"text-3xl text-orange-600"}>&quot;Vision Without Action Is Just A Daydream&quot;</h1>
@@ -12,9 +14,10 @@ function WelcomeYouth2() {
                     true because you work hard for them.</p>
 
                 <div className={'flex mt-10'}>
-                    <div className={'w-1/3 mr-10'}>
-                        <img src={'/img/surround-yourself.jpg'}
-                             alt={'Surround yourself with people image'}/></div>
+                    <div className={'w-1/3 h-[200px] mr-10 relative inline'}>
+                        <Image src={'/img/surround-yourself.jpg'}
+                             alt={'Surround yourself with people image'} sizes="(max-width: 300px) 20vw, (max-width: 300px) 20vw, 18vw" fill/>
+                    </div>
                     <div className={'w-2/3'}>
                         <p>You can probably already think of friends, teachers or family members who support your goals.
                             Now, your TTS Coach is ready to come alongside and help you create a Map that will guide

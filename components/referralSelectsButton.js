@@ -9,10 +9,12 @@ function ReferralSelectsButton({
                                    clientId,
                                    setUserReferrals,
                                    user,
-                                   visible
+                                   visible,
+                                   setSaving
                                }) {
 
     async function saveReferral() {
+        await setSaving(domain)
         await fetch("/api/save-referral", {
             method: "POST",
             headers: {
@@ -52,13 +54,13 @@ function ReferralSelectsButton({
     return (
         <button
             disabled={Object.keys(currentReferral).length === 0 || currentReferral.domain !== domain}
-            className={`${visible ? "visible" : "hidden"}  my-3 py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300`}
+            className={`${visible ? "visible" : "hidden"}  my-3 py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 dark:disabled:bg-gray-800 rounded-lg shadow-xl dark:font-extralight dark:text-white dark:hover:bg-indigo-600`}
             onClick={() => {
 
                 if (checkUserReferrals().length === 0) {
                     // save referral
                     saveReferral().then(() => {
-                        getUserReferrals().then()
+                        getUserReferrals().then(() => {setSaving(false)})
                     })
                     setCurrentReferral({})
                     document.getElementById(domain).selectedIndex = 0

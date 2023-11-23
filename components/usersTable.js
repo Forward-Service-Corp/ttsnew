@@ -26,6 +26,7 @@ export default function UsersTable({users, setModalState}) {
                 </div>
                 <div className={"rounded border border-gray-300 dark:bg-black dark:border-none"}>
                     <input type="text"
+                           id={"search-users"}
                            className={"text-xs border-gray-300 border-0 rounded focus:ring-0 dark:bg-black dark:border-none dark:text-white"}
                            value={searchTerm}
                            placeholder={"Search users..."}
@@ -35,6 +36,7 @@ export default function UsersTable({users, setModalState}) {
                     <select
                         className={"text-xs border-gray-300 border-0 rounded focus:ring-0 dark:bg-black dark:text-white dark:border-0 dark:placeholder:text-gray-500 focus:border-0 focus:border-transparent focus:ring-transparent outline-none focus:outline-none"}
                         defaultValue={`client`}
+                        id={"user-type"}
                         onChange={(e) => {
                         setUserType(e.target.value)
                     }}>
@@ -93,9 +95,7 @@ export default function UsersTable({users, setModalState}) {
                                     <tr key={person.email} className={`dark:hover:bg-indigo-800 dark:hover:bg-opacity-10`}>
                                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 dark:text-white">
                                             <Link href={"/user/" + person._id}>
-                                                <a className="text-orange-600 hover:text-orange-900 dark:text-blue-600 dark:hover:text-blue-400 underline font-bold" about={`View user profile.`} title={`View user profile.`} >
                                                     {person.name}
-                                                </a>
                                             </Link>
 
                                         </td>
@@ -115,9 +115,7 @@ export default function UsersTable({users, setModalState}) {
                                         {/*</td>*/}
                                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-xs font-medium sm:pr-6">
                                             <Link href={"/user/" + person._id}>
-                                                <a className="text-orange-600 hover:text-orange-900 dark:text-blue-600 dark:hover:text-blue-400" about={`View user profile.`} title={`View user profile.`} >
                                                     <ArrowCircleRight size={26}/><span className="sr-only">, {person.name}</span>
-                                                </a>
                                             </Link>
                                         </td>
                                     </tr>

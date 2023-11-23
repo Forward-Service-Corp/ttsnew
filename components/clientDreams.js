@@ -62,21 +62,21 @@ function ClientDreams({viewingUser}) {
             <div
                 className={`grid grid-cols-3 gap-4 text-xs rounded border mt-3 overflow-hidden p-3 shadow-xl ${newDreamOpen ? "h-auto" : "h-0 p-0 hidden"} dark:border-none dark:bg-black dark:bg-opacity-70 dark:text-white dark:rounded-lg dark:shadow-xl`}>
                 <input className={"text-xs p-1 border-0 border-b-[1px] bg-transparent"}
-                       type="text"
+                       type="text" id={"dream"}
                        value={dream}
                        placeholder={"Enter dream here..."}
                        onChange={(e) => {
                            setDream(e.target.value)
                        }}/>
                 <input className={"text-xs p-1 border-0 border-b-[1px] bg-transparent"}
-                       type="text"
+                       type="text" id={"dreamNeed"}
                        value={dreamNeed}
                        placeholder={"What do you need..."}
                        onChange={(e) => {
                            setDreamNeed(e.target.value)
                        }}/>
                 <input className={"text-xs p-1 border-0 border-b-[1px] bg-transparent"}
-                       type="text"
+                       type="text" id={"dreamHelp"}
                        value={dreamHelp}
                        placeholder={"Who do you need..."}
                        onChange={(e) => {

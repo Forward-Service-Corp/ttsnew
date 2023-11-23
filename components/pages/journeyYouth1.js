@@ -1,16 +1,17 @@
 import React from 'react';
+import Image from "next/image";
 
 function JourneyYouth1(props) {
     return (
-        <div className={"text-sm p-4"}>
+        <div className={"text-sm p-4 dark:text-white"}>
             <h1 className={"mt-3 text-center text-2xl font-bold"}>So You&apos;ve Hit A Roadblock: What Now?</h1>
             <h2 className={"mt-3 text-center text-lg font-bold"}>“I&apos;ve failed over and over again in my life and
                 that is
                 why I succeed.”</h2>
             <p className={'mt-[-4px] italic text-center'}>-Michael Jordan, 7-time NBA Champion</p>
             <div className={"flex mt-10"}>
-                <div className={"w-1/3"}>
-                    <img src="./img/construction-guy.jpg" alt=""/>
+                <div className={"w-1/3 relative inline h-[300px]"}>
+                    <Image src="/img/construction-guy.jpg" alt="Road block" sizes="(max-width: 300px) 20vw, (max-width: 300px) 20vw, 18vw" fill/>
                 </div>
                 <div className={"w-2/3 pl-10"}>
                     <p>Even when you know your dreams and you&apos;ve got a plan, things can (and probably will) happen.

@@ -14,31 +14,32 @@ export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) 
     const router = useRouter()
     const [currentReferral, setCurrentReferral] = useState({})
     const [userReferrals, setUserReferrals] = useState(router.query.clientId ? pageDataJson.clientReferrals : pageDataJson.referrals)
+    const [saving, setSaving] = useState(false)
     return (
         <Layout title={"Map of My Dreams"} session={user}>
             <Head>
                 <title>TTS / Map of My Dreams</title>
             </Head>
-            <div className={"p-4 mb-4 bg-gray-100 rounded"}>
-                <p><strong>4 Keys to Your Success</strong></p>
+            <div className={"p-8 mb-4 bg-gray-100 text-sm  dark:rounded-xl dark:bg-black dark:bg-opacity-30 dark:text-white dark:font-extralight dark:shadow-xl"}>
+                <p className={"text-2xl text-orange-400 uppercase dark:font-extralight"}>4 Keys to Your Success</p>
                 <p>Science tells us there are 4 steps to success.</p>
                 <ol className={''}>
-                    <li><strong>1. CARE: </strong>Coordinating All Resources Effectively. Learn to identify and make the
+                    <li><strong className={"font-extrabold"}>1. CARE: </strong>Coordinating All Resources Effectively. Learn to identify and make the
                         most of community services available to you.</li>
-                    <li><strong>2. Understand Money. </strong>Learn about predatory scams, lending, and the pitfalls of credit.</li>
-                    <li><strong>3. Find a mentor, </strong>someone you can relate to that is achieving similar goals.
+                    <li><strong className={"font-extrabold"}>2. Understand Money. </strong>Learn about predatory scams, lending, and the pitfalls of credit.</li>
+                    <li><strong className={"font-extrabold"}>3. Find a mentor, </strong>someone you can relate to that is achieving similar goals.
                         Ask for support and advice.</li>
-                    <li><strong>4. Volunteer: </strong>The research is clear, volunteers are healthier, happier, earn more
+                    <li><strong className={"font-extrabold"}>4. Volunteer: </strong>The research is clear, volunteers are healthier, happier, earn more
                         money, and do better in school. Volunteerism is also a path to your career.</li>
                 </ol>
                 <p>You now know your dreams, goals, and challenges. You&apos;ve picked your priorities. Now let&apos;s make your Map of Your Dreams.</p>
                 <p>On your Map, use the key steps to fuel your success (CARE, Understanding Money, Asking for Help, and Helping Others.)</p>
             </div>
-            <div className={"p-4 mb-4 bg-gray-100 rounded"}>
-                <h2 className={"uppercase text-gray-500"}>Instructions</h2>
-                <p className={"text-sm"}>Please select a referral from the dropdown menu. Once you have selected a referral, you must click or
+            <div className={"p-8 mb-4 bg-gray-100 dark:rounded-xl dark:bg-black dark:bg-opacity-30 dark:text-white dark:font-extralight dark:shadow-xl"}>
+                <h2 className={"uppercase text-gray-500 dark:text-gray-400 mb-0"}>Instructions</h2>
+                <p className={"text-sm mt-0"}>Please select a referral from the dropdown menu. Once you have selected a referral, you must click or
                     tap <button
-                        className={"py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300"}>
+                        className={" my-3 py-2 px-3 mx-2 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 dark:disabled:bg-gray-700 rounded-lg shadow-xl dark:font-extralight dark:text-white dark:hover:bg-indigo-600"}>
                         + Save</button> to
                     save your choice and move on.
                 </p>
@@ -53,13 +54,13 @@ export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) 
                     MAPPING FOR CLIENT {router.query.clientId}
                 </div>
 
-                <div className={"flex py-4 w-full"}>
+                <div className={"flex py-4 w-full dark:text-white"}>
                     <div className={"flex-1"}>
-                        <p className={"text-sm text-gray-600"}>Dream:</p>
+                        <p className={"text-sm text-gray-600 dark:text-gray-400"}>Dream:</p>
                         <p className={"uppercase"}>{surveyJson.dream}</p>
                     </div>
                     <div className={"flex-1"}>
-                        <p className={"text-sm text-gray-600"}>Survey Completed:</p>
+                        <p className={"text-sm text-gray-600 dark:text-gray-400"}>Survey Completed:</p>
                         <p className={"uppercase"}>{moment(surveyJson.datestamp).format("MMMM Do YYYY, h:mm:ss a")}</p>
                     </div>
                 </div>
@@ -74,13 +75,15 @@ export default function MapOfMyDreams({pageDataJson, referralJson, surveyJson}) 
                                      referrals={referrals}
                                      userReferrals={userReferrals}
                                      setUserReferrals={setUserReferrals}
-                                     clientId={router.query.clientId}/>
+                                     clientId={router.query.clientId}
+                    saving={saving}
+                    setSaving={setSaving}/>
 
                 </div>
                 <div className={"flex justify-end"}>
                     <button
                         disabled={userReferrals.length === 0}
-                        className={"py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300"}
+                        className={" my-3 py-2 px-6 text-white text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 dark:disabled:bg-gray-700 rounded-lg shadow-xl dark:font-extralight dark:text-white dark:hover:bg-indigo-600"}
                         onClick={() => {
                             if (router.query.clientId) {
                                 router.back()

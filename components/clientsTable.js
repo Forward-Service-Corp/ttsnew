@@ -51,9 +51,9 @@ export default function ClientsTable({users}) {
                                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300 dark:font-extralight">{person.email}</td>
                                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                             <Link href={"/client/" + person._id}>
-                                                <a className="text-orange-600 hover:text-orange-900 cursor-pointer dark:text-blue-600 dark:hover:text-blue-400">
+
                                                     <ArrowCircleRight size={26}/><span className="sr-only">, {person.name}</span>
-                                            </a>
+
                                             </Link>
                                         </td>
                                     </tr>
