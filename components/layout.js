@@ -5,7 +5,7 @@ import {MenuIcon, XIcon} from '@heroicons/react/outline'
 import {useRouter} from "next/router";
 import {UserCircleGear, UserCircle} from "phosphor-react";
 import ProfileDetailsWarningModal from "./profileDetailsWarningModal";
-import styles from "../styles/Layout.module.scss"
+import styles from "../styles/layout.module.css"
 import SimpleModal from "./simpleModal";
 import DarkModeToggle from "./darkModeToggle";
 import Image from "next/image";

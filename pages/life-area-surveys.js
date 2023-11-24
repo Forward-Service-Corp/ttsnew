@@ -17,7 +17,7 @@ export default function LifeAreaSurveys({pageDataJson, incomingDream}) {
             setCurrentDream(incomingDream.dream)
             setCurrentDreamId(incomingDream.dreamId)
         }
-    }, [])
+    }, [incomingDream.dream, incomingDream.dreamId, incomingDream.hasDream])
 
     return (
         <Layout title={"Life Area Surveys"} session={user}>
