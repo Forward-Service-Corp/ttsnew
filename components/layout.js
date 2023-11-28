@@ -199,13 +199,14 @@ export default function Layout({children, title, session, loadingState, version,
                                                                         <a href={"/reports"}
                                                                             className={'block px-4 py-2 text-sm text-black dark:text-white cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 dark:font-extralight'}
                                                                         >Reports</a></Menu.Item> : null}
-                                                                {session?.level === "admin" ? <Menu.Item>
+                                                                {/*{session?.level === "admin" ? */}
+                                                                    <Menu.Item>
                                                                     <div className={`ml-4 mt-[3px] flex items-center`}>
                                                                         <div className={`mr-3 text-black dark:text-white dark:font-extralight text-sm`}>Dark Mode</div>
                                                                         <DarkModeToggle setDarkMode={setDarkMode} session={session}/>
                                                                     </div>
-
-                                                                </Menu.Item> : null}
+                                                                </Menu.Item>
+                                                                    {/*: null}*/}
                                                                 <Menu.Item>
                                                                     {({active}) => (
                                                                         <a
@@ -292,11 +293,12 @@ export default function Layout({children, title, session, loadingState, version,
                                             ))}
                                             {/*<Disclosure.Button*/}
                                             {/*    className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700 dark:hover:bg-opacity-0">*/}
-                                            {session?.level === "admin" ?
+                                            {/*{session?.level === "admin" ?*/}
                                                 <div className={`ml-3 mt-[3px] flex items-center`}>
                                                 <div className={`mr-3 text-white `}>Dark Mode</div>
                                                 <DarkModeToggle setDarkMode={setDarkMode} session={session}/>
-                                                </div> : null}
+                                                </div>
+                                                {/*: null}*/}
                                             {/*</Disclosure.Button>*/}
                                             <Disclosure.Button
                                                 className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
