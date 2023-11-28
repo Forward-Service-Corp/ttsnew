@@ -23,7 +23,7 @@ export default function CarePlans({pageDataJson}) {
 
     useEffect(() => {
         getUserReferrals().then()
-    }, [userReferrals])
+    }, [])
 
     return (
         <Layout title={"CARE Plans"} session={user}>

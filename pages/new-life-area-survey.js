@@ -13,7 +13,7 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
     const {user} = pageDataJson
     const router = useRouter()
     const [activeDomain, setActiveDomain] = useState("food")
-    const [answered, setAnswered] = useState({})
+    const [answered, setAnswered] = useState([] || null)
     const [domains, setDomains] = useState([])
     const [surprise, setSurprise] = useState("")
     const [concern, setConcern] = useState("")
@@ -29,57 +29,57 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
         await setDomains(survey.priority)
         if(isYouth){
             await setAnswered({
-                myFamily: {selection: survey.myFamily[0], statement: survey.myFamily[1]},
-                school: {selection: survey.school[0], statement: survey.school[1]},
-                familyCare: {selection: survey.familyCare[0], statement: survey.familyCare[1]},
-                childrensEducation: {selection: survey.childrensEducation[0], statement: survey.childrensEducation[1]},
-                money: {selection: survey.money[0],statement: survey.money[1]},
-                disabilities: {selection: survey.disabilities[0], statement: survey.disabilities[1]},
-                work: {selection: survey.work[0], statement: survey.work[1]},
-                friends: {selection: survey.friends[0],statement: survey.friends[1]},
-                food: {selection: survey.food[0], statement: survey.food[1]},
-                healthCare: {selection: survey.healthCare[0], statement: survey.healthCare[1]},
-                housing: {selection: survey.housing[0], statement: survey.housing[1]},
-                internetAccess: {selection: survey.internetAccess[0], statement: survey.internetAccess[1]},
-                legal: {selection: survey.legal[0], statement: survey.legal[1]},
-                lifeSkills: {selection: survey.lifeSkills[0], statement: survey.lifeSkills[1]},
-                mentalHealth: {selection: survey.mentalHealth[0], statement: survey.mentalHealth[1]},
-                manageMoney: {selection: survey.manageMoney[0], statement: survey.manageMoney[1]},
-                parenting: {selection: survey.parenting[0], statement: survey.parenting[1]},
-                education: {selection: survey.education[0], statement: survey.education[1]},
-                safety: {selection: survey.safety[0], statement: survey.safety[1]},
-                substances: {selection: survey.substances[0], statement: survey.substances[1]},
-                transportation: {selection: survey.transportation[0], statement: survey.transportation[1]}
+                myFamily: {selection: survey.myFamily[0] || 0, statement: survey.myFamily[1] || ""},
+                school: {selection: survey.school[0] || 0, statement: survey.school[1] || ""},
+                familyCare: {selection: survey.familyCare[0] || 0, statement: survey.familyCare[1] || ""},
+                childrensEducation: {selection: survey.childrensEducation[0] || 0, statement: survey.childrensEducation[1] || ""},
+                money: {selection: survey.money[0] || 0,statement: survey.money[1] || ""},
+                disabilities: {selection: survey.disabilities[0] || 0, statement: survey.disabilities[1] || ""},
+                work: {selection: survey.work[0] || 0, statement: survey.work[1] || ""},
+                friends: {selection: survey.friends[0] || 0,statement: survey.friends[1] || ""},
+                food: {selection: survey.food[0] || 0, statement: survey.food[1] || ""},
+                healthCare: {selection: survey.healthCare[0] || 0, statement: survey.healthCare[1] || ""},
+                housing: {selection: survey.housing[0] || 0, statement: survey.housing[1] || ""},
+                internetAccess: {selection: survey.internetAccess[0] || 0, statement: survey.internetAccess[1] || ""},
+                legal: {selection: survey.legal[0] || 0, statement: survey.legal[1] || ""},
+                lifeSkills: {selection: survey.lifeSkills[0] || 0, statement: survey.lifeSkills[1] || ""},
+                mentalHealth: {selection: survey.mentalHealth[0] || 0, statement: survey.mentalHealth[1] || ""},
+                manageMoney: {selection: survey.manageMoney[0] || 0, statement: survey.manageMoney[1] || ""},
+                parenting: {selection: survey.parenting[0] || 0, statement: survey.parenting[1] || ""},
+                education: {selection: survey.education[0] || 0, statement: survey.education[1] || ""},
+                safety: {selection: survey.safety[0] || 0, statement: survey.safety[1] || ""},
+                substances: {selection: survey.substances[0] || 0, statement: survey.substances[1] || ""},
+                transportation: {selection: survey.transportation[0] || 0, statement: survey.transportation[1] || ""}
             })
         }else{
             await setAnswered({
-                adultEducation: {selection: survey.adultEducation[0], statement: survey.adultEducation[1]},
-                budgeting: {selection: survey.budgeting[0], statement: survey.budgeting[1]},
-                childcare: {selection: survey.childcare[0], statement: survey.childcare[1]},
-                childrensEducation: {selection: survey.childrensEducation[0], statement: survey.childrensEducation[1]},
+                adultEducation: {selection: survey.adultEducation[0] || 0, statement: survey.adultEducation[1] || ""},
+                budgeting: {selection: survey.budgeting[0] || 0, statement: survey.budgeting[1] || ""},
+                childcare: {selection: survey.childcare[0] || 0, statement: survey.childcare[1] || ""},
+                childrensEducation: {selection: survey.childrensEducation[0] || 0, statement: survey.childrensEducation[1] || ""},
                 communityInvolvement: {
-                    selection: survey.communityInvolvement[0],
-                    statement: survey.communityInvolvement[1]
+                    selection: survey.communityInvolvement[0] || 0,
+                    statement: survey.communityInvolvement[1] || ""
                 },
-                disabilities: {selection: survey.disabilities[0], statement: survey.disabilities[1]},
-                employment: {selection: survey.employment[0], statement: survey.employment[1]},
+                disabilities: {selection: survey.disabilities[0] || 0, statement: survey.disabilities[1] || ""},
+                employment: {selection: survey.employment[0], statement: survey.employment[1] || ""},
                 familyFriendsSupport: {
-                    selection: survey.familyFriendsSupport[0],
-                    statement: survey.familyFriendsSupport[1]
+                    selection: survey.familyFriendsSupport[0] || 0,
+                    statement: survey.familyFriendsSupport[1] || ""
                 },
-                food: {selection: survey.food[0], statement: survey.food[1]},
-                healthInsurance: {selection: survey.healthInsurance[0], statement: survey.healthInsurance[1]},
-                housing: {selection: survey.housing[0], statement: survey.housing[1]},
-                internetAccess: {selection: survey.internetAccess[0], statement: survey.internetAccess[1]},
-                legal: {selection: survey.legal[0], statement: survey.legal[1]},
-                lifeSkills: {selection: survey.lifeSkills[0], statement: survey.lifeSkills[1]},
-                mentalHealth: {selection: survey.mentalHealth[0], statement: survey.mentalHealth[1]},
-                money: {selection: survey.money[0], statement: survey.money[1]},
-                parentingSkills: {selection: survey.parentingSkills[0], statement: survey.parentingSkills[1]},
-                racismBigotry: {selection: survey.racismBigotry[0], statement: survey.racismBigotry[1]},
-                safety: {selection: survey.safety[0], statement: survey.safety[1]},
-                substances: {selection: survey.substances[0], statement: survey.substances[1]},
-                transportation: {selection: survey.transportation[0], statement: survey.transportation[1]}
+                food: {selection: survey.food[0] || 0, statement: survey.food[1] || ""},
+                healthInsurance: {selection: survey.healthInsurance[0] || 0, statement: survey.healthInsurance[1] || ""},
+                housing: {selection: survey.housing[0] || 0, statement: survey.housing[1] || ""},
+                internetAccess: {selection: survey.internetAccess[0] || 0, statement: survey.internetAccess[1] || ""},
+                legal: {selection: survey.legal[0] || 0, statement: survey.legal[1] || ""},
+                lifeSkills: {selection: survey.lifeSkills[0] || 0, statement: survey.lifeSkills[1] || ""},
+                mentalHealth: {selection: survey.mentalHealth[0] || 0, statement: survey.mentalHealth[1] || ""},
+                money: {selection: survey.money[0] || 0, statement: survey.money[1] || ""},
+                parentingSkills: {selection: survey.parentingSkills[0] || 0, statement: survey.parentingSkills[1] || ""},
+                racismBigotry: {selection: survey.racismBigotry[0] || 0, statement: survey.racismBigotry[1] || ""},
+                safety: {selection: survey.safety[0] || 0, statement: survey.safety[1] || ""},
+                substances: {selection: survey.substances[0] || 0, statement: survey.substances[1] || ""},
+                transportation: {selection: survey.transportation[0] || 0, statement: survey.transportation[1] || ""}
             })
         }
 
@@ -292,8 +292,8 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                                       answered={answered} domains={domains} user={user}/>
                 </div>
                 <div className={"flex-grow"}>
-                    <div className={"p-4 bg-gray-100 m-0 md:m-4 my-2 md:my-0"}>
-                        <h2 className={"uppercase text-gray-600"}>Instructions</h2>
+                    <div className={"p-4 bg-gray-100 m-0 md:m-4 my-2 md:my-0 dark:rounded-lg dark:shadow-xl dark:text-white dark:bg-black dark:bg-opacity-70"}>
+                        <h2 className={"uppercase text-gray-600 dark:text-gray-300"}>Instructions</h2>
                         <p className={"text-xs"}>
                             Click or tap on each of the life areas to choose the option that best describes where you
                             are today.

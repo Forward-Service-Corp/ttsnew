@@ -17,7 +17,6 @@ export default function Dreams({pageDataJson}) {
         <Layout title={"Dreams"} session={user} simpleModal={simpleModal} simpleModalTitle={`Great Work!`} simpleModalMessage={`You just created a new dream.`} simpleModalLabel={`Awesome!`}>
             <Head>
                 <title>TTS / Dreams</title>
-
             </Head>
             <div className={""}>
                 <div className={"grid grid-cols-1 md:grid-cols-2 gap-4"}>

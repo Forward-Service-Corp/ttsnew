@@ -81,7 +81,7 @@ export default function Layout({children, title, session, loadingState, version,
                                                 <div className="w-[60px] h-[50px] relative ml-3">
                                                     <Image sizes="(max-width:70px) 3vw, (max-width: 70px) 10vw, 5vw" fill
                                                         src="/img/fsc-logo.png"
-                                                        alt="Workflow"/>
+                                                        alt="Workflow" priority/>
                                                 </div>
                                                 <div className="flex-shrink-0 ml-3 visible md:hidden">
                                                     <a onClick={() => signOut()}
@@ -158,7 +158,7 @@ export default function Layout({children, title, session, loadingState, version,
                                                     <Menu as="div" className="ml-3 relative">
                                                         <div>
                                                             <Menu.Button
-                                                                className="w-[45px] h-[45px] relativemax-w-xs bg-orange-600 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                                                                className="w-[45px] h-[45px] relative max-w-xs bg-orange-600 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                                                                 <span className="sr-only">Open user menu</span>
                                                                 {session?.image ? <Image className="rounded-full"
                                                                                          sizes="(max-width:45px) 3vw, (max-width: 45px) 10vw, 5vw" fill

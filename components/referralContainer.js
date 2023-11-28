@@ -46,6 +46,7 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
     //     await fetch("/api/update-task-status?taskId=" + taskId + "&setTo=" + setTo)
     // }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     async function getTasks() {
         const fetchedTasks = await fetch("/api/get-tasks?userId=" + user.email + "&referralId=" + item._id)
             .then(res => res.json())

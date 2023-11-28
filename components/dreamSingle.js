@@ -3,7 +3,7 @@ import {useRouter} from "next/router";
 import {Brain, Trash, NotePencil, FloppyDisk} from "phosphor-react";
 import moment from "moment";
 
-function DreamSingle({dream, isClientDream, clientId, getDreams, key}) {
+function DreamSingle({dream, isClientDream, clientId, getDreams}) {
 
     const [editMode, setEditMode] = useState(false)
     const [updateSuccess, setUpdateSuccess] = useState(false)

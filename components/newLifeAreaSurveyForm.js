@@ -13,15 +13,15 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
         <div className={"p-0 md:p-4"}>
             <div className={"md:flex justify-between"}>
                 <div className={""}>
-                    <h2 className={"uppercase text-orange-600 text-xl font-serif"}>{labelMap[activeDomain]}</h2>
+                    <h2 className={"uppercase text-orange-600 text-xl font-serif dark:text-orange-400"}>{labelMap[activeDomain]}</h2>
                 </div>
-                <div>
-                    <span className={"text-sm text-red-600 mr-4"}>Set as a priority</span>
+                <div className={`flex items-center`}>
+                    <span className={"text-sm text-red-600 mr-4 dark:text-red-500"}>Set as a priority</span>
                     <Toggle domains={domains} setDomains={setDomains} activeDomain={activeDomain}/>
                 </div>
             </div>
 
-            <p className={"text-sm mt-7"}>Select the option that best describes your condition in each of the life
+            <p className={"text-sm mt-7 dark:text-white dark:font-extralight"}>Select the option that best describes your condition in each of the life
                 areas. You must select an answer for each life area. If one does not apply to you, then
                 select &quot;This does not apply to me.&quot;</p>
             <div className={"mt-8"}>
@@ -45,10 +45,10 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
                                            data-statement={useSurvey[activeDomain].statements[index]}
                                            name={activeDomain}/>
                                     <label
-                                        className={"block hover:bg-gray-100 peer-checked:bg-green-300 mb-2 border text-xs flex items-center justify-between rounded overflow-hidden h-[80px]"}
+                                        className={"relative hover:bg-gray-100 peer-checked:bg-green-300 mb-4 border text-sm flex items-center justify-between rounded overflow-hidden dark:hover:bg-gray-700 dark:peer-checked:bg-purple-800 dark:text-white dark:bg-black dark:bg-opacity-70 dark:shadow-xl dark:border-none"}
                                         htmlFor={activeDomain + "-" + index}>
-                                        <div className={"p-2"}>{useSurvey[activeDomain].statements[index]}</div>
-                                        <div className={"flex justify-center items-center bg-orange-600 text-white min-w-[50px] h-full"}>
+                                        <div className={"p-4"}>{useSurvey[activeDomain].statements[index]}</div>
+                                        <div className={"flex justify-center items-center bg-orange-600 text-white min-w-[50px] h-full absolute right-0 top-0 dark:bg-indigo-600"}>
                                             <div className={"text-sm"}>{index}</div>
                                         </div>
                                     </label>

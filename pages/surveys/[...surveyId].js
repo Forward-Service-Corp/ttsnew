@@ -5,6 +5,7 @@ import {labelMap} from "../../lib/serviceLabelsMap";
 import {ArrowLeft, Printer} from "phosphor-react";
 import {useEffect, useState} from "react";
 import moment from "moment";
+import Head from "next/head";
 
 export default function SurveyId({pageDataJson}) {
 
@@ -16,10 +17,8 @@ export default function SurveyId({pageDataJson}) {
 
     const getUserFullName = async () => {
         const currentSurveyUserId = surveys.filter(survey => survey._id.toString() === surveyId.toString())[0].userId
-        console.log(currentSurveyUserId)
         const data = await fetch(`/api/pages/getSurveyName?userId=${currentSurveyUserId}`)
             .then(res => res.json())
-        console.log(data.surveyUser.name)
         await setUserFullName(data.surveyUser.name)
     }
 
@@ -28,6 +27,9 @@ export default function SurveyId({pageDataJson}) {
             return youthDomains.map((domain, domainIndex) => {
                 return (
                     <div key={domainIndex} className={`p-1  dark:text-white ${survey.priority.indexOf(domain) > -1 ? "border border-1 border-black dark:border-purple-800" : null}`}>
+                        <Head>
+                            <title>TTS / {userFullName}</title>
+                        </Head>
                         <div className={"flex items-center justify-between"}>
                             <div className={"truncate font-bold"}>{labelMap[domain]}</div>
                             <div className={""}>{survey[domain][0]}</div>
@@ -40,6 +42,9 @@ export default function SurveyId({pageDataJson}) {
             return  domains.map((domain, domainIndex) => {
                 return (
                     <div key={domainIndex} className={`p-1  dark:text-white ${survey.priority.indexOf(domain) > -1 ? "border border-1 border-black dark:border-purple-800" : null}`}>
+                        <Head>
+                            <title>TTS / {userFullName}</title>
+                        </Head>
                         <div className={"flex items-center justify-between"}>
                             <div className={"truncate font-bold"}>{labelMap[domain]}</div>
                             <div className={""}>{survey[domain][0]}</div>

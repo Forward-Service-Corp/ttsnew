@@ -104,8 +104,6 @@ export async function getServerSideProps(context) {
     if (!session) return {redirect: {destination: "/login", permanent: false}}
     const {req} = context;
 
-    console.log(context.query)
-
     const protocol = req.headers['x-forwarded-proto'] || 'http'
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
@@ -119,8 +117,6 @@ export async function getServerSideProps(context) {
 
     const getPageData = await fetch(pageDataUrl)
     const pageDataJson = await getPageData.json()
-
-    console.log(context.query.county)
 
     //referral options
     const referralOptionsUrl = baseUrl + "/api/get-referral-options?county=" + context.query.county + "&domain=" + context.query.domain
