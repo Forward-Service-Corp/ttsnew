@@ -3,6 +3,7 @@ import {SessionProvider} from "next-auth/react";
 import Script from "next/script";
 
 function MyApp({ Component, pageProps: {session, ...pageProps} }) {
+
   return (
       <SessionProvider session={session}>
           <Script id={'dark-mode-script'}>

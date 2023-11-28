@@ -18,7 +18,7 @@ function OrganizationInformation({user}) {
     }
 
     useEffect(() => {
-        if(user.coach.length > 0){
+        if(user.coach?.length > 0){
             getCoaches().then()
         }
     }, [])

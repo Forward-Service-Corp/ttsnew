@@ -81,7 +81,7 @@ export default function Layout({children, title, session, loadingState, version,
                                                 <div className="w-[60px] h-[50px] relative ml-3">
                                                     <Image sizes="(max-width:70px) 3vw, (max-width: 70px) 10vw, 5vw" fill
                                                         src="/img/fsc-logo.png"
-                                                        alt="Workflow" priority/>
+                                                        alt="Workflow" priority={true}/>
                                                 </div>
                                                 <div className="flex-shrink-0 ml-3 visible md:hidden">
                                                     <a onClick={() => signOut()}

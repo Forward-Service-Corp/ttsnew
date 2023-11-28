@@ -17,7 +17,7 @@ function WelcomeYouth1() {
                         </p>
                     </div>
                     <div className={'w-1/2 relative inline h-[300px]'}>
-                        <Image src={'/img/pirate-map.jpg'} alt={'Image of a treasure map'} sizes="(max-width: 300px) 20vw, (max-width: 300px) 20vw, 18vw" fill/>
+                        <Image src={'/img/pirate-map.jpg'} alt={'Image of a treasure map'} sizes="(max-width: 300px) 20vw, (max-width: 300px) 20vw, 18vw" fill priority/>
                     </div>
                 </div>
                 <h2 className={"my-5 font-bold text-orange-600"}> Make your dreams come true.</h2>

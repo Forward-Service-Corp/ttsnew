@@ -10,7 +10,7 @@ function ProfilePersonalDetails({user}) {
     const [city, setCity] = useState(user.city ? user.city : undefined)
     const [state, setState] = useState(user.state ? user.state : undefined)
     const [zip, setZip] = useState(user.zip ? user.zip : undefined)
-    const [counties, setCounties] = useState(user.county ? user.county : undefined)
+    const [counties, setCounties] = useState(user.county ? user.county : [])
 
     const [email, setEmail] = useState(user.email)
     const [phone, setPhone] = useState(user.phone ? user.phone : undefined)
