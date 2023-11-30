@@ -87,23 +87,23 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
     return (
         <div className={"my-3  dark:bg-black dark:text-white dark:overflow-hidden dark:bg-opacity-70 dark:rounded-lg dark:shadow-xl"} key={item._id}>
             <div
-                className={`flex justify-start items-center text-sm font-light relative p-3 ${item.archived !== "true" ? colorMap[item.priority] : "bg-gray-600 text-white"}`}>
+                className={`flex justify-start items-center text-sm font-light relative p-3 ${item.archived !== "true" ? "bg-orange-500 text-black" : "bg-gray-600 text-white"}`}>
                 <div className={"w-[160px] ml-4 whitespace-nowrap mr-3 truncate font-bold"}>{labelMap[item.domain]}</div>
                 <div className={"truncate max-w-[200px]"}>{item.name}</div>
                 <div
                     className={"absolute right-[0px] min-w-[130px] flex items-center justify-between h-full  bg-gray-700"}>
-                    <div className={`h-full w-[50px] mr-5 flex`}>
-                        <div className={`align-middle self-center`}>
-                            <select name="priority-select" id={item._id + i} className={`bg-gray-700 border-0 w-[80px] focus:border-0 focus:border-transparent focus:ring-transparent outline-none focus:outline-none`} onChange={(e) => {
-                                savePriority(item._id, e.target.value).then(getReferrals)
-                            }} value={item.priority}>
-                                <option value="0"></option>
-                                <option value="1">✨</option>
-                                <option value="2">⭐</option>
-                                <option value="3">🔥</option>
-                            </select>
-                        </div>
-                    </div>
+                    {/*<div className={`h-full w-[50px] mr-5 flex`}>*/}
+                    {/*    <div className={`align-middle self-center`}>*/}
+                    {/*        <select name="priority-select" id={item._id + i} className={`bg-gray-700 border-0 w-[80px] focus:border-0 focus:border-transparent focus:ring-transparent outline-none focus:outline-none`} onChange={(e) => {*/}
+                    {/*            savePriority(item._id, e.target.value).then(getReferrals)*/}
+                    {/*        }} value={item.priority}>*/}
+                    {/*            <option value="0"></option>*/}
+                    {/*            <option value="1">✨</option>*/}
+                    {/*            <option value="2">⭐</option>*/}
+                    {/*            <option value="3">🔥</option>*/}
+                    {/*        </select>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                     <div className={`ml-8 text-white`}>Tasks: {allTasks.filter(task => task.referralId === item._id && eval(task.completed) === false).length}</div>
                     <div className={"p-3 cursor-pointer text-xs"} onClick={() => {
                         setOpen(!open)

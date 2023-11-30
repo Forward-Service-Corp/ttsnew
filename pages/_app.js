@@ -7,9 +7,12 @@ function MyApp({ Component, pageProps: {session, ...pageProps} }) {
   return (
       <SessionProvider session={session}>
           <Script id={'dark-mode-script'}>
+              {/*{`if (localStorage.theme === "dark" || (!('theme' in localStorage) )) {*/}
+              {/*    document.documentElement.classList.add('dark')*/}
+              {/*} else {*/}
+              {/*    document.documentElement.classList.remove('dark')*/}
+              {/*}`}*/}
               {`if (localStorage.theme === "dark" || (!('theme' in localStorage) )) {
-                  document.documentElement.classList.add('dark')
-              } else {
                   document.documentElement.classList.remove('dark')
               }`}
           </Script>
