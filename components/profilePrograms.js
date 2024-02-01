@@ -42,12 +42,12 @@ function ProfilePrograms({user}) {
                         <option value={`FoodShare Employment and Training`}>FoodShare Employment and Training</option>
                         {/*<option value={`Job Access Loans (JAL)`}>Job Access Loans (JAL)</option>*/}
                         <option value={`Jobs for America&apos;s Graduates (JAG)`}>Jobs for America&apos;s Graduates (JAG)</option>
-                        <option value={`Refugee Support Services`}>Refugee Services</option>
-                        <option value={`Highway Construction Skill Training (HCST)`}>Transportation Alliance for New Solutions (TrANS)</option>
+                        <option value={`Refugee Support Services`}>Refugee Support Services</option>
+                        <option value={`Highway Construction Skill Training (HCST)`}>Highway Construction Skill Training (HCST)</option>
                         <option value={`Upward Bound (UB)`}>Upward Bound (UB)</option>
                         <option value={`Upward Bound Math Science (UBMS)`}>Upward Bound Math Science (UBMS)</option>
-                        <option value={`WIOA Adult`}>WIOA Adult and Dislocated Worker</option>
-                        <option value={`WIOA Dislocated Worker`}>WIOA Adult and Dislocated Worker</option>
+                        <option value={`WIOA Adult`}>WIOA Adult</option>
+                        <option value={`WIOA Dislocated Worker`}>WIOA Dislocated Worker</option>
                         <option value={`WIOA Youth`}>WIOA Youth</option>
                         <option value={`Wisconsin Employment Transportation Assistance Program (WETAP)`}>Wisconsin Employment Transportation Assistance Program (WETAP)</option>
                         <option value={`Wisconsin Works (W-2)`}>Wisconsin Works (W-2)</option>
