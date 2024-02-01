@@ -37,16 +37,17 @@ function ProfilePrograms({user}) {
                         setProgramsUpdated(true)
                     }}>
                         <option value={`College Bound Math Science (CBMS)`}>College Bound Math Science (CBMS)</option>
-                        <option value={`Emergency Assistance`}>Emergency Assistance</option>
+                        {/*<option value={`Emergency Assistance`}>Emergency Assistance</option>*/}
                         <option value={`Family Stabilization Program`}>Family Stabilization Program</option>
                         <option value={`FoodShare Employment and Training`}>FoodShare Employment and Training</option>
-                        <option value={`Job Access Loans (JAL)`}>Job Access Loans (JAL)</option>
+                        {/*<option value={`Job Access Loans (JAL)`}>Job Access Loans (JAL)</option>*/}
                         <option value={`Jobs for America&apos;s Graduates (JAG)`}>Jobs for America&apos;s Graduates (JAG)</option>
-                        <option value={`Refugee Services`}>Refugee Services</option>
-                        <option value={`Transportation Alliance for New Solutions (TrANS)`}>Transportation Alliance for New Solutions (TrANS)</option>
+                        <option value={`Refugee Support Services`}>Refugee Services</option>
+                        <option value={`Highway Construction Skill Training (HCST)`}>Transportation Alliance for New Solutions (TrANS)</option>
                         <option value={`Upward Bound (UB)`}>Upward Bound (UB)</option>
                         <option value={`Upward Bound Math Science (UBMS)`}>Upward Bound Math Science (UBMS)</option>
-                        <option value={`WIOA Adult and Dislocated Worker`}>WIOA Adult and Dislocated Worker</option>
+                        <option value={`WIOA Adult`}>WIOA Adult and Dislocated Worker</option>
+                        <option value={`WIOA Dislocated Worker`}>WIOA Adult and Dislocated Worker</option>
                         <option value={`WIOA Youth`}>WIOA Youth</option>
                         <option value={`Wisconsin Employment Transportation Assistance Program (WETAP)`}>Wisconsin Employment Transportation Assistance Program (WETAP)</option>
                         <option value={`Wisconsin Works (W-2)`}>Wisconsin Works (W-2)</option>
