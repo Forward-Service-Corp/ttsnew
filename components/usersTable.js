@@ -5,48 +5,68 @@ import {ArrowCircleRight} from "phosphor-react";
 
 export default function UsersTable({users}) {
     const [searchTerm, setSearchTerm] = useState("")
-    const [userType, setUserType] = useState("client")
+    const [usersData, setUsersData] = useState(users)
+    const [searched, setSearched] = useState(false)
+    const d1 = "A list of the 100 most recently added users to this TTS database."
+    const d2 = "Your search should be based on the email address used to create the account"
+    const d3 = ", because many of the other fields are not required for account creation."
+    const defaultMessage = `${d1} <strong>${d2}</strong>${d3}`
+    const s1 = `This is a list of all the users whose email address contains <strong>your searched criteria of ${searchTerm}</strong>.`
+    const s2 = `There were ${usersData.length} found.`
+    const searchedMessage = `${s1} ${s2}`
+    const handleSearch = async () => {
+        await fetch('api/get-user-search', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                searchTerm: searchTerm
+            })
+        })
+            .then(response => response.json())
+            .then(data => setUsersData(data))
+            .then(() => setSearched(true))
+            .catch((error) => console.error('Error:', error));
+    }
+    const resetSearch = () => {
+        setSearchTerm("")
+        setUsersData(users)
+        setSearched(false)
+    }
     const evaluateDate = (date) => {
         const now = moment()
         const days = now.diff(date, "days")
-        if(days > 5){
+        if (days > 5) {
             return <span className={`text-green-600 dark:text-purple-500`}>{moment(date).calendar()}</span>
-        }else{
+        } else {
             return <span className={`text-gray-500`}>{moment(date).calendar()}</span>
         }
     }
     return (
         <div className="px-4 sm:px-6 lg:px-8">
-            <div className="sm:flex sm:items-center">
-                <div className="sm:flex-auto">
+            <div className="flex sm:items-center">
+                <div className="w-3/5">
                     <h1 className="text-xl font-semibold text-gray-900">Users</h1>
-                    <p className="mt-2 text-sm text-gray-700 dark:text-white dark:font-extralight">
-                        A list of all the users in your account including their name, title, email and role.
-                    </p>
+                    <p className="mt-2 text-sm text-gray-700 dark:text-white dark:font-extralight" dangerouslySetInnerHTML={{__html: !searched ? defaultMessage : searchedMessage}}/>
                 </div>
-                <div className={"rounded border border-gray-300 dark:bg-black dark:border-none"}>
+                <div className={"w-2/5 ml-8"}>
                     <input type="text"
                            id={"search-users"}
-                           className={"text-xs border-gray-300 border-0 rounded focus:ring-0 dark:bg-black dark:border-none dark:text-white"}
+                           className={"border-gray-300 w-[260px]"}
                            value={searchTerm}
-                           placeholder={"Search users..."}
+                           placeholder={"Search users by email..."}
                            onChange={(e) => {
-                        setSearchTerm(e.target.value)
-                    }}/>
-                    <select
-                        className={"text-xs border-gray-300 border-0 rounded focus:ring-0 dark:bg-black dark:text-white dark:border-0 dark:placeholder:text-gray-500 focus:border-0 focus:border-transparent focus:ring-transparent outline-none focus:outline-none"}
-                        defaultValue={`client`}
-                        id={"user-type"}
-                        onChange={(e) => {
-                        setUserType(e.target.value)
-                    }}>
-                        <option value={""}>All</option>
-                        <option value={"client"}>Client</option>
-                        <option value={"coach"}>Coach</option>
-                        <option value={"admin"}>Admin</option>
-                        <option value={"terminated coach"}>Terminated Coach</option>
-                    </select>
-                    <button type="button" disabled={searchTerm === ""} className={`bg-red-500 disabled:bg-gray-700 text-white px-4 py-2 rounded-r text-sm font-extralight`} onClick={()=>{setSearchTerm('')}}>Clear</button>
+                               setSearchTerm(e.target.value)
+                           }}/>
+                    <button type="button" disabled={searchTerm === ""}
+                            className={`bg-green-500 disabled:bg-gray-300 text-white px-4 py-3 ml-2 text-sm font-extralight rounded`}
+                            onClick={handleSearch}>Submit
+                    </button>
+                    <button type="button" disabled={searchTerm === ""}
+                            className={`bg-blue-500 disabled:bg-gray-300 text-white px-4 py-3 ml-2 text-sm font-extralight rounded`}
+                            onClick={resetSearch}>Clear
+                    </button>
                 </div>
             </div>
             <div className="mt-8 flex flex-col dark:shadow-3xl dark:shadow-black dark:drop-shadow-lg">
@@ -88,14 +108,14 @@ export default function UsersTable({users}) {
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody className="divide-y divide-gray-200 bg-white dark:bg-black dark:bg-opacity-10 dark:divide-opacity-[3%]">
-                                {users && users.filter(person => person.email?.toLowerCase().includes(searchTerm.toLowerCase()) || person.name?.toLowerCase().includes(searchTerm.toLowerCase()))
-                                    .filter(person => person.level?.includes(userType.toString()))
-                                    .map((person) => (
-                                    <tr key={person.email} className={`dark:hover:bg-indigo-800 dark:hover:bg-opacity-10`}>
+                                <tbody
+                                    className="divide-y divide-gray-200 bg-white dark:bg-black dark:bg-opacity-10 dark:divide-opacity-[3%]">
+                                {usersData && usersData.map((person) => (
+                                    <tr key={person.email}
+                                        className={`dark:hover:bg-indigo-800 dark:hover:bg-opacity-10`}>
                                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-6 dark:text-white">
                                             <Link href={"/user/" + person._id}>
-                                                    {person.name}
+                                                {person.name}
                                             </Link>
 
                                         </td>
@@ -106,7 +126,8 @@ export default function UsersTable({users}) {
                                             {person.coach?.toString().split('').length > 0 ? person.coach.toString().split(',').length : ''}
                                         </td>
                                         <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500 dark:text-white">
-                                            {person.coachUpdate ? evaluateDate(person.coachUpdate) : <span className={`text-red-600 dark:text-yellow-400`}>Missing</span>}
+                                            {person.coachUpdate ? evaluateDate(person.coachUpdate) :
+                                                <span className={`text-red-600 dark:text-yellow-400`}>Missing</span>}
                                         </td>
                                         {/*<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-xs font-medium sm:pr-6">*/}
                                         {/*    <a onClick={() => setModalState(true)} className="text-orange-600 hover:text-orange-900 dark:text-blue-600 dark:hover:text-blue-400" about={`Send this profile to a teammate.`} title={`Send this profile to a teammate.`} >*/}
@@ -115,7 +136,8 @@ export default function UsersTable({users}) {
                                         {/*</td>*/}
                                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-xs font-medium sm:pr-6">
                                             <Link href={"/user/" + person._id}>
-                                                    <ArrowCircleRight size={26}/><span className="sr-only">, {person.name}</span>
+                                                <ArrowCircleRight size={26}/><span
+                                                className="sr-only">, {person.name}</span>
                                             </Link>
                                         </td>
                                     </tr>

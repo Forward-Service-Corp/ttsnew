@@ -6,17 +6,16 @@ import Head from "next/head";
 
 export default function Users({user, users}) {
 
-    const [usersData, setUsersData] = useState()
     const [destinationEmail, setDestinationEmail] = useState("")
     const [modalState, setModalState] = useState(false)
-
+    const [searchTerm, setSearchTerm] = useState("")
 
     return (
         <Layout title={"Users"} session={user} setDestinationEmail={setDestinationEmail} modalState={modalState} setModalState={setModalState}>
             <Head>
                 <title>TTS Users</title>
             </Head>
-            <UsersTable users={users} setModalState={setModalState}/>
+            <UsersTable users={users} setModalState={setModalState} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
         </Layout>
     )
 }
