@@ -3,12 +3,13 @@ import {getSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {labelMap} from "../../../lib/serviceLabelsMap";
 import {ArrowLeft, Printer} from "phosphor-react";
+import {useState} from "react";
 
 export default function SurveyId({pageDataJson, surveyJson}) {
 
     const router = useRouter()
     const {user, surveys} = pageDataJson
-    const {surveyId} = router.query
+    const {surveyId, isYouthSurvey} = router.query
 
     const domains = [
         "adultEducation",
@@ -34,6 +35,32 @@ export default function SurveyId({pageDataJson, surveyJson}) {
         "employment"
     ]
 
+    const youthDomains = [
+        "food",
+        "housing",
+        "safety",
+        "friends",
+        "myFamily",
+        "school",
+        "work",
+        "money",
+        "transportation",
+        "familyCare",
+        "mentalHealth",
+        "substances",
+        "disabilities",
+        "lifeSkills",
+        "healthCare",
+        "manageMoney",
+        "legal",
+        "internetAccess",
+        "education",
+        "parenting",
+        "childrensEducation"
+    ]
+
+    const [currentArray, setCurrentArray] = useState(isYouthSurvey === "true" ? youthDomains : domains)
+
     const questions = [
         {
             value: "surprise",
@@ -54,7 +81,8 @@ export default function SurveyId({pageDataJson, surveyJson}) {
         }
 
     ]
-
+    console.log("youth", isYouthSurvey)
+    console.log(surveyJson)
     return (
         <Layout title={"Review Life Area Survey"} session={user}>
             {surveyJson.filter(survey => survey._id.toString() === surveyId.toString()).map(survey => {
@@ -90,7 +118,7 @@ export default function SurveyId({pageDataJson, surveyJson}) {
                         <div className={"grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 text-xs gap-6 print:grid-cols-4 print:break-after-page"}>
 
                             {
-                                domains.map((domain, domainIndex) => {
+                                currentArray.map((domain, domainIndex) => {
                                     return (
                                         <div key={domainIndex} className={`p-1 ${survey.priority.indexOf(domain) > -1 ? "border border-1 border-black" : null}`}>
                                             <div className={"flex items-center justify-between"}>
