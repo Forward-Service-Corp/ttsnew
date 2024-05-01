@@ -9,6 +9,7 @@ function ProfilePersonalDetails({user}) {
     const [street, setStreet] = useState(user.street ? user.street : undefined)
     const [city, setCity] = useState(user.city ? user.city : undefined)
     const [state, setState] = useState(user.state ? user.state : undefined)
+    const [homeCounty, setHomeCounty] = useState(user.homeCounty ? user.homeCounty : undefined)
     const [zip, setZip] = useState(user.zip ? user.zip : undefined)
     const [counties, setCounties] = useState(user.county ? user.county : [])
 
@@ -34,17 +35,17 @@ function ProfilePersonalDetails({user}) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                name, street, city, state, zip, counties, phone,
+                name, street, city, state, zip, homeCounty, counties, phone,
                 userId: user._id
             })
         })
         router.reload()
     }
 
-    const inputJSX = (label, value, setValue, disabled, autocomplete) => {
+    const inputJSX = (label, value, setValue, disabled, autocomplete, required) => {
         return (
             <div className={"py-2"}>
-                <p className={"text-sm text-gray-500 w-full dark:text-white"}>{label}</p>
+                <p className={"text-sm text-gray-500 w-full dark:text-white"}>{label}{required ? <span className={"text-red-600"}>*</span> : ""}</p>
                 <input className={"rounded w-full dark:bg-black dark:text-white dark:font-light dark:border-gray-700 dark:focus:bg-black dark:autofill:bg-black"}
                        name={label}
                        placeholder={label}
@@ -59,24 +60,48 @@ function ProfilePersonalDetails({user}) {
             </div>
         )
     }
+    const selectJSX = (label, value, setValue, disabled, required) => {
+        return (
+            <div className={"py-2"}>
+                <p className={"text-sm text-gray-500 w-full dark:text-white"}>{label}{required ? <span className={"text-red-600"}>*</span> : ""}</p>
+                <select className={"rounded w-full dark:bg-black dark:text-white dark:font-light dark:border-gray-700 dark:focus:bg-black dark:autofill:bg-black"}
+                       name={label}
+                       value={value}
+                       disabled={disabled}
+                       onChange={(e) => {
+                           setValue(e.target.value)
+                           setDataChanged(true)
+                       }}>
+                    <option key={"Select county of resident"} value={""}>Select county of residence</option>
+                    {WICountiesList.map(currentCounty => {
+                        return (
+                            <option key={currentCounty} value={currentCounty}>{currentCounty}</option>
+                        )
+                    })}
+                </select>
+            </div>
+        )
+    }
 
     return (
         <div>
             <h2 className={"uppercase text-gray-500 font-light mb-3 dark:text-white"}>Personal Details</h2>
+            <p>All fields marked with <span className={"text-red-600"}>*</span> are required.</p>
             <div className={`bg-green-400 p-3 text-white rounded ${changeConfirm ? "visible" : "hidden"}`}>Details successfully saved.</div>
             <div className={"flex flex-col lg:flex-row"}>
                 <div className={"lg:flex-1 lg:mr-10"}>
-                    {inputJSX("Name", name, setName, false, "true")}
+                    {inputJSX("First and Last Name", name, setName, false, "true", true)}
                     {inputJSX("Street", street, setStreet, false, "false")}
                     {inputJSX("City", city, setCity, false, "false")}
                     {inputJSX("State", state, setState, false, "false")}
                     {inputJSX("Zip", zip, setZip, false, "false")}
-                    {inputJSX("Email", email, setEmail, true, "true")}
+                    {selectJSX("County of Residence", homeCounty, setHomeCounty, false, true)}
+                    {inputJSX("Email", email, setEmail, true, "true", true)}
                     {inputJSX("Phone", phone, setPhone, false, "true")}
                 </div>
 
                 <div className={"lg:flex-1"}>
-                    <p className={"text-gray-500 mb-1 dark:text-white"}>Counties</p>
+                    <p className={"text-gray-500 mb-1 dark:text-white"}>Your Counties of Resources<span className={"text-red-600"}>*</span></p>
                     <div className={"lg:flex-1 flex flex-wrap"}>
                         {counties.map((currentCounty) => {
                             return (

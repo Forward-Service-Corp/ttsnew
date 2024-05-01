@@ -53,7 +53,7 @@ function ProfilePrograms({user}) {
                     </select>
                 </div>
                 <div className={""}>
-                    <h2 className={"uppercase text-gray-600 font-light mb-3 mt-6 dark:text-white"}>Your Selected Programs</h2>
+                    <h2 className={"uppercase text-gray-600 font-light mb-3 mt-6 dark:text-white"}>Your Selected Programs<span className={"text-red-600"}>*</span></h2>
                     <div>
                         {programs.map(program => (
                             <div className={"cursor-pointer rounded border dark:border-[1px] dark:border-gray-800 py-1 px-2 min-h-8 mr-2 mb-2 flex justify-between align-middle text-sm dark:bg-[#111111] dark:text-white w-auto"} key={program}

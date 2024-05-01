@@ -107,16 +107,19 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
                     <div className={`ml-8 text-white`}>Tasks: {allTasks.filter(task => task.referralId === item._id && eval(task.completed) === false).length}</div>
                     <div className={"p-3 cursor-pointer text-xs"} onClick={() => {
                         setOpen(!open)
-                    }}>{open ? <CaretDoubleUp size={20} weight="thin"/> :
-                        <CaretDoubleDown size={20} weight="thin"/>}</div>
+                    }}>{open ? <CaretDoubleUp size={20} weight="thin" color={"white"}/> :
+                        <CaretDoubleDown size={20} weight="thin" color={"white"}/>}</div>
                 </div>
             </div>
             <div className={`flex justify-between items-center bg-gray-100 p-2 ${open ? "visible" : "hidden"} dark:bg-black dark:bg-opacity-80`}>
                 <div className={"flex items-center text-xs cursor-pointer"} onClick={() => {
                     router.push("/surveys/" + item.surveyId).then()
                 }}>
-                    <Files size={20} weight="thin" color={"blue"}/>
-                    <span className={"text-blue-600 dark:text-orange-400"}>View associated Life Area Survey</span>
+                    <div className={`${item.surveyId === null ? 'hidden' : 'visible'} `}>
+                        <Files size={20} weight="thin" color={"blue"} className={"inline"}/>
+                        <span className={"text-blue-600 dark:text-orange-400 inline"}>View associated Life Area Survey</span>
+                    </div>
+
 
                 </div>
                 {item.hasOwnProperty("archived") && item.archived === "true" ?

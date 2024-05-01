@@ -15,6 +15,7 @@ export default async (req, res) => {
                     city: req.body.city,
                     state: req.body.state,
                     zip: req.body.zip,
+                    homeCounty: req.body.homeCounty,
                     county: req.body.counties,
                     phone: req.body.phone
                 }

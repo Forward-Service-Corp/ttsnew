@@ -89,19 +89,19 @@ export default function CarePlans({pageDataJson}) {
             </div>
             <div className={`flex justify-between align-middle items-center`}>
                 <div><h2 className={"uppercase text-gray-500 my-4"}>Manage Care Plans</h2></div>
-                <div>
-                    <div className={`text-white flex w-[155px] align-middle items-center justify-around bg-blue-900 rounded-xl p-3 text-sm font-thin relative cursor-pointer`}>
-                        <div className={`absolute h-[35px] w-[70px] bg-blue-700 ${sortMap[sort]} z-0 p-1 rounded-xl shadow-xl transition-all ease-in-out`}></div>
-                        <div onClick={() => {
-                            setSort('domain')
-                            getUserReferrals().then()
-                        }} className={`z-10`}>Domain</div>
-                        <div onClick={() => {
-                            setSort('priority')
-                            getUserReferrals().then()
-                        }} className={`z-10`}>Priority</div>
-                    </div>
-                </div>
+                {/*<div>*/}
+                {/*    <div className={`text-white flex w-[155px] align-middle items-center justify-around bg-blue-900 rounded-xl p-3 text-sm font-thin relative cursor-pointer`}>*/}
+                {/*        <div className={`absolute h-[35px] w-[70px] bg-blue-700 ${sortMap[sort]} z-0 p-1 rounded-xl shadow-xl transition-all ease-in-out`}></div>*/}
+                {/*        <div onClick={() => {*/}
+                {/*            setSort('domain')*/}
+                {/*            getUserReferrals().then()*/}
+                {/*        }} className={`z-10`}>Domain</div>*/}
+                {/*        <div onClick={() => {*/}
+                {/*            setSort('priority')*/}
+                {/*            getUserReferrals().then()*/}
+                {/*        }} className={`z-10`}>Priority</div>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
             </div>
 
             {userReferrals.filter(item => !item.hasOwnProperty("archived") || item.archived === "false" || item.archived === null).sort((a, b) => {
