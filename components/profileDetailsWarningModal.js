@@ -5,7 +5,7 @@ import { ExclamationIcon } from '@heroicons/react/outline'
 import {useRouter} from "next/router";
 
 export default function ProfileDetailsWarningModal({session}) {
-    const [open, setOpen] = useState(session?.name === "" || session.county === undefined || session.homeCounty === undefined || session.homeCounty === "" || session.county?.length === 0 || session.programs?.length === 0)
+    const [open, setOpen] = useState(session?.name === "" || session.county === undefined || session.homeCounty === undefined || session.homeCounty === "" || session.county?.length === 0 || session.programs?.length === 0 || session.programs === null)
     const router = useRouter()
     return (
         <Transition.Root show={open} as={Fragment}>
