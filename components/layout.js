@@ -33,6 +33,16 @@ export default function Layout({children, title, session, loadingState, version,
     const [environment, setEnvironment] = useState("production")
     const [darkMode, setDarkMode] = useState(null)
 
+    async function updateLastLogin() {
+        await fetch(`/api/save-last-login?userId=${session._id}`)
+            .then(res => res.json())
+            .then(res => console.log(res))
+    }
+
+    useEffect(() => {
+            updateLastLogin().then()
+    }, [])
+
     useEffect(() => {
         const value = localStorage.theme
         let currentTheme = value !== undefined && value === 'dark' ? 'darkTheme' : 'lightTheme'
