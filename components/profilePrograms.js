@@ -43,7 +43,7 @@ function ProfilePrograms({user}) {
                         <option value={`Job Access Loans (JAL)`}>Job Access Loans (JAL)</option>
                         <option value={`Jobs for America&apos;s Graduates (JAG)`}>Jobs for America&apos;s Graduates (JAG)</option>
                         <option value={`Refugee Services`}>Refugee Services</option>
-                        <option value={`Transportation Alliance for New Solutions (TrANS)`}>Transportation Alliance for New Solutions (TrANS)</option>
+                        <option value={`Highway Construction Skills Training (HCST)`}>Highway Construction Skills Training (HCST)</option>
                         <option value={`Upward Bound (UB)`}>Upward Bound (UB)</option>
                         <option value={`Upward Bound Math Science (UBMS)`}>Upward Bound Math Science (UBMS)</option>
                         <option value={`WIOA Adult and Dislocated Worker`}>WIOA Adult and Dislocated Worker</option>
