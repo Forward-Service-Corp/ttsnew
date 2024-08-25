@@ -17,7 +17,9 @@ export default async (req, res) => {
                     zip: req.body.zip,
                     homeCounty: req.body.homeCounty,
                     county: req.body.counties,
-                    phone: req.body.phone
+                    phone: req.body.formattedNumber,
+                    programs: req.body.programs,
+                    isYouth: req.body.version
                 }
             }
         )

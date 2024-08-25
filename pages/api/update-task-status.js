@@ -15,6 +15,5 @@ export default async(req, res) => {
             }
         )
 
-    res.json(dream)
-
+    res.status(200).json({message: "Task was updated successfully.", dream: dream})
 }

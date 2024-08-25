@@ -8,7 +8,7 @@ import {useState} from "react";
 export default function SurveyId({pageDataJson, surveyJson}) {
 
     const router = useRouter()
-    const {user, surveys} = pageDataJson
+    const {user} = pageDataJson
     const {surveyId, isYouthSurvey} = router.query
 
     const domains = [
@@ -59,7 +59,7 @@ export default function SurveyId({pageDataJson, surveyJson}) {
         "childrensEducation"
     ]
 
-    const [currentArray, setCurrentArray] = useState(isYouthSurvey === "true" ? youthDomains : domains)
+    const [currentArray] = useState(isYouthSurvey === "true" ? youthDomains : domains)
 
     const questions = [
         {
@@ -163,6 +163,10 @@ export async function getServerSideProps(context) {
     const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
     const getPageData = await fetch(pageDataUrl)
     const pageDataJson = await getPageData.json()
+
+    // redirect to profile page if required fields are not complete
+    const {county, name, homeCounty, programs} = pageDataJson.user
+    if(!county.length || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
 
     const surveyUrl = baseUrl + "/api/get-client-survey?surveyId=" + context.query.surveyId
     const getSurveyData = await fetch(surveyUrl)

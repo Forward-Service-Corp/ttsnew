@@ -64,6 +64,10 @@ export async function getServerSideProps(context) {
     const getPageData = await fetch(pageDataUrl)
     const pageDataJson = await getPageData.json()
 
+    // redirect to profile page if required fields are not complete
+    const {county, name, homeCounty, programs} = pageDataJson.user
+    if(!county.length || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
+
     return {
         props: {
             pageDataJson,

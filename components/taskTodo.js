@@ -3,14 +3,29 @@ import {FilePlus, Trash} from "phosphor-react";
 import moment from "moment";
 import NoteItem from "./noteItem";
 
-function TaskTodo({task, setAllTasks, user, item, setAllNotes, loggedInUser, setSaving, allNotes, i}) {
+function TaskTodo({task, setTasks, user, item, setAllNotes, loggedInUser, setSaving, allNotes, i}) {
 
     const [note, setNote] = useState("")
     const [noteOpen, setNoteOpen] = useState(false)
 
     async function setTaskStatus(taskId, setTo) {
-        await fetch("/api/update-task-status?taskId=" + taskId + "&setTo=" + setTo)
+        await toggleTaskCompletion(taskId)
+        const response = await fetch("/api/update-task-status?taskId=" + taskId + "&setTo=" + setTo)
+        const data = await response.json();
+        if(response.ok){
+            console.log(data)
+        }
     }
+
+    const toggleTaskCompletion = (taskId) => {
+        setTasks((prevTasks) =>
+            prevTasks.map((task) =>
+                task.id === taskId
+                    ? { ...task, completed: !task.completed }
+                    : task
+            )
+        );
+    };
 
     async function deleteTask(taskId) {
         setSaving(true)
@@ -20,7 +35,7 @@ function TaskTodo({task, setAllTasks, user, item, setAllNotes, loggedInUser, set
     async function getTasks() {
         const fetchedTasks = await fetch("/api/get-tasks?userId=" + user.email + "&referralId=" + item._id)
             .then(res => res.json())
-        await setAllTasks(fetchedTasks)
+        await setTasks(fetchedTasks)
         await setSaving(false)
     }
 

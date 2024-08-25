@@ -4,7 +4,6 @@ import {Disclosure, Menu, Transition} from '@headlessui/react'
 import {MenuIcon, XIcon} from '@heroicons/react/outline'
 import {useRouter} from "next/router";
 import {UserCircleGear, UserCircle} from "phosphor-react";
-import ProfileDetailsWarningModal from "./profileDetailsWarningModal";
 import styles from "../styles/layout.module.css"
 import SimpleModal from "./simpleModal";
 import DarkModeToggle from "./darkModeToggle";
@@ -20,28 +19,25 @@ const navigation = [
 ]
 const userNavigation = [
     {name: 'Your Profile', href: '/profile'},
-    // {name: 'Settings', href: '/settings'},
 ]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Layout({children, title, session, loadingState, version, simpleModalTitle, simpleModalMessage, simpleModalLabel, simpleModal}) {
+export default function Layout({children, title, session, loadingState, version, simpleModalTitle, simpleModalMessage, simpleModalLabel, simpleModal, background}) {
     const router = useRouter()
-
     const [environment, setEnvironment] = useState("production")
     const [darkMode, setDarkMode] = useState(null)
 
     async function updateLastLogin() {
         await fetch(`/api/save-last-login?userId=${session._id}`)
             .then(res => res.json())
-            .then(res => console.log(res))
     }
 
     useEffect(() => {
             updateLastLogin().then()
-    }, [])
+    }, [updateLastLogin])
 
     useEffect(() => {
         const value = localStorage.theme
@@ -58,6 +54,11 @@ export default function Layout({children, title, session, loadingState, version,
         }
     }, [environment])
 
+    // useEffect(() => {
+    //     if(!session.county.length || !session.homeCounty || !session.programs || !session.name){
+    //         router.push('/profile').then()
+    //     }
+    // }, []);
 
     return (
         <>
@@ -71,8 +72,6 @@ export default function Layout({children, title, session, loadingState, version,
                 <div className={"uppercase text-white self-center rounded-full p-5 bg-orange-600 shadow"}>loading...
                 </div>
             </div>
-            {router.pathname !== "/profile" && router.pathname !== "/" && router.pathname !== "/directory" ?
-                <ProfileDetailsWarningModal session={session}/> : null}
 
             <div id={`layoutBannerContainer`} className={`min-h-full ${darkMode === 'darkTheme' ? styles.darkTheme : styles.lightTheme}`}>
                 <div className={`${session.isYouth || version ? styles.youthVersion : styles.adultVersion} pb-32 print:hidden`}>
@@ -338,10 +337,10 @@ export default function Layout({children, title, session, loadingState, version,
 
                 <main className="-mt-32 print:mt-0">
                     <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
-                        <div
-                            className="bg-white dark:bg-gray-900 shadow px-5 py-6 sm:px-6 print:px-0 print:py-0 print:shadow-none dark:rounded-lg dark:shadow-xl">
-                            {children}
-                        </div>
+                            <div
+                                className={`${background === false ? '' : 'bg-white dark:bg-gray-900 shadow px-5 py-6 dark:rounded-lg dark:shadow-xl sm:px-6'} print:px-0 print:py-0 print:shadow-none`}>
+                                {children}
+                            </div>
                     </div>
                 </main>
             </div>

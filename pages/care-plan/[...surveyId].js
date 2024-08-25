@@ -1,13 +1,9 @@
 import Layout from "../../components/layout";
 import {getSession} from "next-auth/react";
-import {useRouter} from "next/router";
 import ReferralContainer from "../../components/referralContainer";
 
 export default function CarePlan({pageDataJson}) {
-
-    const router = useRouter()
     const {user, referrals} = pageDataJson
-    const {surveyId} = router.query
 
     return (
         <Layout title={"Create Care Plan"} session={user}>
@@ -16,11 +12,6 @@ export default function CarePlan({pageDataJson}) {
                     <ReferralContainer key={item._id} item={item} user={user}/>
                 )
             })}
-            {/*{referrals.filter(referral => referral.surveyId === surveyId.toString()).map(item => {*/}
-            {/*    return (*/}
-            {/*        <ReferralContainer key={item._id} item={item} user={user}/>*/}
-            {/*    )*/}
-            {/*})}*/}
         </Layout>
     )
 }
@@ -37,6 +28,10 @@ export async function getServerSideProps(context) {
     const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
     const getPageData = await fetch(pageDataUrl)
     const pageDataJson = await getPageData.json()
+
+    // redirect to profile page if required fields are not complete
+    const {county, name, homeCounty, programs} = pageDataJson.user
+    if(!county.length || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
 
     return {
         props: {pageDataJson}
