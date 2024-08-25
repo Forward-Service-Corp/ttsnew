@@ -2,10 +2,35 @@ import {signIn} from "next-auth/react";
 import {useRouter} from "next/router";
 import Head from "next/head";
 import Image from "next/image";
+import {useState} from "react";
 
 
-export default function Login() {
+export default function SignIn() {
     const router = useRouter()
+    const [email, setEmail] = useState("")
+    const [isEmailValid, setIsEmailValid] = useState(false);
+
+    const validateEmail = (email) => {
+        // Simple email validation regex
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    const handleEmailChange = (e) => {
+        const newEmail = e.target.value;
+        setEmail(newEmail);
+
+        // Validate the email and update the state
+        setIsEmailValid(validateEmail(newEmail));
+    };
+
+    const handleEmailSubmit = () => {
+        signIn('email', {email: email, callbackUrl: "/"}).then()
+    }
+
+    const handleCancel = () => {
+        router.back()
+    }
 
     return (
         <div
@@ -26,23 +51,24 @@ export default function Login() {
                     </div>
                 </div>
                 <div className={"bg-white p-4 text-center rounded shadow-2xl"}>
-                    <div className={"self-center"}>
-                        <p>
-                            <button className={"rounded bg-green-700 text-white p-2 w-full"}
-                                    onClick={() => signIn("google", {callbackUrl: '/'})}>Sign in with Google
-                            </button>
-                        </p>
-                        <button className={"rounded bg-gray-700 text-white p-2 w-full mt-3"}
-                                onClick={() => signIn("email", {callbackUrl: '/'})}>Sign in with Email
+                    <div className={`self-center flex flex-col`}>
+                        <div className={`text-left pb-2`}>Email</div>
+                        <input type="email" value={email}
+                               className={`rounded ${isEmailValid ? 'border-2 border-green-600' : 'border-gray-300'}`}
+                               onChange={handleEmailChange}
+                               placeholder={"Your email address..."}/>
+                        <button className={`mt-4 p-2 bg-indigo-600 text-white rounded disabled:bg-gray-300`}
+                                disabled={!isEmailValid}
+                        onClick={handleEmailSubmit}>
+                            Get my magic link
                         </button>
-                        <button className={"rounded bg-indigo-700 text-white p-2 w-full mt-3 block m-auto"}
-                                onClick={() => {
-                                    router.push('/login-sms').then()
-                                }}>Sign in by Text
+                        <button className={`mt-4 text-red-600 underline`} onClick={handleCancel}>
+                            Go Back
                         </button>
                     </div>
                 </div>
-                <div className={`bg-gray-800 bg-opacity-90 text-white mt-8 rounded text-xs p-4 text-center font-light shadow-2xl`}>
+                <div
+                    className={`bg-gray-800 bg-opacity-90 text-white mt-8 rounded text-xs p-4 text-center font-light shadow-2xl`}>
                     <p className={`text-lg uppercase`}>Disclaimer</p>
                     <p className={`pb-4`}>
                         You are logging into an application owned by Forward Service Corporation. The information

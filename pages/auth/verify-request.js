@@ -1,7 +1,7 @@
-import {signIn} from "next-auth/react";
 import {useRouter} from "next/router";
 import Head from "next/head";
 import Image from "next/image";
+import {EnvelopeOpen} from "phosphor-react";
 
 
 export default function Login() {
@@ -14,11 +14,10 @@ export default function Login() {
                 <title>TTS / Login</title>
             </Head>
             <div className={`self-center max-w-[360px] flex flex-col`}>
-                <div
-                    className={`bg-orange-600 bg-opacity-80 rounded min-h-[150px] mb-8 flex shadow-2xl w-full items-center justify-around`}>
+                <div className={`bg-orange-600 bg-opacity-80 rounded min-h-[150px] mb-8 flex shadow-2xl w-full items-center justify-around`}>
                     <div className={`w-[150px] h-[110px] relative p-2`}>
                         <Image src={"/img/fsc-logo.png"} alt={`Forward Service Corporation logo`} fill={true}
-                               sizes="(max-width: 320px) 20vw, (max-width: 150px) 20vw, 15vw"/>
+                              sizes="(max-width: 320px) 20vw, (max-width: 150px) 20vw, 15vw"/>
                     </div>
                     <div className={`w-[170px] h-[100px] relative`}>
                         <Image src={"/img/tts-logo.png"} alt={`Transition to Success logo`} fill={true}
@@ -26,21 +25,9 @@ export default function Login() {
                     </div>
                 </div>
                 <div className={"bg-white p-4 text-center rounded shadow-2xl"}>
-                    <div className={"self-center"}>
-                        <p>
-                            <button className={"rounded bg-green-700 text-white p-2 w-full"}
-                                    onClick={() => signIn("google", {callbackUrl: '/'})}>Sign in with Google
-                            </button>
-                        </p>
-                        <button className={"rounded bg-gray-700 text-white p-2 w-full mt-3"}
-                                onClick={() => signIn("email", {callbackUrl: '/'})}>Sign in with Email
-                        </button>
-                        <button className={"rounded bg-indigo-700 text-white p-2 w-full mt-3 block m-auto"}
-                                onClick={() => {
-                                    router.push('/login-sms').then()
-                                }}>Sign in by Text
-                        </button>
-                    </div>
+                    <EnvelopeOpen size={80} color={"orange"} className={'m-auto'}/>
+                    <h2 className={'text-3xl'}>Check your email.</h2>
+                    <p className={'text-2xl'}>Your login link has been sent.</p>
                 </div>
                 <div className={`bg-gray-800 bg-opacity-90 text-white mt-8 rounded text-xs p-4 text-center font-light shadow-2xl`}>
                     <p className={`text-lg uppercase`}>Disclaimer</p>

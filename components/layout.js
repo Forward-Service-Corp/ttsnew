@@ -54,12 +54,6 @@ export default function Layout({children, title, session, loadingState, version,
         }
     }, [environment])
 
-    // useEffect(() => {
-    //     if(!session.county.length || !session.homeCounty || !session.programs || !session.name){
-    //         router.push('/profile').then()
-    //     }
-    // }, []);
-
     return (
         <>
             <div className={`${environment === "dev" || environment === "testing" ? "visible" : "hidden"} p-4 text-center text-xs bg-pink-600 dark:bg-purple-900 text-white font-light`}>
@@ -83,12 +77,12 @@ export default function Layout({children, title, session, loadingState, version,
                                         <div className="flex items-center justify-between h-16 px-4 sm:px-0">
                                             <div className="flex items-center">
                                                 <div className="w-[80px] h-[50px] relative">
-                                                    <Image sizes="(max-width:70px) 3vw, (max-width: 70px) 10vw, 5vw" fill
-                                                        src="/img/TTS_Logo2_vertical.png"
+                                                    <Image sizes="(max-width:70px) 30vw, (max-width: 70px) 20vw, 10vw" fill
+                                                        src="/img/tts-logo.png"
                                                         alt="Workflow"/>
                                                 </div>
                                                 <div className="w-[60px] h-[50px] relative ml-3">
-                                                    <Image sizes="(max-width:70px) 3vw, (max-width: 70px) 10vw, 5vw" fill
+                                                    <Image sizes="(max-width:70px) 30vw, (max-width: 70px) 20vw, 10vw" fill
                                                         src="/img/fsc-logo.png"
                                                         alt="Workflow" priority={true}/>
                                                 </div>

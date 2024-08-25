@@ -104,11 +104,11 @@ export default function Login() {
                     className={`bg-orange-600 bg-opacity-80 rounded min-h-[150px] mb-8 flex shadow-2xl w-full items-center justify-around`}>
                     <div className={`w-[150px] h-[110px] relative p-2`}>
                         <Image src={"/img/fsc-logo.png"} alt={`Forward Service Corporation logo`} fill={true}
-                               sizes="(max-width: 120px) 10vw, (max-width: 120px) 5vw, 3vw"/>
+                               sizes="(max-width: 320px) 20vw, (max-width: 150px) 20vw, 15vw"/>
                     </div>
                     <div className={`w-[170px] h-[100px] relative`}>
                         <Image src={"/img/tts-logo.png"} alt={`Transition to Success logo`} fill={true}
-                               sizes="(max-width: 120px) 10vw, (max-width: 120px) 5vw, 3vw"/>
+                               sizes="(max-width: 320px) 20vw, (max-width: 150px) 20vw, 15vw"/>
                     </div>
                 </div>
                 <div className={"bg-white p-4 text-center rounded shadow-2xl"}>

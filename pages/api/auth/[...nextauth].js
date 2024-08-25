@@ -49,6 +49,10 @@ export default NextAuth({
             }
         })
     ],
+    pages: {
+        signIn: "/auth/sign-in",
+        verifyRequest: "/auth/verify-request",
+    },
     jwt: {
         secret: process.env.JWT_SECRET,
     },

@@ -8,6 +8,7 @@ import ProfileResourceCounties from "../components/profileResourceCounties";
 import ProfileCoaches from "../components/profileCoaches";
 import ProfileWorkbook from "../components/profileWorkbook";
 import ProfileFieldsWarning from "../components/profileFieldsWarning";
+import ProfilePhoneMessage from "../components/profilePhoneMessage";
 
 export default function Profile({user}) {
 
@@ -70,6 +71,7 @@ export default function Profile({user}) {
                                   counties={counties}
                                   programs={programs}
                                   fieldsWarning={fieldsWarning}/>
+            <ProfilePhoneMessage phone={phone}/>
             <ProfilePersonalDetails user={user}
                                     name={name}
                                     setName={setName}
