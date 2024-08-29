@@ -96,7 +96,7 @@ function ClientDetails({viewingUser}) {
                                autoComplete="off"
                                disabled={!editMode}
                                className={"w-full text-sm block mt-2 disabled:border-gray-200 text-gray-400"}
-                               placeholder={"Enter phone number here..."}
+                               value={client.phone}
                                onChange={handleChange}
                         />
                     </label>
