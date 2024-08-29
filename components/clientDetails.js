@@ -70,8 +70,8 @@ function ClientDetails({viewingUser}) {
                         }}>{!editMode ? "Edit Client" : "Cancel Editing"}</button>
             </div>
             <div className={"grid grid-cols-2 gap-5"}>
-                <div className={""}>
-                    <label htmlFor="name" className={`text-xs text-gray-500`}>First and Last Name
+                <div>
+                    <label htmlFor="name" className={`text-xs text-gray-500`}>First and Last Name</label>
                         <input type={"text"} name={"name"}
                                id="name"
                                autoComplete="off"
@@ -80,8 +80,8 @@ function ClientDetails({viewingUser}) {
                                placeholder={"Enter name here..."}
                                value={client.name}
                                onChange={handleChange}/>
-                    </label>
-                    <label htmlFor="email" className={`text-xs text-gray-500 mt-6 block`}>Email
+
+                    <label htmlFor="email" className={`text-xs text-gray-500 mt-6 block`}>Email </label>
                         <input disabled={true} type={"text"} name={"email"}
                                id="email"
                                autoComplete="off"
@@ -89,8 +89,8 @@ function ClientDetails({viewingUser}) {
                                value={client.email}
                                onChange={handleChange}
                         />
-                    </label>
-                    <label htmlFor="phone" className={`text-xs text-gray-500 mt-6 block`}>Phone Number
+
+                    <label htmlFor="phone" className={`text-xs text-gray-500 mt-6 block`}>Phone Number</label>
                         <input type={"text"} name={"phone"}
                                id="phone"
                                autoComplete="off"
@@ -99,8 +99,8 @@ function ClientDetails({viewingUser}) {
                                value={client.phone}
                                onChange={handleChange}
                         />
-                    </label>
-                    <label htmlFor="county" className={`text-xs text-gray-500 mt-6 block`}>Service Counties
+
+                    <label htmlFor="county" className={`text-xs text-gray-500 mt-6 block`}>Service Counties</label>
                         <span
                             className={`block text-red-600 font-bold mb-2`}>CTRL + Click to select multiple counties</span>
                         <select multiple value={client.county} className={"w-full min-h-[270px] text-sm block mt-2 disabled:border-gray-200 text-gray-400"}
@@ -111,11 +111,11 @@ function ClientDetails({viewingUser}) {
                                 return <option key={county} value={county}>{county}</option>
                             })}
                         </select>
-                    </label>
+
                 </div>
 
-                <div className={""}>
-                    <label htmlFor="street" className={`text-xs text-gray-500`}>Street Address
+                <div>
+                    <label htmlFor="street" className={`text-xs text-gray-500`}>Street Address</label>
                         <input type={"text"} name={"street"}
                                id="street"
                                disabled={!editMode}
@@ -123,8 +123,8 @@ function ClientDetails({viewingUser}) {
                                className={"w-full text-sm block mt-2 disabled:border-gray-200 text-gray-400"}
                                placeholder={"Enter street address here..."}
                                onChange={handleChange}/>
-                    </label>
-                    <label htmlFor="city" className={`text-xs text-gray-500 mt-6 block`}>City
+
+                    <label htmlFor="city" className={`text-xs text-gray-500 mt-6 block`}>City </label>
                         <input type={"text"} name={"city"}
                                id="city"
                                disabled={!editMode}
@@ -133,8 +133,8 @@ function ClientDetails({viewingUser}) {
                                placeholder={"Enter city here..."}
                                onChange={handleChange}/>
 
-                    </label>
-                    <label htmlFor="state" className={`text-xs text-gray-500 mt-6 block`}>State
+
+                    <label htmlFor="state" className={`text-xs text-gray-500 mt-6 block`}>State</label>
                         <input type={"text"} name={"state"}
                                id="state"
                                className={"w-full text-sm block mt-2 disabled:border-gray-200 text-gray-400"}
@@ -142,8 +142,8 @@ function ClientDetails({viewingUser}) {
                                value={client.state}
                                placeholder={"Enter state here..."}
                                onChange={handleChange}/>
-                    </label>
-                    <label htmlFor="zip" className={`text-xs text-gray-500 mt-6 block`}>Zip
+
+                    <label htmlFor="zip" className={`text-xs text-gray-500 mt-6 block`}>Zip</label>
                         <input type={"text"} name={"zip"}
                                id="zip"
                                className={"w-full text-sm block mt-2 disabled:border-gray-200 text-gray-400"}
@@ -151,7 +151,7 @@ function ClientDetails({viewingUser}) {
                                value={client.zip}
                                placeholder={"Enter zip code here..."}
                                onChange={handleChange}/>
-                    </label>
+
                     <p className={"text-gray-500 text-xs mt-6 block"}>Programs</p>
                     {client.programs && client.programs.map((program, i) => (
                         <div className={`text-sm bg-amber-300 text-black mt-2 p-2`} key={i}>{program}</div>
