@@ -63,7 +63,7 @@ function ClientDetails({viewingUser}) {
         <div
             className={`mt-5 p-6 border rounded`}>
             <div className={"flex justify-between"}>
-                <div><h2 className={"uppercase text-gray-500 mb-3 "}>Personal Details</h2></div>
+                <h2 className={"uppercase text-gray-500 mb-3 "}>Personal Details</h2>
                 <button className={`p-2 text-white text-xs min-w-[140px] ${!editMode ? "bg-indigo-600" : "bg-red-600"}`}
                         onClick={() => {
                             setEditMode(!editMode)

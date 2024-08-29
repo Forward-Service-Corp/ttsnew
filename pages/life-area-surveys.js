@@ -10,7 +10,7 @@ export default function LifeAreaSurveys({pageDataJson, incomingDream}) {
     const {user, surveys} = pageDataJson
     const [currentDream, setCurrentDream] = useState("")
     const [currentDreamId, setCurrentDreamId] = useState("")
-    const [surveysList, setSurveysList] = useState(surveys)
+    const [surveysList, setSurveysList] = useState([])
 
     useEffect(() => {
         if (incomingDream.hasDream) {
@@ -18,6 +18,10 @@ export default function LifeAreaSurveys({pageDataJson, incomingDream}) {
             setCurrentDreamId(incomingDream.dreamId)
         }
     }, [incomingDream.dream, incomingDream.dreamId, incomingDream.hasDream])
+
+    useEffect(() => {
+        setSurveysList(surveys)
+    }, [surveys]);
 
     return (
         <Layout title={"Life Area Surveys"} session={user}>
