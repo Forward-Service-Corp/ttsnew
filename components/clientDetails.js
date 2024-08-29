@@ -2,19 +2,22 @@ import React, {useState} from 'react';
 import {WICountiesList} from "../lib/WI_Counties";
 
 function ClientDetails({viewingUser}) {
-    const [client, setClient] = useState({
-        name: viewingUser.name ? viewingUser.name : "",
-        email: viewingUser.email ? viewingUser.email : "",
-        street: viewingUser.street ? viewingUser.street : "",
-        city: viewingUser.city ? viewingUser.city : "",
-        homeCounty: viewingUser.homeCounty ? viewingUser.homeCounty : "",
-        state: viewingUser.state ? viewingUser.state : "",
-        zip: viewingUser.zip ? viewingUser.zip : "",
-        county: viewingUser.county ? viewingUser.county : [],
-        phone: viewingUser.phone ? viewingUser.phone : "",
-        coach: viewingUser.coach ? viewingUser.coach : [],
-        programs: viewingUser.programs ? viewingUser.programs : [],
-    });
+    // const [client, setClient] = useState({
+    //     _id: viewingUser._id,
+    //     name: viewingUser.name ? viewingUser.name : "",
+    //     email: viewingUser.email ? viewingUser.email : "",
+    //     street: viewingUser.street ? viewingUser.street : "",
+    //     city: viewingUser.city ? viewingUser.city : "",
+    //     homeCounty: viewingUser.homeCounty ? viewingUser.homeCounty : "",
+    //     state: viewingUser.state ? viewingUser.state : "",
+    //     zip: viewingUser.zip ? viewingUser.zip : "",
+    //     county: viewingUser.county ? viewingUser.county : [],
+    //     phone: viewingUser.phone ? viewingUser.phone : "",
+    //     coach: viewingUser.coach ? viewingUser.coach : [],
+    //     programs: viewingUser.programs ? viewingUser.programs : [],
+    // });
+
+    const [client, setClient] = useState(viewingUser);
 
     const [dataChanged, setDataChanged] = useState(false)
     const [editMode, setEditMode] = useState(false)
@@ -38,17 +41,20 @@ function ClientDetails({viewingUser}) {
     };
 
     async function saveClientDetails() {
-        const {name, street, city, homeCounty, state, zip, county, phone} = client
-        await fetch("/api/save-client-details", {
+        const {_id, name, street, city, homeCounty, state, zip, county, phone} = client
+        const user = await fetch("/api/save-client-details", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                name, street, city, homeCounty, state, zip, county, phone,
-                userId: viewingUser._id
+               _id, name, street, city, homeCounty, state, zip, county, phone,
+
             })
         })
+
+        const userJSON = await user.json();
+        await setClient(userJSON.user);
         await setDataChanged(false)
         await setEditMode(false)
     }
@@ -67,6 +73,8 @@ function ClientDetails({viewingUser}) {
                 <div className={""}>
                     <label htmlFor="name" className={`text-xs text-gray-500`}>First and Last Name
                         <input type={"text"} name={"name"}
+                               id="name"
+                               autoComplete="off"
                                disabled={!editMode}
                                className={"w-full text-sm block mt-2 disabled:border-gray-200 text-gray-400"}
                                placeholder={"Enter name here..."}
@@ -75,6 +83,8 @@ function ClientDetails({viewingUser}) {
                     </label>
                     <label htmlFor="email" className={`text-xs text-gray-500 mt-6 block`}>Email
                         <input disabled={true} type={"text"} name={"email"}
+                               id="email"
+                               autoComplete="off"
                                className={"w-full text-sm block mt-2 disabled:border-gray-200 text-gray-400"}
                                value={client.email}
                                onChange={handleChange}
@@ -82,6 +92,8 @@ function ClientDetails({viewingUser}) {
                     </label>
                     <label htmlFor="phone" className={`text-xs text-gray-500 mt-6 block`}>Phone Number
                         <input type={"text"} name={"phone"}
+                               id="phone"
+                               autoComplete="off"
                                disabled={!editMode}
                                className={"w-full text-sm block mt-2 disabled:border-gray-200 text-gray-400"}
                                placeholder={"Enter phone number here..."}
@@ -92,7 +104,9 @@ function ClientDetails({viewingUser}) {
                         <span
                             className={`block text-red-600 font-bold mb-2`}>CTRL + Click to select multiple counties</span>
                         <select multiple value={client.county} className={"w-full min-h-[270px] text-sm block mt-2 disabled:border-gray-200 text-gray-400"}
-                                name={"county"} onChange={handleCountyChange} disabled={!editMode}>
+                                name={"county"}
+                                id="county"
+                                onChange={handleCountyChange} disabled={!editMode}>
                             {WICountiesList.map(county => {
                                 return <option key={county} value={county}>{county}</option>
                             })}
@@ -103,6 +117,7 @@ function ClientDetails({viewingUser}) {
                 <div className={""}>
                     <label htmlFor="street" className={`text-xs text-gray-500`}>Street Address
                         <input type={"text"} name={"street"}
+                               id="street"
                                disabled={!editMode}
                                value={client.street}
                                className={"w-full text-sm block mt-2 disabled:border-gray-200 text-gray-400"}
@@ -111,6 +126,7 @@ function ClientDetails({viewingUser}) {
                     </label>
                     <label htmlFor="city" className={`text-xs text-gray-500 mt-6 block`}>City
                         <input type={"text"} name={"city"}
+                               id="city"
                                disabled={!editMode}
                                value={client.city}
                                className={"w-full text-sm block mt-2 disabled:border-gray-200 text-gray-400"}
@@ -120,6 +136,7 @@ function ClientDetails({viewingUser}) {
                     </label>
                     <label htmlFor="state" className={`text-xs text-gray-500 mt-6 block`}>State
                         <input type={"text"} name={"state"}
+                               id="state"
                                className={"w-full text-sm block mt-2 disabled:border-gray-200 text-gray-400"}
                                disabled={!editMode}
                                value={client.state}
@@ -128,6 +145,7 @@ function ClientDetails({viewingUser}) {
                     </label>
                     <label htmlFor="zip" className={`text-xs text-gray-500 mt-6 block`}>Zip
                         <input type={"text"} name={"zip"}
+                               id="zip"
                                className={"w-full text-sm block mt-2 disabled:border-gray-200 text-gray-400"}
                                disabled={!editMode}
                                value={client.zip}
