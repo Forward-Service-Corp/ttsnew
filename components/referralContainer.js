@@ -69,7 +69,7 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
                 <div className={"truncate max-w-[200px]"}>{item.name}</div>
                 <div
                     className={"absolute right-[0px] min-w-[130px] flex items-center justify-between h-full  bg-gray-700"}>
-                    <div className={`ml-8 text-white`}>Tasks: {tasks.filter(task => task.referralId === item._id && eval(task.completed) === false).length}</div>
+                    <div className={`ml-8 text-white`}>Tasks: {tasks?.filter(task => task.referralId === item._id && eval(task.completed) === false).length}</div>
                     <div className={"p-3 cursor-pointer text-xs"} onClick={() => {
                         setOpen(!open)
                     }}>{open ? <CaretDoubleUp size={20} weight="thin" color={"white"}/> :

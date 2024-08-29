@@ -41,7 +41,7 @@ function ClientDreams({viewingUser}) {
 
     useEffect(() => {
         getDreams().then()
-    }, [dreams])
+    }, [])
 
 
     return (
