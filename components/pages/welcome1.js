@@ -38,23 +38,37 @@ function Welcome1() {
                 </p>
             </div>
 
-            <div className={"p-5 bg-gray-700 my-5 flex flex-wrap justify-between align-middle text-white dark:rounded-[7px] dark:bg-opacity-50"}>
-                <div className={"relative block flex-none w-1/3"}>
-                    <Image src={"/img/birdsroad.png"} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt={"image for quotes"} fill/>
-                </div>
-                <div className={"flex-grow ml-10"}>
-                    <p className={"font-bold  font-serif"}>&quot;If at first you don&apos;t succeed try and try
-                    again.&quot;</p>
-                    <p className={"font-bold  my-3"}>Did you know –</p>
-                    <ul className={"list-disc px-5"}>
-                        <li>Michael Jordan did not make the cut for his high school basketball team.</li>
-                        <li>Thomas Edison had over 1000 failed attempts at a light bulb.</li>
-                        <li>Oprah was told she didn&apos;t have a &quot;face&quot; for television.</li>
-                        <li>Dr. Seuss&apos; 1st book was rejected 27 times before it was finally published.</li>
-                    </ul>
+            <div className="container mx-auto my-6 p-6 border-2 rounded-xl border-indigo-100 shadow-xl">
+                <div className="flex flex-col lg:flex-row items-center lg:items-start">
+                    {/* Image Section */}
+                    <div className="w-full lg:w-1/3 mb-6 lg:mb-0">
+                        <div className="relative w-full h-0 pb-[100%] lg:pb-[calc(100%)]">
+                            <Image
+                                src="/img/birds-road.png"
+                                alt="Descriptive alt text"
+                                fill={true}
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            />
+                        </div>
+                    </div>
+                    {/* Text Section */}
+                    <div className="w-full lg:w-2/3 lg:pl-8">
+                        <h2 className="text-2xl font-bold mb-4">If at first you don&apos;t succeed try and try
+                            again.</h2>
+                        <div className="text-lg text-gray-700">
+                            <p className={"font-bold  my-3"}>Did you know –</p>
+                            <ul className={"list-disc px-5"}>
+                                <li>Michael Jordan did not make the cut for his high school basketball team.</li>
+                                <li>Thomas Edison had over 1000 failed attempts at a light bulb.</li>
+                                <li>Oprah was told she didn&apos;t have a &quot;face&quot; for television.</li>
+                                <li>Dr. Seuss&apos; 1st book was rejected 27 times before it was finally published.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div className={" bg-gray-100 p-4 dark:p-0 dark:bg-opacity-0 dark:text-white"}>
+
+            <div className={" bg-gray-100 p-4"}>
                 <p className={"text-sm"}>
                 From now on giving up is not an option. To be the best you, you must embrace the missteps, learn
                 from your mistakes, and re-route. Keep moving, and YOU will get to your destination.

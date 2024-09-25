@@ -1,132 +1,95 @@
-import {useState} from "react";
-import {useRouter} from "next/router";
 import {WICountiesList} from "../lib/WI_Counties";
-import {XCircle} from "phosphor-react";
+import ProfileSectionStyle from "./ProfileSectionStyle";
 
-function ProfilePersonalDetails({user}) {
-    const router = useRouter()
-    const [name, setName] = useState(user.name ? user.name : undefined)
-    const [street, setStreet] = useState(user.street ? user.street : undefined)
-    const [city, setCity] = useState(user.city ? user.city : undefined)
-    const [state, setState] = useState(user.state ? user.state : undefined)
-    const [zip, setZip] = useState(user.zip ? user.zip : undefined)
-    const [counties, setCounties] = useState(user.county ? user.county : [])
+function ProfilePersonalDetails({name, setName, street, setStreet, city, setCity, state, setState, homeCounty, setHomeCounty, zip, setZip, email, phone, setPhone, setFormattedNumber}) {
 
-    const [email, setEmail] = useState(user.email)
-    const [phone, setPhone] = useState(user.phone ? user.phone : undefined)
+    // Highlight empty fields
+    const getFieldClass = (required, value) => {
+        if(required){
+            return value ? 'border-gray-300' : 'border-red-500';
+        }
+    };
 
-    const [dataChanged, setDataChanged] = useState(false)
-    const [changeConfirm, setChangeConfirm] = useState(false)
+    const handlePhoneChange = (e) => {
+        const value = e.target.value;
 
-    // const [darkMode, setDarkMode] = useState(null)
-    //
-    // useEffect(() => {
-    //     const value = localStorage.theme
-    //     let currentTheme = value !== undefined && value === 'dark' ? 'darkTheme' : 'lightTheme'
-    //
-    //     setDarkMode(currentTheme)
-    // }, []);
+        // Check if the input is numeric and 10 digits long
+        if (/^\d{0,10}$/.test(value)) {
+            setPhone(value);
 
-    async function savePersonalDetails() {
-        await fetch("/api/save-personal-details", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                name, street, city, state, zip, counties, phone,
-                userId: user._id
-            })
-        })
-        router.reload()
-    }
+            // If 10 digits long, add "+1" to the beginning
+            if (value.length === 10) {
+                setFormattedNumber(`+1${value}`);
+            } else {
+                setFormattedNumber('');
+            }
+        }
+    };
 
-    const inputJSX = (label, value, setValue, disabled, autocomplete) => {
+    const inputJSX = (label, value, setValue, placeholder, disabled, autocomplete, required) => {
         return (
             <div className={"py-2"}>
-                <p className={"text-sm text-gray-500 w-full dark:text-white"}>{label}</p>
-                <input className={"rounded w-full dark:bg-black dark:text-white dark:font-light dark:border-gray-700 dark:focus:bg-black dark:autofill:bg-black"}
+                <p className={"text-sm w-full dark:text-white mb-2"}>{label}{required ? <span className={"text-red-600 text-lg ml-1"}>*</span> : <span className={"text-gray-400 text-xs ml-1"}>(Optional)</span>}</p>
+                <input className={`rounded text-sm w-full border-2 ${getFieldClass(required, value)}`}
                        name={label}
-                       placeholder={label}
+                       placeholder={placeholder}
                        type="text"
                        value={value}
                        disabled={disabled}
                        autoComplete={autocomplete}
                        onChange={(e) => {
-                           setValue(e.target.value)
-                           setDataChanged(true)
+                           if(label === "Phone"){
+                               setValue(e)
+                           }else {
+                               setValue(e.target.value)
+                           }
+
                        }}/>
+            </div>
+        )
+    }
+    const selectJSX = (label, value, setValue, disabled, required) => {
+        return (
+            <div className={"py-2"}>
+                <p className={"text-sm text-gray-500 w-full dark:text-white"}>{label}{required ? <span className={"text-red-600"}>*</span> : ""}</p>
+                <select className={`rounded text-sm w-full border-2 ${getFieldClass(required, value)}`}
+                       name={label}
+                       value={value}
+                       disabled={disabled}
+                       onChange={(e) => {
+                           setValue(e.target.value)
+                       }}>
+                    <option key={"Select county of resident"} value={""}>Select county of residence</option>
+                    {WICountiesList.map(currentCounty => {
+                        return (
+                            <option key={currentCounty} value={currentCounty}>{currentCounty}</option>
+                        )
+                    })}
+                </select>
             </div>
         )
     }
 
     return (
-        <div>
-            <h2 className={"uppercase text-gray-500 font-light mb-3 dark:text-white"}>Personal Details</h2>
-            <div className={`bg-green-400 p-3 text-white rounded ${changeConfirm ? "visible" : "hidden"}`}>Details successfully saved.</div>
+        <ProfileSectionStyle title={`Personal Details`}>
+            <p className={`text-gray-600 font-extralight`}>All fields marked with <span className={"text-red-600"}>*</span> are required.</p>
             <div className={"flex flex-col lg:flex-row"}>
                 <div className={"lg:flex-1 lg:mr-10"}>
-                    {inputJSX("Name", name, setName, false, "true")}
-                    {inputJSX("Street", street, setStreet, false, "false")}
-                    {inputJSX("City", city, setCity, false, "false")}
-                    {inputJSX("State", state, setState, false, "false")}
-                    {inputJSX("Zip", zip, setZip, false, "false")}
-                    {inputJSX("Email", email, setEmail, true, "true")}
-                    {inputJSX("Phone", phone, setPhone, false, "true")}
-                </div>
-
-                <div className={"lg:flex-1"}>
-                    <p className={"text-gray-500 mb-1 dark:text-white"}>Counties</p>
-                    <div className={"lg:flex-1 flex flex-wrap"}>
-                        {counties.map((currentCounty) => {
-                            return (
-                                <div key={currentCounty}
-                                     className={"cursor-pointer rounded border font-light dark:border-[1px] dark:border-gray-800 py-1 px-2 h-8 mr-2 mb-2 flex justify-between align-middle text-sm dark:bg-[#111111]"}
-                                     onClick={() => {
-                                         setCounties(prevState => prevState.filter(item => item !== currentCounty))
-                                         setDataChanged(true)
-                                     }}>
-                                    <div className={"inline-block mr-1 dark:text-white"}>{currentCounty}</div>
-                                    <div className={"inline-block"}>
-                                        <XCircle size={20} weight="thin" color={"orange"}/>
-                                    </div>
-                                </div>
-                            )
-                        })}
-
+                    {inputJSX("First and Last Name", name, setName, "Enter your first and last name...", false, "false", true)}
+                    {inputJSX("Street", street, setStreet, "", false, "false", false)}
+                    {inputJSX("City", city, setCity,"",  false, "false", false)}
+                    {inputJSX("State", state, setState, "", false, "false", false)}
+                    {inputJSX("Zip", zip, setZip, "", false, "false", false)}
+                    {selectJSX("County of Residence", homeCounty, setHomeCounty, false, true)}
+                    {inputJSX("Email", email, null, "", true, "false", "false")}
+                    {inputJSX("Phone", phone, handlePhoneChange, "Enter your 10 digit phone number...", false, "false", false)}
+                    <div className={`text-sm`}>
+                        <p className={`mt-0`}><strong>Example:</strong> 9206971143</p>
+                        <p className={`mt-0`}><strong>NOTE:</strong> This field will only accept numbers. </p>
                     </div>
-                    <p className={"text-indigo-600 text-sm mb-5 dark:text-white"}>Select all counties in which you may want to access resources.</p>
-                    <select className={"w-full lg:min-h-[400px] dark:bg-black dark:text-white"} multiple={true} onChange={(e) => {
-                        setCounties(prevState => {
-                            if (counties.indexOf(e.target.value) === -1) {
-                                return [...prevState, e.target.value]
-                            } else {
-                                return prevState
-                            }
-                        })
-                        setDataChanged(true)
-                    }}>
-                        {WICountiesList.map((county) => {
-                            return (
-                                <option key={county} value={county}>{county}</option>
-                            )
-                        })}
-                    </select>
                 </div>
             </div>
-            <button className={"rounded bg-indigo-600 text-white p-2 mt-4 disabled:bg-gray-600"} onClick={() => {
-                if (dataChanged) {
-                    savePersonalDetails(user._id)
-                        .then(res => console.log(res))
-                        .catch(err => console.warn(err))
-                    setChangeConfirm(true)
-                    setTimeout(() => {
-                        setChangeConfirm(false)
-                    }, 3000)
-                }
-            }} disabled={!dataChanged}>Save details
-            </button>
-        </div>
+        </ProfileSectionStyle>
     );
 }
 

@@ -1,14 +1,9 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
-import Link from "next/link"
-import {useEffect, useState} from "react";
-import UsersTable from "../components/usersTable";
 import Head from "next/head";
 import ClientsTable from "../components/clientsTable";
 
 export default function Clients({user, users}) {
-
-    const [usersData, setUsersData] = useState()
 
     return (
         <Layout title={"My Clients"} session={user}>
@@ -37,6 +32,10 @@ export async function getServerSideProps(context) {
     const getUsersUrl = baseUrl + "/api/get-clients?coachId=" + session.user.email
     const getUsers = await fetch(getUsersUrl)
     const usersJson = await getUsers.json()
+
+    // redirect to profile page if required fields are not complete
+    const {county, name, homeCounty, programs} = userJson
+    if(!county.length || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
 
     return {
         props: {

@@ -14,7 +14,8 @@ export default function UsersTable({users}) {
     const s1 = `This is a list of all the users whose email address contains <strong>your searched criteria of ${searchTerm}</strong>.`
     const s2 = `There were ${usersData.length} found.`
     const searchedMessage = `${s1} ${s2}`
-    const handleSearch = async () => {
+    const handleSearch = async (e) => {
+        e.preventDefault()
         await fetch('api/get-user-search', {
             method: "POST",
             headers: {
@@ -45,31 +46,34 @@ export default function UsersTable({users}) {
     }
     return (
         <div className="px-4 sm:px-6 lg:px-8">
-            <div className="flex sm:items-center">
-                <div className="w-3/5">
+            <div className="flex flex-col lg:flex-row items-center lg:justify-between lg:items-center">
+                <div className="w-full mb-6 mr-0 lg:mr-6 lg:mb-0 lg:flex-1">
                     <h1 className="text-xl font-semibold text-gray-900">Users</h1>
-                    <p className="mt-2 text-sm text-gray-700 dark:text-white dark:font-extralight" dangerouslySetInnerHTML={{__html: !searched ? defaultMessage : searchedMessage}}/>
+                    <p className="mt-2 text-sm text-gray-700" dangerouslySetInnerHTML={{__html: !searched ? defaultMessage : searchedMessage}}/>
                 </div>
-                <div className={"w-2/5 ml-8"}>
-                    <input type="text"
-                           id={"search-users"}
-                           className={"border-gray-300 w-[260px]"}
-                           value={searchTerm}
-                           placeholder={"Search users by email..."}
-                           onChange={(e) => {
-                               setSearchTerm(e.target.value)
-                           }}/>
-                    <button type="button" disabled={searchTerm === ""}
-                            className={`bg-green-500 disabled:bg-gray-300 text-white px-4 py-3 ml-2 text-sm font-extralight rounded`}
-                            onClick={handleSearch}>Submit
-                    </button>
-                    <button type="button" disabled={searchTerm === ""}
-                            className={`bg-blue-500 disabled:bg-gray-300 text-white px-4 py-3 ml-2 text-sm font-extralight rounded`}
-                            onClick={resetSearch}>Clear
-                    </button>
+                <div className={"w-full lg:w-[350px] lg:justify-items-end"}>
+                    <form onSubmit={handleSearch} className={`grid grid-cols-5 gap-1`}>
+                        <input type="text"
+                              id={"search-users"}
+                              className={"border-gray-300 text-xs col-span-3"}
+                              value={searchTerm}
+                               autoComplete="false"
+                              placeholder={"Search users by email..."}
+                              onChange={(e) => {
+                                  setSearchTerm(e.target.value)
+                              }}/>
+                        <button type="submit" disabled={searchTerm === ""}
+                                className={`bg-green-500 disabled:bg-gray-300 text-white py-1 text-xs font-extralight rounded col-span-1`}>
+                            Submit
+                        </button>
+                        <button type="reset" disabled={searchTerm === ""}
+                                className={`bg-blue-500 disabled:bg-gray-300 text-white py-1 text-xs font-extralight rounded col-span-1`}
+                                onClick={resetSearch}>Clear
+                        </button>
+                    </form>
                 </div>
             </div>
-            <div className="mt-8 flex flex-col dark:shadow-3xl dark:shadow-black dark:drop-shadow-lg">
+            <div className="mt-8 flex flex-col">
                 <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">

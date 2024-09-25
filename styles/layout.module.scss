@@ -1,24 +1,14 @@
 
 .lightTheme {
   .youthVersion {
-    background-image: url('/youth_light_bg.png')
+    background-image: url(../public/img/youth_light_bg.png);
   }
 
   .adultVersion {
-    background: url('/adult_light_bg.png')
+    background: url(../public/img/adult_light_bg.png)
   }
 }
 
-
-.darkTheme {
-  .youthVersion {
-    background: url('/youth_dark_bg.png')
-  }
-
-  .adultVersion {
-    background: url('/adult_dark_bg.png')
-  }
-}
 
 
 

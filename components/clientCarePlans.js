@@ -14,7 +14,7 @@ function ClientCarePlans({user, viewingUser, viewingUserData}) {
 
     useEffect(() => {
         getUserReferrals().then()
-    }, [userReferrals])
+    }, [])
 
     return (
         <div className={"mt-5 p-6 border rounded dark:border-none dark:bg-black dark:bg-opacity-70 dark:text-white dark:rounded-lg dark:shadow-xl"}>

@@ -5,13 +5,11 @@ import UsersTable from "../components/usersTable";
 import Head from "next/head";
 
 export default function Users({user, users}) {
-
-    const [destinationEmail, setDestinationEmail] = useState("")
     const [modalState, setModalState] = useState(false)
     const [searchTerm, setSearchTerm] = useState("")
 
     return (
-        <Layout title={"Users"} session={user} setDestinationEmail={setDestinationEmail} modalState={modalState} setModalState={setModalState}>
+        <Layout title={"Users"} session={user} modalState={modalState} setModalState={setModalState}>
             <Head>
                 <title>TTS Users</title>
             </Head>
@@ -32,6 +30,10 @@ export async function getServerSideProps(context) {
     const url =  baseUrl + "/api/get-user?email=" + session.user.email
     const getUser = await fetch(url)
     const userJson = await getUser.json()
+
+    // redirect to profile page if required fields are not complete
+    const {county, name, homeCounty, programs} = userJson
+    if(!county.length || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
 
     // tasks data
     const getUsersUrl = baseUrl + "/api/get-users"

@@ -2,18 +2,18 @@ import {connectToDatabase} from "../../lib/dbConnect";
 import {ObjectId} from "mongodb";
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async(req, res) => {
+export default async (req, res) => {
     const {db} = await connectToDatabase()
-    const dream = await db
-        .collection("todos")
+    const record = await db
+        .collection("users")
         .updateOne(
-            { _id: ObjectId(req.query.taskId) },
+            { _id: ObjectId(req.query.userId) },
             {
                 $set: {
-                    completed: req.query.setTo
+                    lastLogin: new Date()
                 }
             }
         )
+    res.json(record)
 
-    res.status(200).json({message: "Task was updated successfully.", dream: dream})
 }

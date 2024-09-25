@@ -4,7 +4,6 @@ import {Disclosure, Menu, Transition} from '@headlessui/react'
 import {MenuIcon, XIcon} from '@heroicons/react/outline'
 import {useRouter} from "next/router";
 import {UserCircleGear, UserCircle} from "phosphor-react";
-import ProfileDetailsWarningModal from "./profileDetailsWarningModal";
 import styles from "../styles/layout.module.css"
 import SimpleModal from "./simpleModal";
 import DarkModeToggle from "./darkModeToggle";
@@ -20,18 +19,25 @@ const navigation = [
 ]
 const userNavigation = [
     {name: 'Your Profile', href: '/profile'},
-    // {name: 'Settings', href: '/settings'},
 ]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Layout({children, title, session, loadingState, version, simpleModalTitle, simpleModalMessage, simpleModalLabel, simpleModal}) {
+export default function Layout({children, title, session, loadingState, version, simpleModalTitle, simpleModalMessage, simpleModalLabel, simpleModal, background}) {
     const router = useRouter()
-
     const [environment, setEnvironment] = useState("production")
     const [darkMode, setDarkMode] = useState(null)
+
+    async function updateLastLogin() {
+        await fetch(`/api/save-last-login?userId=${session._id}`)
+            .then(res => res.json())
+    }
+
+    useEffect(() => {
+            updateLastLogin().then()
+    }, [updateLastLogin])
 
     useEffect(() => {
         const value = localStorage.theme
@@ -50,7 +56,6 @@ export default function Layout({children, title, session, loadingState, version,
         }
     }, [environment])
 
-
     return (
         <>
             <div className={`${environment === "dev" || environment === "testing" || environment === "training" ? "visible" : "hidden"} ${environment === "testing" ? "bg-indigo-600" : "bg-pink-600"} p-4 text-center text-xs text-white font-light`}>
@@ -63,8 +68,6 @@ export default function Layout({children, title, session, loadingState, version,
                 <div className={"uppercase text-white self-center rounded-full p-5 bg-orange-600 shadow"}>loading...
                 </div>
             </div>
-            {router.pathname !== "/profile" && router.pathname !== "/" && router.pathname !== "/directory" ?
-                <ProfileDetailsWarningModal session={session}/> : null}
 
             <div id={`layoutBannerContainer`} className={`min-h-full ${darkMode === 'darkTheme' ? styles.darkTheme : styles.lightTheme}`}>
                 <div className={`${session.isYouth || version ? styles.youthVersion : styles.adultVersion} pb-32 print:hidden`}>
@@ -76,12 +79,12 @@ export default function Layout({children, title, session, loadingState, version,
                                         <div className="flex items-center justify-between h-16 px-4 sm:px-0">
                                             <div className="flex items-center">
                                                 <div className="w-[80px] h-[50px] relative">
-                                                    <Image sizes="(max-width:70px) 3vw, (max-width: 70px) 10vw, 5vw" fill
-                                                        src="/img/TTS_Logo2_vertical.png"
+                                                    <Image sizes="(max-width:70px) 30vw, (max-width: 70px) 20vw, 10vw" fill
+                                                        src="/img/tts-logo.png"
                                                         alt="Workflow"/>
                                                 </div>
                                                 <div className="w-[60px] h-[50px] relative ml-3">
-                                                    <Image sizes="(max-width:70px) 3vw, (max-width: 70px) 10vw, 5vw" fill
+                                                    <Image sizes="(max-width:70px) 30vw, (max-width: 70px) 20vw, 10vw" fill
                                                         src="/img/fsc-logo.png"
                                                         alt="Workflow" priority={true}/>
                                                 </div>
@@ -330,10 +333,10 @@ export default function Layout({children, title, session, loadingState, version,
 
                 <main className="-mt-32 print:mt-0">
                     <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
-                        <div
-                            className="bg-white dark:bg-gray-900 shadow px-5 py-6 sm:px-6 print:px-0 print:py-0 print:shadow-none dark:rounded-lg dark:shadow-xl">
-                            {children}
-                        </div>
+                            <div
+                                className={`${background === false ? '' : 'bg-white dark:bg-gray-900 shadow px-5 py-6 dark:rounded-lg dark:shadow-xl sm:px-6'} print:px-0 print:py-0 print:shadow-none`}>
+                                {children}
+                            </div>
                     </div>
                 </main>
             </div>

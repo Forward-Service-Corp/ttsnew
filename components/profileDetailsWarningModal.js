@@ -5,7 +5,17 @@ import { ExclamationIcon } from '@heroicons/react/outline'
 import {useRouter} from "next/router";
 
 export default function ProfileDetailsWarningModal({session}) {
-    const [open, setOpen] = useState(session?.name === "" || session.county === undefined || session.county?.length === 0)
+    const checkRequiredFields = () => {
+        if(session?.name === ""){
+            return true
+        }else if(session.county === undefined || session.county?.length === 0){
+            return true
+        }else if(session.homeCounty === undefined || session.homeCounty === ""){
+            return true
+        }else return session.programs?.length === 0 || session.programs === undefined;
+    }
+    // const [open, setOpen] = useState(session?.name === "" || session.county === undefined || session.homeCounty === undefined || session.homeCounty === "" || session.county?.length === 0 || session.programs?.length === 0 || session.programs === undefined)
+    const [open] = useState(checkRequiredFields)
     const router = useRouter()
     return (
         <Transition.Root show={open} as={Fragment}>
@@ -44,7 +54,7 @@ export default function ProfileDetailsWarningModal({session}) {
                                         </Dialog.Title>
                                         <div className="mt-2">
                                             <p className="text-sm text-gray-500">
-                                                We require your full name and at least one county to proceed.
+                                                We require your full name, county of residence, at least one county you would access services in, and the program(s) you are currently enrolled in to proceed.
                                             </p>
                                         </div>
                                     </div>

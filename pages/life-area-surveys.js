@@ -10,7 +10,7 @@ export default function LifeAreaSurveys({pageDataJson, incomingDream}) {
     const {user, surveys} = pageDataJson
     const [currentDream, setCurrentDream] = useState("")
     const [currentDreamId, setCurrentDreamId] = useState("")
-    const [surveysList, setSurveysList] = useState(surveys)
+    const [surveysList, setSurveysList] = useState([])
 
     useEffect(() => {
         if (incomingDream.hasDream) {
@@ -18,6 +18,10 @@ export default function LifeAreaSurveys({pageDataJson, incomingDream}) {
             setCurrentDreamId(incomingDream.dreamId)
         }
     }, [incomingDream.dream, incomingDream.dreamId, incomingDream.hasDream])
+
+    useEffect(() => {
+        setSurveysList(surveys)
+    }, [surveys]);
 
     return (
         <Layout title={"Life Area Surveys"} session={user}>
@@ -63,6 +67,10 @@ export async function getServerSideProps(context) {
     const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
     const getPageData = await fetch(pageDataUrl)
     const pageDataJson = await getPageData.json()
+
+    // redirect to profile page if required fields are not complete
+    const {county, name, homeCounty, programs} = pageDataJson.user
+    if(!county.length || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
 
     return {
         props: {
