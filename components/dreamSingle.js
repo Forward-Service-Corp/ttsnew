@@ -41,7 +41,9 @@ function DreamSingle({dream, isClientDream, clientId, setSavedDreams}) {
     };
 
     async function deleteDream(dreamId) {
-        await fetch("/api/delete-dream?dreamId=" + dreamId)
+       await fetch("/api/delete-dream?dreamId=" + dreamId)
+           .then(r => r.json())
+           .then(r => setSavedDreams(r) )
     }
 
     const router = useRouter()

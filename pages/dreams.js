@@ -6,9 +6,8 @@ import Head from "next/head";
 import DreamIntro from "../components/pages/dreamIntro";
 import DreamForm from "../components/dreamForm";
 
-export default function Dreams({pageDataJson}) {
+export default function Dreams({user, dreams}) {
 
-    const {user, dreams} = pageDataJson
     const [savedDreams, setSavedDreams] = useState([])
     const [simpleModal, setSimpleModal] = useState(false)
     const [currentTab, setCurrentTab] = useState("active")
@@ -61,6 +60,7 @@ export default function Dreams({pageDataJson}) {
 
 export async function getServerSideProps(context) {
     const session = await getSession(context)
+    const { sub } = session;
     if (!session) return {redirect: {destination: "/login", permanent: false}}
     const {req} = context;
 
@@ -69,16 +69,16 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
-    const getPageData = await fetch(pageDataUrl)
-    const pageDataJson = await getPageData.json()
+    const dataUrl = baseUrl + "/api/pages/dreamsPageData?userId=" + session.sub
+    const getData = await fetch(dataUrl)
+    const {user, dreams} = await getData.json()
 
     // redirect to profile page if required fields are not complete
-    const {county, name, homeCounty, programs} = pageDataJson.user
-    if(!county.length || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
+    // const {county, name, homeCounty, programs} = pageDataJson.user
+    // if(!county.length || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
 
     return {
-        props: {pageDataJson}
+        props: {user, dreams}
     }
 
 }

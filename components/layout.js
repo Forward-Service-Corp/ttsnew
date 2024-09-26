@@ -36,7 +36,21 @@ export default function Layout({children, title, session, loadingState, version,
     }
 
     useEffect(() => {
-            updateLastLogin().then()
+        const now = new Date();
+        const lastLoginTime = new Date(session.lastLogin); // Convert lastLogin to a Date object
+
+        // Calculate the time difference in milliseconds
+        const timeDifference = now - lastLoginTime;
+
+        // Convert milliseconds to hours
+        const hoursDifference = timeDifference / (1000 * 60 * 60);
+
+        // Check if the lastLogin is within 12 hours
+        if (hoursDifference < 12) {
+            return;
+        }
+
+        updateLastLogin().then()
     }, [updateLastLogin])
 
     useEffect(() => {

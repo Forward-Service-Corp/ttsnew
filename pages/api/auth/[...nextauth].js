@@ -58,12 +58,34 @@ export default NextAuth({
     },
     secret: process.env.NEXTAUTH_SECRET,
     url: process.env.NEXTAUTH_URL,
+    callbacks: {
+        async session({ session, token }) {
+            try {
+                const {db} = await connectToDatabase();
+                const dbUser = await db.collection("users").findOne({_id: token.sub})
+                if(dbUser){
+                    session.user._id = dbUser._id.toString();
+                }
+            } catch (error){
+                console.error('Error fetching user from database:', error);
+            }
+            session.sub = token.sub;
+            return session
+        },
+        async jwt({ token, user }) {
+            if (user) {
+                token.user = user
+            }
+            return token
+        },
+    },
     events: {
         signIn: async ({user, isNewUser}) => {
+            const {db} = await connectToDatabase()
             if (isNewUser) {
                 const userEmail = user.email
                 const isFSCEmail = user.email.indexOf("fsc-corp.org") > -1
-                const {db} = await connectToDatabase()
+
                 await db.collection("users").updateOne({"email": userEmail}, {
                     $set: {
                         "level": isFSCEmail ? "coach" : "client",
@@ -74,6 +96,6 @@ export default NextAuth({
                     }
                 })
             }
-        }
+        },
     }
 })

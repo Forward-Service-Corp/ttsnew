@@ -7,10 +7,10 @@ import DashboardMetric from "../components/dashboardMetric";
 import WelcomeGroupAdult from "../components/pages/welcomeGroupAdult";
 import WelcomeGroupYouth from "../components/pages/welcomeGroupYouth";
 
-export default function Home({pageDataJson}) {
+export default function Home({user, dreams, surveys, referrals, tasks}) {
 
     const router = useRouter()
-    const {user, dreams, surveys, referrals, tasks} = pageDataJson
+    // const {user, dreams, surveys, referrals, tasks} = pageDataJson
     tasks.filter(task => eval(task.completed) === true).length;
     const [currentTab, setCurrentTab] = useState(1)
 
@@ -77,16 +77,16 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
-    const getPageData = await fetch(pageDataUrl)
-    const pageDataJson = await getPageData.json()
+    const dataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.sub
+    const getData = await fetch(dataUrl)
+    const {user, dreams, surveys, referrals, tasks} = await getData.json()
 
     // redirect to profile page if required fields are not complete
-    const {county, name, homeCounty, programs} = pageDataJson.user
-    if(!county.length || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
+    // const {county, name, homeCounty, programs} = pageDataJson
+    // if(!county || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
 
     return {
-        props: {pageDataJson}
+        props: {user, dreams, surveys, referrals, tasks}
     }
 
 }
