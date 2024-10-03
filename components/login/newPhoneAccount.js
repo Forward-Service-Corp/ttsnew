@@ -41,7 +41,7 @@ function NewPhoneAccount({loginValue, setStep}) {
                        required={required}
                        defaultValue={value}
                        onChange={setValue}
-                       id={name}
+                       id={name+"-for-phone"}
                        disabled={disabled}
                        name={name}
                        autoComplete="true"
@@ -60,7 +60,7 @@ function NewPhoneAccount({loginValue, setStep}) {
                         required={required}
                         onChange={setValue}
                         name={name}
-                        id={name}
+                        id={name+"-for-phone"}
                         disabled={disabled}>
                     <option value="">{`Please select a ${label}...`}</option>
                     {list.map(currentCounty => {
@@ -105,6 +105,7 @@ function NewPhoneAccount({loginValue, setStep}) {
     const handleFormChange = (e) => {
         const { name, value } = e.target;
         updateFormData({ [name]: value })
+        updateFormData({ ["phone"]: loginValue })
         updateFormValidationData(name, value)
     };
 
@@ -200,11 +201,12 @@ function NewPhoneAccount({loginValue, setStep}) {
             })
         })
         const data = await loginCheck.json()
-        if (data.code === 666) {
+        if (data) {
             setUsedEmail(true)
             // updateFormData({ ["email"]: "" })
             // updateFormValidationData("email", false)
         } else {
+            setUsedEmail(false)
             sendAccount().then()
         }
     }
@@ -239,7 +241,7 @@ function NewPhoneAccount({loginValue, setStep}) {
                     {inputJSX('First Name', 'first_name', userData.first_name, handleFormChange, false, true)}
                     {inputJSX('Last Name', 'last_name', userData.last_name, handleFormChange, false, true)}
                     {inputJSX('Email', 'email', userData.email, handleFormChange, false, true)}
-                    {inputJSX('Phone', 'email', loginValue, handleFormChange, true, false)}
+                    {inputJSX('Phone', 'phone', loginValue, handleFormChange, true, false)}
                     {selectJSX("County of Residence", 'homeCounty', userData.homeCounty, handleFormChange, false, true, WICountiesList)}
                     {selectJSX("State", 'state', userData.state, handleFormChange, false, true, States)}
                     {selectJSX("Workbook Version", 'isYouth', userData.state, handleFormChange, false, true, ["Adult", "Youth"])}

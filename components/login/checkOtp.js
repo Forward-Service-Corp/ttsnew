@@ -3,7 +3,7 @@ import Link from "next/link";
 import {signIn} from "next-auth/react";
 
 function CheckOtp({loginValue}) {
-    const [error, setError] = useState({});
+    const [error, setError] = useState(false);
     const [code, setCode] = useState("");
     const [formattedCode, setFormattedCode] = useState("")
 
@@ -32,8 +32,10 @@ function CheckOtp({loginValue}) {
             .then(res => res.json())
         if (check === "approved") {
             await signIn('credentials', {phone: loginValue, response: check, callbackUrl: '/'})
+            console.log(check)
         } else {
-            setError({code: 111, message: "Bad code. Try again."})
+            console.log(check)
+            setError(true)
             setCode("")
             setFormattedCode("")
         }
@@ -45,6 +47,7 @@ function CheckOtp({loginValue}) {
             The code that was entered is incorrect. Please try again.
         </div>
         <input type="text" value={code} onChange={handleCodeChange}
+               id={'code'}
                className={`rounded ${formattedCode.length === 6 ? 'border-2 border-green-600' : 'border-gray-300'}`}
                placeholder={"6 digit code..."}/>
         <button className={`mt-4 p-2 bg-green-600 text-white rounded disabled:bg-gray-300`}
