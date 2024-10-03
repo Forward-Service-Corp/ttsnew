@@ -104,6 +104,7 @@ function NewEmailAccount({loginValue}) {
         const { name, value } = e.target;
         updateFormData({ [name]: value })
         updateFormValidationData(name, value)
+        updateFormData({ ["email"]: loginValue })
     };
 
     const handleCountyChange = (e) => {
@@ -196,7 +197,7 @@ function NewEmailAccount({loginValue}) {
         const account = await createAccount.json();
         await console.log(account)
         if (account) {
-            signIn('email', {email: loginValue, callbackUrl: "/"}).then()
+            signIn('email', {email: userData.email, callbackUrl: "/"}).then()
         }
     }
 
