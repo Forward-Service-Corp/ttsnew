@@ -2,7 +2,6 @@ import {labelMap} from "../lib/serviceLabelsMap";
 import UserReferralItem from "./userReferralItem";
 import ReferralSelectsSelect from "./referralSelectsSelect";
 import CustomReferralForm from "./customReferralForm";
-import {useEffect} from "react";
 
 function ReferralSelects({
                              domains,
@@ -18,17 +17,12 @@ function ReferralSelects({
                              setSaving
                          }) {
 
-
     async function getUserReferrals() {
-        const id = clientId === undefined ? user.email : clientId
-        const referrals = await fetch("/api/get-referrals?userId=" + id)
+        const id = clientId === undefined ? user._id : clientId
+        await fetch("/api/get-referrals?userId=" + id)
             .then(res => res.json())
-        await setUserReferrals(referrals)
+            .then(res => { setUserReferrals(res) })
     }
-
-    useEffect(() => {
-        getUserReferrals().then()
-    }, [getUserReferrals])
 
     return (<div className={"flex-1"}>
             {domains.map((domain, i) => {

@@ -33,14 +33,14 @@ function TaskTodo({task, setTasks, user, item, setAllNotes, loggedInUser, setSav
     }
 
     async function getTasks() {
-        const fetchedTasks = await fetch("/api/get-tasks?userId=" + user.email + "&referralId=" + item._id)
+        const fetchedTasks = await fetch("/api/get-tasks?userId=" + user._id + "&referralId=" + item._id)
             .then(res => res.json())
         await setTasks(fetchedTasks)
         await setSaving(false)
     }
 
     async function getNotes() {
-        const fetchedNotes = await fetch("/api/get-notes?userId=" + user.email)
+        const fetchedNotes = await fetch("/api/get-notes?userId=" + user._id)
             .then(res => res.json())
         await setAllNotes(fetchedNotes)
         await setSaving(false)
@@ -56,7 +56,7 @@ function TaskTodo({task, setTasks, user, item, setAllNotes, loggedInUser, setSav
             body: JSON.stringify({
                 referralId: item._id,
                 taskId: task._id,
-                userId: user.email,
+                userId: user._id,
                 note: note,
                 surveyId: item.surveyId,
                 timestamp: new Date(),

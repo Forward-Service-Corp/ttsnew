@@ -8,8 +8,7 @@ import {labelMap} from "../lib/serviceLabelsMap";
 
 export default function Directory({pageDataJson}) {
 
-    const {user} = pageDataJson
-    const [loadedServices, setLoadedServices] = useState([])
+    const [loadedServices, setLoadedServices] = useState(pageDataJson.directory ? pageDataJson.directory :  [])
     const [searched, setSearched] = useState(false)
     const [keyword, setKeyword] = useState("")
     const [domain, setDomain] = useState("")
@@ -31,17 +30,10 @@ export default function Directory({pageDataJson}) {
     }
 
     return (
-        <Layout title={"CARE Network"} session={user}>
+        <Layout title={"CARE Network"} session={pageDataJson.user}>
             <Head>
                 <title>TTS / CARE Network</title>
             </Head>
-            {/*<div className={user.level === "admin" ? "visible mb-3 flex justify-end" : "hidden"}>*/}
-            {/*    <button className={"py-[6px] px-6 mr-2 text-white  text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400"} onClick={()=> {*/}
-            {/*        router.push("/add-new-referral")*/}
-            {/*    }}>*/}
-            {/*        Add new referral to CARE Network*/}
-            {/*    </button>*/}
-            {/*</div>*/}
             <div className={"w-full max-w-[95%] m-auto p-3 bg-gray-100 rounded shadow dark:bg-transparent"}>
                 <form className={"grid grid-cols-1 md:grid-cols-4 gap-4 items-end"} onSubmit={(e) => {
                     e.preventDefault()
@@ -119,7 +111,7 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    const pageDataUrl = baseUrl + "/api/pages/directoryPageData?userId=" + session.sub
     const getPageData = await fetch(pageDataUrl)
     const pageDataJson = await getPageData.json()
 

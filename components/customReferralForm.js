@@ -19,7 +19,7 @@ function CustomReferralForm({
     const [referralNeeds, setReferralNeeds] = useState("")
 
     async function saveCustomReferral() {
-        const id = clientId === undefined ? user.email : clientId
+        const id = clientId === undefined ? user._id : clientId
         await fetch("/api/save-custom-referral", {
             method: "POST",
             headers: {

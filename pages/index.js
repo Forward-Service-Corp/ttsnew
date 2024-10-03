@@ -10,7 +10,6 @@ import WelcomeGroupYouth from "../components/pages/welcomeGroupYouth";
 export default function Home({user, dreams, surveys, referrals, tasks}) {
 
     const router = useRouter()
-    // const {user, dreams, surveys, referrals, tasks} = pageDataJson
     tasks.filter(task => eval(task.completed) === true).length;
     const [currentTab, setCurrentTab] = useState(1)
 
@@ -77,13 +76,12 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    const dataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.sub
-    const getData = await fetch(dataUrl)
-    const {user, dreams, surveys, referrals, tasks} = await getData.json()
+    const dataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.sub;
+    const getData = await fetch(dataUrl);
+    const {user, dreams, surveys, referrals, tasks} = await getData.json();
 
     // redirect to profile page if required fields are not complete
-    // const {county, name, homeCounty, programs} = pageDataJson
-    // if(!county || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
+    if(!user.county.length || !user.homeCounty  || !user.programs.length || !user.name) return  {redirect: {destination: "/profile", permanent: false}}
 
     return {
         props: {user, dreams, surveys, referrals, tasks}

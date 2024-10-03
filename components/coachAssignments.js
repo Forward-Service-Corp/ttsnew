@@ -60,8 +60,8 @@ function CoachAssignments({coachesJson, viewingUser}) {
                                    name={coach.name}/>
                             <label className={"p-2 bg-white text-xs block text-center border-[1px] rounded text-black truncate peer-checked:bg-orange-600 peer-checked:text-white"}
                                    htmlFor={coach.email}>
-                                <div>{coach.name || "undefined"}</div>
-                                <div>{coach.email || "undefined"}</div>
+                                <p className={"block"}>{coach.name || "undefined"}</p>
+                                <p>{coach.email || "undefined"}</p>
                             </label>
                         </div>
                     )

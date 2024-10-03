@@ -7,10 +7,8 @@ import {useRouter} from "next/router";
 import NewLifeAreaSurveyQuestions from "../components/newLifeAreaSurveyQuestions";
 import Head from "next/head";
 
+export default function NewLifeAreaSurvey({user}) {
 
-export default function NewLifeAreaSurvey({pageDataJson}) {
-
-    const {user} = pageDataJson
     const router = useRouter()
     const [activeDomain, setActiveDomain] = useState("food")
     const [answered, setAnswered] = useState([] || null)
@@ -129,7 +127,7 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                 racismBigotry: [answered.racismBigotry.selection, answered.racismBigotry.statement],
                 internetAccess: [answered.internetAccess.selection, answered.internetAccess.statement],
                 housing: [answered.housing.selection, answered.housing.statement],
-                userId: router.query.clientId === undefined ? user.email : router.query.clientId,
+                userId: router.query.clientId === undefined ? user._id : router.query.clientId,
                 surprise, concern, family, health, income
             })
         })
@@ -169,7 +167,7 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                 education: [answered.education.selection, answered.education.statement],
                 parenting: [answered.parenting.selection, answered.parenting.statement],
                 childrensEducation: [answered.childrensEducation.selection, answered.childrensEducation.statement],
-                userId: router.query.clientId === undefined ? user.email : router.query.clientId,
+                userId: router.query.clientId === undefined ? user._id : router.query.clientId,
                 surprise, concern, family, health, income
             })
         })
@@ -207,7 +205,7 @@ export default function NewLifeAreaSurvey({pageDataJson}) {
                 racismBigotry: [answered.racismBigotry.selection, answered.racismBigotry.statement],
                 internetAccess: [answered.internetAccess.selection, answered.internetAccess.statement],
                 housing: [answered.housing.selection, answered.housing.statement],
-                userId: router.query.clientId === undefined ? user.email : router.query.clientId,
+                userId: router.query.clientId === undefined ? user._id : router.query.clientId,
                 surprise, concern, family, health, income
             })
         })
@@ -346,13 +344,13 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
-    const getPageData = await fetch(pageDataUrl)
-    const pageDataJson = await getPageData.json()
+    const dataUrl = baseUrl + "/api/pages/surveysPageData?userId=" + session.sub
+    const getData = await fetch(dataUrl)
+    const {user} = await getData.json()
 
     return {
         props: {
-            pageDataJson,
+            user,
             incomingDream: {
                 hasDream: context.query.dream !== undefined,
                 dream: dream,

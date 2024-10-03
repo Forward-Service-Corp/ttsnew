@@ -11,14 +11,6 @@ export default function ClientsTable({users}) {
                         A list of all the clients you manage.
                     </p>
                 </div>
-                <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                    {/*<button*/}
-                    {/*    type="button"*/}
-                    {/*    className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"*/}
-                    {/*>*/}
-                    {/*    Add user*/}
-                    {/*</button>*/}
-                </div>
             </div>
             <div className="mt-8 flex flex-col">
                 <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -51,9 +43,7 @@ export default function ClientsTable({users}) {
                                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300 dark:font-extralight">{person.email}</td>
                                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                             <Link href={"/client/" + person._id}>
-
                                                     <ArrowCircleRight size={26}/><span className="sr-only">, {person.name}</span>
-
                                             </Link>
                                         </td>
                                     </tr>

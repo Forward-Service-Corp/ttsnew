@@ -3,24 +3,16 @@ import {getSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {labelMap} from "../../lib/serviceLabelsMap";
 import {ArrowLeft, Printer} from "phosphor-react";
-import {useEffect, useState} from "react";
 import moment from "moment";
 import Head from "next/head";
 
 export default function SurveyId({pageDataJson}) {
 
-    const router = useRouter()
-    const {user, surveys} = pageDataJson
-    const {surveyId} = router.query
-    const {isYouthSurvey} = router.query
-    const [userFullName, setUserFullName] = useState("")
-
-    const getUserFullName = async () => {
-        const currentSurveyUserId = surveys.filter(survey => survey._id.toString() === surveyId.toString())[0].userId
-        const data = await fetch(`/api/pages/getSurveyName?userId=${currentSurveyUserId}`)
-            .then(res => res.json())
-        await setUserFullName(data.surveyUser.name)
-    }
+    const router = useRouter();
+    const {user, surveys} = pageDataJson;
+    const {surveyId} = router.query;
+    const {isYouthSurvey} = router.query;
+    const title = `TTS / Survey / ${user.name}`
 
     const getIsYouth = (survey) => {
         if(isYouthSurvey === 'true'){
@@ -28,7 +20,7 @@ export default function SurveyId({pageDataJson}) {
                 return (
                     <div key={domainIndex} className={`p-1  dark:text-white ${survey.priority.indexOf(domain) > -1 ? "border border-1 border-black dark:border-purple-800" : null}`}>
                         <Head>
-                            <title>TTS / {userFullName}</title>
+                            <title>{title}</title>
                         </Head>
                         <div className={"flex items-center justify-between"}>
                             <div className={"truncate font-bold"}>{labelMap[domain]}</div>
@@ -43,7 +35,7 @@ export default function SurveyId({pageDataJson}) {
                 return (
                     <div key={domainIndex} className={`p-1  dark:text-white ${survey.priority.indexOf(domain) > -1 ? "border border-1 border-black dark:border-purple-800" : null}`}>
                         <Head>
-                            <title>TTS / {userFullName}</title>
+                            <title></title>
                         </Head>
                         <div className={"flex items-center justify-between"}>
                             <div className={"truncate font-bold"}>{labelMap[domain]}</div>
@@ -57,9 +49,7 @@ export default function SurveyId({pageDataJson}) {
 
     }
 
-    useEffect(()=> {
-        getUserFullName().then()
-    })
+
 
     const domains = [
         "adultEducation",
@@ -150,7 +140,7 @@ export default function SurveyId({pageDataJson}) {
                         </div>
                         <div className={"flex justify-between p-2 text-sm mb-4"}>
                             <div>
-                                <p className={"font-bold"}>Client name: <span className={"font-extralight"}>{userFullName}</span></p>
+                                <p className={"font-bold"}>Client name: <span className={"font-extralight"}>{user.name}</span></p>
                                 <p>Client email: <span className={"font-extralight"}>{survey.userId}</span></p>
                                 <p>Associated dream: <span className={"font-extralight"}>{survey.dream}</span></p>
                                 <p>Date taken: <span className={"font-extralight"}>{moment(survey.datestamp).calendar() }</span></p>
@@ -168,17 +158,6 @@ export default function SurveyId({pageDataJson}) {
                         <div className={"grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 text-xs gap-6 print:grid-cols-4 print:break-after-page"}>
                             {
                                 getIsYouth(survey)
-                                // [isYouth].map((domain, domainIndex) => {
-                                //     return (
-                                //         <div key={domainIndex} className={`p-1 ${survey.priority.indexOf(domain) > -1 ? "border border-1 border-black" : null}`}>
-                                //             <div className={"flex items-center justify-between"}>
-                                //                 <div className={"truncate font-bold"}>{labelMap[domain]}</div>
-                                //                 <div className={""}>{survey[domain][0]}</div>
-                                //             </div>
-                                //             <p>{survey[domain][1]}</p>
-                                //         </div>
-                                //     )
-                                // })
                             }
 
                         </div>
@@ -211,7 +190,7 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.sub
     const getPageData = await fetch(pageDataUrl)
     const pageDataJson = await getPageData.json()
 

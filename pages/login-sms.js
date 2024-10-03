@@ -3,6 +3,7 @@ import {useRouter} from "next/router";
 import Head from "next/head";
 import Image from "next/image";
 import {useState} from "react";
+import Link from "next/link";
 
 export default function Login() {
     const router = useRouter()
@@ -14,16 +15,14 @@ export default function Login() {
     const [sendingState, setSendingState] = useState(1)
 
     const sendOTP = async () => {
-        const verification = await fetch(`/api/send-OTP?phone=${phone}`)
+        await fetch(`/api/send-OTP?phone=${phone}`)
             .then(res => res.json())
             .then(() => setSendingState(3))
-        console.log(verification)
     }
 
     const checkCode = async () => {
         const check = await fetch(`/api/check-OTP?phone=${phone}&code=${code}`)
             .then(res => res.json())
-        console.log(check)
         if (check === "approved") {
             await signIn('credentials', {phone: phone, response: check, callbackUrl: '/'})
         } else {
@@ -125,9 +124,7 @@ export default function Login() {
                         <button className={`mt-4 p-2 bg-indigo-600 text-white rounded disabled:bg-gray-300`} disabled={formattedNumber.length !== 10} onClick={checkPhoneNumber}>
                             Request One-Time Password
                         </button>
-                        <button className={`mt-4 text-red-600 underline`} onClick={handleCancel}>
-                            Go Back
-                        </button>
+                        <Link href="/login" className={`text-red-600 underline mt-5 block text-sm`}>Go Back</Link>
                     </div>
 
                     {/* Sending message */}

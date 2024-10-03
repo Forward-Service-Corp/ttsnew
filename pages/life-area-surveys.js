@@ -5,9 +5,8 @@ import LasHistory from "../components/lasHistory";
 import Head from "next/head";
 import LasCurrent from "../components/lasCurrent";
 
-export default function LifeAreaSurveys({pageDataJson, incomingDream}) {
+export default function LifeAreaSurveys({user, surveys, incomingDream}) {
 
-    const {user, surveys} = pageDataJson
     const [currentDream, setCurrentDream] = useState("")
     const [currentDreamId, setCurrentDreamId] = useState("")
     const [surveysList, setSurveysList] = useState([])
@@ -64,17 +63,17 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
-    const getPageData = await fetch(pageDataUrl)
-    const pageDataJson = await getPageData.json()
+    const dataUrl = baseUrl + "/api/pages/surveysPageData?userId=" + session.sub
+    const getData = await fetch(dataUrl)
+    const {user, surveys} = await getData.json()
 
     // redirect to profile page if required fields are not complete
-    const {county, name, homeCounty, programs} = pageDataJson.user
-    if(!county.length || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
+    if(!user.county.length || !user.homeCounty  || !user.programs.length || !user.name) return  {redirect: {destination: "/profile", permanent: false}}
 
     return {
         props: {
-            pageDataJson,
+            user,
+            surveys,
             incomingDream: {
                 hasDream: context.query.dream !== undefined,
                 dream: dream,

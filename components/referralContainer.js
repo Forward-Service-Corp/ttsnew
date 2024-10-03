@@ -22,7 +22,7 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
             },
             body: JSON.stringify({
                 referralId: item._id,
-                userId: user.email,
+                userId: user._id,
                 task: task,
                 surveyId: item.surveyId,
                 timestamp: new Date(),
@@ -32,12 +32,12 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
     }
 
     const getTasks = useCallback( () => {
-        fetch("/api/get-tasks?userId=" + user.email + "&referralId=" + item._id)
+        fetch("/api/get-tasks?userId=" + user._id + "&referralId=" + item._id)
             .then(res => res.json())
             .then(res => setTasks(res))
             .then(() => setSaving(false))
             .catch(e => console.log(e))
-    },[item._id, setTasks, user.email])
+    },[item._id, setTasks, user._id])
 
     async function deleteReferral(referralId) {
         await fetch("/api/delete-referral?referralId=" + referralId)
@@ -56,7 +56,7 @@ function ReferralContainer({item, user, notes, setUserReferrals, modifier, logge
     }
 
     async function getReferrals() {
-        const fetchedReferrals = await fetch("/api/get-referrals?userId=" + user.email)
+        const fetchedReferrals = await fetch("/api/get-referrals?userId=" + user._id)
             .then(res => res.json())
         await setUserReferrals(fetchedReferrals)
     }

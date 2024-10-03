@@ -17,7 +17,7 @@ function DreamForm({user, setSimpleModal}) {
                 dream,
                 dreamNeed,
                 dreamHelp,
-                userId: user.email,
+                userId: user._id,
                 status: "active"
             })
         })

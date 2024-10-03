@@ -6,15 +6,14 @@ import {useState} from "react";
 import CarePlansIntro from "../components/carePlansIntro";
 import CarePlansInstructions from "../components/carePlansInstructions";
 
-export default function CarePlans({pageDataJson}) {
+export default function CarePlans({pageJson}) {
 
-    const {user, referrals, notes} = pageDataJson
-    const [tasks, setTasks] = useState(pageDataJson.tasks || [])
-    const [userReferrals, setUserReferrals] = useState(referrals)
+    const [tasks, setTasks] = useState(pageJson.todos || [])
+    const [userReferrals, setUserReferrals] = useState(pageJson.referrals)
     const [sort] = useState('priority')
 
     return (
-        <Layout title={"CARE Plans"} session={user}>
+        <Layout title={"CARE Plans"} session={pageJson.user}>
             <Head>
                 <title>TTS / Care Plans</title>
             </Head>
@@ -48,11 +47,11 @@ export default function CarePlans({pageDataJson}) {
                 return (
                     <ReferralContainer key={item._id}
                                        item={item}
-                                       user={user}
-                                       tasks={tasks.filter((task) => task.referralId === item._id)} notes={notes} i={i}
+                                       user={pageJson.user}
+                                       tasks={tasks.filter((task) => task.referralId === item._id)} notes={pageJson.notes} i={i}
                                        setTasks={setTasks}
-                                       modifier={user.email}
-                                       loggedInUser={user}
+                                       modifier={pageJson.user.email}
+                                       loggedInUser={pageJson.user}
                                        setUserReferrals={setUserReferrals}/>
                 )
             })}
@@ -78,10 +77,10 @@ export default function CarePlans({pageDataJson}) {
                 }
             }).map(item => {
                 return (
-                    <ReferralContainer key={item._id} item={item} user={user} notes={notes}
-                                       modifier={user.email}
+                    <ReferralContainer key={item._id} item={item} user={pageJson.user} notes={pageJson.notes}
+                                       modifier={pageJson.email}
                                        tasks={tasks.filter((task) => task.referralId === item._id)}
-                                       loggedInUser={user}
+                                       loggedInUser={pageJson}
                                        setUserReferrals={setUserReferrals}/>
                 )
             })}
@@ -98,16 +97,16 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    const pageDataUrl = baseUrl + "/api/pages/carePlansPageData?userId=" + session.sub
     const getPageData = await fetch(pageDataUrl)
-    const pageDataJson = await getPageData.json()
+    const pageJson = await getPageData.json()
 
     // redirect to profile page if required fields are not complete
-    const {county, name, homeCounty, programs} = pageDataJson.user
-    if(!county.length || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
+    const {user} = pageJson
+    if(!user.county.length || !user.homeCounty  || !user.programs.length || !user.name) return  {redirect: {destination: "/profile", permanent: false}}
 
     return {
-        props: {pageDataJson}
+        props: {pageJson, user}
     }
 
 }

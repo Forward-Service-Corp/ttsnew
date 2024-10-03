@@ -11,6 +11,7 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
 
     const router = useRouter()
     const {user} = pageDataJson
+    const [viewingUserState, setViewingUserState] = useState(viewingUser)
     const [role, setRole] = useState(viewingUser.level)
     const [version, setVersion] = useState(viewingUser.isYouth)
     const [clients, setClients] = useState(null)
@@ -24,15 +25,14 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
 
     async function updateRoleInformation(role){
         await setRole(role)
-        // await setRoleChanged(true)
         await saveRole(role)
     }
 
-    async function getClients(coachId) {
-       const fetchClients = await fetch("/api/get-clients?coachId=" + coachId)
+    async function getClients() {
+       await fetch("/api/get-clients?coachId=" + viewingUser._id.toString())
             .then(res => res.json())
-            .catch(err => console.warn(err.json()))
-        setClients(fetchClients)
+            .then(res => {setClients(res)})
+            .catch(err => console.warn(err))
     }
 
     async function terminationPattern(){
@@ -59,11 +59,13 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
         }
     }, [viewingUser.email, viewingUser.level])
 
+    const title = `TTS / User / ${viewingUser.name || viewingUser.email}`
+
     return (
         <Layout title={viewingUser.name || viewingUser.email} session={user} version={version} simpleModalTitle={`Workbook Version Update`}
                 simpleModalMessage={`You have now updated this user to the ${version ? "youth" : "adult"} version of the workbook.`} simpleModalLabel={`I understand.`} simpleModal={simpleModal}>
             <Head>
-                <title>TTS / User / {viewingUser.name || viewingUser.email}</title>
+                <title>{title}</title>
             </Head>
 
             <div className={`mt-8 mb-8`}>
@@ -137,18 +139,9 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
                         }}>Terminate Coach</button>
                     </div>
                 </div>
-
-
-                {/*<div className={"flex justify-start mt-4 pt-4 border-t-[1px] border-gray-400"}>*/}
-                {/*    <button disabled={!roleChanged}*/}
-                {/*            onClick={saveRole}*/}
-                {/*            className={"py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"}>Save*/}
-                {/*        role updates*/}
-                {/*    </button>*/}
-                {/*</div>*/}
             </div>
             <CoachAssignments coachesJson={coachesJson} viewingUser={viewingUser}/>
-            <NewEmailAssignment user={viewingUser.email}/>
+            <NewEmailAssignment viewingUserState={viewingUserState} setViewingUserState={setViewingUserState}/>
 
         </Layout>
     )
@@ -163,7 +156,7 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.sub
     const getPageData = await fetch(pageDataUrl)
     const pageDataJson = await getPageData.json()
 
@@ -174,7 +167,7 @@ export async function getServerSideProps(context) {
     // viewing user data
     const userUrl = baseUrl + "/api/get-user?userId=" + context.query.userId
     const getViewingUser = await fetch(userUrl)
-    const viewingUserJson = await getViewingUser.json()
+    const viewingUser = await getViewingUser.json()
 
     // all coaches data
     const coachesUrl = baseUrl + "/api/get-all-coaches"
@@ -182,10 +175,7 @@ export async function getServerSideProps(context) {
     const coachesJson = await getCoaches.json()
 
     return {
-        props: {
-            pageDataJson, coachesJson,
-            viewingUser: viewingUserJson,
-        }
+        props: {pageDataJson, coachesJson, viewingUser, session}
     }
 
 }

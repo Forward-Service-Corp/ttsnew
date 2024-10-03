@@ -27,13 +27,13 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // user data
-    const url =  baseUrl + "/api/get-user?email=" + session.user.email
+    const url =  baseUrl + "/api/get-user?userId=" + session.sub
     const getUser = await fetch(url)
     const userJson = await getUser.json()
 
     // redirect to profile page if required fields are not complete
-    const {county, name, homeCounty, programs} = userJson
-    if(!county.length || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
+    // const {county, name, homeCounty, programs} = userJson
+    // if(!county.length || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
 
     // tasks data
     const getUsersUrl = baseUrl + "/api/get-users"

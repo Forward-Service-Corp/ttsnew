@@ -81,8 +81,7 @@ export default function SurveyId({pageDataJson, surveyJson}) {
         }
 
     ]
-    console.log("youth", isYouthSurvey)
-    console.log(surveyJson)
+
     return (
         <Layout title={"Review Life Area Survey"} session={user}>
             {surveyJson.filter(survey => survey._id.toString() === surveyId.toString()).map(survey => {
@@ -160,7 +159,7 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    const pageDataUrl = baseUrl + "/api/pages/singleSurveyPageData?userId=" + session.sub
     const getPageData = await fetch(pageDataUrl)
     const pageDataJson = await getPageData.json()
 

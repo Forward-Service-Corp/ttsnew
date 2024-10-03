@@ -7,7 +7,7 @@ function ClientCarePlans({user, viewingUser, viewingUserData}) {
 
     async function getUserReferrals() {
         // const id = clientId === undefined ? user.email : clientId
-        const referrals = await fetch("/api/get-referrals?userId=" + viewingUser.email)
+        const referrals = await fetch("/api/get-referrals?userId=" + viewingUser._id)
             .then(res => res.json())
         await setUserReferrals(referrals)
     }

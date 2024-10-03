@@ -60,7 +60,7 @@ export default function Dreams({user, dreams}) {
 
 export async function getServerSideProps(context) {
     const session = await getSession(context)
-    const { sub } = session;
+
     if (!session) return {redirect: {destination: "/login", permanent: false}}
     const {req} = context;
 
@@ -74,8 +74,7 @@ export async function getServerSideProps(context) {
     const {user, dreams} = await getData.json()
 
     // redirect to profile page if required fields are not complete
-    // const {county, name, homeCounty, programs} = pageDataJson.user
-    // if(!county.length || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
+    if(!user.county.length || !user.homeCounty  || !user.programs.length || !user.name) return  {redirect: {destination: "/profile", permanent: false}}
 
     return {
         props: {user, dreams}

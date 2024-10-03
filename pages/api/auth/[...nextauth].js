@@ -26,7 +26,7 @@ export default NextAuth({
                 phone: {label: "Phone", type: "text", placeholder: "phone"},
                 response: {label: "Response", type: "text"}
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 const {phone, response} = credentials;
                 const {db} = await connectToDatabase()
                 const userSearch = await db
@@ -35,15 +35,12 @@ export default NextAuth({
 
                 if(response === "approved"){
                     // If no error and we have user data, return it
-                    const user = {
+                    return {
                         id: userSearch._id.toString(),
                         name: userSearch.name,
                         email: userSearch.email,
                     }
-                    console.log(user)
-                    return user
                 }else{
-                    // Return null if user data could not be retrieved
                     return null
                 }
             }
@@ -63,6 +60,7 @@ export default NextAuth({
             try {
                 const {db} = await connectToDatabase();
                 const dbUser = await db.collection("users").findOne({_id: token.sub})
+                    .catch(er => console.error(er));
                 if(dbUser){
                     session.user._id = dbUser._id.toString();
                 }
@@ -71,6 +69,33 @@ export default NextAuth({
             }
             session.sub = token.sub;
             return session
+        },
+        async signIn({ user, account, credentials }){
+            const {db} = await connectToDatabase()
+            if (account.type === "email") {
+                const userSearch = await db.collection("users").findOne({email: user.email})
+                if(userSearch){
+                    return true
+                } else {
+                    return "/api/auth/no-account"
+                }
+            } else if(account.type === "credentials") {
+                const userSearch = await db.collection("users").findOne({phone: credentials.phone})
+                if(userSearch){
+                    return true
+                } else {
+                    return "/api/auth/no-account"
+                }
+            } else if(account.type === "oauth") {
+                const userSearch = await db.collection("users").findOne({email: user.email})
+                if(userSearch){
+                    return true
+                } else {
+                    return "/auth/no-account"
+                }
+            }
+
+
         },
         async jwt({ token, user }) {
             if (user) {

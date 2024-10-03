@@ -1,10 +1,11 @@
 import {connectToDatabase} from "../../lib/dbConnect";
+import {ObjectId} from "mongodb";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async(req, res) => {
     const record = {
         surveyId: req.body.surveyId,
-        userId: req.body.userId,
+        userId: ObjectId(req.body.userId),
         dream: req.body.dream,
         domain: req.body.domain,
         name: req.body.name,
