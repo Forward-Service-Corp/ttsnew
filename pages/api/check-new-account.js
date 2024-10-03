@@ -9,10 +9,10 @@ export default async(req, res) => {
     const {db} = await connectToDatabase();
     const user = await db.collection("users").findOne(term);
 
-    if (user) {
-        res.json({code: 666, message: "Looks like you already have an account. Try signing in with that email or phone number."})
-    }
+    // if (user) {
+    //     res.json({code: 666, message: "Looks like you already have an account. Try signing in with that email or phone number."})
+    // }
 
-    res.json({code: 777, message: "Just a few more details.", loginValue})
-
+    // res.json({code: 777, message: "Just a few more details.", loginValue})
+    res.json(user);
 }
