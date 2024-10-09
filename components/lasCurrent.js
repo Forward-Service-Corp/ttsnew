@@ -13,16 +13,14 @@ function LasCurrent({surveys, user, isClientSurvey, clientId}) {
             {surveys.sort((a, b) => new Date(b.datestamp) - new Date(a.datestamp)).map((survey, i) => {
                 if (i === 0) {
                     return (
-                        <div
-                            className={"shadow mr-5 mb-5 text-sm overflow-hidden relative flex flex-col justify-between dark:bg-black dark:text-white dark:rounded-xl dark:overflow-hidden dark:bg-opacity-70"}
-                            key={survey._id}>
+                        <div className={"mb-4 flex flex-col shadow-xl justify-between bg-white rounded-lg overflow-x-hidden"} key={survey._id}>
                             <div>
-                                <div className={"bg-gray-700 p-3 truncate font-light text-white flex justify-start"}>
-                                    <div><ListNumbers size={22}/></div>
-                                    <div className={"ml-2 truncate"}>{survey.dream}</div>
+                                <div className={"bg-gray-700 p-4 text-white items-center relative"}>
+                                    <div className={"truncate text-xl font-extralight capitalize"}>{survey.dream}</div>
+                                    <div className={`truncate text-xs font-extralight`}>
+                                        {moment(survey.timestamp).format("MMMM Do YYYY @ h:mm a")}
+                                    </div>
                                 </div>
-                                <div
-                                    className={"bg-gray-100 p-2 text-xs dark:bg-black dark:bg-opacity-80"}>{moment(survey.datestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}</div>
                             </div>
 
                             <div className={"flex flex-wrap"}>
@@ -37,10 +35,10 @@ function LasCurrent({surveys, user, isClientSurvey, clientId}) {
                                     </div>
                                 </div>
                             </div>
-                            <div className={"bg-gray-400 flex text-center text-white text-xs"}>
+                            <div className={"text-xs p-4 flex"}>
                                 <div
                                     title={"Map your priorities"}
-                                    className={"p-2 flex-1 cursor-pointer bg-blue-500 hover:bg-blue-600 dark:bg-indigo-800  dark:hover:bg-indigo-600"}
+                                    className={"grow bg-indigo-700 hover:bg-indigo-500 text-center text-white p-2 rounded-full mr-2 cursor-pointer"}
                                     onClick={() => {
                                         if (isClientSurvey) {
                                             router.push({
@@ -73,16 +71,16 @@ function LasCurrent({surveys, user, isClientSurvey, clientId}) {
                                     (new Date() - new Date(survey.datestamp)) / (1000 * 60 * 60) < 12 ?
                                         <div
                                             title={"Edit this life area survey"}
-                                            className={"bg-gray-500 hover:bg-gray-600 p-2 flex-1 cursor-pointer max-w-[40px] flex justify-center"}
+                                            className={"flex-auto bg-indigo-400 hover:bg-indigo-200 text-center text-white p-2 rounded-full cursor-pointer"}
                                             onClick={() => {
                                                 router.push("/new-life-area-survey?dreamName=" + survey.dream + "&dreamId=" + survey.dreamId + "&surveyId=" + survey._id).then()
                                             }}>
-                                            <div><NotePencil size={15}/></div>
+                                            <div>Edit Survey</div>
                                         </div> : null
                                 }
                                 <div
                                     title={"Review this life area survey"}
-                                    className={"p-2 flex-1 cursor-pointer bg-green-500 hover:bg-green-600 max-w-[40px] flex justify-center items-center"}
+                                    className={"flex-auto bg-green-500 hover:bg-green-300 text-center text-white p-2 rounded-full cursor-pointer"}
                                     onClick={() => {
                                         if (isClientSurvey) {
                                             router.push("/client/survey/" + survey._id + "?isYouthSurvey=" + survey.isYouthSurvey).then()
@@ -91,7 +89,7 @@ function LasCurrent({surveys, user, isClientSurvey, clientId}) {
                                         }
 
                                     }}>
-                                    <div><Link size={15}/></div>
+                                    <div>View Survey</div>
                                 </div>
 
                             </div>

@@ -69,35 +69,25 @@ function LoginTypeCheck({loginValue, setLoginValue, loginType, setLoginType, set
     }
 
     return (
-        <div
-            className={`text-xs`}
-            name={'checkLoginType'}>
+        <div className={`text-xs`}>
             <div className={`text-center`}>
-                <h2 className={'pb-4 font-extralight text-2xl my-2 w-full text-center'}>Enter an Email or Phone
-                    Number</h2>
-
-                <div className={`px-10`}>
-                    {loginCheckJSX('Email or Phone Number', 'loginValue', loginValue, handleLoginValueChange, false, true)}
-                    <div
-                        className={`bg-green-100 p-4 text-center rounded ${checking ? 'visible' : 'hidden'}`}>One
-                        moment please...
-                    </div>
-                    <div
-                        className={`bg-red-200 p-4 text-center rounded ${error.code === 666 ? 'visible' : 'hidden'}`}>{error.message}
-                    </div>
+                <h2 className={'pb-2 font-extralight text-2xl my-2'}>
+                    Enter an Email or Phone Number
+                </h2>
+                {loginCheckJSX('Email or Phone Number', 'loginValue', loginValue, handleLoginValueChange, false, true)}
+                <div className={`bg-green-100 p-4 text-center rounded ${checking ? 'visible' : 'hidden'}`}>
+                    One moment please...
                 </div>
-
-                <div className={`text-center`}>
-                    <div className={'w-full p-8'}>
-                        <button
-                            className={"rounded bg-indigo-600 text-white font-extralight p-2 disabled:bg-gray-300 w-1/2 text-lg"}
-                            disabled={!loginTypeValid}
-                            onClick={checkNewAccount}>Next
-                        </button>
-                        <Link href="/login" className={`text-red-600 underline mt-5 text-sm block m-auto`}>Go
-                            Back</Link>
-                    </div>
+                <div className={`bg-red-200 p-4 text-center rounded ${error.code === 666 ? 'visible' : 'hidden'}`}>
+                    {error.message}
                 </div>
+                <button
+                    className={"rounded-full bg-indigo-700 hover:bg-indigo-600 disabled:bg-gray-300 text-white font-extralight p-2 w-full mt-3 block m-auto text-lg"}
+                    disabled={!loginTypeValid}
+                    onClick={checkNewAccount}>Next
+                </button>
+                <Link href="/login" className={`text-red-600 underline mt-5 text-sm block m-auto`}>Go
+                    Back</Link>
             </div>
         </div>
     );

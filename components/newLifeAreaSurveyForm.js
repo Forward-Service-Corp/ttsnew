@@ -10,20 +10,23 @@ function NewLifeAreaSurveyForm({activeDomain, setAnswered, answered, domains, se
     const useSurvey = !user.isYouth || user.isYouth === false  ? lasList : lasYouthList
 
     return (
-        <div className={"p-0 md:p-4"}>
-            <div className={"md:flex justify-between"}>
-                <div className={""}>
-                    <h2 className={"uppercase text-orange-600 text-xl font-serif dark:text-orange-400"}>{labelMap[activeDomain]}</h2>
-                </div>
-                <div className={`flex items-center`}>
-                    <span className={"text-sm text-red-600 mr-4 dark:text-red-500"}>Set as a priority</span>
-                    <Toggle domains={domains} setDomains={setDomains} activeDomain={activeDomain}/>
-                </div>
-            </div>
+        <div className={"ml-4"}>
 
-            <p className={"text-sm mt-7 dark:text-white dark:font-extralight"}>Select the option that best describes your condition in each of the life
-                areas. You must select an answer for each life area. If one does not apply to you, then
-                select &quot;This does not apply to me.&quot;</p>
+                <div className={`${true ? ' bg-green-100' : 'bg-blue-100'} flex justify-between items-center bg-opacity-40 p-6 rounded-lg`}>
+                    <div className={"w-2/4"}>
+                        <div className={'text-2xl mb-2'}>{labelMap[activeDomain]}</div>
+                        <div className={"text-xs "}>
+                            Select the option that best
+                            describes your condition in each of the life areas. You must select an answer for each life area.
+                            If one does not apply to you, then select &quot;This does not apply to me.&quot;
+                        </div>
+                    </div>
+                    <div className={`flex items-center w-1/4 justify-end`}>
+                        <div className={'h-full bg-indigo-500 text-white text-sm rounded-full py-2 px-4'}>Make Priority</div>
+                        {/*<span className={"text-sm text-red-600 mr-4"}>Set as a priority</span>*/}
+                        {/*<Toggle domains={domains} setDomains={setDomains} activeDomain={activeDomain}/>*/}
+                    </div>
+                </div>
             <div className={"mt-8"}>
 
                 <form onChange={async (event) => {

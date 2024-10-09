@@ -15,7 +15,7 @@ export default function SurveyDomainList({setActiveDomain, activeDomain, answere
 
     return (
         <div
-            className={`${styles.surveyDomainList} ${open ? styles.open : null}   relative bg-gray-100`}>
+            className={`${styles.surveyDomainList} ${open ? styles.open : null}`}>
 
             <div className={`${styles.openButton} bg-gradient-to-r from-green-700 to-green-500`} onClick={() => {
                 setOpen(!open)
@@ -27,11 +27,11 @@ export default function SurveyDomainList({setActiveDomain, activeDomain, answere
                     className={`absolute rounded-full w-3 h-3 bg-orange-500 top-0 right-[-5px] ${!tapped ? "animate-ping" : "hidden"}`}></div>
             </div>
             <div className={`${styles.listInner}  divide-y divide-white divide-opacity-20 overflow-hidden`}>
-                <div className={"bg-gradient-to-r from-orange-600 to-orange-400 py-3 px-4 text-white font-light"}>
-                    <p className={"uppercase"}>Life areas</p>
+                <div className={"bg-gray-700 rounded mb-2 py-3 px-4 text-white font-light"}>
+                    <div className={"uppercase"}>Life areas</div>
 
                 </div>
-                <div className={"divide-y"}>{list.map((item, i) => {
+                <div className={"gap-2"}>{list.map((item, i) => {
                     return (
                         <SurveyDomainListItem key={i} item={item} setActiveDomain={setActiveDomain}
                                               activeDomain={activeDomain} answered={answered} domains={domains}

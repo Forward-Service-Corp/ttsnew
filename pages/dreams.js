@@ -26,32 +26,45 @@ export default function Dreams({user, dreams}) {
                     <DreamIntro/>
                     <DreamForm setSavedDreams={setSavedDreams} user={user} setSimpleModal={setSimpleModal}/>
                 </div>
-                <div className={"bg-gray-100 p-3 my-6 dark:p-8 dark:bg-[#111111] dark:text-white dark:text-center dark:rounded-2xl dark:bg-opacity-40 dark:shadow-2xl"}>
-                    <h2 className={"uppercase"}><span className={"text-orange-500"}>Hint: </span>Completing
-                        a Life Area Survey</h2>
-                    <p className={"text-sm"}>Completing a Life Area Survey is easy! Simply choose a dream you would like
-                        to survey and click the &quot;Life Area Survey&quot; button to continue to a new survey
-                        page.</p>
+                <div className={'p-8 bg-orange-500 text-white my-5 text-center rounded-lg font-extralight'}>
+                    <span className={'text-3xl block'}>&quot;You&apos;re braver than you believe, stronger than you seem, and smarter than you
+                        think.&quot;</span>
+                    <span className={'text-sm text-gray-300'}>A.A.Milne, English author of Winnie the Pooh</span>
                 </div>
-                <div className={"bg-gray-100 p-3 mb-3 dark:bg-opacity-0 dark:text-white"}>
-                    My <select className={"text-xs border-gray-300 rounded dark:bg-black dark:border-0 "}
-                               id={"currentTab"}
-                               onChange={(e) => {
-                                   setCurrentTab(e.target.value)
-                               }}>
-                    <option value="active">Active</option>
-                    <option value="complete">Complete</option>
-                    <option value="archived">Archived</option>
-                </select> Dreams
+
+                <div className={"bg-gray-200 px-8 py-4 mb-4 rounded-lg flex justify-between items-center"}>
+                    <div className={'font-extralight text-xl'}>
+                        You Are Viewing: <span className={'capitalize font-bold'}>{currentTab} Dreams</span>
+                    </div>
+                    <div>
+                        <select className={"text-xs border-gray-300 rounded mx-1"}
+                                id={"currentTab"}
+                                defaultValue={"active"}
+                                onChange={(e) => {
+                                    setCurrentTab(e.target.value)
+                                }}>
+                            <option value="all">All - {savedDreams.length}</option>
+                            <option value="active">Active - {savedDreams.filter(dream => dream.status === "active").length}</option>
+                            <option value="complete">Complete - {savedDreams.filter(dream => dream.status === "complete").length}</option>
+                            <option value="archived">Archived - {savedDreams.filter(dream => dream.status === "archived").length}</option>
+                        </select>
+                    </div>
+                </div>
+                <div className={`${currentTab === "all" ? "visible" : "hidden"}`}>
+                    <SavedDreams savedDreams={savedDreams}
+                                 setSavedDreams={setSavedDreams}/>
                 </div>
                 <div className={`${currentTab === "active" ? "visible" : "hidden"}`}>
-                    <SavedDreams savedDreams={savedDreams.filter(dream => dream.status === "active")} setSavedDreams={setSavedDreams}/>
+                    <SavedDreams savedDreams={savedDreams.filter(dream => dream.status === "active")}
+                                 setSavedDreams={setSavedDreams}/>
                 </div>
                 <div className={`${currentTab === "complete" ? "visible" : "hidden"}`}>
-                    <SavedDreams savedDreams={savedDreams.filter(dream => dream.status === "complete")} setSavedDreams={setSavedDreams}/>
+                    <SavedDreams savedDreams={savedDreams.filter(dream => dream.status === "complete")}
+                                 setSavedDreams={setSavedDreams}/>
                 </div>
                 <div className={`${currentTab === "archived" ? "visible" : "hidden"}`}>
-                    <SavedDreams savedDreams={savedDreams.filter(dream => dream.status === "archived")} setSavedDreams={setSavedDreams}/>
+                    <SavedDreams savedDreams={savedDreams.filter(dream => dream.status === "archived")}
+                                 setSavedDreams={setSavedDreams}/>
                 </div>
             </div>
         </Layout>

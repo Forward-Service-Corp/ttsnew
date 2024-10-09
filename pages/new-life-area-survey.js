@@ -260,53 +260,65 @@ export default function NewLifeAreaSurvey({user}) {
             <Head>
                 <title>TTS / Life Area Survey</title>
             </Head>
-            <div className={"text-xl text-center p-3 truncate dark:text-white"}>Dream: {router.query.dreamName}</div>
-            <div className={"p-4 bg-gray-100 rounded text-sm mb-4 text-center dark:rounded-lg dark:shadow-xl dark:text-white dark:bg-black dark:bg-opacity-70"}>
-                <p>Where am I today?</p>
-                <p><strong>&quot;What I treasure most in life, is being able to dream. During my most difficult
-                    moments and complex situations, I have been able to dream of a more beautiful life.&quot;</strong>
-                 -- Rigoberta Mensh&ugrave;, Guatemalan human rights activist and Nobel Peace prize winner</p>
-                <p>What does your life look like now? Knowing where you are is key to finding your path. How are
-                    things going? What areas in your life are challenging? Where are you feeling confident?
-                    Where could you use help?</p>
-                <p>Using the Life Area Survey, you can see how things are going and the areas you want to work on now.</p>
+            {/*<div className={"text-xl text-center p-3 truncate dark:text-white"}>Dream: {router.query.dreamName}</div>*/}
+            <div className={'grid grid-cols-3 gap-6 mb-6'}>
+                <div className={"p-8 rounded-lg text-sm text-center col-span-2 flex items-center border shadow"}>
+                    <div className={''}>
+                        <h2 className={'text-2xl font-extralight uppercase mb-4'}>Where am I today?</h2>
+                        <p>What does your life look like now? Knowing where you are is key to finding your path. How are
+                            things going? What areas in your life are challenging? Where are you feeling confident?
+                            Where could you use help?</p>
+                        <p>Using the Life Area Survey, you can see how things are going and the areas you want to work
+                            on
+                            now.</p>
+                    </div>
+                </div>
+                <div className={'bg-gray-700 text-white text-center p-4 font-extralight rounded-lg'}>
+                    <p className={'text-xl m-0 p-0'}>What I treasure most in life, is being able to dream. During my
+                        most
+                        difficult
+                        moments and complex situations, I have been able to dream of a more beautiful life.</p>
+                    <p className={'text-xs text-gray-300'}>Rigoberta Mensh&ugrave;, Guatemalan human rights activist and
+                        Nobel Peace
+                        prize winner</p>
+                </div>
             </div>
             <div
-                className={"bg-gray-600 text-center p-2 text-white mb-3 rounded flex justify-around font-light text-sm grid-cols-1 md:grid-cols-2 dark:bg-black"}>
-                <div>Priorities: <strong>{domains.length}</strong></div>
-                <div>Answered: <strong>{Object.keys(answered).length}/21</strong></div>
+                className={"p-8 bg-orange-100 rounded-lg mb-4 bg-opacity-50 font-extralight"}>
+                <span className={"uppercase w-full block text-center text-2xl font-medium"}>Instructions</span>
+                <span className={"text-sm text-center w-full block mt-2"}>
+                    Click or tap on each of the life areas to choose the option that best describes where you
+                    are today.
+                    You may need to scroll down to see all 21 life areas.
+                    You must select an answer for each life area.
+                    If one does not apply to you, then select &quot;This does not apply to me.&quot;
+                    If the life area is something you want to work on, use the &quot;Set as
+                    priority&quot; toggle button.
+                    Life areas that you mark as a priority will have a red flag in the life areas list.
+                </span>
+                <span className={'text-lg font-normal text-center w-full block mt-2'}>MOST IMPORTANT TO YOU -- your priorities.</span>
             </div>
-            <div
-                className={`bg-red-600 p-2 rounded text-center text-white text-xs mb-2 ${Object.keys(answered).length === 21 ? "hidden" : null} dark:bg-indigo-800`}>
-                You&apos;ve completed {Object.keys(answered).length} of 21 life areas. Keep going!
-            </div>
-            <div
-                className={`bg-red-600 p-2 rounded text-center text-white text-xs mb-6 ${domains.length > 0 ? "hidden" : null} dark:bg-indigo-800`}>
-                Please select at least one life area as a priority by using the toggle.
-            </div>
+            {/*<div*/}
+            {/*    className={"bg-gray-600 text-center p-2 text-white mb-3 rounded flex justify-around font-light text-sm grid-cols-1 md:grid-cols-2 dark:bg-black"}>*/}
+            {/*    <div>Priorities: <strong>{domains.length}</strong></div>*/}
+            {/*    <div>Answered: <strong>{Object.keys(answered).length}/21</strong></div>*/}
+            {/*</div>*/}
+            {/*<div*/}
+            {/*    className={`bg-red-600 p-2 rounded text-center text-white text-xs mb-2 ${Object.keys(answered).length === 21 ? "hidden" : null} dark:bg-indigo-800`}>*/}
+            {/*    You&apos;ve completed {Object.keys(answered).length} of 21 life areas. Keep going!*/}
+            {/*</div>*/}
+            {/*<div*/}
+            {/*    className={`bg-red-600 p-2 rounded text-center text-white text-xs mb-6 ${domains.length > 0 ? "hidden" : null} dark:bg-indigo-800`}>*/}
+            {/*    Please select at least one life area as a priority by using the toggle.*/}
+            {/*</div>*/}
             <div className={"flex"}>
                 <div className={"flex-initial"}>
                     <SurveyDomainList setActiveDomain={setActiveDomain} activeDomain={activeDomain}
                                       answered={answered} domains={domains} user={user}/>
                 </div>
                 <div className={"flex-grow"}>
-                    <div className={"p-4 bg-gray-100 m-0 md:m-4 my-2 md:my-0 dark:rounded-lg dark:shadow-xl dark:text-white dark:bg-black dark:bg-opacity-70"}>
-                        <h2 className={"uppercase text-gray-600 dark:text-gray-300"}>Instructions</h2>
-                        <p className={"text-xs"}>
-                            Click or tap on each of the life areas to choose the option that best describes where you
-                            are today.
-                            You may need to scroll down to see all 21 life areas.
-                            You must select an answer for each life area.
-                            If one does not apply to you, then select &quot;This does not apply to me.&quot;
-                            If the life area is something you want to work on, use the &quot;Set as
-                            priority&quot; toggle button.
-                            Life areas that you mark as a priority will have a red flag in the life areas list.
-                        </p>
-                        <p>MOST IMPORTANT TO YOU -- your priorities.</p>
-                    </div>
                     <NewLifeAreaSurveyForm activeDomain={activeDomain} setAnswered={setAnswered} answered={answered}
                                            domains={domains} setDomains={setDomains} user={user}/>
-
                 </div>
             </div>
 

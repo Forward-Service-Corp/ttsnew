@@ -356,7 +356,7 @@ export default function Layout({children, title, session, loadingState, version,
                             </>
                         )}
                     </Disclosure>
-                    <div className={`w-full bg-orange-700`}>
+                    <div className={`hidden md:visible w-full bg-orange-700`}>
                         <div className={`px-8 min-w-[640px] max-w-[1280px] m-auto`}>
                             <ul className={`flex justify-end text-white font-extralight text-sm`}>
                                 <li className={`py-2 px-4 text-xs`}>

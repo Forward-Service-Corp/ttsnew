@@ -4,6 +4,8 @@ import ProfileSectionStyle from "./ProfileSectionStyle";
 function ProfileCoaches({user}) {
 
     const [coaches, setCoaches] = useState([])
+    const [open, setOpen] = useState(false)
+
 
     // async function getCoaches () {
     //     const fetchCoaches = await fetch("/api/get-coaches", {
@@ -34,7 +36,7 @@ function ProfileCoaches({user}) {
     }, [user.coach, user.coach?.length])
 
     return (
-        <ProfileSectionStyle title={`Coaches`}>
+        <ProfileSectionStyle title={`Coaches`} buttonActionTitle={"See My "} open={open} setOpen={setOpen}>
             <div className={`mt-4 text-sm`}>
                 {user.coach === undefined || user.coach.length === 0 ? <span className={"mb-6 block"}>You have no coaches</span> : <span className={"mb-6 block"}>Your Coaches:</span>}
             </div>

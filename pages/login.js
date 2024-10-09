@@ -1,74 +1,46 @@
 import {signIn} from "next-auth/react";
 import {useRouter} from "next/router";
-import Head from "next/head";
-import Image from "next/image";
+import LoginLayout from "../components/login/loginLayout";
 
 export default function Login() {
-    const router = useRouter()
-    return (
-        <div
-            className={"h-screen w-screen bg-[url('/img/YouthWorkbookArt.png')] bg-center bg-cover flex align-middle justify-center"}>
-            <Head>
-                <title>TTS / Login</title>
-            </Head>
-            <div className={`self-center max-w-[360px] flex flex-col`}>
-                <div
-                    className={`bg-orange-600 bg-opacity-80 rounded min-h-[150px] mb-8 flex shadow-2xl w-full items-center justify-around`}>
-                    <div className={`w-[150px] h-[110px] relative p-2`}>
-                        <Image src={"/img/fsc-logo.png"} alt={`Forward Service Corporation logo`} fill={true}
-                               sizes="(max-width: 320px) 20vw, (max-width: 150px) 20vw, 15vw"/>
-                    </div>
-                    <div className={`w-[170px] h-[100px] relative`}>
-                        <Image src={"/img/tts-logo.png"} alt={`Transition to Success logo`} fill={true}
-                               sizes="(max-width: 320px) 20vw, (max-width: 150px) 20vw, 15vw"/>
-                    </div>
-                </div>
-                <div className={"bg-white p-4 text-center rounded shadow-2xl"}>
-                    <div className={"self-center"}>
-                        <h2 className={'pb-2 font-extralight text-2xl my-2'}>Sign in to Your Account</h2>
-                        <button className={"rounded bg-green-700 text-white font-extralight p-2 w-full"}
-                                onClick={() => signIn("google", {callbackUrl: '/'})}>Sign in with Google
-                        </button>
-                        <button className={"rounded bg-gray-700 text-white font-extralight p-2 w-full mt-3"}
-                                onClick={() => signIn("email", {callbackUrl: '/'})}>Sign in with Email
-                        </button>
-                        <button
-                            className={"rounded bg-indigo-700 text-white font-extralight p-2 w-full mt-3 block m-auto"}
-                            onClick={() => {
-                                router.push('/login-sms').then()
-                            }}>Sign in by Text
-                        </button>
-                        <div className={"flex items-center pt-2 mt-4"}>
-                            <div className={"border-b border-gray-700 border-opacity-40 w-1/2 mr-4"}></div>
-                            <div>OR</div>
-                            <div className={"border-b border-gray-700 border-opacity-40 w-1/2 ml-4"}></div>
-                        </div>
-                        <h2 className={'font-extralight text-2xl my-2'}>Create a New Account</h2>
-                        <div>
-                            <p className={'text-xs'}>
-                                If you don&apos;t already have an account you can create one now. Just click the button
-                                below to get started.
-                            </p>
-                        </div>
-                        <button className={"rounded bg-red-500 text-white font-extralight p-2 w-full mt-5 text-sm"}
-                                onClick={() => {
-                                    router.push("/create-new-account").then()
-                                }}>Create New Account
-                        </button>
 
-                    </div>
+    const router = useRouter();
+
+    return (
+        <LoginLayout title={"Login"}>
+            <div className={"text-center"}>
+                <h2 className={'pb-2 font-extralight text-2xl my-2'}>Sign in to Your Account</h2>
+                <button className={"rounded-full bg-green-700 text-white font-extralight p-2 w-full"}
+                        onClick={() => signIn("google", {callbackUrl: '/'})}>Sign in with Google
+                </button>
+                <button className={"rounded-full bg-gray-700 text-white font-extralight p-2 w-full mt-3"}
+                        onClick={() => signIn("email", {callbackUrl: '/'})}>Sign in with Email
+                </button>
+                <button
+                    className={"rounded-full bg-indigo-700 text-white font-extralight p-2 w-full mt-3 block m-auto"}
+                    onClick={() => {
+                        router.push('/login-sms').then()
+                    }}>Sign in by Text
+                </button>
+                <div className={"flex items-center pt-2 mt-4"}>
+                    <div className={"border-b border-gray-700 border-opacity-40 w-1/2 mr-4"}></div>
+                    <div>OR</div>
+                    <div className={"border-b border-gray-700 border-opacity-40 w-1/2 ml-4"}></div>
                 </div>
-                <div
-                    className={`bg-gray-800 bg-opacity-90 text-white mt-8 rounded text-xs p-4 text-center font-light shadow-2xl`}>
-                    <p className={`text-lg uppercase`}>Disclaimer</p>
-                    <p className={`pb-4`}>
-                        You are logging into an application owned by Forward Service Corporation. The information
-                        collected by this application is protected and will not be sold or shared with any third
-                        parties. We will use the data collected to improve our services and understand how people are
-                        utilizing our programs. By accessing this site, you consent to FSC using your data in this way.
+                <h2 className={'font-extralight text-2xl my-2'}>Create a New Account</h2>
+                <div>
+                    <p className={'text-xs'}>
+                        If you don&apos;t already have an account you can create one now. Just click the button
+                        below to get started.
                     </p>
                 </div>
+                <button className={"rounded-full bg-red-500 text-white font-extralight p-2 w-full mt-5 text-sm"}
+                        onClick={() => {
+                            router.push("/create-new-account").then()
+                        }}>Create New Account
+                </button>
+
             </div>
-        </div>
+        </LoginLayout>
     )
 }

@@ -1,7 +1,7 @@
 function Welcome2() {
     return (
         <div className={"font-light"}>
-            <div className={" bg-gray-100 p-4 dark:p-0 dark:bg-opacity-0 dark:text-white"}>
+            <div className={" bg-gray-100 p-4 rounded-lg"}>
                 <h1 className={"text-3xl text-orange-600"}>Vision Without Backbone Is Merely
                 Hallucination</h1>
                 <p className={"font-bold"}>Wishes don&apos;t make your dreams come true. Dreams come true because we
@@ -34,7 +34,7 @@ function Welcome2() {
                 <p className={"font-bold"}>Fate is what happens to you. Destiny is what you do about it.</p>
             </div>
 
-            <div className={"p-5 bg-gray-700 text-white my-5 flex flex-wrap justify-between align-middle "}>
+            <div className={"p-5 bg-orange-500 text-white my-5 flex flex-wrap justify-between align-middle rounded-lg"}>
                 <div><p className={"font-bold text-2xl font-serif"}>You lead your life</p>
                     <p className={"font-bold my-3"}>That&apos;s how dreams come true. Welcome To Transition To
                         Success&reg;. Let&apos;s make your dreams come true.</p>

@@ -28,6 +28,7 @@ export default function Profile({user}) {
     const [isButtonEnabled, setIsButtonEnabled] = useState(false);
     const [fieldsWarning, setFieldsWarning] = useState(false);
     const [changeConfirm, setChangeConfirm] = useState(false)
+    const [phoneExists, setPhoneExists] = useState(false)
 
 
     // Check if all required fields are filled
@@ -88,24 +89,27 @@ export default function Profile({user}) {
                                     email={email}
                                     phone={phone}
                                     setPhone={setPhone}
-                                    setFormattedNumber={setFormattedNumber}/>
-            <ProfilePrograms programs={programs} setPrograms={setPrograms}/>
-            <ProfileResourceCounties counties={counties} setCounties={setCounties}/>
-            <ProfileCoaches user={user}/>
-            <ProfileWorkbook user={user} version={version} setVersion={setVersion} setSimpleModal={setSimpleModal}/>
+                                    setFormattedNumber={setFormattedNumber}
+                                    phoneExists={phoneExists}
+                                    setPhoneExists={setPhoneExists}
+                                    defaultState={true}/>
+            <ProfilePrograms programs={programs} setPrograms={setPrograms} defaultState={false}/>
+            <ProfileResourceCounties counties={counties} setCounties={setCounties} defaultState={false}/>
+            <ProfileCoaches user={user} defaultState={true}/>
+            <ProfileWorkbook user={user} version={version} setVersion={setVersion} setSimpleModal={setSimpleModal} defaultState={true}/>
 
-            <div className={`bg-indigo-400 p-3 text-white rounded mb-4 text-center ${changeConfirm ? "visible" : "hidden"}`}>Details successfully saved.</div>
+            <div className={`bg-green-200 p-3 rounded mb-4 text-center text-xs w-1/2 m-auto ${changeConfirm ? "visible" : "hidden"}`}>Details successfully saved.</div>
 
-            <div>
+            <div className={'text-center'}>
                 <button
                     type="submit"
-                    className={`w-full p-2 text-white rounded ${
-                        isButtonEnabled ? 'bg-green-500' : 'bg-gray-400'
+                    className={`p-2 text-white rounded text-sm w-1/4 ${
+                        isButtonEnabled && !phoneExists ? 'bg-indigo-800' : 'bg-gray-400'
                     }`}
-                    disabled={!isButtonEnabled}
+                    disabled={!isButtonEnabled || phoneExists}
                     onClick={savePersonalDetails}
                 >
-                    {isButtonEnabled ? 'Save Profile' : 'Complete Required Fields'}
+                    {isButtonEnabled && !phoneExists ? 'Save Profile' : 'Complete Required Fields'}
                 </button>
             </div>
         </Layout>

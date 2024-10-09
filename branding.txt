@@ -1,0 +1,7 @@
+Buttons
+Primary: bg-indigo-600
+Secondary:
+
+Alerts
+Success: bg-green-200
+Warning: bg-red-200

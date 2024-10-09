@@ -52,7 +52,7 @@ export default function SignIn() {
             </Head>
             <div className={`self-center max-w-[360px] flex flex-col`}>
                 <div
-                    className={`bg-orange-600 bg-opacity-80 rounded min-h-[150px] mb-8 flex shadow-2xl w-full items-center justify-around`}>
+                    className={`bg-orange-600 bg-opacity-80 rounded-lg min-h-[150px] mb-8 flex shadow-2xl w-full items-center justify-around`}>
                     <div className={`w-[150px] h-[110px] relative p-2`}>
                         <Image src={"/img/fsc-logo.png"} alt={`Forward Service Corporation logo`} fill={true}
                                sizes="(max-width: 320px) 20vw, (max-width: 150px) 20vw, 15vw"/>
@@ -62,32 +62,32 @@ export default function SignIn() {
                                sizes="(max-width: 320px) 20vw, (max-width: 150px) 20vw, 15vw"/>
                     </div>
                 </div>
-                <div className={"bg-white p-4 text-center rounded shadow-2xl"}>
-                    <div className={`self-center flex flex-col`}>
+                <div className={"bg-white p-4 text-center rounded-lg shadow-2xl"}>
+                    <div className={`self-center flex flex-col items-center justify-center`}>
                         <h2 className={'pb-2 font-extralight text-2xl my-2'}>Enter Your Email</h2>
                         <input type="email" value={email}
-                               className={`rounded ${isEmailValid ? 'border-2 border-green-600' : 'border-gray-300'}`}
+                               className={`rounded ${isEmailValid ? 'border-2 border-green-600' : 'border-gray-300'} w-full placeholder:text-gray-400`}
                                onChange={handleEmailChange}
                                placeholder={"Your email address..."}/>
-                        <div
-                            className={`bg-green-100 p-4 text-center rounded ${checking ? 'visible' : 'hidden'}`}>One
+                        <span
+                            className={`bg-green-100 px-4 py-2 text-xs my-4 text-green-800 text-center rounded block w-full ${'visible'}`}>One
                             moment please...
-                        </div>
-                        <div
-                            className={`text-center text-red-600 mt-4 text-xs ${error.code === 777 ? 'visible' : 'hidden'}`}>
+                        </span>
+                        <span
+                            className={`text-center text-red-600 my-4 text-xs ${error.code === 777 ? 'visible' : 'hidden'}`}>
                             There is no account with the email address you provided. Please try again,
                             or <Link className={'underline'} href={'/create-new-account'}>Create a new account here.</Link>
-                        </div>
-                        <button className={`mt-4 p-2 bg-indigo-600 text-white rounded disabled:bg-gray-300`}
+                        </span>
+                        <button className={`my-4 p-2 bg-indigo-600 text-white rounded-full disabled:bg-gray-200 disabled:text-gray-400 text-xs w-1/2`}
                                 disabled={!isEmailValid || error.code === 777}
                                 onClick={handleEmailSubmit}>
                             Get my magic link
                         </button>
-                        <Link href="/login" className={`text-red-600 underline mt-5 block text-sm`}>Go Back</Link>
+                        <Link href="/login" className={`text-red-600 underline block text-xs`}>Go Back</Link>
                     </div>
                 </div>
                 <div
-                    className={`bg-gray-800 bg-opacity-90 text-white mt-8 rounded text-xs p-4 text-center font-light shadow-2xl`}>
+                    className={`bg-gray-800 bg-opacity-90 text-white mt-8 rounded-lg text-xs p-4 text-center font-light shadow-2xl`}>
                     <p className={`text-lg uppercase`}>Disclaimer</p>
                     <p className={`pb-4`}>
                         You are logging into an application owned by Forward Service Corporation. The information

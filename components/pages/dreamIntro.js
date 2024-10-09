@@ -2,7 +2,7 @@ import JourneyQuote from "../journeyQuote";
 
 function DreamIntro() {
     return (
-            <div className={" bg-gray-100 p-4 dark:p-0 dark:bg-opacity-0 dark:text-white"}>
+            <div className={" bg-gray-100 p-4 text-xs rounded-lg"}>
                 <div>
                     <h1 className={"text-2xl text-orange-600 uppercase font-light dark:text-orange-400 dark:text-lg"}>My
                         Dreams Today</h1>
@@ -32,9 +32,6 @@ function DreamIntro() {
                     </ul>
 
                     <p>You have choices!</p>
-
-                    <p><strong>&quot;You&apos;re braver than you believe, stronger than you seem, and smarter than you
-                        think.&quot;</strong> A.A.Milne, English author of Winnie the Pooh</p>
                 </div>
             </div>
     );
