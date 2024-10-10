@@ -15,7 +15,7 @@ function NewEmailAccount({loginValue}) {
         timestamp: new Date(),
         phone: '',
         street: '',
-        state: '',
+        state: 'Wisconsin',
         zip: '',
         homeCounty: '',
         county: [],
@@ -26,7 +26,6 @@ function NewEmailAccount({loginValue}) {
         first_name: false,
         last_name: false,
         homeCounty: false,
-        state: false,
         county: false,
         programs: false,
     });
@@ -75,7 +74,7 @@ function NewEmailAccount({loginValue}) {
             <div className={""}>
                 <label htmlFor={name} className={"text-xs w-full block font-bold"}>{label}<span
                     className={`text-red-600 ${required ? 'visible' : 'hidden'}`}>*</span></label>
-                <span className={`text-indigo-600 block mb-2`}>Shift + Click to select multiple options</span>
+                <span className={`text-indigo-600 block mb-2`}><span className={'font-bold'}>Control + Click</span> to select multiple options</span>
                 <select className={`rounded text-xs w-full border-2 ${getFieldClass(required, value)}`}
                         id={name}
                         name={name}
@@ -214,7 +213,7 @@ function NewEmailAccount({loginValue}) {
                     {inputJSX('Last Name', 'last_name', userData.last_name, handleFormChange, false, true)}
                     {inputJSX('Email', 'email', loginValue, handleFormChange, true, false)}
                     {selectJSX("County of Residence", 'homeCounty', userData.homeCounty, handleFormChange, false, true, WICountiesList)}
-                    {selectJSX("State", 'state', userData.state, handleFormChange, false, true, States)}
+                    {/*{selectJSX("State", 'state', userData.state, handleFormChange, false, true, States)}*/}
                     {selectJSX("Workbook Version", 'isYouth', userData.state, handleFormChange, false, true, ["Adult", "Youth"])}
                 </div>
                 <div className={``}>

@@ -81,7 +81,7 @@ export async function getServerSideProps(context) {
     const {user, dreams, surveys, referrals, tasks} = await getData.json();
 
     // redirect to profile page if required fields are not complete
-    if(!user.county.length || !user.homeCounty  || !user.programs.length || !user.name) return  {redirect: {destination: "/profile", permanent: false}}
+    // if(!user.county.length || !user.homeCounty  || !user.programs.length || !user.name) return  {redirect: {destination: "/profile", permanent: false}}
 
     return {
         props: {user, dreams, surveys, referrals, tasks}
