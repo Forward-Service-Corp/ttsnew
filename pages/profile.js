@@ -28,7 +28,12 @@ export default function Profile({user}) {
     const [isButtonEnabled, setIsButtonEnabled] = useState(false);
     const [fieldsWarning, setFieldsWarning] = useState(false);
     const [changeConfirm, setChangeConfirm] = useState(false)
+    const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
 
+    function scrollToTop() {
+        if (!isBrowser()) return;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     // Check if all required fields are filled
     useEffect(() => {
@@ -55,6 +60,7 @@ export default function Profile({user}) {
         await setChangeConfirm(true)
         setTimeout(() => {
             setChangeConfirm(false)
+            scrollToTop()
         }, 3000)
     }
 

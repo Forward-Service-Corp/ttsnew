@@ -14,7 +14,7 @@ function NewPhoneAccount({loginValue, setStep}) {
         timestamp: new Date(),
         phone: loginValue,
         street: '',
-        state: '',
+        state: 'Wisconsin',
         zip: '',
         homeCounty: '',
         county: [],
@@ -26,7 +26,6 @@ function NewPhoneAccount({loginValue, setStep}) {
         last_name: false,
         email: false,
         homeCounty: false,
-        state: false,
         county: false,
         programs: false,
     });
@@ -241,7 +240,7 @@ function NewPhoneAccount({loginValue, setStep}) {
                     {inputJSX('Email', 'email', userData.email, handleFormChange, false, true)}
                     {inputJSX('Phone', 'email', loginValue, handleFormChange, true, false)}
                     {selectJSX("County of Residence", 'homeCounty', userData.homeCounty, handleFormChange, false, true, WICountiesList)}
-                    {selectJSX("State", 'state', userData.state, handleFormChange, false, true, States)}
+                    {/*{selectJSX("State", 'state', userData.state, handleFormChange, false, true, States)}*/}
                     {selectJSX("Workbook Version", 'isYouth', userData.state, handleFormChange, false, true, ["Adult", "Youth"])}
                 </div>
                 <div className={``}>

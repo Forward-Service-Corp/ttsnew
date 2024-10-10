@@ -19,7 +19,7 @@ function ProfilePersonalDetails({name, setName, street, setStreet, city, setCity
 
             // If 10 digits long, add "+1" to the beginning
             if (value.length === 10) {
-                setFormattedNumber(`+1${value}`);
+                setFormattedNumber(`${value}`);
             } else {
                 setFormattedNumber('');
             }
