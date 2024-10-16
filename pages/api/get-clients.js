@@ -6,7 +6,7 @@ export default async (req, res) => {
 
     const {db} = await connectToDatabase()
     const coachObjectId = new ObjectId(req.query.coachId);
-    const cursor = await db.collection("users").find({"coach.key": coachObjectId})
+    const cursor = await db.collection("users").find({_id: coachObjectId})
     const records = await cursor.toArray()
     await cursor.close()
 

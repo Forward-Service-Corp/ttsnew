@@ -161,7 +161,7 @@ function ClientDetails({viewingUser}) {
                     {client.coach && client.coach.map((coach, i) => (
                         <div className={`text-sm bg-sky-600 text-black mt-2 p-2`} key={i}>
                             <a className={"underline text-white"}
-                            href={`mailto:${coach}`}>{coach}</a>
+                            href={`mailto:${coach.email}`}>{coach.email}</a>
                         </div>
                     ))}
 
