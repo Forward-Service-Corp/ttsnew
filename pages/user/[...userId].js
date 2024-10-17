@@ -6,15 +6,17 @@ import {useEffect, useState} from "react";
 import NewEmailAssignment from "../../components/newEmailAssignment";
 import CoachAssignments from "../../components/coachAssignments";
 import WorkbookToggle from "../../components/workbookToggle";
+import UserPersonalDetails from "../../components/userPersonalDetails";
+import UserRole from "../../components/userRole";
 
-export default function User({viewingUser, pageDataJson, coachesJson}) {
+export default function User({viewingUser, pageDataJson, coachesJson, viewingUserClients}) {
 
     const router = useRouter()
     const {user} = pageDataJson
     const [viewingUserState, setViewingUserState] = useState(viewingUser)
     const [role, setRole] = useState(viewingUser.level)
     const [version, setVersion] = useState(viewingUser.isYouth)
-    const [clients, setClients] = useState(null)
+    const [clients, setClients] = useState([])
     const [simpleModal, setSimpleModal] = useState(false)
 
     async function saveRole(newRole) {
@@ -26,13 +28,6 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
     async function updateRoleInformation(role){
         await setRole(role)
         await saveRole(role)
-    }
-
-    async function getClients() {
-       await fetch("/api/get-clients?coachId=" + viewingUser._id.toString())
-            .then(res => res.json())
-            .then(res => {setClients(res)})
-            .catch(err => console.warn(err))
     }
 
     async function terminationPattern(){
@@ -49,16 +44,6 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
 
     }
 
-    useEffect(() => {
-        document.getElementById("roleSelect").value = role
-    }, [role])
-
-    useEffect(() => {
-        if(viewingUser.level === "coach"){
-            getClients(viewingUser.email).then()
-        }
-    }, [viewingUser.email, viewingUser.level])
-
     const title = `TTS / User / ${viewingUser.name || viewingUser.email}`
 
     return (
@@ -71,75 +56,8 @@ export default function User({viewingUser, pageDataJson, coachesJson}) {
             <div className={`mt-8 mb-8`}>
                 <WorkbookToggle user={viewingUser} version={version} setVersion={setVersion} setSimpleModal={setSimpleModal}/>
             </div>
-            <div className={"bg-gray-100 p-6 mb-5 rounded"}>
-                <h2 className={"uppercase text-gray-500 mb-3"}>Personal Details</h2>
-                <div className={"flex"}>
-                    <div className={"flex-1"}>
-                        <div>
-                            <p className={"text-gray-500 text-xs"}>Name</p>
-                            <p>{viewingUser.name}</p>
-                        </div>
-                        <p className={"text-gray-500 text-xs"}>Email</p>
-                        <p>{viewingUser.email}</p>
-                        <p className={"text-gray-500 text-xs mt-4"}>Phone</p>
-                        <p>{viewingUser.phone}</p>
-                        <p className={"text-gray-500 text-xs mt-4"}>User ID</p>
-                        <p>{viewingUser._id}</p>
-                        <p className={"text-gray-500 text-xs mt-4"}>County</p>
-                        <ul>
-                            {viewingUser.county && viewingUser.county.map(county => (
-                                <li key={county}>{county}</li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className={"flex-1"}>
-                        <p className={"text-gray-500 text-xs"}>Address</p>
-                        <p>{viewingUser.street}</p>
-                        <p className={"text-gray-500 text-xs mt-4"}>City</p>
-                        <p>{viewingUser.city}</p>
-                        <p className={"text-gray-500 text-xs mt-4"}>State</p>
-                        <p>{viewingUser.state}</p>
-                        <p className={"text-gray-500 text-xs mt-4"}>Programs</p>
-                        <ul>
-                            {viewingUser.programs && viewingUser.programs.map((program, i) => (
-                                <li key={i}>{program}</li>
-                            ))}
-                        </ul>
-                        <p className={"text-gray-500 text-xs mt-4"}>User Type</p>
-                        <p>{role}</p>
-                    </div>
-                </div>
-            </div>
-            <div className={"bg-gray-100 p-6 mb-5 rounded"}>
-                <div className={`flex`}>
-                    <div className={`w-1/3`}>
-                        <h2 className={"uppercase text-gray-500 mb-4"}>Role</h2>
-                        <select id={"roleSelect"} onChange={(e) => {
-                            updateRoleInformation(e.target.value).then()
-                        }}>
-                            <option value={""}>Select a new role...</option>
-                            <option value={"client"}>client</option>
-                            <option value={"coach"}>coach</option>
-                            <option value={"admin"}>admin</option>
-                            <option value={"terminated coach"}>terminated coach</option>
-                        </select>
-                    </div>
-                    <div className={`w-1/3`}>
-                        <h2 className={`${role === 'coach' ? '' : 'hidden' } uppercase text-gray-500 mb-4`}>Clients</h2>
-                        {role === 'coach' && clients && clients.map((client, i) => (
-                            <li key={i}>{client.email}</li>
-                        ))}
-                    </div>
-                    <div className={`w-1/3 flex items-center`}>
-                        <button className={`${role === 'coach' ? '' : 'hidden' } py-2 px-6 text-white text-sm rounded bg-gradient-to-t from-orange-600 to-orange-400`}
-                        onClick={() => {
-                            if(confirm("Are you sure? This action cannot be undone.") === true){
-                                terminationPattern().then()
-                        }
-                        }}>Terminate Coach</button>
-                    </div>
-                </div>
-            </div>
+            <UserPersonalDetails viewingUser={viewingUser} role={role}/>
+            <UserRole clients={clients} terminationPattern={terminationPattern} updateRoleInformation={updateRoleInformation} role={role} viewingUser={viewingUser} viewingUserClients={viewingUserClients} />
             <CoachAssignments coachesJson={coachesJson} viewingUser={viewingUser}/>
             <NewEmailAssignment viewingUserState={viewingUserState} setViewingUserState={setViewingUserState}/>
 
@@ -169,13 +87,18 @@ export async function getServerSideProps(context) {
     const getViewingUser = await fetch(userUrl)
     const viewingUser = await getViewingUser.json()
 
+    // viewing user clients data
+    const clientsUrl = baseUrl + "/api/get-clients?coachId=" + context.query.userId
+    const getViewingClients = await fetch(clientsUrl)
+    const viewingUserClients = await getViewingClients.json()
+
     // all coaches data
     const coachesUrl = baseUrl + "/api/get-all-coaches"
     const getCoaches = await fetch(coachesUrl)
     const coachesJson = await getCoaches.json()
 
     return {
-        props: {pageDataJson, coachesJson, viewingUser, session}
+        props: {pageDataJson, coachesJson, viewingUser, session, viewingUserClients}
     }
 
 }
