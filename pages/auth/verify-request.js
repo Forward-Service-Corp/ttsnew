@@ -25,9 +25,10 @@ export default function Login() {
                     </div>
                 </div>
                 <div className={"bg-white p-4 text-center rounded shadow-2xl"}>
-                    <EnvelopeOpen size={80} color={"orange"} className={'m-auto'}/>
-                    <h2 className={'text-3xl'}>Check your email.</h2>
-                    <p className={'text-2xl'}>Your login link has been sent.</p>
+                    <EnvelopeOpen size={60} color={"orange"} className={'m-auto'}/>
+                    <h2 className={'text-2xl'}>Check your email.</h2>
+                    <p className={'text-lg'}>Your login link has been sent.</p>
+                    <p>If you don&apos;t see the link in your inbox, please check your spam folder.</p>
                 </div>
                 <div className={`bg-gray-800 bg-opacity-90 text-white mt-8 rounded text-xs p-4 text-center font-light shadow-2xl`}>
                     <p className={`text-lg uppercase`}>Disclaimer</p>

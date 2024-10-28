@@ -1,5 +1,4 @@
 import {signIn} from "next-auth/react";
-import {useRouter} from "next/router";
 import Head from "next/head";
 import Image from "next/image";
 import {useState} from "react";
@@ -7,7 +6,6 @@ import Link from "next/link";
 
 
 export default function SignIn() {
-    const router = useRouter()
     const [email, setEmail] = useState("")
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [checking, setChecking] = useState(false);
@@ -32,15 +30,15 @@ export default function SignIn() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                loginType: "email", loginValue: email,
+                loginType: "email", loginValue: email, loginFrom: "existing-account"
             })
         })
         const data = await loginCheck.json()
-        if (data.code === 777) {
-            setError({code: 777, message: "There is no account with that email address."})
-            setChecking(false)
-        } else {
+        if (data.code === 666) {
             signIn('email', {email, callbackUrl: "/"}).then()
+        } else {
+            setError({code: 777, message: "No account found with this login.  Please try again or create a new account."})
+            setChecking(false)
         }
     }
 

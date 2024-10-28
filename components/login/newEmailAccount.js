@@ -212,6 +212,7 @@ function NewEmailAccount({loginValue}) {
                     {inputJSX('First Name', 'first_name', userData.first_name, handleFormChange, false, true)}
                     {inputJSX('Last Name', 'last_name', userData.last_name, handleFormChange, false, true)}
                     {inputJSX('Email', 'email', loginValue, handleFormChange, true, false)}
+                    {inputJSX('Phone', 'phone', userData.phone, handleFormChange, false, false)}
                     {selectJSX("County of Residence", 'homeCounty', userData.homeCounty, handleFormChange, false, true, WICountiesList)}
                     {/*{selectJSX("State", 'state', userData.state, handleFormChange, false, true, States)}*/}
                     {selectJSX("Workbook Version", 'isYouth', userData.state, handleFormChange, false, true, ["Adult", "Youth"])}

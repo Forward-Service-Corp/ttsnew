@@ -118,11 +118,11 @@ export default function Login() {
                             There was no account with this phone number associated. Try logging in with your email and
                             adding your mobile number to your account.
                         </div>
-                        <div className={`text-left pb-2`}>Mobile Phone Number</div>
+                        <div className={`text-left pb-2 text-gray-700 font-extralight`}><span className={`font-bold text-black`}>Mobile</span> Phone Number</div>
                         <input type="text" value={phone} onChange={handlePhoneChange} className={`rounded ${formattedNumber.length === 10 ? 'border-2 border-green-600' : 'border-gray-300'}`} placeholder={"10 digit phone number..."} />
                         <div className={"text-left text-xs mt-2"}>Example: 5556667777</div>
-                        <button className={`mt-4 p-2 bg-indigo-600 text-white rounded disabled:bg-gray-300`} disabled={formattedNumber.length !== 10} onClick={checkPhoneNumber}>
-                            Request One-Time Password
+                        <button className={`mt-4 p-2 bg-indigo-600 text-gray-400 font-extralight text-sm rounded disabled:bg-gray-200`} disabled={formattedNumber.length !== 10} onClick={checkPhoneNumber}>
+                            Request One-Time Code
                         </button>
                         <Link href="/login" className={`text-red-600 underline mt-5 block text-sm`}>Go Back</Link>
                     </div>
