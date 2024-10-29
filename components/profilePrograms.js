@@ -1,5 +1,6 @@
 import {XCircle} from "phosphor-react";
 import ProfileSectionStyle from "./ProfileSectionStyle";
+import {Programs} from "../lib/lists";
 
 function ProfilePrograms({programs, setPrograms}) {
 
@@ -21,20 +22,27 @@ function ProfilePrograms({programs, setPrograms}) {
                             }
                         })
                     }}>
-                        <option value={`College Bound Math Science (CBMS)`}>College Bound Math Science (CBMS)</option>
-                        <option value={`Emergency Assistance`}>Emergency Assistance</option>
-                        <option value={`Family Stabilization Program`}>Family Stabilization Program</option>
-                        <option value={`FoodShare Employment and Training`}>FoodShare Employment and Training</option>
-                        <option value={`Job Access Loans (JAL)`}>Job Access Loans (JAL)</option>
-                        <option value={`Jobs for America's Graduates (JAG)`}>Jobs for Americas Graduates (JAG)</option>
-                        <option value={`Refugee Services`}>Refugee Services</option>
-                        <option value={`Highway Construction Skills Training (HCST)`}>Highway Construction Skills Training (HCST)</option>
-                        <option value={`Upward Bound (UB)`}>Upward Bound (UB)</option>
-                        <option value={`Upward Bound Math Science (UBMS)`}>Upward Bound Math Science (UBMS)</option>
-                        <option value={`WIOA Adult and Dislocated Worker`}>WIOA Adult and Dislocated Worker</option>
-                        <option value={`WIOA Youth`}>WIOA Youth</option>
-                        <option value={`Wisconsin Employment Transportation Assistance Program (WETAP)`}>Wisconsin Employment Transportation Assistance Program (WETAP)</option>
-                        <option value={`Wisconsin Works (W-2)`}>Wisconsin Works (W-2)</option>
+                        {
+                            programs.map((program, i) => {
+                                return (
+                                    <option key={i} value={program}>{program}</option>
+                                )
+                            })
+                        }
+                        {/*<option value={`College Bound Math Science (CBMS)`}>College Bound Math Science (CBMS)</option>*/}
+                        {/*<option value={`Emergency Assistance`}>Emergency Assistance</option>*/}
+                        {/*<option value={`Family Stabilization Program`}>Family Stabilization Program</option>*/}
+                        {/*<option value={`FoodShare Employment and Training`}>FoodShare Employment and Training</option>*/}
+                        {/*<option value={`Job Access Loans (JAL)`}>Job Access Loans (JAL)</option>*/}
+                        {/*<option value={`Jobs for America's Graduates (JAG)`}>Jobs for Americas Graduates (JAG)</option>*/}
+                        {/*<option value={`Refugee Services`}>Refugee Services</option>*/}
+                        {/*<option value={`Highway Construction Skills Training (HCST)`}>Highway Construction Skills Training (HCST)</option>*/}
+                        {/*<option value={`Upward Bound (UB)`}>Upward Bound (UB)</option>*/}
+                        {/*<option value={`Upward Bound Math Science (UBMS)`}>Upward Bound Math Science (UBMS)</option>*/}
+                        {/*<option value={`WIOA Adult and Dislocated Worker`}>WIOA Adult and Dislocated Worker</option>*/}
+                        {/*<option value={`WIOA Youth`}>WIOA Youth</option>*/}
+                        {/*<option value={`Wisconsin Employment Transportation Assistance Program (WETAP)`}>Wisconsin Employment Transportation Assistance Program (WETAP)</option>*/}
+                        {/*<option value={`Wisconsin Works (W-2)`}>Wisconsin Works (W-2)</option>*/}
                     </select>
                     <h2 className={"uppercase text-gray-600 font-light mb-3 mt-6 dark:text-white"}>Your Selected Programs<span className={"text-red-600"}>*</span></h2>
                     <div className={"lg:flex-1 flex flex-wrap"}>
