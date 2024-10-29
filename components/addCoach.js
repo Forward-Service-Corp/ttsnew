@@ -37,7 +37,7 @@ function AddCoach({coach, searchTerm, addCoachFunc, setCoachObject}) {
     return (
         <div className={`rounded-full text-xs font-extralight`} key={coach._id}>
             <div className={`${edit ? 'hidden' : 'visible'} flex justify-between rounded-full overflow-hidden`}>
-                <div className={`bg-gray-200 flex-grow px-4 py-2 text-black`}>{getHighlightedText(coach.email, searchTerm)}</div>
+                <div className={`bg-gray-200 flex-grow px-4 py-2 text-black truncate`}>{getHighlightedText(coach.email, searchTerm)}</div>
                 <div className={`bg-green-500 px-4 py-2 flex items-center cursor-pointer`} onClick={handleChange}>
                     <Plus color={'white'} size={16}/>
                 </div>

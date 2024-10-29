@@ -77,7 +77,7 @@ function CoachAssignments({coachesJson, viewingUser}) {
             </div>
             <div className={"grid grid-cols-4 gap-4"}>
                 {newCoaches?.map((coach, i) => (
-                    <AssignedCoach key={coach.key} coach={coach} viewingUser={viewingUser}
+                    <AssignedCoach key={i} coach={coach} viewingUser={viewingUser}
                                    setUndo={setUndo} setLastRemoved={setLastRemoved}  setNewCoaches={setNewCoaches}/>
                 ))}
             </div>

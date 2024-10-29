@@ -1,4 +1,3 @@
-// pages/api/users/add-coach.js
 import clientPromise from "../../lib/mongodb";
 import {ObjectId} from "mongodb";
 
@@ -26,7 +25,6 @@ export default async function handler(req, res) {
         );
 
         const user = await collection.findOne({ _id: ObjectId(userId) })
-
 
         if (result.modifiedCount === 0) {
             return res.status(404).json({ message: 'User not found or coach not removed' });

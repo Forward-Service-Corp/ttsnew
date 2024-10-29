@@ -45,7 +45,7 @@ function AssignedCoach({coach, viewingUser, setNewCoaches, setUndo, setLastRemov
     return (
         <div className={`rounded-full text-xs font-extralight shadow`}>
             <div className={`${edit ? 'hidden' : 'visible'} flex justify-between rounded-full overflow-hidden`}>
-                <div className={`bg-green-100 flex-grow px-4 py-2 text-black`}>{coach.email}</div>
+                <div className={`bg-green-100 flex-grow px-4 py-2 text-black truncate`}>{coach.email}</div>
                 <div className={`bg-red-500 px-4 py-2 flex items-center cursor-pointer`} onClick={handleChange}>
                     <Trash color={'white'} size={16}/>
                 </div>
