@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Programs, States, WICountiesList} from "../../lib/lists";
+import {ProgramsList, WICountiesList} from "../../lib/lists";
 import Link from "next/link";
 import {signIn} from "next-auth/react";
 
@@ -214,7 +214,6 @@ function NewEmailAccount({loginValue}) {
                     {inputJSX('Email', 'email', loginValue, handleFormChange, true, false)}
                     {inputJSX('Phone', 'phone', userData.phone, handleFormChange, false, false)}
                     {selectJSX("County of Residence", 'homeCounty', userData.homeCounty, handleFormChange, false, true, WICountiesList)}
-                    {/*{selectJSX("State", 'state', userData.state, handleFormChange, false, true, States)}*/}
                     {selectJSX("Workbook Version", 'isYouth', userData.state, handleFormChange, false, true, ["Adult", "Youth"])}
                 </div>
                 <div className={``}>
@@ -223,7 +222,7 @@ function NewEmailAccount({loginValue}) {
                     </div>
                     <div className={`grid grid-cols-2 gap-x-8`}>
                         {multipleSelectJSX("Service Counties", 'county', userData.county, handleCountyChange, false, true, WICountiesList)}
-                        {multipleSelectJSX("Programs", 'programs', userData.programs, handleProgramsChange, false, true, Programs)}
+                        {multipleSelectJSX("Programs", 'programs', userData.programs, handleProgramsChange, false, true, ProgramsList)}
                     </div>
                 </div>
 

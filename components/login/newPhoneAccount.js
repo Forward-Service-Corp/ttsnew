@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Programs, States, WICountiesList} from "../../lib/lists";
+import {ProgramsList, WICountiesList} from "../../lib/lists";
 import Link from "next/link";
 
 function NewPhoneAccount({loginValue, setStep}) {
@@ -242,7 +242,6 @@ function NewPhoneAccount({loginValue, setStep}) {
                     {inputJSX('Email', 'email', userData.email, handleFormChange, false, true)}
                     {inputJSX('Phone', 'phone', loginValue, handleFormChange, true, false)}
                     {selectJSX("County of Residence", 'homeCounty', userData.homeCounty, handleFormChange, false, true, WICountiesList)}
-                    {/*{selectJSX("State", 'state', userData.state, handleFormChange, false, true, States)}*/}
                     {selectJSX("Workbook Version", 'isYouth', userData.state, handleFormChange, false, true, ["Adult", "Youth"])}
                 </div>
                 <div className={``}>
@@ -251,7 +250,7 @@ function NewPhoneAccount({loginValue, setStep}) {
                     </div>
                     <div className={`grid grid-cols-2 gap-x-8`}>
                         {multipleSelectJSX("Service Counties", 'county', userData.county, handleCountyChange, false, true, WICountiesList)}
-                        {multipleSelectJSX("Programs", 'programs', userData.programs, handleProgramsChange, false, true, Programs)}
+                        {multipleSelectJSX("Programs", 'programs', userData.programs, handleProgramsChange, false, true, ProgramsList)}
                     </div>
                 </div>
                 <div className={`${usedEmail ? 'visible' : 'hidden'} bg-red-200 p-2 text-center mt-4 rounded`}>

@@ -1,6 +1,6 @@
 import {XCircle} from "phosphor-react";
 import ProfileSectionStyle from "./ProfileSectionStyle";
-import {Programs} from "../lib/lists";
+import {ProgramsList}  from "../lib/lists";
 
 function ProfilePrograms({programs, setPrograms}) {
 
@@ -23,7 +23,7 @@ function ProfilePrograms({programs, setPrograms}) {
                         })
                     }}>
                         {
-                            programs.map((program, i) => {
+                            ProgramsList.map((program, i) => {
                                 return (
                                     <option key={i} value={program}>{program}</option>
                                 )
