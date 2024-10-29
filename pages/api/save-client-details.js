@@ -7,7 +7,7 @@ export default async (req, res) => {
         return res.status(405).json({ message: 'Only POST requests are allowed' });
     }
 
-    const { _id, name, phone, street, city, state, zip, county, homeCounty } = req.body;
+    const { _id, name, phone, street, city, state, zip, county, homeCounty, programs } = req.body;
 
     if (!_id) {
         return res.status(400).json({ message: 'User ID is required' });
@@ -43,6 +43,9 @@ export default async (req, res) => {
         }
         if (county && JSON.stringify(county) !== JSON.stringify(user.county)) {
             updates.county = county;
+        }
+        if (programs && JSON.stringify(programs) !== JSON.stringify(user.programs)) {
+            updates.programs = programs;
         }
         if (homeCounty && homeCounty !== user.homeCounty) {
             updates.homeCounty = homeCounty;
