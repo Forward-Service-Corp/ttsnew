@@ -1,8 +1,7 @@
 import Layout from "../../components/layout";
-import {getSession} from "next-auth/react";
-import {useRouter} from "next/router";
+import { getSession } from "next-auth/react";
 import Head from "next/head";
-import {useEffect, useState} from "react";
+import { useState } from "react";
 import NewEmailAssignment from "../../components/newEmailAssignment";
 import CoachAssignments from "../../components/coachAssignments";
 import WorkbookToggle from "../../components/workbookToggle";
@@ -11,17 +10,23 @@ import UserRole from "../../components/userRole";
 
 export default function User({viewingUser, pageDataJson, coachesJson, viewingUserClients}) {
 
-    const router = useRouter()
     const {user} = pageDataJson
     const [viewingUserState, setViewingUserState] = useState(viewingUser)
     const [role, setRole] = useState(viewingUser.level)
     const [version, setVersion] = useState(viewingUser.isYouth)
-    const [clients, setClients] = useState([])
+    const [clients, setClients] = useState(viewingUserClients || [])
     const [simpleModal, setSimpleModal] = useState(false)
 
     async function saveRole(newRole) {
         await fetch("/api/save-role?userId=" + viewingUser._id + "&role=" + newRole)
             .then(res => res.json())
+            .catch(err => console.warn(err))
+    }
+
+    async function getClients() {
+        await fetch("/api/get-clients?userId=" + viewingUser._id)
+            .then(res => res.json())
+            .then(res => {setClients(res)})
             .catch(err => console.warn(err))
     }
 
@@ -33,15 +38,15 @@ export default function User({viewingUser, pageDataJson, coachesJson, viewingUse
     async function terminationPattern(){
         await setRole("terminated coach")
         await saveRole("terminated coach")
-        await terminateCoach(viewingUser.email)
-        await router.reload()
+        await terminateCoach(viewingUser._id)
+        await getClients()
     }
 
     async function terminateCoach(coachId){
         await fetch("/api/terminate-coach?coachId=" + coachId)
             .then(res => res.json())
+            .then((res) => {console.log(res)})
             .catch(err => console.warn(err))
-
     }
 
     const title = `TTS / User / ${viewingUser.name || viewingUser.email}`
@@ -57,7 +62,15 @@ export default function User({viewingUser, pageDataJson, coachesJson, viewingUse
                 <WorkbookToggle user={viewingUser} version={version} setVersion={setVersion} setSimpleModal={setSimpleModal}/>
             </div>
             <UserPersonalDetails viewingUser={viewingUser} role={role}/>
-            <UserRole clients={clients} terminationPattern={terminationPattern} updateRoleInformation={updateRoleInformation} role={role} viewingUser={viewingUser} viewingUserClients={viewingUserClients} />
+            <UserRole
+                clients={clients}
+                setClients={setClients}
+                terminationPattern={terminationPattern}
+                updateRoleInformation={updateRoleInformation}
+                role={role}
+                setRole={setRole}
+                viewingUser={viewingUser}
+            />
             <CoachAssignments coachesJson={coachesJson} viewingUser={viewingUser}/>
             <NewEmailAssignment viewingUserState={viewingUserState} setViewingUserState={setViewingUserState}/>
 

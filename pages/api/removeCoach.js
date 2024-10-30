@@ -8,7 +8,8 @@ export default async function handler(req, res) {
 
     try {
         const { userId, coachObject } = req.body;
-
+        const userSearchId = new ObjectId(userId);
+        const coachObjectId = new ObjectId(coachObject.key);
         console.log(userId, coachObject)
 
         if (!userId || !coachObject) {
@@ -20,11 +21,19 @@ export default async function handler(req, res) {
         const collection = db.collection('users');
 
         const result = await collection.updateOne(
-            { _id: ObjectId(userId) },
-            { $pull: { coach: { key: ObjectId(coachObject.key) } } }
+            {
+                _id: userSearchId,
+                coach: {$elemMatch: {key: coachObjectId}},
+            },
+            {
+                $set: { 'coach.$[elem].removalDate': new Date() }
+            },
+            {
+                arrayFilters: [{ 'elem.key': coachObjectId }]
+            }
         );
 
-        const user = await collection.findOne({ _id: ObjectId(userId) })
+        const user = await collection.findOne({ _id: userSearchId })
 
         if (result.modifiedCount === 0) {
             return res.status(404).json({ message: 'User not found or coach not removed' });

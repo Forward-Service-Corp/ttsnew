@@ -11,6 +11,7 @@ function CoachAssignments({coachesJson, viewingUser}) {
     const [undo, setUndo] = useState(false)
     const [lastRemoved, setLastRemoved] = useState({})
     const [coachObject, setCoachObject] = React.useState({});
+    const [fullHistory, setFullHistory] = React.useState(false);
 
 
     const addCoachFunc = async () => {
@@ -76,7 +77,7 @@ function CoachAssignments({coachesJson, viewingUser}) {
                     onClick={handleAddCoach}>{addCoach ? '- Cancel add coach' : '+ Add coach'}</button>
             </div>
             <div className={"grid grid-cols-4 gap-4"}>
-                {newCoaches?.map((coach, i) => (
+                {newCoaches?.filter(c => c.terminationDate === undefined && c.removalDate === undefined).map((coach, i) => (
                     <AssignedCoach key={i} coach={coach} viewingUser={viewingUser}
                                    setUndo={setUndo} setLastRemoved={setLastRemoved}  setNewCoaches={setNewCoaches}/>
                 ))}
@@ -105,12 +106,59 @@ function CoachAssignments({coachesJson, viewingUser}) {
                 </div>
                 <div className={"grid grid-cols-4 gap-4"}>
                     {
-                        searchTerm !== "" && coachesJson.filter(coach =>
-                            coach.email.includes(searchTerm) && !newCoaches.some(userCoach => userCoach.email === coach.email)).map(coach => (
-                            <AddCoach coach={coach} key={coach._id} viewingUser={viewingUser} setNewCoaches={setNewCoaches}
+                        searchTerm !== "" && coachesJson
+                            .filter( coach => coach.email.includes(searchTerm) )
+                            .map(coach => (
+                                <AddCoach coach={coach} key={coach._id} viewingUser={viewingUser} setNewCoaches={setNewCoaches}
                                       searchTerm={searchTerm} addCoachFunc={addCoachFunc} setCoachObject={setCoachObject}/>
-                        ))
+                            ))
                     }
+                </div>
+            </div>
+            <div className={`flex justify-end mt-6`}>
+                <div>
+                    <button onClick={() => {setFullHistory(prevState => !prevState)}} className={`${fullHistory ? "text-red-600" : "text-indigo-600"} text-xs font-extralight`}>{fullHistory ? "- Hide full coach history" : "+ View full coach history"}</button>
+                </div>
+            </div>
+            <div className={`${!fullHistory ? 'hidden' : 'visible'}`}>
+                <div className={"inline-block min-w-full py-2 align-middle"}>
+                    <table className="min-w-full divide-y divide-gray-300">
+                        <thead>
+                        <tr>
+                            <th scope="col"
+                                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
+                                Name
+                            </th>
+                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                Email
+                            </th>
+                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                Phone
+                            </th>
+                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                Add Date
+                            </th>
+                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                Removal Date
+                            </th>
+                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                Termination Date
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200">
+                        {newCoaches?.map((coach, i) => (
+                            <tr key={i}>
+                                <td className="whitespace-nowrap py-4 pl-4 text-xs pr-3 font-medium text-gray-900 sm:pl-0">{coach?.name}</td>
+                                <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">{coach?.email}</td>
+                                <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">{coach?.phone}</td>
+                                <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">{coach?.timestamp}</td>
+                                <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">{coach?.removalDate}</td>
+                                <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500">{coach?.terminationDate}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
