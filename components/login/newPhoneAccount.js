@@ -76,7 +76,7 @@ function NewPhoneAccount({loginValue, setStep}) {
             <div className={""}>
                 <label htmlFor={name} className={"text-xs w-full block font-bold"}>{label}<span
                     className={`text-red-600 ${required ? 'visible' : 'hidden'}`}>*</span></label>
-                <span className={`text-indigo-600 block mb-2`}>Control + Click to select multiple options</span>
+                <span className={`text-indigo-600 block mb-2`}>Click + Click to select multiple options</span>
                 <select className={`rounded text-xs w-full border-2 ${getFieldClass(required, value)}`}
                         id={name}
                         name={name}
