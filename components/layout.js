@@ -9,6 +9,7 @@ import styles from "../styles/layout.module.css"
 import SimpleModal from "./simpleModal";
 import DarkModeToggle from "./darkModeToggle";
 import Image from "next/image";
+import ServiceDown from "./serviceDown";
 
 const navigation = [
     {name: 'Dashboard', href: '/', current: true},
@@ -320,6 +321,8 @@ export default function Layout({children, title, session, loadingState, version,
                     </Disclosure>
                     <header className="py-10">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <ServiceDown/>
+
                             <h1 className="text-xl font-black text-white dark:text-gray-400">{title}</h1>
                             <p className={`mt-0 text-white`}>{session.isYouth || version ? "Youth Workbook" : "Adult Workbook"}</p>
                         </div>
