@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useRouter} from "next/router";
 
-function DreamForm({setSavedDreams, user, setSimpleModal}) {
+function DreamForm({user, setSimpleModal}) {
     const [dream, setDream] = useState("")
     const [dreamNeed, setDreamNeed] = useState("")
     const [dreamHelp, setDreamHelp] = useState("")
@@ -17,7 +17,7 @@ function DreamForm({setSavedDreams, user, setSimpleModal}) {
                 dream,
                 dreamNeed,
                 dreamHelp,
-                userId: user.email,
+                userId: user._id,
                 status: "active"
             })
         })

@@ -1,4 +1,5 @@
 import {connectToDatabase} from "../../lib/dbConnect";
+import {ObjectId} from "mongodb";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async(req, res) => {
@@ -6,7 +7,7 @@ export default async(req, res) => {
         dream: req.body.dream,
         dreamNeed: req.body.dreamNeed,
         dreamHelp: req.body.dreamHelp,
-        userId: req.body.userId,
+        userId: ObjectId(req.body.userId),
         status: req.body.status,
         timestamp: new Date()
     }

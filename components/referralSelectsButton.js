@@ -23,7 +23,7 @@ function ReferralSelectsButton({
             body: JSON.stringify({
                 dreamId: router.query.dreamId,
                 surveyId: router.query.surveyId,
-                userId: clientId === undefined ? user.email : clientId,
+                userId: clientId === undefined ? user._id : clientId,
                 dream: router.query.dream,
                 domain: currentReferral.domain,
                 name: currentReferral.name,
@@ -36,14 +36,15 @@ function ReferralSelectsButton({
                 contactEmail: currentReferral.contactEmail,
                 needs: currentReferral.needs
             })
-        })
+        }).then(res => res.json())
+            .then()
     }
 
     async function getUserReferrals() {
-        const id = clientId === undefined ? user.email : clientId
-        const referrals = await fetch("/api/get-referrals?userId=" + id)
+        const id = clientId === undefined ? user._id : clientId
+        await fetch("/api/get-referrals?userId=" + id)
             .then(res => res.json())
-        await setUserReferrals(referrals)
+            .then(res => { setUserReferrals(res) })
     }
 
 

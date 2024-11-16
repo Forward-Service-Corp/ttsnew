@@ -15,23 +15,23 @@ export default async (req, res) => {
 
     const user = await db.collection("users").findOne(clientQuery)
 
-    const dreamsCursor = await db.collection("dreams").find(UID)
+    const dreamsCursor = await db.collection("dreams").find(clientQuery)
     const dreams = await dreamsCursor.toArray()
     await dreamsCursor.close()
 
-    const surveysCursor = await db.collection("lifeAreaSurveys").find(UID)
+    const surveysCursor = await db.collection("lifeAreaSurveys").find(clientQuery)
     const surveys = await surveysCursor.toArray()
     await surveysCursor.close()
 
-    const referralsCursor = await db.collection("referrals").find(UID)
+    const referralsCursor = await db.collection("referrals").find(clientQuery)
     const referrals = await referralsCursor.toArray()
     await referralsCursor.close()
 
-    const tasksCursor = await db.collection("todos").find(UID)
+    const tasksCursor = await db.collection("todos").find(clientQuery)
     const tasks = await tasksCursor.toArray()
     await tasksCursor.close()
 
-    const notesCursor = await db.collection("notes").find(UID)
+    const notesCursor = await db.collection("notes").find(clientQuery)
     const notes = await notesCursor.toArray()
     await notesCursor.close()
 

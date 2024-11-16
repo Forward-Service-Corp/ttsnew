@@ -7,14 +7,14 @@ function ClientCarePlans({user, viewingUser, viewingUserData}) {
 
     async function getUserReferrals() {
         // const id = clientId === undefined ? user.email : clientId
-        const referrals = await fetch("/api/get-referrals?userId=" + viewingUser.email)
+        const referrals = await fetch("/api/get-referrals?userId=" + viewingUser._id)
             .then(res => res.json())
         await setUserReferrals(referrals)
     }
 
     useEffect(() => {
         getUserReferrals().then()
-    }, [userReferrals])
+    }, [])
 
     return (
         <div className={"mt-5 p-6 border rounded dark:border-none dark:bg-black dark:bg-opacity-70 dark:text-white dark:rounded-lg dark:shadow-xl"}>

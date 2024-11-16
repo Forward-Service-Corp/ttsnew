@@ -16,7 +16,7 @@ export default function ReferralId({pageDataJson, referralDataJson}) {
             },
             body: JSON.stringify({
                 surveyId: null,
-                userId: user.email,
+                userId: user._id,
                 dream: null,
                 domain: referralDataJson.service,
                 name: referralDataJson.name,
@@ -32,10 +32,10 @@ export default function ReferralId({pageDataJson, referralDataJson}) {
     }
 
     async function getReferrals () {
-        const fetchReferrals = await fetch("/api/get-referrals?userId=" + user.email)
+        await fetch("/api/get-referrals?userId=" + user._id)
             .then(res => res.json())
+            .then(res => { setUserReferrals(res) })
             .catch(err => console.warn(err.json()))
-        setUserReferrals(fetchReferrals)
     }
 
     const textInfoJSX = (data, label) => {
@@ -143,9 +143,13 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.sub
     const getPageData = await fetch(pageDataUrl)
     const pageDataJson = await getPageData.json()
+
+    // redirect to profile page if required fields are not complete
+    const {county, name, homeCounty, programs} = pageDataJson.user
+    if(!county.length || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
 
     // single referral
     const referralDataUrl = baseUrl + "/api/get-single-referral?referralId=" + context.query.referralId

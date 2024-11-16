@@ -1,73 +1,118 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import ProfilePrograms from "../components/profilePrograms";
 import ProfilePersonalDetails from "../components/profilePersonalDetails";
-import OrganizationInformation from "../components/organizationInformation";
 import Head from "next/head";
-import WorkbookToggle from "../components/workbookToggle";
+import ProfileResourceCounties from "../components/profileResourceCounties";
+import ProfileCoaches from "../components/profileCoaches";
+import ProfileWorkbook from "../components/profileWorkbook";
+import ProfileFieldsWarning from "../components/profileFieldsWarning";
+import ProfilePhoneMessage from "../components/profilePhoneMessage";
 
 export default function Profile({user}) {
 
-    const [currentTab, setCurrentTab] = useState("tab1")
     const [version, setVersion] = useState(user.isYouth)
+    const [name, setName] = useState(user.name ? user.name : "")
+    const [street, setStreet] = useState(user.street ? user.street : "")
+    const [city, setCity] = useState(user.city ? user.city : "")
+    const [state, setState] = useState(user.state ? user.state : "")
+    const [homeCounty, setHomeCounty] = useState(user.homeCounty ? user.homeCounty : "")
+    const [zip, setZip] = useState(user.zip ? user.zip : "")
+    const [programs, setPrograms] = useState(user.programs ? user.programs : [])
+    const [counties, setCounties] = useState(user.county ? user.county : [])
+    const [email] = useState(user.email)
+    const [phone, setPhone] = useState(user.phone ? user.phone : "")
+    const [formattedNumber, setFormattedNumber] = useState("");
     const [simpleModal, setSimpleModal] = useState(false)
+    const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+    const [fieldsWarning, setFieldsWarning] = useState(false);
+    const [changeConfirm, setChangeConfirm] = useState(false)
+    const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
+
+    function scrollToTop() {
+        if (!isBrowser()) return;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Check if all required fields are filled
+    useEffect(() => {
+        if (name && homeCounty && counties.length && programs.length) {
+            setIsButtonEnabled(true);
+            setFieldsWarning(false);
+        } else {
+            setIsButtonEnabled(false);
+            setFieldsWarning(true);
+        }
+    }, [name, homeCounty, counties, programs, phone]);
+
+    async function savePersonalDetails() {
+        await fetch("/api/save-personal-details", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name, street, city, state, zip, homeCounty, counties, formattedNumber, programs, version,
+                userId: user._id
+            })
+        })
+        await setChangeConfirm(true)
+        setTimeout(() => {
+            setChangeConfirm(false)
+            scrollToTop()
+        }, 3000)
+    }
 
     return (
         <Layout title={"Profile"} session={user} version={version} simpleModalTitle={`Workbook Version Update`}
-        simpleModalMessage={`You are now using the ${version ? "youth" : "adult"} version of the workbook.`} simpleModalLabel={`I understand.`} simpleModal={simpleModal}>
+                background={false}
+                simpleModalMessage={`You are now using the ${version ? "youth" : "adult"} version of the workbook.`}
+                simpleModalLabel={`I understand.`} simpleModal={simpleModal}>
             <Head>
                 <title>TTS / My Profile</title>
             </Head>
-            <div className={"mb-5 border-b-[1px] border-b-gray-300 flex dark:border-b-gray-700 dark:text-white dark:font-light flex-col md:flex-row lg:flex-row "}>
+            <ProfileFieldsWarning name={name}
+                                  homeCounty={homeCounty}
+                                  counties={counties}
+                                  programs={programs}
+                                  fieldsWarning={fieldsWarning}/>
+            <ProfilePhoneMessage phone={phone}/>
+            <ProfilePersonalDetails user={user}
+                                    name={name}
+                                    setName={setName}
+                                    street={street}
+                                    setStreet={setStreet}
+                                    city={city}
+                                    setCity={setCity}
+                                    state={state}
+                                    setState={setState}
+                                    homeCounty={homeCounty}
+                                    setHomeCounty={setHomeCounty}
+                                    zip={zip}
+                                    setZip={setZip}
+                                    email={email}
+                                    phone={phone}
+                                    setPhone={setPhone}
+                                    setFormattedNumber={setFormattedNumber}/>
+            <ProfilePrograms programs={programs} setPrograms={setPrograms}/>
+            <ProfileResourceCounties counties={counties} setCounties={setCounties}/>
+            <ProfileCoaches user={user}/>
+            <ProfileWorkbook user={user} version={version} setVersion={setVersion} setSimpleModal={setSimpleModal}/>
 
-                <div
-                    className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab1" ? "border-b-2 border-b-orange-500 dark:border-b-blue-900" : ""}`}
-                    onClick={() => {
-                        setCurrentTab("tab1")
-                    }}>Personal Details
-                </div>
-                <div
-                    className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab2" ? "border-b-2 border-b-orange-500 dark:border-b-blue-900" : ""}`}
-                    onClick={() => {
-                        setCurrentTab("tab2")
-                    }}>Programs
-                </div>
-                <div
-                    className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab3" ? "border-b-2 border-b-orange-500 dark:border-b-blue-900" : ""}`}
-                    onClick={() => {
-                        setCurrentTab("tab3")
-                    }}>Coaches
-                </div>
-                <div
-                    className={`cursor-pointer inline-block px-3 py-2 ${currentTab === "tab4" ? "border-b-2 border-b-orange-500 dark:border-b-blue-900" : ""}`}
-                    onClick={() => {
-                        setCurrentTab("tab4")
-                    }}>Workbook Version
-                </div>
-            </div>
+            <div className={`bg-indigo-400 p-3 text-white rounded mb-4 text-center ${changeConfirm ? "visible" : "hidden"}`}>Details successfully saved.</div>
 
-            <div className={`${currentTab === "tab1" ? "visible" : "hidden"}`}>
-                <ProfilePersonalDetails user={user}/>
-            </div>
-            <div className={`${currentTab === "tab2" ? "visible" : "hidden"}`}>
-                <ProfilePrograms user={user}/>
-            </div>
-            <div className={`${currentTab === "tab3" ? "visible" : "hidden"}`}>
-                <OrganizationInformation user={user}/>
-            </div>
-            <div className={`${currentTab === "tab4" ? "visible" : "hidden"}`}>
-                <div className={`p-4`}>
-                    <div className={`dark:text-white`}>
-
-                        This application has {version === true ? "an adult" : "a youth"} workbook. If you would like to use that workbook,
-                        simply toggle the switch below. You may switch back at any time. If you are unsure
-                        which workbook to use, please reach out to your coach. Thank you.
-                    </div>
-                    <div className={`mt-8`}>
-                        <WorkbookToggle user={user} version={version} setVersion={setVersion} setSimpleModal={setSimpleModal}/>
-                    </div>
-                </div>
+            <div>
+                <button
+                    type="submit"
+                    className={`w-full p-2 text-white rounded ${
+                        isButtonEnabled ? 'bg-green-500' : 'bg-gray-400'
+                    }`}
+                    disabled={!isButtonEnabled}
+                    onClick={savePersonalDetails}
+                >
+                    {isButtonEnabled ? 'Save Profile' : 'Complete Required Fields'}
+                </button>
             </div>
         </Layout>
     )
@@ -82,7 +127,7 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // set up variables
-    const url = baseUrl + "/api/get-user?email=" + session.user.email
+    const url = baseUrl + "/api/get-user?userId=" + session.sub
 
     // fetch data
     const getUser = await fetch(url)
@@ -90,21 +135,9 @@ export async function getServerSideProps(context) {
     // cast data to json
     const userJson = await getUser.json()
 
-    //dreams url
-    const getUserDreamsUrl = baseUrl + "/api/get-dreams?userId=" + userJson._id
-    const getDreams = await fetch(getUserDreamsUrl)
-    const dreamsJson = await getDreams.json()
-
-    //surveys url
-    const getUserSurveysUrl = baseUrl + "/api/get-surveys?userId=" + userJson._id
-    const getSurveys = await fetch(getUserSurveysUrl)
-    const surveysJson = await getSurveys.json()
-
     return {
         props: {
-            user: userJson,
-            dreams: dreamsJson,
-            surveys: surveysJson
+            user: userJson
         }
     }
 }

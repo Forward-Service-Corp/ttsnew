@@ -1,21 +1,16 @@
 import Layout from "../components/layout";
 import {getSession} from "next-auth/react";
-import Link from "next/link"
-import {useEffect, useState} from "react";
-import UsersTable from "../components/usersTable";
 import Head from "next/head";
 import ClientsTable from "../components/clientsTable";
 
-export default function Clients({user, users}) {
-
-    const [usersData, setUsersData] = useState()
+export default function Clients({userJson, usersJson}) {
 
     return (
-        <Layout title={"My Clients"} session={user}>
+        <Layout title={"My Clients"} session={userJson}>
             <Head>
                 <title>TTS / My Clients</title>
             </Head>
-            <ClientsTable users={users}/>
+            <ClientsTable users={usersJson}/>
         </Layout>
     )
 }
@@ -29,20 +24,21 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // user data
-    const url =  baseUrl + "/api/get-user?email=" + session.user.email
+    const url =  baseUrl + "/api/get-user?userId=" + session.sub
     const getUser = await fetch(url)
     const userJson = await getUser.json()
 
-    // tasks data
-    const getUsersUrl = baseUrl + "/api/get-clients?coachId=" + session.user.email
+    // clients data
+    const getUsersUrl = baseUrl + "/api/get-clients?coachId=" + session.sub
     const getUsers = await fetch(getUsersUrl)
     const usersJson = await getUsers.json()
 
+    // redirect to profile page if required fields are not complete
+
+    if(!userJson?.county.length || !userJson?.homeCounty  || !userJson?.programs.length || !userJson?.name) return  {redirect: {destination: "/profile", permanent: false}}
+
     return {
-        props: {
-            user: userJson,
-            users: usersJson
-        }
+        props: {userJson, usersJson}
     }
 
 }

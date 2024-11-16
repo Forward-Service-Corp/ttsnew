@@ -108,25 +108,27 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    let pageDataUrl
+    let pageDataUrl;
     if (context.query.clientId === undefined) {
-        pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+        pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.sub;
     } else {
-        pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email + "&clientId=" + context.query.clientId
+        pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.sub + "&clientId=" + context.query.clientId;
     }
 
-    const getPageData = await fetch(pageDataUrl)
-    const pageDataJson = await getPageData.json()
+    const getPageData = await fetch(pageDataUrl);
+    const pageDataJson = await getPageData.json();
 
     //referral options
-    const referralOptionsUrl = baseUrl + "/api/get-referral-options?county=" + context.query.county + "&domain=" + context.query.domain
-    const getReferralOptions = await fetch(referralOptionsUrl)
-    const referralJson = await getReferralOptions.json()
+    const referralOptionsUrl = baseUrl + "/api/get-referral-options?county=" + context.query.county + "&domain=" + context.query.domain;
+    const getReferralOptions = await fetch(referralOptionsUrl);
+    const referralJson = await getReferralOptions.json();
 
     // single survey data
-    const surveyUrl = baseUrl + "/api/get-survey-by-id?surveyId=" + context.query.surveyId
-    const getSurvey = await fetch(surveyUrl)
-    const surveyJson = await getSurvey.json()
+    const surveyUrl = baseUrl + "/api/get-survey-by-id?surveyId=" + context.query.surveyId;
+    const getSurvey = await fetch(surveyUrl);
+    const surveyJson = await getSurvey.json();
+    const {user} = pageDataJson
+    if(!user.county.length || !user.homeCounty  || !user.programs.length || !user.name) return  {redirect: {destination: "/profile", permanent: false}};
 
     return {
         props: {

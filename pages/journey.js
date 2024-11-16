@@ -7,8 +7,6 @@ import JourneyYouth1 from "../components/pages/journeyYouth1";
 import JourneyYouth2 from "../components/pages/journeyYouth2";
 import Head from "next/head";
 
-
-
 function Journey({pageDataJson}) {
 
     const {user} = pageDataJson
@@ -58,9 +56,13 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user.email
+    const pageDataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.sub
     const getPageData = await fetch(pageDataUrl)
     const pageDataJson = await getPageData.json()
+
+    // redirect to profile page if required fields are not complete
+    const {county, name, homeCounty, programs} = pageDataJson.user
+    if(!county.length || !homeCounty || !programs.length || !name) return  {redirect: {destination: "/profile", permanent: false}}
 
     return {
         props: {pageDataJson}

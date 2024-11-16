@@ -3,16 +3,17 @@ import {useRouter} from "next/router";
 import {Brain, Trash, NotePencil, FloppyDisk} from "phosphor-react";
 import moment from "moment";
 
-function DreamSingle({dream, isClientDream, clientId, getDreams}) {
+function DreamSingle({dream, isClientDream, clientId, setSavedDreams}) {
 
     const [editMode, setEditMode] = useState(false)
     const [updateSuccess, setUpdateSuccess] = useState(false)
     const [newDream, setNewDream] = useState(dream.dream.toString())
     const [need, setNeed] = useState(dream.dreamNeed.toString())
     const [help, setHelp] = useState(dream.dreamHelp.toString())
-    const [status, setStatus] = useState(dream.status || "active")
+    const [currentStatus, setCurrentStatus] = useState(dream.status || "active")
 
-    async function updateDream(id) {
+    async function updateDream(value, id) {
+        await changeDreamStatus(value, id)
         await fetch("/api/update-dream", {
             method: "POST",
             headers: {
@@ -23,14 +24,26 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
                 dream: newDream,
                 dreamNeed: need,
                 dreamHelp: help,
-                dreamStatus: status
+                dreamStatus: value
             })
         })
+            .then(r => r.json())
     }
 
+    const changeDreamStatus = (value, id) => {
+         setSavedDreams((prevDreams) =>
+            prevDreams.map((dream) =>
+                dream._id === id
+                    ? { ...dream, status: value }
+                    : dream
+            )
+        );
+    };
+
     async function deleteDream(dreamId) {
-        await fetch("/api/delete-dream?dreamId=" + dreamId)
-        await getDreams().then()
+       await fetch("/api/delete-dream?dreamId=" + dreamId)
+           .then(r => r.json())
+           .then(r => setSavedDreams(r) )
     }
 
     const router = useRouter()
@@ -59,12 +72,13 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
                         successful
                     </div>
                 </div>
-                <div className={`p-2 text-xs border-b ${editMode === true ? "hidden" : "visible"} dark:border-gray-800`}>Status: {status}</div>
+                <div className={`p-2 text-xs border-b ${editMode === true ? "hidden" : "visible"} dark:border-gray-800`}>Status: {dream.status}</div>
                 <div>
                     <select className={`text-xs w-full border-none ${editMode ? "visible" : "hidden"}`}
-                            defaultValue={status} id={"statusSelect"+dream._id}
+                            id={"statusSelect"+dream._id}
+                            value={currentStatus}
                             onChange={(e) => {
-                                setStatus(e.target.value)
+                                setCurrentStatus(e.target.value)
                             }}>
                         <option value="active">Active</option>
                         <option value="complete">Complete</option>
@@ -113,9 +127,8 @@ function DreamSingle({dream, isClientDream, clientId, getDreams}) {
                      onClick={() => {
                          setEditMode(!editMode)
                          if (editMode) {
-                             updateDream(dream._id).then(() => {
+                             updateDream(currentStatus, dream._id).then(() => {
                                  setUpdateSuccess(true)
-                                 getDreams()
                                  setTimeout(() => {
                                      setUpdateSuccess(false)
                                  }, 3000)
