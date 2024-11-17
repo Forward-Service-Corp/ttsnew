@@ -9,7 +9,6 @@ import styles from "../styles/layout.module.css"
 import SimpleModal from "./simpleModal";
 import DarkModeToggle from "./darkModeToggle";
 import Image from "next/image";
-import ServiceDown from "./serviceDown";
 
 const navigation = [
     {name: 'Dashboard', href: '/', current: true},
@@ -21,7 +20,6 @@ const navigation = [
 ]
 const userNavigation = [
     {name: 'Your Profile', href: '/profile'},
-    // {name: 'Settings', href: '/settings'},
 ]
 
 function classNames(...classes) {
@@ -49,7 +47,6 @@ export default function Layout({children, title, session, loadingState, version,
         }
     }, [environment])
 
-
     return (
         <>
             <div className={`${environment === "dev" || environment === "testing" ? "visible" : "hidden"} p-4 text-center text-xs bg-pink-600 dark:bg-purple-900 text-white font-light`}>
@@ -76,12 +73,12 @@ export default function Layout({children, title, session, loadingState, version,
                                             <div className="flex items-center">
                                                 <div className="w-[80px] h-[50px] relative">
                                                     <Image sizes="(max-width:70px) 3vw, (max-width: 70px) 10vw, 5vw" fill
-                                                        src="/img/TTS_Logo2_vertical.png"
+                                                        src={`/img/tts-logo.png`}
                                                         alt="Workflow"/>
                                                 </div>
                                                 <div className="w-[60px] h-[50px] relative ml-3">
                                                     <Image sizes="(max-width:70px) 3vw, (max-width: 70px) 10vw, 5vw" fill
-                                                        src="/img/fsc-logo.png"
+                                                           src={`/img/fsc-logo.png`}
                                                         alt="Workflow" priority={true}/>
                                                 </div>
                                                 <div className="flex-shrink-0 ml-3 visible md:hidden">
@@ -321,8 +318,6 @@ export default function Layout({children, title, session, loadingState, version,
                     </Disclosure>
                     <header className="py-10">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <ServiceDown/>
-
                             <h1 className="text-xl font-black text-white dark:text-gray-400">{title}</h1>
                             <p className={`mt-0 text-white`}>{session.isYouth || version ? "Youth Workbook" : "Adult Workbook"}</p>
                         </div>
