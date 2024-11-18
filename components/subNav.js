@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from "next/link";
 
-export default function SubNav({session, environment, handleLogout}) {
+export default function SubNav({session, handleLogout, handleDeleteUser, environment}) {
     return (
         <div className={`w-full bg-orange-700`}>
             <div className={`px-8 min-w-[640px] max-w-[1280px] m-auto`}>

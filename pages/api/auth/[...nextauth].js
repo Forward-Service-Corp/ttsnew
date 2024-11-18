@@ -94,8 +94,6 @@ export default NextAuth({
                     return "/auth/no-account"
                 }
             }
-
-
         },
         async jwt({ token, user }) {
             if (user) {
