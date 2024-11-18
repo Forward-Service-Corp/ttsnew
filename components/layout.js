@@ -1,14 +1,13 @@
 import {Fragment, useEffect, useState} from 'react'
 import {signOut} from "next-auth/react"
-import {Disclosure, Menu, Transition} from '@headlessui/react'
+import {Disclosure} from '@headlessui/react'
 import {MenuIcon, XIcon} from '@heroicons/react/outline'
 import {useRouter} from "next/router";
-import {UserCircleGear, UserCircle} from "phosphor-react";
-import ProfileDetailsWarningModal from "./profileDetailsWarningModal";
+import {UserCircle} from "phosphor-react";
 import styles from "../styles/layout.module.css"
 import SimpleModal from "./simpleModal";
-import DarkModeToggle from "./darkModeToggle";
 import Image from "next/image";
+import SubNav from "./subNav";
 
 const navigation = [
     {name: 'Dashboard', href: '/', current: true},
@@ -26,17 +25,48 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Layout({children, title, session, loadingState, version, simpleModalTitle, simpleModalMessage, simpleModalLabel, simpleModal}) {
+export default function Layout({children, title, session, loadingState, version, simpleModalTitle, simpleModalMessage, simpleModalLabel, simpleModal, background}) {
     const router = useRouter()
-
     const [environment, setEnvironment] = useState("production")
-    const [darkMode, setDarkMode] = useState(null)
+    const [darkMode] = useState(null)
+
+    const handleLogout = async () => {
+        await signOut().then()
+        await router.push('/login')
+    }
+
+    const handleDeleteUser = async () => {
+        const makeSure = confirm("Are you sure you want to delete this user?")
+        if (makeSure) {
+            const deletingUser = await fetch(`/api/delete-user?userId=${session?._id}`)
+                .then(res => res.json())
+            await signOut().then()
+            await console.log(deletingUser)
+        }
+    }
+
+    async function updateLastLogin() {
+        await fetch(`/api/save-last-login?userId=${session?._id}`)
+            .then(res => res.json())
+    }
 
     useEffect(() => {
-        const value = localStorage.theme
-        let currentTheme = value !== undefined && value === 'dark' ? 'darkTheme' : 'lightTheme'
-        setDarkMode(currentTheme)
-    }, []);
+        const now = new Date();
+        const lastLoginTime = new Date(session?.lastLogin); // Convert lastLogin to a Date object
+
+        // Calculate the time difference in milliseconds
+        const timeDifference = now - lastLoginTime;
+
+        // Convert milliseconds to hours
+        const hoursDifference = timeDifference / (1000 * 60 * 60);
+
+        // Check if the lastLogin is within 12 hours
+        if (hoursDifference < 12) {
+            return;
+        }
+
+        updateLastLogin().then()
+    }, [updateLastLogin])
 
     useEffect(() => {
         const location = window.location.host
@@ -44,12 +74,14 @@ export default function Layout({children, title, session, loadingState, version,
             setEnvironment("dev")
         }else if(location.indexOf("-test") > -1){
             setEnvironment("testing")
+        }else if(location.indexOf("-training")){
+            setEnvironment("training")
         }
     }, [environment])
 
     return (
         <>
-            <div className={`${environment === "dev" || environment === "testing" ? "visible" : "hidden"} p-4 text-center text-xs bg-pink-600 dark:bg-purple-900 text-white font-light`}>
+            <div className={`${environment === "dev" || environment === "testing" || environment === "training" ? "visible" : "hidden"} ${environment === "testing" ? "bg-indigo-600" : "bg-pink-600"} p-4 text-center text-xs text-white font-light`}>
                 You are currently in the <strong className={`uppercase font-black`}>{environment}</strong> environment.
             </div>
             {simpleModal ? <SimpleModal title={simpleModalTitle} message={simpleModalMessage} label={simpleModalLabel}
@@ -59,43 +91,47 @@ export default function Layout({children, title, session, loadingState, version,
                 <div className={"uppercase text-white self-center rounded-full p-5 bg-orange-600 shadow"}>loading...
                 </div>
             </div>
-            {router.pathname !== "/profile" && router.pathname !== "/" && router.pathname !== "/directory" ?
-                <ProfileDetailsWarningModal session={session}/> : null}
 
             <div id={`layoutBannerContainer`} className={`min-h-full ${darkMode === 'darkTheme' ? styles.darkTheme : styles.lightTheme}`}>
-                <div className={`${session.isYouth || version ? styles.youthVersion : styles.adultVersion} pb-32 print:hidden`}>
-                    <Disclosure as="nav" className="bg-[#db5839] shadow-lg dark:bg-black dark:shadow-2xl">
+                <div
+                    className={`${session?.isYouth || version ? styles.youthVersion : styles.adultVersion} pb-32 print:hidden`}>
+                    <Disclosure as="nav" className="bg-[#db5839] shadow-lg">
                         {({open}) => (
                             <>
                                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                                    <div className="">
-                                        <div className="flex items-center justify-between h-16 px-4 sm:px-0">
-                                            <div className="flex items-center">
-                                                <div className="w-[80px] h-[50px] relative">
-                                                    <Image sizes="(max-width:70px) 3vw, (max-width: 70px) 10vw, 5vw" fill
-                                                        src={`/img/tts-logo.png`}
-                                                        alt="Workflow"/>
+                                        <div className="flex items-center h-16 px-4 sm:px-0">
+                                            <div className="flex items-center justify-between w-full">
+                                                <div className={'flex'}>
+                                                    <div className="w-[80px] h-[50px] relative">
+                                                        <Image
+                                                            sizes="(max-width:70px) 30vw, (max-width: 70px) 20vw, 10vw"
+                                                            fill
+                                                            src="/img/tts-logo.png"
+                                                            alt="Workflow"/>
+                                                    </div>
+                                                    <div className="w-[60px] h-[50px] relative ml-3">
+                                                        <Image
+                                                            sizes="(max-width:70px) 30vw, (max-width: 70px) 20vw, 10vw"
+                                                            fill
+                                                            src="/img/fsc-logo.png"
+                                                            alt="Workflow" priority={true}/>
+                                                    </div>
                                                 </div>
-                                                <div className="w-[60px] h-[50px] relative ml-3">
-                                                    <Image sizes="(max-width:70px) 3vw, (max-width: 70px) 10vw, 5vw" fill
-                                                           src={`/img/fsc-logo.png`}
-                                                        alt="Workflow" priority={true}/>
-                                                </div>
-                                                <div className="flex-shrink-0 ml-3 visible md:hidden">
-                                                    <a onClick={() => signOut()}
-                                                       className={"ml-16 px-3 py-2 text-white rounded border"}>Logout</a>
-                                                </div>
+                                                {/*<div className="flex-shrink-0 ml-3 visible md:hidden">*/}
+                                                {/*    <a onClick={() => signOut()}*/}
+                                                {/*       className={"ml-16 px-3 py-2 text-white rounded border"}>Logout</a>*/}
+                                                {/*</div>*/}
                                                 <div className="hidden md:block">
-                                                    <div className="ml-10 flex items-baseline space-x-4">
+                                                    <div className="flex items-right space-x-4">
                                                         {navigation.map((item) => (
                                                             <a
                                                                 key={item.name}
                                                                 href={item.href}
                                                                 className={classNames(
                                                                     router.pathname === item.href
-                                                                        ? 'bg-orange-700 text-white dark:bg-gray-800'
-                                                                        : 'text-white hover:bg-orange-400 hover:text-white dark:hover:bg-gray-600',
-                                                                    'px-3 py-2 rounded-md text-sm font-medium dark:font-extralight'
+                                                                        ? 'bg-black bg-opacity-10 text-white'
+                                                                        : 'text-white hover:bg-orange-400 hover:text-white',
+                                                                    'px-3 py-2 rounded text-sm font-extralight'
                                                                 )}
                                                                 aria-current={item.current ? 'page' : undefined}
                                                             >
@@ -103,132 +139,137 @@ export default function Layout({children, title, session, loadingState, version,
                                                             </a>
                                                         ))}
                                                         {/*Conditional Navigation*/}
-                                                        {session?.level === "client" ?
-                                                            <a
-                                                                onClick={() => signOut()}
-                                                                className={classNames(
-                                                                    router.pathname === "/clients"
-                                                                        ? 'bg-orange-700 text-white dark:bg-gray-800'
-                                                                        : 'text-white hover:bg-orange-400 hover:text-white dark:hover:bg-gray-600',
-                                                                    'px-3 py-2 rounded-md text-sm font-medium cursor-pointer dark:font-extralight'
-                                                                )}
-                                                                aria-current={router.pathname === "/clients" ? 'page' : undefined}
-                                                            >
-                                                                Logout
-                                                            </a> : null
-                                                        }
-                                                        {session?.level === "coach" || session?.level === "admin" ?
-                                                            <a
-                                                                href={"/clients"}
-                                                                className={classNames(
-                                                                    router.pathname === "/clients"
-                                                                        ? 'bg-orange-700 text-white dark:bg-gray-800'
-                                                                        : 'text-white hover:bg-orange-400 hover:text-white dark:hover:bg-gray-600',
-                                                                    'px-3 py-2 rounded-md text-sm font-medium dark:font-extralight'
-                                                                )}
-                                                                aria-current={router.pathname === "/clients" ? 'page' : undefined}
-                                                            >
-                                                                My Clients
-                                                            </a> : null
-                                                        }
+                                                        {/*{session?.level === "client" ?*/}
+                                                        {/*    <a*/}
+                                                        {/*        onClick={() => signOut()}*/}
+                                                        {/*        className={classNames(*/}
+                                                        {/*            router.pathname === "/clients"*/}
+                                                        {/*                ? 'bg-orange-700 text-white dark:bg-gray-800'*/}
+                                                        {/*                : 'text-white hover:bg-orange-400 hover:text-white dark:hover:bg-gray-600',*/}
+                                                        {/*            'px-3 py-2 rounded-md text-sm font-medium cursor-pointer dark:font-extralight'*/}
+                                                        {/*        )}*/}
+                                                        {/*        aria-current={router.pathname === "/clients" ? 'page' : undefined}*/}
+                                                        {/*    >*/}
+                                                        {/*        Logout*/}
+                                                        {/*    </a> : null*/}
+                                                        {/*}*/}
+                                                        {/*{session?.level === "coach" || session?.level === "admin" ?*/}
+                                                        {/*    <a*/}
+                                                        {/*        href={"/clients"}*/}
+                                                        {/*        className={classNames(*/}
+                                                        {/*            router.pathname === "/clients"*/}
+                                                        {/*                ? 'bg-orange-700 text-white dark:bg-gray-800'*/}
+                                                        {/*                : 'text-white hover:bg-orange-400 hover:text-white dark:hover:bg-gray-600',*/}
+                                                        {/*            'px-3 py-2 rounded-md text-sm font-medium dark:font-extralight'*/}
+                                                        {/*        )}*/}
+                                                        {/*        aria-current={router.pathname === "/clients" ? 'page' : undefined}*/}
+                                                        {/*    >*/}
+                                                        {/*        My Clients*/}
+                                                        {/*    </a> : null*/}
+                                                        {/*}*/}
 
-                                                        {session?.level === "admin" ?
-                                                            <a
-                                                                href={"/users"}
-                                                                className={classNames(
-                                                                    router.pathname === "/users"
-                                                                        ? 'bg-orange-700 text-white dark:bg-gray-800'
-                                                                        : 'text-white hover:bg-orange-400 hover:text-white dark:hover:bg-gray-600',
-                                                                    'px-3 py-2 rounded-md text-sm font-medium dark:font-extralight'
-                                                                )}
-                                                                aria-current={router.pathname === "/users" ? 'page' : undefined}
-                                                            >
-                                                                Users
-                                                            </a> : null
-                                                        }
-
-
+                                                        {/*{session?.level === "admin" ?*/}
+                                                        {/*    <a*/}
+                                                        {/*        href={"/users"}*/}
+                                                        {/*        className={classNames(*/}
+                                                        {/*            router.pathname === "/users"*/}
+                                                        {/*                ? 'bg-orange-700 text-white dark:bg-gray-800'*/}
+                                                        {/*                : 'text-white hover:bg-orange-400 hover:text-white dark:hover:bg-gray-600',*/}
+                                                        {/*            'px-3 py-2 rounded-md text-sm font-medium dark:font-extralight'*/}
+                                                        {/*        )}*/}
+                                                        {/*        aria-current={router.pathname === "/users" ? 'page' : undefined}*/}
+                                                        {/*    >*/}
+                                                        {/*        Users*/}
+                                                        {/*    </a> : null*/}
+                                                        {/*}*/}
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="hidden md:block">
-                                                <div className="ml-4 flex items-center md:ml-6">
-                                                    <Menu as="div" className="ml-3 relative">
-                                                        <div>
-                                                            <Menu.Button
-                                                                className="w-[45px] h-[45px] relative max-w-xs bg-orange-600 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                                                                <span className="sr-only">Open user menu</span>
-                                                                {session?.image ? <Image className="rounded-full"
-                                                                                         sizes="(max-width:45px) 3vw, (max-width: 45px) 10vw, 5vw" fill
-                                                                                       src={session.image} alt="User avatar"/> :
-                                                                    <UserCircleGear size={32} weight="thin"
-                                                                                    color={"white"}/>}
-`
-                                                            </Menu.Button>
-                                                        </div>
-                                                        <Transition
-                                                            as={Fragment}
-                                                            enter="transition ease-out duration-100"
-                                                            enterFrom="transform opacity-0 scale-95"
-                                                            enterTo="transform opacity-100 scale-100"
-                                                            leave="transition ease-in duration-75"
-                                                            leaveFrom="transform opacity-100 scale-100"
-                                                            leaveTo="transform opacity-0 scale-95"
-                                                        >
-                                                            <Menu.Items
-                                                                className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-gray-900 ring-1 ring-black dark:ring-purple-900 ring-opacity-5 dark:ring-opacity-40 dark:shadow-2xl focus:outline-none">
-                                                                {userNavigation.map((item) => (
-                                                                    <Menu.Item key={item.name}>
-                                                                        {({active}) => (
-                                                                            <a
-                                                                                href={item.href}
-                                                                                className={classNames(
-                                                                                    active ? 'bg-gray-100 dark:hover:bg-gray-800' : '',
-                                                                                    'block px-4 py-2 text-sm text-black dark:text-white dark:font-extralight'
-                                                                                )}
-                                                                            >
-                                                                                {item.name}
-                                                                            </a>
-                                                                        )}
-                                                                    </Menu.Item>
-                                                                ))}
-                                                                {session?.level === "admin" ?
-                                                                    <Menu.Item>
-                                                                        <a href={"/reports"}
-                                                                            className={'block px-4 py-2 text-sm text-black dark:text-white cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 dark:font-extralight'}
-                                                                        >Reports</a></Menu.Item> : null}
-                                                                {session?.level === "admin" ?
-                                                                    <Menu.Item>
-                                                                    <div className={`ml-4 mt-[3px] flex items-center`}>
-                                                                        <div className={`mr-3 text-black dark:text-white dark:font-extralight text-sm`}>Dark Mode</div>
-                                                                        <DarkModeToggle setDarkMode={setDarkMode} session={session}/>
-                                                                    </div>
-                                                                </Menu.Item>
-                                                                    : null}
-                                                                <Menu.Item>
-                                                                    {({active}) => (
-                                                                        <a
-                                                                            onClick={() => {
-                                                                                signOut()
-                                                                                    .then(() => {
-                                                                                        router.reload()
-                                                                                    })
-                                                                            }}
-                                                                            className={classNames(
-                                                                                active ? 'bg-gray-100 dark:hover:bg-gray-800' : '',
-                                                                                'block px-4 py-2 text-sm text-black dark:text-white cursor-pointer dark:font-extralight'
-                                                                            )}
-                                                                        >
-                                                                            Sign Out
-                                                                        </a>
-                                                                    )}
-                                                                </Menu.Item>
+                                            {/*<div className="hidden md:block">*/}
+                                            {/*    <div className="ml-4 flex items-center md:ml-6">*/}
+                                            {/*        <Menu as="div" className="ml-3 relative">*/}
+                                            {/*            <div>*/}
+                                            {/*                <Menu.Button*/}
+                                            {/*                    className="w-[45px] h-[45px] relative max-w-xs bg-orange-600 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">*/}
+                                            {/*                    <span className="sr-only">Open user menu</span>*/}
+                                            {/*                    {session?.image ? <Image className="rounded-full"*/}
+                                            {/*                                             sizes="(max-width:45px) 3vw, (max-width: 45px) 10vw, 5vw"*/}
+                                            {/*                                             fill*/}
+                                            {/*                                             src={session.image}*/}
+                                            {/*                                             alt="User avatar"/> :*/}
+                                            {/*                        <UserCircleGear size={32} weight="thin"*/}
+                                            {/*                                        color={"white"}/>}*/}
+                                            {/*                    `*/}
+                                            {/*                </Menu.Button>*/}
+                                            {/*            </div>*/}
+                                            {/*            <Transition*/}
+                                            {/*                as={Fragment}*/}
+                                            {/*                enter="transition ease-out duration-100"*/}
+                                            {/*                enterFrom="transform opacity-0 scale-95"*/}
+                                            {/*                enterTo="transform opacity-100 scale-100"*/}
+                                            {/*                leave="transition ease-in duration-75"*/}
+                                            {/*                leaveFrom="transform opacity-100 scale-100"*/}
+                                            {/*                leaveTo="transform opacity-0 scale-95"*/}
+                                            {/*            >*/}
+                                            {/*                <Menu.Items*/}
+                                            {/*                    className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-gray-900 ring-1 ring-black dark:ring-purple-900 ring-opacity-5 dark:ring-opacity-40 dark:shadow-2xl focus:outline-none">*/}
+                                            {/*                    {userNavigation.map((item) => (*/}
+                                            {/*                        <Menu.Item key={item.name}>*/}
+                                            {/*                            {({active}) => (*/}
+                                            {/*                                <a*/}
+                                            {/*                                    href={item.href}*/}
+                                            {/*                                    className={classNames(*/}
+                                            {/*                                        active ? 'bg-gray-100 dark:hover:bg-gray-800' : '',*/}
+                                            {/*                                        'block px-4 py-2 text-sm text-black dark:text-white dark:font-extralight'*/}
+                                            {/*                                    )}*/}
+                                            {/*                                >*/}
+                                            {/*                                    {item.name}*/}
+                                            {/*                                </a>*/}
+                                            {/*                            )}*/}
+                                            {/*                        </Menu.Item>*/}
+                                            {/*                    ))}*/}
+                                            {/*                    {session?.level === "admin" ?*/}
+                                            {/*                        <Menu.Item>*/}
+                                            {/*                            <a href={"/reports"}*/}
+                                            {/*                               className={'block px-4 py-2 text-sm text-black dark:text-white cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 dark:font-extralight'}*/}
+                                            {/*                            >Reports</a></Menu.Item> : null}*/}
+                                            {/*                    {session?.level === "admin" ?*/}
+                                            {/*                        <Menu.Item>*/}
+                                            {/*                            <div*/}
+                                            {/*                                className={`ml-4 mt-[3px] flex items-center`}>*/}
+                                            {/*                                <div*/}
+                                            {/*                                    className={`mr-3 text-black dark:text-white dark:font-extralight text-sm`}>Dark*/}
+                                            {/*                                    Mode*/}
+                                            {/*                                </div>*/}
+                                            {/*                                <DarkModeToggle setDarkMode={setDarkMode}*/}
+                                            {/*                                                session={session}/>*/}
+                                            {/*                            </div>*/}
+                                            {/*                        </Menu.Item>*/}
+                                            {/*                        : null}*/}
+                                            {/*                    <Menu.Item>*/}
+                                            {/*                        {({active}) => (*/}
+                                            {/*                            <a*/}
+                                            {/*                                onClick={() => {*/}
+                                            {/*                                    signOut()*/}
+                                            {/*                                        .then(() => {*/}
+                                            {/*                                            router.reload()*/}
+                                            {/*                                        })*/}
+                                            {/*                                }}*/}
+                                            {/*                                className={classNames(*/}
+                                            {/*                                    active ? 'bg-gray-100 dark:hover:bg-gray-800' : '',*/}
+                                            {/*                                    'block px-4 py-2 text-sm text-black dark:text-white cursor-pointer dark:font-extralight'*/}
+                                            {/*                                )}*/}
+                                            {/*                            >*/}
+                                            {/*                                Sign Out*/}
+                                            {/*                            </a>*/}
+                                            {/*                        )}*/}
+                                            {/*                    </Menu.Item>*/}
 
-                                                            </Menu.Items>
-                                                        </Transition>
-                                                    </Menu>
-                                                </div>
-                                            </div>
+                                            {/*                </Menu.Items>*/}
+                                            {/*            </Transition>*/}
+                                            {/*        </Menu>*/}
+                                            {/*    </div>*/}
+                                            {/*</div>*/}
                                             <div className="-mr-2 flex md:hidden">
                                                 {/* Mobile menu button */}
                                                 <Disclosure.Button
@@ -242,7 +283,6 @@ export default function Layout({children, title, session, loadingState, version,
                                                 </Disclosure.Button>
                                             </div>
                                         </div>
-                                    </div>
                                 </div>
 
                                 <Disclosure.Panel className="border-b border-gray-700 md:hidden">
@@ -266,10 +306,11 @@ export default function Layout({children, title, session, loadingState, version,
                                         <div className="flex items-center px-5">
                                             <div className="flex-shrink-0 w-[45px] h-[45px] relative">
                                                 {session?.image ?
-                                                    <Image className="rounded-full" src={session.image} sizes="(max-width:45px) 3vw, (max-width: 45px) 10vw, 5vw" fill
-                                                         alt="Mobile avatar"/> :
+                                                    <Image className="rounded-full" src={session.image}
+                                                           sizes="(max-width:45px) 3vw, (max-width: 45px) 10vw, 5vw"
+                                                           fill
+                                                           alt="Mobile avatar"/> :
                                                     <UserCircle size={32} weight="thin" color={"white"}/>}
-
                                             </div>
                                             <div className="ml-3">
                                                 <div
@@ -290,13 +331,12 @@ export default function Layout({children, title, session, loadingState, version,
                                                 </Disclosure.Button>
                                             ))}
                                             {/*<Disclosure.Button*/}
-                                            {/*    className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700 dark:hover:bg-opacity-0">*/}
-                                            {session?.level === "admin" ?
-                                                <div className={`ml-3 mt-[3px] flex items-center`}>
-                                                <div className={`mr-3 text-white `}>Dark Mode</div>
-                                                <DarkModeToggle setDarkMode={setDarkMode} session={session}/>
-                                                </div>
-                                                : null}
+                                            {/*{session?.level === "admin" ?*/}
+                                            {/*    <div className={`ml-3 mt-[3px] flex items-center`}>*/}
+                                            {/*        <div className={`mr-3 text-white `}>Dark Mode</div>*/}
+                                            {/*        <DarkModeToggle setDarkMode={setDarkMode} session={session}/>*/}
+                                            {/*    </div>*/}
+                                            {/*    : null}*/}
                                             {/*</Disclosure.Button>*/}
                                             <Disclosure.Button
                                                 className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-white hover:bg-gray-700"
@@ -316,10 +356,11 @@ export default function Layout({children, title, session, loadingState, version,
                             </>
                         )}
                     </Disclosure>
+                    <SubNav session={session} environment={environment} handleLogout={handleLogout} />
                     <header className="py-10">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <h1 className="text-xl font-black text-white dark:text-gray-400">{title}</h1>
-                            <p className={`mt-0 text-white`}>{session.isYouth || version ? "Youth Workbook" : "Adult Workbook"}</p>
+                            <span className="text-4xl font-extralight text-white dark:text-gray-400">{title}</span>
+                            <p className={`mt-0 text-white font-extralight uppercase text-sm`}>{session?.isYouth || version ? "Youth Workbook" : "Adult Workbook"}</p>
                         </div>
                     </header>
                 </div>
@@ -327,9 +368,9 @@ export default function Layout({children, title, session, loadingState, version,
                 <main className="-mt-32 print:mt-0">
                     <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
                         <div
-                            className="bg-white dark:bg-gray-900 shadow px-5 py-6 sm:px-6 print:px-0 print:py-0 print:shadow-none dark:rounded-lg dark:shadow-xl">
-                            {children}
-                        </div>
+                            className={`${background === false ? '' : 'bg-white shadow px-5 py-6 sm:px-6'} print:px-0 print:py-0 print:shadow-none`}>
+                                {children}
+                            </div>
                     </div>
                 </main>
             </div>
