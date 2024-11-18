@@ -4,11 +4,13 @@ import {ObjectId} from "mongodb";
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req, res) => {
 
+    const { clientId, clientEmail } = req.query;
+
     const clientQuery = {
-        _id: ObjectId(req.query.clientId)
+        _id: new ObjectId(clientId)
     }
     const UID = {
-        userId: req.query.clientEmail
+        userId: clientEmail
     }
 
     const {db} = await connectToDatabase()
