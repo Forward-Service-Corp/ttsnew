@@ -142,7 +142,7 @@ export default function UsersTable({users}) {
                                         <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500 dark:text-white dark:font-extralight">{person.email}</td>
                                         <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500 dark:text-white dark:font-extralight">{person.level}</td>
                                         <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500 dark:text-white dark:font-extralight">
-                                            {person.coach?.toString().split('').length > 0 ? person.coach.toString().split(',').length : ''}
+                                            {person.coach?.filter(coach => !coach.removalDate && !coach.terminationDate).toString().split('').length > 0 ? person.coach.toString().split(',').length : ''}
                                         </td>
                                         <td className="whitespace-nowrap px-3 py-4 text-xs text-gray-500 dark:text-white">
                                             {lastCoachUpdate(person)}
