@@ -22,7 +22,7 @@ export default function User({viewingUserData, pageDataJson}) {
                 simpleModalMessage={`You have now updated this user to the ${version ? "youth" : "adult"} version of the workbook.`} simpleModalLabel={`I understand.`} simpleModal={simpleModal}>
 
             <Head>
-                <title>{viewingUser.name !== "" ? `TTS / User / ${viewingUser.name}` : `TTS / User / ${viewingUser.email}`}</title>
+                <title>{viewingUser.name !== "" ? `TTS / Client / ${viewingUser.name}` : `TTS / User / ${viewingUser.email}`}</title>
             </Head>
 
             <div className={`mt-8`}>
