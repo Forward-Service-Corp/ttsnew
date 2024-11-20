@@ -40,7 +40,7 @@ function LoginTypeCheck({loginValue, setLoginValue, loginType, setLoginType, set
         })
         const data = await accountCheck.json()
         if (data.code === 666) {
-            setError({code: 666, message: "There is already an account with that email address."})
+            setError({code: 666, message: "There is already an account with that email address or phone number."})
         } else {
             if (loginType === "email") {
                 setStep(2)

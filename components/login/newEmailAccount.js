@@ -30,6 +30,9 @@ function NewEmailAccount({loginValue}) {
         programs: false,
     });
 
+    const [usedPhone, setUsedPhone] = useState(false);
+
+
     const inputJSX = (label, name, value, setValue, disabled, required) => {
         return (
             <div>
@@ -182,6 +185,26 @@ function NewEmailAccount({loginValue}) {
         });
     };
 
+    const checkUsedPhone = async (e) => {
+        e.preventDefault()
+        const loginCheck = await fetch("/api/check-new-account", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                loginType: "phone", loginValue: userData.phone
+            })
+        })
+        const data = await loginCheck.json()
+        if (data.code === 777) {
+            setUsedPhone(false)
+            sendAccount().then()
+        } else {
+            setUsedPhone(true)
+        }
+        await console.log(data)
+    }
 
     const sendAccount = async () => {
         const createAccount = await fetch("/api/create-new-account", {
@@ -225,13 +248,17 @@ function NewEmailAccount({loginValue}) {
                         {multipleSelectJSX("Programs", 'programs', userData.programs, handleProgramsChange, false, true, ProgramsList)}
                     </div>
                 </div>
-
+                <div className={`${usedPhone ? 'visible' : 'hidden'} bg-red-200 p-2 text-center mt-4 rounded`}>
+                    There is already an account associated with <span
+                    className={'font-bold'}>{userData.phone}</span>.
+                    Please use a different phone number, or sign in with that phone number.
+                </div>
                 <div className={`text-center`}>
                     <div className={'w-full p-8'}>
                         <button
                             className={"rounded bg-indigo-600 text-white font-extralight p-2 disabled:bg-gray-300 w-1/2 text-lg"}
                             disabled={!formValid}
-                            onClick={sendAccount}>Create Account
+                            onClick={checkUsedPhone}>Create Account
                         </button>
                         <Link href="/login" className={`text-red-600 underline mt-5 text-sm block m-auto`}>Go
                             Back</Link>
