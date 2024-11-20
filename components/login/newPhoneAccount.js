@@ -200,16 +200,15 @@ function NewPhoneAccount({loginValue, setStep}) {
             })
         })
         const data = await loginCheck.json()
-        if (data.code !== 777) {
-            sendAccount().then()
-
-            // setUsedEmail(true)
-            // updateFormData({ ["email"]: "" })
-            // updateFormValidationData("email", false)
-        } else {
+        if (data.code === 777) {
             setUsedEmail(false)
             sendAccount().then()
+        } else {
+            setUsedEmail(true)
+            // updateFormData({ ["email"]: "" })
+            // updateFormValidationData("email", false)
         }
+        await console.log(data)
     }
 
     const sendAccount = async () => {
