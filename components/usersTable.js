@@ -47,12 +47,12 @@ export default function UsersTable({users}) {
 
     const lastCoachUpdate = (person) => {
 
-        if(person.coachUpdate){
-            return moment(person.coachUpdate).calendar()
+        if(person.coach){
+            return moment(person.coach[person.coach.length-1]?.timestamp).calendar()
         }
 
-        if(person.coach){
-            return moment(person.coach[person.coach.length-1].timestamp).calendar()
+        if(person.coachUpdate){
+            return moment(person.coachUpdate).calendar()
         }
 
         return <span className={`text-red-600`}>Missing</span>
