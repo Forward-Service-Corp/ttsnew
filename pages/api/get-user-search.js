@@ -27,7 +27,8 @@ export default async function handler(req, res) {
             const searchResult = await usersCollection.find({
                 $or: [
                     { email: new RegExp(searchTerm, 'i') }, // Case-insensitive regex for email
-                    { phone: new RegExp(searchTerm, 'i') } // Case-insensitive regex for phone
+                    { phone: new RegExp(searchTerm, 'i') }, // Case-insensitive regex for phone
+                    { name: new RegExp(searchTerm, 'i') } // Case-insensitive regex for phone
                 ]
             }).toArray();
 
