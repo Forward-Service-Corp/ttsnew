@@ -73,7 +73,7 @@ export default function UsersTable({users}) {
                               className={"border-gray-300 text-xs col-span-3"}
                               value={searchTerm}
                                autoComplete="false"
-                              placeholder={"Search users by email..."}
+                              placeholder={"Search users by email or phone number..."}
                               onChange={(e) => {
                                   setSearchTerm(e.target.value)
                               }}/>
