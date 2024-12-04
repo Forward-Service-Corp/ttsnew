@@ -20,6 +20,8 @@ export default async(req, res) => {
     const todos = await todosCursor.toArray()
     await todosCursor.close()
 
+    console.log(req.body)
+
     res.json({user, referrals, notes, todos})
 
 }
