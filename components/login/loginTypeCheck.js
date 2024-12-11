@@ -10,7 +10,7 @@ function LoginTypeCheck({loginValue, setLoginValue, loginType, setLoginType, set
     const validateInput = (val) => {
         const phonePattern = /^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        setLoginValue(val);
+        setLoginValue(val.toLowerCase());
         if (phonePattern.test(val)) {
             setLoginTypeValid(true);
             setLoginType("phone");
