@@ -30,6 +30,7 @@ export default function Layout({children, title, session, loadingState, version,
     const [environment, setEnvironment] = useState("production")
     const [darkMode] = useState(null)
 
+    console.log(session)
     const handleLogout = async () => {
         await signOut().then()
         await router.push('/login')
@@ -38,7 +39,7 @@ export default function Layout({children, title, session, loadingState, version,
     const handleDeleteUser = async () => {
         const makeSure = confirm("Are you sure you want to delete this user?")
         if (makeSure) {
-            const deletingUser = await fetch(`/api/delete-user?userId=${session?._id}`)
+            const deletingUser = await fetch(`/api/delete-user?userId=${session.user._id}`)
                 .then(res => res.json())
             await signOut().then()
             await console.log(deletingUser)
@@ -64,9 +65,8 @@ export default function Layout({children, title, session, loadingState, version,
         if (hoursDifference < 12) {
             return;
         }
-
         updateLastLogin().then()
-    }, [updateLastLogin])
+    }, [])
 
     useEffect(() => {
         const location = window.location.host

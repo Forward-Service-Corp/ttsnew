@@ -59,16 +59,18 @@ export async function getServerSideProps(context) {
 
     // dynamic url setup
     const {req} = context;
+    const {sub} = session;
+
     const protocol = req.headers['x-forwarded-proto'] || 'http'
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
-    const dataUrl = baseUrl + "/api/pages/surveysPageData?userId=" + session.sub
+    const dataUrl = baseUrl + "/api/pages/surveysPageData?userId=" + session.user._id
     const getData = await fetch(dataUrl)
     const {user, surveys} = await getData.json()
 
     // redirect to profile page if required fields are not complete
-    if(!user.county.length || !user.homeCounty  || !user.programs.length || !user.name) return  {redirect: {destination: "/profile", permanent: false}}
+    // if(!user.county.length || !user.homeCounty  || !user.programs.length || !user.name) return  {redirect: {destination: "/profile", permanent: false}}
 
     return {
         props: {

@@ -1,31 +1,35 @@
 /**
  * @type {import('next').NextConfig}
  */
-const nextConfig= {
+const nextConfig = {
   reactStrictMode: true,
   basePath: '',
-
   sassOptions: {
     includePaths: ['./styles/**/*.scss'],
   },
   images: {
-    domains: ['localhost'],
     localPatterns: [
       {
         pathname: '/img/**',
-        search: ''
+        search: '',
       }
     ],
     remotePatterns: [
       {
         protocol: "https",
-        hostname: 'lh3.googleusercontent.com'
+        hostname: 'lh3.googleusercontent.com',
       },
+      // {
+      //   protocol: "https",
+      //   hostname: 'fsc-corp-tts.org',
+      // },
       {
-        protocol: "https",
-        hostname: 'fsc-corp-tts.org'
-      },
+        protocol: "http",
+        hostname: "localhost",
+        port: '3000'
+      }
     ]
   }
-}
-module.exports = nextConfig
+};
+
+module.exports = nextConfig;

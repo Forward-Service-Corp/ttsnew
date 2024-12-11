@@ -104,9 +104,9 @@ function NewEmailAccount({loginValue}) {
 
     const handleFormChange = (e) => {
         const { name, value } = e.target;
-        updateFormData({ [name]: value })
+        updateFormData({ [name]: value.toLowerCase() })
         updateFormValidationData(name, value)
-        updateFormData({ ["email"]: loginValue })
+        updateFormData({ ["email"]: loginValue.toLowerCase() })
     };
 
     const handleCountyChange = (e) => {
