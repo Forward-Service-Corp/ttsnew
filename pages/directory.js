@@ -97,7 +97,6 @@ export default function Directory({pageDataJson}) {
                 Please enter your search criteria.
             </div>
             {loadedServices.length > 0 ? <ServicesTable services={loadedServices}/> : null}
-
         </Layout>
     )
 }
