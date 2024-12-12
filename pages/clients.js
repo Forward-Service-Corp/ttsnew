@@ -29,7 +29,7 @@ export async function getServerSideProps(context) {
     const userJson = await getUser.json()
 
     // clients data
-    const getUsersUrl = baseUrl + "/api/get-clients?coachId=" + context.query.coachId
+    const getUsersUrl = baseUrl + "/api/get-clients?coachId=" + ""
     const getUsers = await fetch(getUsersUrl)
     const usersJson = await getUsers.json()
 
