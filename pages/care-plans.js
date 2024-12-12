@@ -8,7 +8,7 @@ import CarePlansInstructions from "../components/carePlansInstructions";
 
 export default function CarePlans({pageJson}) {
 
-    const [tasks, setTasks] = useState(pageJson.todos || [])
+    const [tasks, setTasks] = useState(pageJson.todos)
     const [userReferrals, setUserReferrals] = useState(pageJson.referrals)
     const [sort] = useState('priority')
 
@@ -92,7 +92,7 @@ export async function getServerSideProps(context) {
     const session = await getSession(context)
     if (!session) return {redirect: {destination: "/login", permanent: false}}
     const {req} = context;
-    const {sub} = session;
+    // const {sub} = session;
 
     const protocol = req.headers['x-forwarded-proto'] || 'http'
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
