@@ -78,6 +78,7 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // page data
+    // console.log("log", session.user._id)
     const dataUrl = baseUrl + "/api/pages/indexPageData?userId=" + session.user._id;
     const getData = await fetch(dataUrl);
     const {user, dreams, surveys, referrals, tasks} = await getData.json();
