@@ -128,7 +128,7 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
     console.log("130: ", context)
     // set up variables
-    const url = baseUrl + "/api/get-user?userId=" + "673e36ac97928d7b84d4bdbb"
+    const url = baseUrl + "/api/get-user?userId=" + session.user._id
 
     // fetch data
     const getUser = await fetch(url)
