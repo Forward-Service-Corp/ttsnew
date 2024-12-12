@@ -24,12 +24,12 @@ export async function getServerSideProps(context) {
     const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
 
     // user data
-    const url =  baseUrl + "/api/get-user?userId=" + session.sub
+    const url =  baseUrl + "/api/get-user?userId=" + session.user._id
     const getUser = await fetch(url)
     const userJson = await getUser.json()
 
     // clients data
-    const getUsersUrl = baseUrl + "/api/get-clients?coachId=" + session.user._id
+    const getUsersUrl = baseUrl + "/api/get-clients?coachId=" + context.query.coachId
     const getUsers = await fetch(getUsersUrl)
     const usersJson = await getUsers.json()
 
