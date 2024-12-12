@@ -34,6 +34,7 @@ export async function getServerSideProps(context) {
     const getUsersUrl = baseUrl + "/api/get-clients?coachId=" + session.user._id
     const getUsers = await fetch(getUsersUrl)
     const usersJson = await getUsers.json()
+    console.log(usersJson)
 
     // redirect to profile page if required fields are not complete
 
