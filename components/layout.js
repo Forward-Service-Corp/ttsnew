@@ -30,7 +30,7 @@ export default function Layout({children, title, session, loadingState, version,
     const [environment, setEnvironment] = useState("production")
     const [darkMode] = useState(null)
 
-    console.log(session)
+    // console.log(session)
     const handleLogout = async () => {
         await signOut().then()
         await router.push('/login')

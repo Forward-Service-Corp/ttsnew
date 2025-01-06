@@ -9,7 +9,7 @@ import WelcomeGroupYouth from "../components/pages/welcomeGroupYouth";
 
 export default function Home({user, dreams, surveys, referrals, tasks}) {
 
-    console.log(user)
+    // console.log(user)
 
     const router = useRouter()
     tasks.filter(task => eval(task.completed) === true).length;
