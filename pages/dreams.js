@@ -9,7 +9,7 @@ import {useSession} from "next-auth/react";
 
 export default function Dreams({user, dreams}) {
 
-    console.log(user)
+    // console.log(user)
     const [savedDreams, setSavedDreams] = useState([])
     const [simpleModal, setSimpleModal] = useState(false)
     const [currentTab, setCurrentTab] = useState("active")

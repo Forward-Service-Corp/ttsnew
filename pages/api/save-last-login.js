@@ -13,7 +13,7 @@ export default async (req, res) => {
             { _id: userId },
             {
                 $set: {
-                    lastLogin: new Date().toDateString()
+                    lastLogin: new Date()
                 }
             }
         )
