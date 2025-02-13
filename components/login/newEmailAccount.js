@@ -187,23 +187,27 @@ function NewEmailAccount({loginValue}) {
 
     const checkUsedPhone = async (e) => {
         e.preventDefault()
-        const loginCheck = await fetch("/api/check-new-account", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                loginType: "phone", loginValue: userData.phone
+        if(userData.phone !== ""){
+            const loginCheck = await fetch("/api/check-new-account", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    loginType: "phone", loginValue: userData.phone
+                })
             })
-        })
-        const data = await loginCheck.json()
-        if (data.code === 777) {
-            setUsedPhone(false)
+            const data = await loginCheck.json()
+            if (data.code === 777) {
+                setUsedPhone(false)
+                sendAccount().then()
+            } else {
+                setUsedPhone(true)
+            }
+            await console.log(data)
+        }else {
             sendAccount().then()
-        } else {
-            setUsedPhone(true)
         }
-        await console.log(data)
     }
 
     const sendAccount = async () => {
