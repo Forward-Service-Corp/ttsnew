@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import AssignedClient from "./assignedClient";
 import RoleUpdateButton from "./roleUpdateButton";
 
-function UserRole({updateRoleInformation, terminationPattern, role, setRole, viewingUser, clients, setClients}) {
+function UserRole({terminationPattern, role, setRole, viewingUser, clients, setClients}) {
 
     return (
         <div className={"bg-gray-100 p-6 mb-5 rounded"}>
