@@ -14,10 +14,11 @@ function UserRole({updateRoleInformation, terminationPattern, role, setRole, vie
                     className={`${role === "coach" ? 'visible' : 'hidden'} text-xs rounded-full text-white px-4 py-2 bg-red-500`}
                     onClick={terminationPattern}>X Terminate coach</button>
             </div>
-            <div className={`grid grid-cols-4 gap-4`}>
+            <div className={`grid grid-cols-5 gap-4`}>
                 <RoleUpdateButton role={role} title={'client'} id={viewingUser._id} setRole={setRole} />
                 <RoleUpdateButton role={role} title={'coach'} id={viewingUser._id} setRole={setRole} />
                 <RoleUpdateButton role={role} title={'admin'} id={viewingUser._id} setRole={setRole} />
+                <RoleUpdateButton role={null} title={'inactive client'} id={viewingUser._id} setRole={null} />
                 <RoleUpdateButton role={role} title={'terminated coach'} id={viewingUser._id} setRole={setRole} />
 
             </div>
