@@ -25,8 +25,6 @@ The platform supports multiple user roles with appropriate permissions:
 
 - **Administrators**: Full system access and configuration capabilities
 - **TTS Coaches**: Certified staff who can create and manage client dream maps and CARE plans
-- **Case Managers**: Staff who coordinate services and track client progress
-- **Support Staff**: Limited access for auxiliary team members
 - **Clients**: Self-service access to their own plans and resources
 
 ## Technical Requirements
