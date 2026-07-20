@@ -148,7 +148,7 @@ function TaskTodo({
             }}
           >
             <FilePlus size={16} weight="thin" />
-            <span className="text-gray-600 text-[11px]">Notes</span>
+            <span className="text-gray-600 text-[11px]">Add Notes</span>
           </div>
           <div
             className={"cursor-pointer"}
