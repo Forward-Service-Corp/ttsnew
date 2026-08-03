@@ -1,12 +1,12 @@
-import { Fragment } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { ExclamationIcon } from '@heroicons/react/outline';
+import { Fragment } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
 export default function AutoLogoutWarning({
   isOpen,
   timeRemaining,
   onExtendSession,
-  onLogout
+  onLogout,
 }) {
   const handleExtendSession = () => {
     onExtendSession();
@@ -45,9 +45,9 @@ export default function AutoLogoutWarning({
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <ExclamationIcon 
-                      className="h-6 w-6 text-orange-600" 
-                      aria-hidden="true" 
+                    <ExclamationCircleIcon
+                      className="h-6 w-6 text-orange-600"
+                      aria-hidden="true"
                     />
                   </div>
                   <div className="ml-3">
@@ -59,14 +59,15 @@ export default function AutoLogoutWarning({
                     </Dialog.Title>
                   </div>
                 </div>
-                
+
                 <div className="mt-4">
                   <p className="text-sm text-gray-500">
-                    You will be automatically logged out in{' '}
+                    You will be automatically logged out in{" "}
                     <span className="font-semibold text-orange-600">
-                      {timeRemaining} second{timeRemaining !== 1 ? 's' : ''}
-                    </span>{' '}
-                    due to inactivity. Click &quot;Stay Logged In&quot; to continue your session.
+                      {timeRemaining} second{timeRemaining !== 1 ? "s" : ""}
+                    </span>{" "}
+                    due to inactivity. Click &quot;Stay Logged In&quot; to
+                    continue your session.
                   </p>
                 </div>
 

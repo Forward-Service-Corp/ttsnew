@@ -1,15 +1,14 @@
 import Layout from "../components/layout";
-import { useEffect, useState, useCallback } from "react";
 import SavedDreams from "../components/savedDreams";
 import Head from "next/head";
 import DreamIntro from "../components/pages/dreamIntro";
 import DreamForm from "../components/dreamForm";
 import { useSession } from "next-auth/react";
 import useSpaData from "../hooks/useSpaData";
+import { useCallback, useEffect, useState } from "react";
 
 export default function Dreams() {
   const { data: session } = useSession();
-  const [savedDreams, setSavedDreams] = useState([]);
   const [simpleModal, setSimpleModal] = useState(false);
   const [currentTab, setCurrentTab] = useState("active");
 
@@ -33,11 +32,7 @@ export default function Dreams() {
     }
   }, [session?.user?._id, refetchDreams]);
 
-  useEffect(() => {
-    if (dreamsData) {
-      setSavedDreams(dreamsData);
-    }
-  }, [dreamsData]);
+  const savedDreams = dreamsData ?? [];
 
   // Show loading state while data is being fetched
   if (pageLoading || !pageData) {
@@ -89,7 +84,6 @@ export default function Dreams() {
         <div className={"grid grid-cols-1 md:grid-cols-2 gap-4"}>
           <DreamIntro />
           <DreamForm
-            setSavedDreams={setSavedDreams}
             user={user}
             setSimpleModal={setSimpleModal}
             getDreams={getDreams}
@@ -134,7 +128,7 @@ export default function Dreams() {
             savedDreams={savedDreams?.filter(
               (dream) => dream.status === "active",
             )}
-            setSavedDreams={setSavedDreams}
+            onDreamUpdated={refetchDreams}
           />
         </div>
         <div className={`${currentTab === "complete" ? "visible" : "hidden"}`}>
@@ -142,7 +136,7 @@ export default function Dreams() {
             savedDreams={savedDreams?.filter(
               (dream) => dream.status === "complete",
             )}
-            setSavedDreams={setSavedDreams}
+            onDreamUpdated={refetchDreams}
           />
         </div>
         <div className={`${currentTab === "archived" ? "visible" : "hidden"}`}>
@@ -150,7 +144,7 @@ export default function Dreams() {
             savedDreams={savedDreams?.filter(
               (dream) => dream.status === "archived",
             )}
-            setSavedDreams={setSavedDreams}
+            onDreamUpdated={refetchDreams}
           />
         </div>
         <div
@@ -160,13 +154,13 @@ export default function Dreams() {
         >
           <h2 className={"uppercase"}>
             <span className={"text-orange-500"}>
-              You've taken the first step on your Dream journey!
+              You&apos;ve taken the first step on your Dream journey!
             </span>
           </h2>
           <p className={"text-sm"}>
             {" "}
-            Now it's time to decide what you want to focus on next. Choose a
-            Dream above and click on "Create Life Area Survey"
+            Now it&apos;s time to decide what you want to focus on next. Choose
+            a Dream above and click on &quot;Create Life Area Survey&quot;
           </p>
         </div>
       </div>

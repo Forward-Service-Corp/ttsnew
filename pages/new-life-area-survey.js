@@ -68,6 +68,10 @@ export default function NewLifeAreaSurvey({ user, client }) {
   const [income, setIncome] = useState("");
   const [testingMode, setTestingMode] = useState(false);
 
+  const isUpdate = router.query.surveyId !== undefined;
+  const isSurveyDisabled =
+    domains.length === 0 || Object.keys(answered).length !== 21;
+
   // Helper to initialize survey data from API response
   const initializeSurveyData = (survey, fields) => {
     return fields.reduce((acc, field) => {
@@ -79,28 +83,27 @@ export default function NewLifeAreaSurvey({ user, client }) {
     }, {});
   };
 
-  const getSurvey = useCallback(async () => {
-    const survey = await fetch(
-      "/api/get-survey?surveyId=" + router.query.surveyId,
-    )
-      .then((res) => res.json())
-      .catch((err) => console.warn(err));
-
-    const fields = survey.isYouthSurvey ? YOUTH_FIELDS : ADULT_FIELDS;
-    setDomains(survey.priority);
-    setAnswered(initializeSurveyData(survey, fields));
-    setSurprise(survey.surprise);
-    setConcern(survey.concern);
-    setFamily(survey.family);
-    setHealth(survey.health);
-    setIncome(survey.income);
-  }, [router.query.surveyId]);
-
   useEffect(() => {
-    if (router.query.surveyId !== undefined) {
-      getSurvey().then();
+    if (!router.query.surveyId) return;
+
+    async function getSurvey() {
+      const survey = await fetch(
+        "/api/get-survey?surveyId=" + router.query.surveyId,
+      )
+        .then((res) => res.json())
+        .catch((err) => console.warn(err));
+
+      const fields = survey.isYouthSurvey ? YOUTH_FIELDS : ADULT_FIELDS;
+      setDomains(survey.priority);
+      setAnswered(initializeSurveyData(survey, fields));
+      setSurprise(survey.surprise);
+      setConcern(survey.concern);
+      setFamily(survey.family);
+      setHealth(survey.health);
+      setIncome(survey.income);
     }
-  }, [getSurvey, router.query.surveyId]);
+    getSurvey();
+  }, [router.query.surveyId]);
 
   // Helper to convert answered object to API payload format
   const buildSurveyPayload = () => {
@@ -220,22 +223,6 @@ export default function NewLifeAreaSurvey({ user, client }) {
       return "Please score all life areas";
     }
     return isUpdate ? "Update this Survey" : "Save this Survey";
-  };
-
-  const SurveyButton = () => {
-    const isUpdate = router.query.surveyId !== undefined;
-    const isDisabled =
-      domains.length === 0 || Object.keys(answered).length !== 21;
-
-    return (
-      <button
-        disabled={isDisabled}
-        className="text-white text-sm rounded py-2 px-4 mt-5 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"
-        onClick={handleSaveSurvey}
-      >
-        {getButtonText(isUpdate)}
-      </button>
-    );
   };
 
   return (
@@ -399,7 +386,13 @@ export default function NewLifeAreaSurvey({ user, client }) {
       />
 
       <div className={"flex justify-end"}>
-        <SurveyButton />
+        <button
+          disabled={isSurveyDisabled}
+          className="text-white text-sm rounded py-2 px-4 mt-5 bg-gradient-to-t from-orange-600 to-orange-400 disabled:bg-gradient-to-b disabled:from-gray-300 disabled:to-gray-400"
+          onClick={handleSaveSurvey}
+        >
+          {getButtonText(isUpdate)}
+        </button>
       </div>
     </Layout>
   );

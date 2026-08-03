@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
-import { Dialog, Transition } from "@headlessui/react";
 import { WICountiesList } from "../lib/WI_Counties";
 import { labelMap } from "../lib/serviceLabelsMap";
+import { Dialog, Transition } from "@headlessui/react";
 
 export default function ServiceDuplicateModal({
   isOpen,
@@ -11,47 +11,25 @@ export default function ServiceDuplicateModal({
 }) {
   const serviceLabels = Object.keys(labelMap);
   const [formData, setFormData] = useState({
-    name: "",
-    city: "",
-    state: "WI",
-    street: "",
-    zip: "",
-    county: "",
-    service: "",
-    url: "http://",
-    requirements: "",
-    contactName: "",
-    hours: "",
-    phone: "",
-    contactEmail: "",
-    contactPhone: "",
-    needs: "",
+    name: service?.name || "",
+    city: service?.city || "",
+    state: service?.state || "WI",
+    street: service?.street || "",
+    zip: service?.zip || "",
+    county: service?.county || "",
+    service: service?.service || "",
+    url: service?.url || "",
+    requirements: service?.requirements || "",
+    contactName: service?.contactName || "",
+    hours: service?.hours || "",
+    phone: service?.phone || "",
+    contactEmail: service?.contactEmail || "",
+    contactPhone: service?.contactPhone || "",
+    needs: service?.needs || "",
   });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    if (service) {
-      setFormData({
-        name: service.name || "",
-        city: service.city || "",
-        state: service.state || "WI",
-        street: service.street || "",
-        zip: service.zip || "",
-        county: service.county || "",
-        service: service.service || "",
-        url: service.url || "",
-        requirements: service.requirements || "",
-        contactName: service.contactName || "",
-        hours: service.hours || "",
-        phone: service.phone || "",
-        contactEmail: service.contactEmail || "",
-        contactPhone: service.contactPhone || "",
-        needs: service.needs || "",
-      });
-    }
-  }, [service]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
